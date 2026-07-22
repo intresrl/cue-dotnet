@@ -90,6 +90,9 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_from_bytes(nuint context, byte* value, nuint size);
 
     [LibraryImport("cue")]
+    internal static partial nuint cue_from_list(nuint context, nuint* values, nuint count);
+
+    [LibraryImport("cue")]
     internal static partial nuint cue_dec_int64(nuint value, long* result);
 
     [LibraryImport("cue")]
@@ -131,6 +134,15 @@ internal static unsafe partial class NativeMethods
 
     [LibraryImport("cue")]
     internal static partial nuint* cue_attrs(nuint value, int kind, nuint* length);
+
+    [LibraryImport("cue")]
+    internal static partial nuint* cue_fields(nuint value, nuint* length);
+
+    [LibraryImport("cue")]
+    internal static partial nuint* cue_list(nuint value, nuint* length);
+
+    [LibraryImport("cue")]
+    internal static partial byte* cue_path(nuint value);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_attr_numargs(nuint attribute);

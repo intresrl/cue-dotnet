@@ -82,6 +82,34 @@ public sealed unsafe class CueContext : IDisposable
 
     public Value ToValue(byte[] value) => new(this, value);
 
+    public Value ToValue(params Value[] values)
+    {
+        ThrowIfDisposed();
+        ArgumentNullException.ThrowIfNull(values);
+
+        if (values.Length == 0)
+        {
+            return new Value(this, NativeMethods.cue_from_list(Handle, null, 0));
+        }
+
+        var handles = new nuint[values.Length];
+        for (var i = 0; i < values.Length; i++)
+        {
+            var value = values[i] ?? throw new ArgumentException("Values cannot contain null entries.", nameof(values));
+            if (!ReferenceEquals(value.Context, this))
+            {
+                throw new ArgumentException("All values must belong to this context.", nameof(values));
+            }
+
+            handles[i] = value.Handle;
+        }
+
+        fixed (nuint* ptr = handles)
+        {
+            return new Value(this, NativeMethods.cue_from_list(Handle, ptr, (nuint)handles.Length));
+        }
+    }
+
     public void Dispose()
     {
         if (_disposed)

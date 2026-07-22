@@ -86,5 +86,93 @@ public sealed class ValueTests
         Assert.Equal(new byte[] { 0xde, 0xad, 0xbe, 0xef }, bytesValue.GetBytes());
         Assert.Equal("{\"a\":{\"b\":{\"c\":42}}}", jsonValue.GetJson());
     }
-}
 
+    [Fact]
+    public void FieldsAndListExposeNativeValueTraversal()
+    {
+        using var ctx = new CueContext();
+        using var root = ctx.Compile("""
+            x: 1
+            y: true
+            nested: {
+                list: [10, 20]
+            }
+            """);
+        using var nested = root.Lookup("nested");
+        using var listValue = nested.Lookup("list");
+
+        var fields = root.Fields();
+        var items = listValue.List();
+
+        try
+        {
+            Assert.Equal(3, fields.Length);
+            Assert.Contains(fields, value => value.Kind() == Kind.Int && value.GetLong() == 1);
+            Assert.Contains(fields, value => value.Kind() == Kind.Bool && value.GetBoolean());
+            Assert.Contains(fields, value => value.Kind() == Kind.Struct);
+
+            Assert.Equal(2, items.Length);
+            Assert.Equal(10, items[0].GetLong());
+            Assert.Equal(20, items[1].GetLong());
+        }
+        finally
+        {
+            foreach (var field in fields)
+            {
+                field.Dispose();
+            }
+
+            foreach (var item in items)
+            {
+                item.Dispose();
+            }
+        }
+    }
+
+    [Fact]
+    public void LookupNavigatesPropertiesAndListElements()
+    {
+        using var ctx = new CueContext();
+        using var root = ctx.Compile("""
+            person: {
+                name: "Jane"
+                scores: [10, 20, 30]
+            }
+            """);
+        using var person = root.Lookup("person");
+        using var name = person.Lookup("name");
+        using var secondScore = person.Lookup("scores[1]");
+
+        Assert.Equal("Jane", name.GetString());
+        Assert.Equal(20, secondScore.GetLong());
+        Assert.Throws<CueError>(() =>
+        {
+            using var _ = person.Lookup("missing");
+        });
+        Assert.Throws<CueError>(() =>
+        {
+            using var _ = person.Lookup("scores[99]");
+        });
+    }
+
+    [Fact]
+    public void PathReturnsExpectedLocationForNestedAndListValues()
+    {
+        using var ctx = new CueContext();
+        using var root = ctx.Compile("""
+            person: {
+                name: "Jane"
+                scores: [10, 20, 30]
+            }
+            """);
+        using var person = root.Lookup("person");
+        using var name = person.Lookup("name");
+        using var scores = person.Lookup("scores");
+        using var secondScore = person.Lookup("scores[1]");
+
+        Assert.Equal("person", person.Path());
+        Assert.Equal("person.name", name.Path());
+        Assert.Equal("person.scores", scores.Path());
+        Assert.Equal("person.scores[1]", secondScore.Path());
+    }
+}

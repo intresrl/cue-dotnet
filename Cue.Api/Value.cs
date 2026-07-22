@@ -216,6 +216,36 @@ public sealed unsafe class Value : IDisposable
         return NativeMarshalling.CopyUtf8BytesAndFree(result, len);
     }
 
+    /// <summary>
+    /// May be called only if Kind is Struct
+    /// </summary>
+    /// <returns>The list of properties on this object as Value objects</returns>
+    public Value[] Fields()
+    {
+        nuint len = 0;
+        var fields = NativeMethods.cue_fields(Handle, &len);
+        return FromNativeValueArray(fields, len);
+    }
+
+    /// <summary>
+    /// May be called only if Kind is List
+    /// </summary>
+    /// <returns>The elements of the list as Value objects</returns>
+    public Value[] List()
+    {
+        nuint len = 0;
+        var elements = NativeMethods.cue_list(Handle, &len);
+        return FromNativeValueArray(elements, len);
+    }
+
+    /// <summary>
+    /// String representation of the path of this property in the payload
+    /// </summary>
+    public string Path()
+    {
+        return NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_path(Handle));
+    }
+
     public Attribute[] Attributes(AttributeKind kind = AttributeKind.Value)
     {
         nuint len = 0;
@@ -248,5 +278,21 @@ public sealed unsafe class Value : IDisposable
     {
         _resource.Dispose();
     }
-}
 
+    private Value[] FromNativeValueArray(nuint* handles, nuint length)
+    {
+        if (handles == null || length == 0)
+        {
+            return [];
+        }
+
+        var count = checked((int)length);
+        var values = new Value[count];
+        for (var i = 0; i < count; i++)
+        {
+            values[i] = new Value(Context, handles[i]);
+        }
+
+        return values;
+    }
+}

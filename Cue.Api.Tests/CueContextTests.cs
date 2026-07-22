@@ -66,5 +66,29 @@ public sealed class CueContextTests
         Assert.Equal(new byte[] { 1, 2, 3, 4, 5 }, bytesValue.GetBytes());
         Assert.Equal(0xcafebabeUL, unsignedValue.GetLongAsUnsigned());
     }
+
+    [Fact]
+    public void ToValueSupportsListFromExistingValues()
+    {
+        using var ctx = new CueContext();
+        using var one = ctx.ToValue(1);
+        using var two = ctx.ToValue(2);
+        using var list = ctx.ToValue(one, two);
+
+        var values = list.List();
+        try
+        {
+            Assert.Equal(2, values.Length);
+            Assert.Equal(1, values[0].GetLong());
+            Assert.Equal(2, values[1].GetLong());
+        }
+        finally
+        {
+            foreach (var value in values)
+            {
+                value.Dispose();
+            }
+        }
+    }
 }
 
