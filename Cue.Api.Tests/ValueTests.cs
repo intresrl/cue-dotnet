@@ -5,7 +5,7 @@ public sealed class ValueTests
     [Fact]
     public void KindAndIncompleteKindMatchNativeKinds()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var n = ctx.Compile("null");
@@ -24,7 +24,7 @@ public sealed class ValueTests
     [Fact]
     public void LookupAndUnifyWorkForNestedValues()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var foo = ctx.Compile("a: int\nb: _");
@@ -41,7 +41,7 @@ public sealed class ValueTests
     [Fact]
     public void ErrorReportsUnificationFailure()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var foo = ctx.Compile("x: 1");
@@ -55,7 +55,7 @@ public sealed class ValueTests
     [Fact]
     public void ValidateAndCheckSchemaRespectEvalOptions()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var concrete = ctx.Compile("1");
@@ -72,7 +72,7 @@ public sealed class ValueTests
     [Fact]
     public void DefaultValueAndJsonAndBytesRoundTrip()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var withDefault = ctx.Compile("int | *1");
@@ -82,7 +82,7 @@ public sealed class ValueTests
         var defaultValue = withDefault.DefaultValue();
 
         Assert.NotNull(defaultValue);
-        Assert.Equal(1, defaultValue!.GetLong());
+        Assert.Equal(1, defaultValue.GetLong());
         Assert.Equal(new byte[] { 0xde, 0xad, 0xbe, 0xef }, bytesValue.GetBytes());
         Assert.Equal("{\"a\":{\"b\":{\"c\":42}}}", jsonValue.GetJson());
     }

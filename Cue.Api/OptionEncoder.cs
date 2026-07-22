@@ -8,10 +8,10 @@ internal static unsafe class OptionEncoder
     {
         if (options.IsEmpty)
         {
-            return new EncodedBuildOptions(null, []);
+            return new EncodedBuildOptions(null, 0, []);
         }
 
-        var ptr = (cue_bopt*)NativeMemory.AllocZeroed((nuint)(options.Length + 1), (nuint)sizeof(cue_bopt));
+        var ptr = (cue_bopt*)NativeMemory.AllocZeroed((nuint)options.Length, (nuint)sizeof(cue_bopt));
         var allocatedStrings = new List<nint>();
 
         for (var i = 0; i < options.Length; i++)
@@ -43,18 +43,17 @@ internal static unsafe class OptionEncoder
             }
         }
 
-        ptr[options.Length].tag = NativeMethods.CUE_BUILD_NONE;
-        return new EncodedBuildOptions(ptr, allocatedStrings);
+        return new EncodedBuildOptions(ptr, (nuint)options.Length, allocatedStrings);
     }
 
-    public static cue_eopt* EncodeEvalOptions(ReadOnlySpan<EvalOption> options)
+    public static EncodedEvalOptions EncodeEvalOptions(ReadOnlySpan<EvalOption> options)
     {
         if (options.IsEmpty)
         {
-            return null;
+            return new EncodedEvalOptions(null, 0);
         }
 
-        var ptr = (cue_eopt*)NativeMemory.AllocZeroed((nuint)(options.Length + 1), (nuint)sizeof(cue_eopt));
+        var ptr = (cue_eopt*)NativeMemory.AllocZeroed((nuint)options.Length, (nuint)sizeof(cue_eopt));
 
         for (var i = 0; i < options.Length; i++)
         {
@@ -115,8 +114,7 @@ internal static unsafe class OptionEncoder
             }
         }
 
-        ptr[options.Length].tag = NativeMethods.CUE_OPT_NONE;
-        return ptr;
+        return new EncodedEvalOptions(ptr, (nuint)options.Length);
     }
 
     public static void FreeEvalOptions(cue_eopt* options)
@@ -128,17 +126,12 @@ internal static unsafe class OptionEncoder
     }
 }
 
-internal readonly unsafe struct EncodedBuildOptions
+internal readonly unsafe struct EncodedBuildOptions(cue_bopt* options, nuint count, IReadOnlyList<nint> ownedStrings)
 {
-    public EncodedBuildOptions(cue_bopt* options, IReadOnlyList<nint> ownedStrings)
-    {
-        Options = options;
-        OwnedStrings = ownedStrings;
-    }
+    public cue_bopt* Options { get; } = options;
+    public nuint Count { get; } = count;
 
-    public cue_bopt* Options { get; }
-
-    public IReadOnlyList<nint> OwnedStrings { get; }
+    public IReadOnlyList<nint> OwnedStrings { get; } = ownedStrings;
 
     public void Dispose()
     {
@@ -154,3 +147,16 @@ internal readonly unsafe struct EncodedBuildOptions
     }
 }
 
+internal readonly unsafe struct EncodedEvalOptions(cue_eopt* options, nuint count)
+{
+    public cue_eopt* Options { get; } = options;
+    public nuint Count { get; } = count;
+
+    public void Dispose()
+    {
+        if (Options != null)
+        {
+            NativeMemory.Free(Options);
+        }
+    }
+}

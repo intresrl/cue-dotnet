@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Cue.Api.Tests/Cue.Api.Tests.csproj" />
+  <Project Path="Cue.Api/Cue.Api.csproj" />
+</Solution>

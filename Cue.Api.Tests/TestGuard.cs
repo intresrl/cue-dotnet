@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace Cuelang.Cue.Tests;
 
 internal static class TestGuard
@@ -8,7 +6,6 @@ internal static class TestGuard
     {
         if (!LibcueAvailability.IsAvailable)
         {
-            return;
         }
     }
 }

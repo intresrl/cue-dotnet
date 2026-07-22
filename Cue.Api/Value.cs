@@ -2,19 +2,19 @@ namespace Cuelang.Cue;
 
 public sealed unsafe class Value : IDisposable
 {
-    private static readonly Dictionary<int, global::Cuelang.Cue.Kind> KindMap = new()
+    private static readonly Dictionary<int, Kind> KindMap = new()
     {
-        [NativeMethods.CUE_KIND_BOTTOM] = global::Cuelang.Cue.Kind.Bottom,
-        [NativeMethods.CUE_KIND_NULL] = global::Cuelang.Cue.Kind.Null,
-        [NativeMethods.CUE_KIND_BOOL] = global::Cuelang.Cue.Kind.Bool,
-        [NativeMethods.CUE_KIND_INT] = global::Cuelang.Cue.Kind.Int,
-        [NativeMethods.CUE_KIND_FLOAT] = global::Cuelang.Cue.Kind.Float,
-        [NativeMethods.CUE_KIND_STRING] = global::Cuelang.Cue.Kind.String,
-        [NativeMethods.CUE_KIND_BYTES] = global::Cuelang.Cue.Kind.Bytes,
-        [NativeMethods.CUE_KIND_STRUCT] = global::Cuelang.Cue.Kind.Struct,
-        [NativeMethods.CUE_KIND_LIST] = global::Cuelang.Cue.Kind.List,
-        [NativeMethods.CUE_KIND_NUMBER] = global::Cuelang.Cue.Kind.Number,
-        [NativeMethods.CUE_KIND_TOP] = global::Cuelang.Cue.Kind.Top,
+        [NativeMethods.CUE_KIND_BOTTOM] = Cue.Kind.Bottom,
+        [NativeMethods.CUE_KIND_NULL] = Cue.Kind.Null,
+        [NativeMethods.CUE_KIND_BOOL] = Cue.Kind.Bool,
+        [NativeMethods.CUE_KIND_INT] = Cue.Kind.Int,
+        [NativeMethods.CUE_KIND_FLOAT] = Cue.Kind.Float,
+        [NativeMethods.CUE_KIND_STRING] = Cue.Kind.String,
+        [NativeMethods.CUE_KIND_BYTES] = Cue.Kind.Bytes,
+        [NativeMethods.CUE_KIND_STRUCT] = Cue.Kind.Struct,
+        [NativeMethods.CUE_KIND_LIST] = Cue.Kind.List,
+        [NativeMethods.CUE_KIND_NUMBER] = Cue.Kind.Number,
+        [NativeMethods.CUE_KIND_TOP] = Cue.Kind.Top
     };
 
     private readonly CueResource _resource;
@@ -92,12 +92,12 @@ public sealed unsafe class Value : IDisposable
         return NativeMethods.cue_is_equal(Handle, value.Handle);
     }
 
-    public global::Cuelang.Cue.Kind Kind()
+    public Kind Kind()
     {
         return KindMap[NativeMethods.cue_concrete_kind(Handle)];
     }
 
-    public global::Cuelang.Cue.Kind IncompleteKind()
+    public Kind IncompleteKind()
     {
         return KindMap[NativeMethods.cue_incomplete_kind(Handle)];
     }
@@ -107,12 +107,12 @@ public sealed unsafe class Value : IDisposable
         var evalOpts = OptionEncoder.EncodeEvalOptions(options);
         try
         {
-            var err = NativeMethods.cue_validate(Handle, evalOpts);
+            var err = NativeMethods.cue_validate_raw(Handle, evalOpts.Options, evalOpts.Count);
             Context.ThrowIfError(err);
         }
         finally
         {
-            OptionEncoder.FreeEvalOptions(evalOpts);
+            evalOpts.Dispose();
         }
     }
 
@@ -121,12 +121,12 @@ public sealed unsafe class Value : IDisposable
         var evalOpts = OptionEncoder.EncodeEvalOptions(options);
         try
         {
-            var err = NativeMethods.cue_instance_of(Handle, value.Handle, evalOpts);
+            var err = NativeMethods.cue_instance_of_raw(Handle, value.Handle, evalOpts.Options, evalOpts.Count);
             Context.ThrowIfError(err);
         }
         finally
         {
-            OptionEncoder.FreeEvalOptions(evalOpts);
+            evalOpts.Dispose();
         }
     }
 
@@ -216,12 +216,7 @@ public sealed unsafe class Value : IDisposable
         return NativeMarshalling.CopyUtf8BytesAndFree(result, len);
     }
 
-    public Attribute[] Attributes()
-    {
-        return Attributes(AttributeKind.Value);
-    }
-
-    public Attribute[] Attributes(AttributeKind kind)
+    public Attribute[] Attributes(AttributeKind kind = AttributeKind.Value)
     {
         nuint len = 0;
         var attrs = NativeMethods.cue_attrs(Handle, (int)kind, &len);
@@ -244,10 +239,8 @@ public sealed unsafe class Value : IDisposable
         }
         finally
         {
-            if (attrs != null)
-            {
-                NativeMethods.libc_free(attrs);
-            }
+            // The outer attrs array is Go-GC-managed; the individual handles are
+            // freed by CueResource.Dispose → cue_free. No manual free needed here.
         }
     }
 

@@ -2,13 +2,8 @@ namespace Cuelang.Cue;
 
 public sealed unsafe class CueContext : IDisposable
 {
-    private readonly CueResource _resource;
+    private readonly CueResource _resource = new(NativeMethods.cue_newctx());
     private bool _disposed;
-
-    public CueContext()
-    {
-        _resource = new CueResource(NativeMethods.cue_newctx());
-    }
 
     internal nuint Handle => _resource.Handle;
 
@@ -34,7 +29,7 @@ public sealed unsafe class CueContext : IDisposable
         try
         {
             nuint result = 0;
-            var err = NativeMethods.cue_compile_string(Handle, source, encoded.Options, &result);
+            var err = NativeMethods.cue_compile_string_raw(Handle, source, encoded.Options, encoded.Count, &result);
             ThrowIfError(err);
             return new Value(this, result);
         }
@@ -55,7 +50,7 @@ public sealed unsafe class CueContext : IDisposable
             fixed (byte* source = value)
             {
                 nuint result = 0;
-                var err = NativeMethods.cue_compile_bytes(Handle, source, (nuint)value.Length, encoded.Options, &result);
+                var err = NativeMethods.cue_compile_bytes_raw(Handle, source, (nuint)value.Length, encoded.Options, encoded.Count, &result);
                 ThrowIfError(err);
                 return new Value(this, result);
             }

@@ -5,6 +5,14 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
+    <RootNamespace>Cuelang.Cue</RootNamespace>
+    <AssemblyName>Cuelang.Cue</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\cue.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
 

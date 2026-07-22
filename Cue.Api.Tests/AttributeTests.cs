@@ -5,7 +5,7 @@ public sealed class AttributeTests
     [Fact]
     public void AttributeMetadataAndArgumentsAreDecoded()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
@@ -19,23 +19,23 @@ public sealed class AttributeTests
         Assert.Equal(2, rootAttributes.Length);
         Assert.Equal("foo", rootAttributes[0].Name());
         Assert.Equal("", rootAttributes[0].Value());
-        Assert.Equal(new Cuelang.Cue.Attribute.Arg.Value(""), rootAttributes[0].GetArg(0));
+        Assert.Equal(new Attribute.Arg.Value(""), rootAttributes[0].GetArg(0));
 
         Assert.Equal("bar", rootAttributes[1].Name());
         Assert.Equal(3, rootAttributes[1].ArgCount());
-        Assert.Equal(new Cuelang.Cue.Attribute.Arg.Value("foo"), rootAttributes[1].GetArg(0));
-        Assert.Equal(new Cuelang.Cue.Attribute.Arg.KeyValue("baz", "qux"), rootAttributes[1].GetArg(2));
+        Assert.Equal(new Attribute.Arg.Value("foo"), rootAttributes[1].GetArg(0));
+        Assert.Equal(new Attribute.Arg.KeyValue("baz", "qux"), rootAttributes[1].GetArg(2));
 
         using var x = value.Lookup("x");
         var fieldAttributes = x.Attributes();
         Assert.Single(fieldAttributes);
-        Assert.Equal(new Cuelang.Cue.Attribute.Arg.KeyValue("bar", "baz"), fieldAttributes[0].GetArg(2));
+        Assert.Equal(new Attribute.Arg.KeyValue("bar", "baz"), fieldAttributes[0].GetArg(2));
     }
 
     [Fact]
     public void AttributeKindFilteringMatchesDeclarationsAndFields()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var value = ctx.Compile("""

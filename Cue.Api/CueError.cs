@@ -26,17 +26,8 @@ public sealed class CueError : Exception
     private static unsafe string GetErrorString(nuint handle)
     {
         var errorPtr = NativeMethods.cue_error_string(handle);
-        try
-        {
-            return Marshal.PtrToStringUTF8((IntPtr)errorPtr) ?? string.Empty;
-        }
-        finally
-        {
-            if (errorPtr != null)
-            {
-                NativeMethods.libc_free(errorPtr);
-            }
-        }
+        // cue_error_string returns a Go-managed string; the caller must NOT free it.
+        return Marshal.PtrToStringUTF8((IntPtr)errorPtr) ?? string.Empty;
     }
 }
 

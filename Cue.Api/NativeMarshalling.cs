@@ -18,6 +18,7 @@ internal static unsafe class NativeMarshalling
         }
     }
 
+    // Strings returned by the native library are Go-managed; the caller must NOT free them.
     public static string PtrToUtf8AndFree(byte* value)
     {
         if (value == null)
@@ -25,59 +26,29 @@ internal static unsafe class NativeMarshalling
             return string.Empty;
         }
 
-        try
-        {
-            return Marshal.PtrToStringUTF8((IntPtr)value) ?? string.Empty;
-        }
-        finally
-        {
-            NativeMethods.libc_free(value);
-        }
+        return Marshal.PtrToStringUTF8((IntPtr)value) ?? string.Empty;
     }
 
+    // Byte buffers returned by the native library are Go-managed; copy the data and do NOT free.
     public static byte[] CopyBytesAndFree(byte* source, nuint length)
     {
         if (source == null || length == 0)
         {
-            if (source != null)
-            {
-                NativeMethods.libc_free(source);
-            }
-
             return [];
         }
 
-        try
-        {
-            return new ReadOnlySpan<byte>(source, checked((int)length)).ToArray();
-        }
-        finally
-        {
-            NativeMethods.libc_free(source);
-        }
+        return new ReadOnlySpan<byte>(source, checked((int)length)).ToArray();
     }
 
+    // Same as CopyBytesAndFree but decodes UTF-8.
     public static string CopyUtf8BytesAndFree(byte* source, nuint length)
     {
         if (source == null || length == 0)
         {
-            if (source != null)
-            {
-                NativeMethods.libc_free(source);
-            }
-
             return string.Empty;
         }
 
-        try
-        {
-            var data = new ReadOnlySpan<byte>(source, checked((int)length));
-            return Encoding.UTF8.GetString(data);
-        }
-        finally
-        {
-            NativeMethods.libc_free(source);
-        }
+        var data = new ReadOnlySpan<byte>(source, checked((int)length));
+        return Encoding.UTF8.GetString(data);
     }
 }
-

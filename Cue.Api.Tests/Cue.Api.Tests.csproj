@@ -4,6 +4,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
+    <AssemblyName>Cuelang.Cue.Tests</AssemblyName>
+    <RootNamespace>Cuelang.Cue.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +23,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cue.Api\Cue.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\cue.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
 

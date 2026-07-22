@@ -5,7 +5,7 @@ public sealed class CueContextTests
     [Fact]
     public void TopAndBottomExposeExpectedKinds()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var top = ctx.Top();
@@ -18,7 +18,7 @@ public sealed class CueContextTests
     [Fact]
     public void CompileSupportsTextAndBytesWithBuildOptions()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
 
@@ -40,7 +40,7 @@ public sealed class CueContextTests
     [Fact]
     public void CompileBottomThrowsCueError()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         Assert.Throws<CueError>(() => ctx.Compile("_|_"));
@@ -49,7 +49,7 @@ public sealed class CueContextTests
     [Fact]
     public void ToValueOverloadsRoundTrip()
     {
-        if (!LibcueAvailability.IsAvailable) return;
+        // if (!LibcueAvailability.IsAvailable) return;
 
         using var ctx = new CueContext();
         using var longValue = ctx.ToValue(-1);

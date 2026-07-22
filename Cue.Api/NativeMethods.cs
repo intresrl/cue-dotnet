@@ -51,10 +51,10 @@ internal static unsafe partial class NativeMethods
     internal static partial byte* cue_error_string(nuint error);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_compile_string(nuint context, byte* source, cue_bopt* options, nuint* result);
+    internal static partial nuint cue_compile_string_raw(nuint context, byte* source, cue_bopt* options, nuint count, nuint* result);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_compile_bytes(nuint context, byte* source, nuint size, cue_bopt* options, nuint* result);
+    internal static partial nuint cue_compile_bytes_raw(nuint context, byte* source, nuint size, cue_bopt* options, nuint count, nuint* result);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_top(nuint context);
@@ -66,7 +66,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_unify(nuint left, nuint right);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_instance_of(nuint value, nuint schema, cue_eopt* options);
+    internal static partial nuint cue_instance_of_raw(nuint value, nuint schema, cue_eopt* options, nuint count);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_lookup_string(nuint value, byte* path, nuint* result);
@@ -111,7 +111,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_dec_json(nuint value, byte** result, nuint* length);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_validate(nuint value, cue_eopt* options);
+    internal static partial nuint cue_validate_raw(nuint value, cue_eopt* options, nuint count);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_default(nuint value, byte* hasDefault);
@@ -145,7 +145,7 @@ internal static unsafe partial class NativeMethods
     internal static partial void cue_attr_getarg(nuint attribute, nuint index, cue_attr_arg* result);
 
     [LibraryImport("cue")]
-    internal static partial void libc_free(void* ptr);
+    internal static partial void cue_free_all_inner_raw(nuint* ptr, nuint count);
 }
 
 [StructLayout(LayoutKind.Sequential)]
@@ -173,4 +173,3 @@ internal unsafe struct cue_attr_arg
     public byte* key;
     public byte* val;
 }
-
