@@ -4,13 +4,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>preview</LangVersion>
     <RootNamespace>Cuelang.Cue</RootNamespace>
+    <LangVersion>preview</LangVersion>
     <AssemblyName>Cuelang.Cue</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\cue.dll">
+    <None Include="..\cue.dll" Condition="'$(OS)' == 'Windows_NT'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\libcue.so" Condition="'$(OS)' != 'Windows_NT'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
