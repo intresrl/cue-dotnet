@@ -7,6 +7,8 @@ namespace Cue.Generator;
 
 public sealed class RoslynGenerator
 {
+    private static int _anonymousIndex = 1;
+    
     // map from struct path -> generated type name
     private readonly Dictionary<string, string> _typeNames = new();
 
@@ -106,7 +108,7 @@ public sealed class RoslynGenerator
 
     private static string SanitizeIdentifier(string s)
     {
-        if (string.IsNullOrEmpty(s)) return "Item";
+        if (string.IsNullOrEmpty(s)) return "Anonymous" + _anonymousIndex++;
         // remove invalid chars
         var chars = s.Where(ch => char.IsLetterOrDigit(ch) || ch == '_').ToArray();
         var res = new string(chars);
