@@ -72,6 +72,12 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_lookup_string(nuint value, byte* path, nuint* result);
 
     [LibraryImport("cue")]
+    internal static partial nuint cue_lookup_any_index(nuint value, nuint* result);
+
+    [LibraryImport("cue")]
+    internal static partial nuint cue_lookup_any_string(nuint value, nuint* result);
+
+    [LibraryImport("cue")]
     internal static partial nuint cue_from_int64(nuint context, long value);
 
     [LibraryImport("cue")]

@@ -175,4 +175,52 @@ public sealed class ValueTests
         Assert.Equal("person.scores", scores.Path());
         Assert.Equal("person.scores[1]", secondScore.Path());
     }
+
+    [Fact]
+    public void LookupAnyIndexReturnsListElementConstraint()
+    {
+        using var ctx = new CueContext();
+        // A list schema where every element must be an int
+        using var listSchema = ctx.Compile("[...int]");
+        using var elemConstraint = listSchema.LookupAnyIndex();
+
+        Assert.Equal(Kind.Int, elemConstraint.IncompleteKind());
+    }
+
+    [Fact]
+    public void LookupAnyIndexThrowsWhenNoIndexConstraintExists()
+    {
+        using var ctx = new CueContext();
+        // A plain struct has no list element constraint
+        using var structValue = ctx.Compile("a: 1");
+
+        Assert.Throws<CueError>(() =>
+        {
+            using var _ = structValue.LookupAnyIndex();
+        });
+    }
+
+    [Fact]
+    public void LookupAnyStringReturnsStructValueConstraint()
+    {
+        using var ctx = new CueContext();
+        // A struct schema where every field value must be a string
+        using var mapSchema = ctx.Compile("[string]: string");
+        using var valueConstraint = mapSchema.LookupAnyString();
+
+        Assert.Equal(Kind.String, valueConstraint.IncompleteKind());
+    }
+
+    [Fact]
+    public void LookupAnyStringThrowsWhenNoStringConstraintExists()
+    {
+        using var ctx = new CueContext();
+        // A plain list has no string pattern constraint
+        using var listValue = ctx.Compile("[1, 2, 3]");
+
+        Assert.Throws<CueError>(() =>
+        {
+            using var _ = listValue.LookupAnyString();
+        });
+    }
 }

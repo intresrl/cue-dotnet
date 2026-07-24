@@ -146,6 +146,30 @@ public sealed unsafe class Value : IDisposable
         }
     }
 
+    /// <summary>
+    /// Looks up the element constraint value defined by the any-index (<c>[int]</c>) pattern selector.
+    /// Useful for retrieving the element type of a list constraint.
+    /// </summary>
+    public Value LookupAnyIndex()
+    {
+        nuint result = 0;
+        var err = NativeMethods.cue_lookup_any_index(Handle, &result);
+        Context.ThrowIfError(err);
+        return new Value(Context, result);
+    }
+
+    /// <summary>
+    /// Looks up the element constraint value defined by the any-string (<c>[string]</c>) pattern selector.
+    /// Useful for retrieving the value type of a map/struct constraint keyed by arbitrary strings.
+    /// </summary>
+    public Value LookupAnyString()
+    {
+        nuint result = 0;
+        var err = NativeMethods.cue_lookup_any_string(Handle, &result);
+        Context.ThrowIfError(err);
+        return new Value(Context, result);
+    }
+
     public Value? DefaultValue()
     {
         byte hasDefault = 0;
