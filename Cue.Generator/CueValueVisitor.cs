@@ -6,11 +6,18 @@ public abstract class CueValueVisitor<TResult>
 {
     public TResult Visit(Value value)
     {
-        return value.Kind() switch
+        var kind = value.Kind();
+        // For non-concrete declarations (schemas), prefer the incomplete kind
+        if (kind is Kind.Bottom or Kind.Top)
+        {
+            kind = value.IncompleteKind();
+        }
+
+        return kind switch
         {
             Kind.Struct => VisitStruct(value),
             Kind.List => VisitList(value),
-            var kind => VisitSimple(value, kind)
+            _ => VisitSimple(value, kind)
         };
     }
 

@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Cue.Api\Cue.Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.1" />
+    </ItemGroup>
+
 </Project>

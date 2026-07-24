@@ -25,18 +25,9 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitList(Value value)
     {
         var path = value.Path();
-        var elementValues = value.List();
-        var items = new List<CueValueNode>(elementValues.Length);
-
-        foreach (var elementValue in elementValues)
-        {
-            using (elementValue)
-            {
-                items.Add(Visit(elementValue));
-            }
-        }
-
-        return new CueListValue(path, items);
+        using var elementValue = value.LookupAnyIndex();
+        var elementType = Visit(elementValue);
+        return new CueListValue(path, elementType);
     }
 
     protected override CueValueNode VisitSimple(Value value, Kind kind)

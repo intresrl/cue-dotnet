@@ -9,7 +9,7 @@ public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> F
 
 public sealed record CueStructField(string Name, CueValueNode Value);
 
-public sealed record CueListValue(string Path, IReadOnlyList<CueValueNode> Items)
+public sealed record CueListValue(string Path, CueValueNode ElementType)
     : CueValueNode(Kind.List, Path);
 
 public sealed record CueSimpleValue : CueValueNode
