@@ -244,10 +244,10 @@ public sealed unsafe class Value : IDisposable
     /// May be called only if Kind is Struct
     /// </summary>
     /// <returns>The list of properties on this object as Value objects</returns>
-    public Value[] Fields()
+    public Value[] Fields(bool definitions = false)
     {
         nuint len = 0;
-        var fields = NativeMethods.cue_fields(Handle, &len);
+        var fields = NativeMethods.cue_fields(Handle, definitions, &len);
         return FromNativeValueArray(fields, len);
     }
 
@@ -275,27 +275,19 @@ public sealed unsafe class Value : IDisposable
         nuint len = 0;
         var attrs = NativeMethods.cue_attrs(Handle, (int)kind, &len);
 
-        try
+        var count = checked((int)len);
+        if (count == 0)
         {
-            var count = checked((int)len);
-            if (count == 0)
-            {
-                return [];
-            }
-
-            var values = new Attribute[count];
-            for (var i = 0; i < count; i++)
-            {
-                values[i] = new Attribute(new CueResource(attrs[i]));
-            }
-
-            return values;
+            return [];
         }
-        finally
+
+        var values = new Attribute[count];
+        for (var i = 0; i < count; i++)
         {
-            // The outer attrs array is Go-GC-managed; the individual handles are
-            // freed by CueResource.Dispose → cue_free. No manual free needed here.
+            values[i] = new Attribute(new CueResource(attrs[i]));
         }
+
+        return values;
     }
 
     public void Dispose()

@@ -142,7 +142,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint* cue_attrs(nuint value, int kind, nuint* length);
 
     [LibraryImport("cue")]
-    internal static partial nuint* cue_fields(nuint value, nuint* length);
+    internal static partial nuint* cue_fields(nuint value, [MarshalAs(UnmanagedType.I1)] bool definitions, nuint* length);
 
     [LibraryImport("cue")]
     internal static partial nuint* cue_list(nuint value, nuint* length);
@@ -161,9 +161,6 @@ internal static unsafe partial class NativeMethods
 
     [LibraryImport("cue")]
     internal static partial void cue_attr_getarg(nuint attribute, nuint index, cue_attr_arg* result);
-
-    [LibraryImport("cue")]
-    internal static partial void cue_free_all_inner_raw(nuint* ptr, nuint count);
 }
 
 [StructLayout(LayoutKind.Sequential)]

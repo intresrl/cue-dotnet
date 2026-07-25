@@ -7,7 +7,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitStruct(Value value)
     {
         var path = value.Path();
-        var fieldValues = value.Fields();
+        var fieldValues = value.Fields(true);
         var fields = new List<CueStructField>(fieldValues.Length);
 
         foreach (var fieldValue in fieldValues)
