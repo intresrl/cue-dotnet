@@ -223,4 +223,109 @@ public sealed class ValueTests
             using var _ = listValue.LookupAnyString();
         });
     }
+
+    [Fact]
+    public void DisjunctionsExposesDisjunctionOptions()
+    {
+        using var ctx = new CueContext();
+        using var disjunction = ctx.Compile("int | string | bool");
+         
+        var options = disjunction.Disjunctions();
+
+        try
+        {
+            Assert.Equal(3, options.Length);
+             
+            var kinds = options.Select(o => o.IncompleteKind()).OrderBy(k => (int)k).ToList();
+            Assert.Contains(Kind.Int, kinds);
+            Assert.Contains(Kind.String, kinds);
+            Assert.Contains(Kind.Bool, kinds);
+        }
+        finally
+        {
+            foreach (var option in options)
+            {
+                option.Dispose();
+            }
+        }
+    }
+
+    [Fact]
+    public void DisjunctionsReturnsEmptyForNonDisjunctionValue()
+    {
+        using var ctx = new CueContext();
+        using var simpleValue = ctx.Compile("42");
+          
+        var options = simpleValue.Disjunctions();
+
+        Assert.Empty(options);
+    }
+
+    [Fact]
+    public void DisjunctionsOutputVerification()
+    {
+        using var ctx = new CueContext();
+         
+        // Test case 1: Basic type disjunction
+        using var typeDisjunction = ctx.Compile("int | string | bool");
+        var typeOptions = typeDisjunction.Disjunctions();
+         
+        try
+        {
+            Assert.NotNull(typeOptions);
+            Assert.Equal(3, typeOptions.Length);
+             
+            // Verify each option's kind
+            var kindMap = typeOptions
+                .Select((opt, idx) => (Index: idx, Kind: opt.IncompleteKind().ToString()))
+                .OrderBy(x => x.Kind)
+                .ToList();
+             
+            Assert.Contains("Bool", kindMap.Select(x => x.Kind));
+            Assert.Contains("Int", kindMap.Select(x => x.Kind));
+            Assert.Contains("String", kindMap.Select(x => x.Kind));
+        }
+        finally
+        {
+            foreach (var opt in typeOptions)
+            {
+                opt.Dispose();
+            }
+        }
+
+        // Test case 2: Value disjunction
+        using var valueDisjunction = ctx.Compile("1 | 2 | 3");
+        var valueOptions = valueDisjunction.Disjunctions();
+         
+        try
+        {
+            Assert.NotNull(valueOptions);
+            Assert.Equal(3, valueOptions.Length);
+             
+            // Extract and verify values
+            var values = new List<long>();
+            foreach (var opt in valueOptions)
+            {
+                var val = opt.GetLong();
+                values.Add(val);
+            }
+            values.Sort();
+             
+            Assert.Equal(new[] { 1L, 2L, 3L }, values);
+        }
+        finally
+        {
+            foreach (var opt in valueOptions)
+            {
+                opt.Dispose();
+            }
+        }
+
+        // Test case 3: Non-disjunction returns empty array
+        using var simpleValue = ctx.Compile("\"hello\"");
+        var noDisjuncts = simpleValue.Disjunctions();
+         
+        Assert.NotNull(noDisjuncts);
+        Assert.Empty(noDisjuncts);
+    }
 }

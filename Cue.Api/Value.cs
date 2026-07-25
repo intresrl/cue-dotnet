@@ -263,6 +263,21 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
+    /// Returns all disjunctions for this value, or an empty array if the value contains no disjunctions.
+    /// 
+    /// For a value with a disjunction like `int | string | bool`, Disjunctions will
+    /// return an array containing three separate Value objects, one for each option.
+    /// For a non-disjunction value, it returns an empty array.
+    /// </summary>
+    /// <returns>An array of Value objects representing each disjunction option</returns>
+    public Value[] Disjunctions()
+    {
+        nuint len = 0;
+        var disjuncts = NativeMethods.cue_disjunctions(Handle, &len);
+        return FromNativeValueArray(disjuncts, len);
+    }
+
+    /// <summary>
     /// String representation of the path of this property in the payload
     /// </summary>
     public string Path()

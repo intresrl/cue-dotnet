@@ -148,6 +148,9 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint* cue_list(nuint value, nuint* length);
 
     [LibraryImport("cue")]
+    internal static partial nuint* cue_disjunctions(nuint value, nuint* length);
+
+    [LibraryImport("cue")]
     internal static partial byte* cue_path(nuint value);
 
     [LibraryImport("cue")]
