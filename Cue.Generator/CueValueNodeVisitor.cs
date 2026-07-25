@@ -7,6 +7,11 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitStruct(Value value)
     {
         var path = value.Path();
+        if (value.Disjunctions() is { Length: > 0 } disjunctions)
+        {
+            return new CueDisjunction(path, [.. disjunctions.Select(Visit)]);
+        }
+
         var fieldValues = value.Fields(true);
         var fields = new List<CueStructField>(fieldValues.Length);
 

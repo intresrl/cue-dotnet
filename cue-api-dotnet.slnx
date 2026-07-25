@@ -2,4 +2,5 @@
   <Project Path="Cue.Api.Tests/Cue.Api.Tests.csproj" />
   <Project Path="Cue.Api/Cue.Api.csproj" />
   <Project Path="Cue.Generator/Cue.Generator.csproj" />
+  <Project Path="Cue.Generator.Tests/Cue.Generator.Tests.csproj" />
 </Solution>

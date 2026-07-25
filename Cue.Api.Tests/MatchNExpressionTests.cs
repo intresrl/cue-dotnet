@@ -48,7 +48,7 @@ public sealed class MatchNExpressionTests
         Assert.Equal(42, intUnified.Lookup("value").GetLong());
 
         // Verify string satisfies the schema
-        using var stringValue = ctx.Compile("""value: "hello\"""");
+        using var stringValue = ctx.Compile("value: \"hello\"");
         using var stringUnified = schema.Unify(stringValue);
         Assert.Equal("hello", stringUnified.Lookup("value").GetString());
     }
