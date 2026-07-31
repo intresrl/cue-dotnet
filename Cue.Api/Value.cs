@@ -92,6 +92,11 @@ public sealed unsafe class Value : IDisposable
         return NativeMethods.cue_is_equal(Handle, value.Handle);
     }
 
+    public bool IsConcrete()
+    {
+        return NativeMethods.cue_is_concrete(Handle);
+    }
+
     public Kind Kind()
     {
         return KindMap[NativeMethods.cue_concrete_kind(Handle)];

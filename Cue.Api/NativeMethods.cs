@@ -139,6 +139,10 @@ internal static unsafe partial class NativeMethods
     internal static partial bool cue_is_equal(nuint left, nuint right);
 
     [LibraryImport("cue")]
+    [return: MarshalAs(UnmanagedType.I1)]
+    internal static partial bool cue_is_concrete(nuint value);
+
+    [LibraryImport("cue")]
     internal static partial nuint* cue_attrs(nuint value, int kind, nuint* length);
 
     [LibraryImport("cue")]
