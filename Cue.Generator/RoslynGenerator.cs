@@ -11,11 +11,18 @@ public sealed class RoslynGenerator
     
     // map from struct path -> generated type name
     private readonly Dictionary<string, string> _typeNames = new();
+    
+    // map from disjunction path -> (base class name, discriminator field, branch paths)
+    private readonly Dictionary<string, (string BaseClassName, string DiscriminatorField, List<string> BranchPaths)> 
+        _discriminatedUnions = new();
 
     public string GenerateCode(CueValueNode root)
     {
         // collect struct nodes and assign type names
         CollectStructs(root);
+        
+        // collect discriminated unions
+        CollectDiscriminatedUnions(root);
         
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddUsings(
@@ -25,11 +32,21 @@ public sealed class RoslynGenerator
 
         var members = new List<MemberDeclarationSyntax>();
 
+        // create abstract base classes for discriminated unions first
+        foreach (var (_, (baseClassName, _, _)) in _discriminatedUnions.OrderBy(kv => kv.Value.BaseClassName))
+        {
+            var abstractClass = CreateAbstractBaseClass(baseClassName);
+            members.Add(abstractClass);
+        }
+
         // create classes for each struct (keep deterministic order)
         foreach (var (path, typeName) in _typeNames.OrderBy(kv => kv.Value))
         {
             if (!TryFindStruct(root, path, out var structNode)) continue;
-            var classDecl = CreateClassDeclaration(typeName, structNode!);
+            
+            // Check if this struct is part of a discriminated union
+            var baseClass = FindDiscriminatorBaseClass(path);
+            var classDecl = CreateClassDeclaration(typeName, structNode!, baseClass);
             members.Add(classDecl);
         }
 
@@ -65,7 +82,89 @@ public sealed class RoslynGenerator
                 CollectStructs(l.ElementType, visitedStructPaths);
                 break;
             }
+            case CueDisjunction d:
+            {
+                foreach (var branch in d.Branches)
+                {
+                    CollectStructs(branch, visitedStructPaths);
+                }
+                break;
+            }
         }
+    }
+
+    private void CollectDiscriminatedUnions(CueValueNode node)
+    {
+        CollectDiscriminatedUnions(node, new HashSet<string>(StringComparer.Ordinal));
+    }
+
+    private void CollectDiscriminatedUnions(CueValueNode node, HashSet<string> visited)
+    {
+        while (true)
+        {
+            switch (node)
+            {
+                case CueDisjunction { IsDiscriminated: true } disjunction when !visited.Add(disjunction.Path):
+                    return;
+                // Generate base class name from path
+                case CueDisjunction { IsDiscriminated: true } disjunction:
+                {
+                    var baseClassName = GenerateBaseClassName(disjunction.Path);
+                    var branchPaths = disjunction.Branches.OfType<CueStructValue>()
+                        .Select(b => b.Path)
+                        .ToList();
+
+                    _discriminatedUnions[disjunction.Path] = (baseClassName, disjunction.DiscriminatorField!, branchPaths);
+
+                    foreach (var branch in disjunction.Branches)
+                    {
+                        CollectDiscriminatedUnions(branch, visited);
+                    }
+
+                    break;
+                }
+                case CueStructValue structValue when !visited.Add(structValue.Path):
+                    return;
+                case CueStructValue structValue:
+                {
+                    foreach (var field in structValue.Fields)
+                    {
+                        CollectDiscriminatedUnions(field.Value, visited);
+                    }
+
+                    break;
+                }
+                case CueListValue listValue:
+                    node = listValue.ElementType;
+                    continue;
+                // Regular non-discriminated union - still need to visit branches
+                case CueDisjunction regularDisjunction when !visited.Add(regularDisjunction.Path):
+                    return;
+                case CueDisjunction regularDisjunction:
+                {
+                    foreach (var branch in regularDisjunction.Branches)
+                    {
+                        CollectDiscriminatedUnions(branch, visited);
+                    }
+
+                    break;
+                }
+            }
+
+            break;
+        }
+    }
+
+    private string? FindDiscriminatorBaseClass(string structPath)
+    {
+        foreach (var (_, (baseClassName, _, branchPaths)) in _discriminatedUnions)
+        {
+            if (branchPaths.Contains(structPath))
+            {
+                return baseClassName;
+            }
+        }
+        return null;
     }
 
     private static bool TryFindStruct(CueValueNode root, string path, out CueStructValue? result)
@@ -89,6 +188,15 @@ public sealed class RoslynGenerator
                     return true;
                 break;
             }
+            case CueDisjunction du:
+            {
+                foreach (var branch in du.Branches)
+                {
+                    if (TryFindStruct(branch, path, out result))
+                        return true;
+                }
+                break;
+            }
         }
 
         return false;
@@ -104,6 +212,13 @@ public sealed class RoslynGenerator
         if (idx >= 0) seg = seg[..idx];
         var typeName = ToPascalCase(SanitizeIdentifier(seg));
         return typeName;
+    }
+
+    private static string GenerateBaseClassName(string path)
+    {
+        // Generate name like "ValueFormatBase" from a discriminator union path
+        var typeName = GenerateTypeName(path);
+        return typeName + "Base";
     }
 
     private static string SanitizeIdentifier(string s)
@@ -122,13 +237,37 @@ public sealed class RoslynGenerator
         return string.Concat(parts.Select(p => char.ToUpperInvariant(p[0]) + p[1..]));
     }
 
-    private ClassDeclarationSyntax CreateClassDeclaration(string typeName, CueStructValue node)
+    private static ClassDeclarationSyntax CreateAbstractBaseClass(string className)
     {
-        return SyntaxFactory.ClassDeclaration(typeName)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            .AddMembers([
+        return SyntaxFactory.ClassDeclaration(className)
+            .AddModifiers(
+                SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                SyntaxFactory.Token(SyntaxKind.AbstractKeyword)
+            )
+            .WithMembers(SyntaxFactory.List<MemberDeclarationSyntax>());
+    }
+
+    private ClassDeclarationSyntax CreateClassDeclaration(string typeName, CueStructValue node, string? baseClass = null)
+    {
+        var classDecl = SyntaxFactory.ClassDeclaration(typeName)
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+        // If this class extends a base class, add it
+        if (string.IsNullOrEmpty(baseClass))
+            return classDecl.AddMembers([
                 .. node.Fields.Select(DeclareProperty)
             ]);
+        var baseTypeName = SyntaxFactory.ParseTypeName(baseClass);
+        var baseTypeList = SyntaxFactory.BaseList(
+            SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(
+                SyntaxFactory.SimpleBaseType(baseTypeName)
+            )
+        );
+        classDecl = classDecl.WithBaseList(baseTypeList);
+
+        return classDecl.AddMembers([
+            .. node.Fields.Select(DeclareProperty)
+        ]);
     }
 
     private PropertyDeclarationSyntax DeclareProperty(CueStructField field)
@@ -150,6 +289,7 @@ public sealed class RoslynGenerator
         return node switch
         {
             CueStructValue s => _typeNames.GetValueOrDefault(s.Path, "object"),
+            CueDisjunction { IsDiscriminated: true } d => FindDiscriminatorBaseClass(d.Path) ?? "object",
             CueListValue l => GetListTypeName(l),
             CueSimpleValue sv => MapSimpleKindToCSharpType(sv.Kind),
             _ => "object"

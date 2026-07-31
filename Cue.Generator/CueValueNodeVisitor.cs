@@ -4,14 +4,26 @@ namespace Cue.Generator;
 
 public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 {
+    protected override CueValueNode VisitTop(Value value)
+    {
+        // Check for disjunctions at the top level
+        if (value.Disjunctions() is { Length: > 0 } disjunctions)
+        {
+            return VisitDisjunction(value.Path(), disjunctions);
+        }
+
+        if (value.IncompleteKind() != Kind.Top)
+        {
+            // Delegate to base class incomplete kind dispatch
+            return Dispatch(value, value.IncompleteKind());
+        }
+
+        return new CueTop(value.Path());
+    }
+
     protected override CueValueNode VisitStruct(Value value)
     {
         var path = value.Path();
-        if (value.Disjunctions() is { Length: > 0 } disjunctions)
-        {
-            return new CueDisjunction(path, [.. disjunctions.Select(Visit)]);
-        }
-
         var fieldValues = value.Fields(true);
         var fields = new List<CueStructField>(fieldValues.Length);
 
@@ -38,6 +50,14 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitSimple(Value value, Kind kind)
     {
         return new CueSimpleValue(kind, value.Path());
+    }
+
+    private CueDisjunction VisitDisjunction(string path, Value[] disjunctions)
+    {
+        var branches = disjunctions.Select(Visit).ToList();
+        
+        // Create disjunction with optional discriminator
+        return new CueDisjunction(path, branches, true);
     }
 
     private static string GetFieldName(string parentPath, string childPath)

@@ -2,17 +2,54 @@ using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-public abstract record CueValueNode(Kind Kind, string Path);
+public abstract record CueValueNode(Kind Kind, string Path)
+{
+    public override string ToString() => $"{GetType().Name} at {Path}";
+}
+
+public sealed record CueTop(string Path) : CueValueNode(Kind.Top, Path)
+{
+    public override string ToString() => $"Top at {Path}";
+}
 
 public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> Fields)
-    : CueValueNode(Kind.Struct, Path);
+    : CueValueNode(Kind.Struct, Path)
+{
+    public override string ToString()
+    {
+        if (Fields.Count == 0)
+            return $"Struct() at {Path}";
+        
+        var fieldList = string.Join(", ", Fields.Select(f => $"{f.Name}: {f.Value.Kind}"));
+        
+        return $"Struct({fieldList}) at {Path}";
+    }
+}
 
 public sealed record CueStructField(string Name, CueValueNode Value);
 
-public sealed record CueDisjunction(string Path, IReadOnlyList<CueValueNode> Branches) : CueValueNode(Kind.Top, Path);
+public sealed record CueDisjunction(
+    string Path,
+    IReadOnlyList<CueValueNode> Branches,
+    bool IsDiscriminated)
+    : CueValueNode(Kind.Top, Path)
+{
+    public string DiscriminatorField => "TODO remove";
+
+    public override string ToString()
+    {
+        var result = $"Disjunction({Branches.Count} branches";
+        result += string.Join("\n", Branches.Select(e => e.ToString()));
+        result += $") at {Path}";
+        return result;
+    }
+}
 
 public sealed record CueListValue(string Path, CueValueNode ElementType)
-    : CueValueNode(Kind.List, Path);
+    : CueValueNode(Kind.List, Path)
+{
+    public override string ToString() => $"List<{ElementType.Kind}> at {Path}";
+}
 
 public sealed record CueSimpleValue : CueValueNode
 {
@@ -30,4 +67,7 @@ public sealed record CueSimpleValue : CueValueNode
             _ => kind
         };
     }
+
+    public override string ToString() => $"{Kind} at {Path}";
 }
+
