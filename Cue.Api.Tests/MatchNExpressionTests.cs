@@ -18,9 +18,7 @@ public sealed class MatchNExpressionTests
         using var ctx = new CueContext();
         
         // Compile a simple matchN(1, ...) expression
-        using var matchNValue = ctx.Compile("""
-            matchN(1, [int, string, bool])
-            """);
+        using var matchNValue = ctx.Compile("matchN(1, [int, string, bool])");
 
         // The expression should be incomplete (not concrete)
         // It represents a constraint on what values are allowed
@@ -38,9 +36,7 @@ public sealed class MatchNExpressionTests
         using var ctx = new CueContext();
         
         // Define a schema with matchN(1, [int, string])
-        using var schema = ctx.Compile("""
-            value: matchN(1, [int, string])
-            """);
+        using var schema = ctx.Compile("value: matchN(1, [int, string])");
 
         // Verify integer satisfies the schema
         using var intValue = ctx.Compile("value: 42");
@@ -61,9 +57,7 @@ public sealed class MatchNExpressionTests
         using var ctx = new CueContext();
         
         // Define a schema with matchN(1, [int, string])
-        using var schema = ctx.Compile("""
-            value: matchN(1, [int, string])
-            """);
+        using var schema = ctx.Compile("value: matchN(1, [int, string])");
 
         // Try to unify with a boolean (should fail)
         using var boolValue = ctx.Compile("value: true");
@@ -112,9 +106,7 @@ public sealed class MatchNExpressionTests
         using var ctx = new CueContext();
         
         // Compile matchN with int, string, and bytes
-        using var matchN = ctx.Compile("""
-            matchN(1, [int, string, bytes])
-            """);
+        using var matchN = ctx.Compile("matchN(1, [int, string, bytes])");
 
         // The incomplete kind should be Top (representing the constraint)
         Assert.Equal(Kind.Top, matchN.IncompleteKind());
@@ -136,13 +128,9 @@ public sealed class MatchNExpressionTests
         using var ctx = new CueContext();
         
         // matchN(1, [A, B, C]) should be equivalent to A | B | C
-        using var matchNForm = ctx.Compile("""
-            value: matchN(1, [int, string, bool])
-            """);
+        using var matchNForm = ctx.Compile("value: matchN(1, [int, string, bool])");
         
-        using var disjunctionForm = ctx.Compile("""
-            value: (int | string | bool)
-            """);
+        using var disjunctionForm = ctx.Compile("value: (int | string | bool)");
 
         // Both should have Top as incomplete kind
         Assert.Equal(Kind.Top, matchNForm.Lookup("value").IncompleteKind());

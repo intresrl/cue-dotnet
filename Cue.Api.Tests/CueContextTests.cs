@@ -29,7 +29,7 @@ public sealed class CueContextTests
             new BuildOption.InferBuiltins(true));
 
         using var fromBytes = ctx.Compile(
-            "int"u8.ToArray(),
+            [.. "int"u8],
             new BuildOption.FileName("empty.cue"),
             new BuildOption.ImportPath("example.com/foo/bar"));
 
@@ -56,7 +56,7 @@ public sealed class CueContextTests
         using var boolValue = ctx.ToValue(true);
         using var doubleValue = ctx.ToValue(0.123);
         using var stringValue = ctx.ToValue("hello");
-        using var bytesValue = ctx.ToValue(new byte[] { 1, 2, 3, 4, 5 });
+        using var bytesValue = ctx.ToValue([1, 2, 3, 4, 5]);
         using var unsignedValue = ctx.ToValueAsUnsigned(0xcafebabe);
 
         Assert.Equal(-1, longValue.GetLong());

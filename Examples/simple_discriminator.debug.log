@@ -1,0 +1,10 @@
+=== Collected Structs ===
+ -> Root
+#DateTimeMessage -> DateTimeMessage
+#TextMessage -> TextMessage
+#Message -> Message
+
+=== Collected Discriminated Unions ===
+#Message.message -> BaseClass: MessageBase, Discriminator: type
+  - #DateTimeMessage
+  - #TextMessage

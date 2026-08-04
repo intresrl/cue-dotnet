@@ -153,7 +153,7 @@ public sealed unsafe class Value : IDisposable
 
     /// <summary>
     /// Looks up the element constraint value defined by the any-index (<c>[int]</c>) pattern selector.
-    /// Useful for retrieving the element type of a list constraint.
+    /// Useful for retrieving the element type of list constraint.
     /// </summary>
     public Value LookupAnyIndex()
     {
@@ -165,7 +165,7 @@ public sealed unsafe class Value : IDisposable
 
     /// <summary>
     /// Looks up the element constraint value defined by the any-string (<c>[string]</c>) pattern selector.
-    /// Useful for retrieving the value type of a map/struct constraint keyed by arbitrary strings.
+    /// Useful for retrieving the value type of map/struct constraint keyed by arbitrary strings.
     /// </summary>
     public Value LookupAnyString()
     {
@@ -179,12 +179,7 @@ public sealed unsafe class Value : IDisposable
     {
         byte hasDefault = 0;
         var value = NativeMethods.cue_default(Handle, &hasDefault);
-        if (hasDefault == 1)
-        {
-            return new Value(Context, value);
-        }
-
-        return null;
+        return hasDefault == 1 ? new Value(Context, value) : null;
     }
 
     public long GetLong()

@@ -12,12 +12,12 @@
     },
     "simple_debug": {
       "commandName": "Project",
-      "commandLineArgs": "Examples/simple.cue Examples/simple.cs --debug Examples/debug_simple.txt",
+      "commandLineArgs": "Examples/simple.cue Examples/simple.cs --debug Examples/simple.debug.log",
       "workingDirectory": "../"
     },
     "simple_discriminator_debug": {
       "commandName": "Project",
-      "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs --debug Examples/debug_simple_discriminator.txt",
+      "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs --debug Examples/simple_discriminator.debug.log",
       "workingDirectory": "../"
     }
   }
