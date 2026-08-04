@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "simple": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/simple.cue Examples/simple.cs",
+      "workingDirectory": "../"
+    },
+    "simple_discriminator": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs",
+      "workingDirectory": "../"
+    }
+  }
+}
