@@ -1,4 +1,3 @@
-using Cuelang.Cue;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,19 +7,24 @@ namespace Cue.Generator;
 public sealed class RoslynGenerator
 {
     private static int _anonymousIndex = 1;
-    
+
+    // map from disjunction path -> (base class name, discriminator field, branch paths)
+    private readonly Dictionary<string, (string BaseClassName, string DiscriminatorField, List<string> BranchPaths)>
+        _discriminatedUnions = new();
+
     // map from struct path -> generated type name
     private readonly Dictionary<string, string> _typeNames = new();
-    
-    // map from disjunction path -> (base class name, discriminator field, branch paths)
-    private readonly Dictionary<string, (string BaseClassName, string DiscriminatorField, List<string> BranchPaths)> 
-        _discriminatedUnions = new();
+
+    // Temporary storage during code generation
+    private CueValueNode? _currentRoot;
 
     public string GenerateCode(CueValueNode root, TextWriter? debugWriter = null)
     {
+        _currentRoot = root;
+
         // collect struct nodes and assign type names
         CollectStructs(root);
-        
+
         // Debug: Check what we're collecting (if debug output is enabled)
         if (debugWriter != null)
         {
@@ -29,12 +33,21 @@ public sealed class RoslynGenerator
             {
                 debugWriter.WriteLine($"{path} -> {typeName}");
             }
+
             debugWriter.WriteLine();
         }
-        
-        // collect discriminated unions
-        CollectDiscriminatedUnions(root);
-        
+
+        // collect discriminated unions and map inline branches to named structs
+        CollectDiscriminatedUnions(root, new HashSet<string>(StringComparer.Ordinal), debugWriter);
+
+        // Remove inline discriminated union definitions from the type names
+        // They should not generate their own classes
+        var inlineUnionPaths = _discriminatedUnions.Keys.ToList();
+        foreach (var unionPath in inlineUnionPaths)
+        {
+            _typeNames.Remove(unionPath);
+        }
+
         if (debugWriter != null)
         {
             debugWriter.WriteLine("=== Collected Discriminated Unions ===");
@@ -46,9 +59,42 @@ public sealed class RoslynGenerator
                     debugWriter.WriteLine($"  - {branch}");
                 }
             }
+
+            debugWriter.WriteLine();
+            debugWriter.WriteLine("=== Disjunction Details ===");
+            var result = new List<(string, CueDisjunction)>();
+            FindAllDisjunctions(root, result);
+            var disjunctions = (List<(string Path, CueDisjunction Disjunction)>)result;
+            foreach (var (path, disjunction) in disjunctions)
+            {
+                debugWriter.WriteLine($"Disjunction at {path}:");
+                debugWriter.WriteLine($"  IsDiscriminated: {disjunction.IsDiscriminated}");
+                debugWriter.WriteLine($"  DiscriminatorField: {disjunction.DiscriminatorField}");
+                debugWriter.WriteLine($"  BranchPaths ({disjunction.BranchPaths.Count}):");
+                foreach (var (key, value) in disjunction.BranchPaths)
+                {
+                    debugWriter.WriteLine($"    {key} -> {value}");
+                }
+
+                debugWriter.WriteLine($"  Branches ({disjunction.Branches.Count}):");
+                foreach (var branch in disjunction.Branches)
+                {
+                    debugWriter.WriteLine($"    {branch.GetType().Name} at {branch.Path}");
+                    if (branch is not CueStructValue sv)
+                    {
+                        continue;
+                    }
+
+                    foreach (var field in sv.Fields)
+                    {
+                        debugWriter.WriteLine($"      - {field.Name}: {field.Value.GetType().Name}");
+                    }
+                }
+            }
+
             debugWriter.Flush();
         }
-        
+
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddUsings(
                 SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")),
@@ -67,8 +113,11 @@ public sealed class RoslynGenerator
         // create classes for each struct (keep deterministic order)
         foreach (var (path, typeName) in _typeNames.OrderBy(kv => kv.Value))
         {
-            if (!TryFindStruct(root, path, out var structNode)) continue;
-            
+            if (!TryFindStruct(root, path, out var structNode))
+            {
+                continue;
+            }
+
             // Check if this struct is part of a discriminated union
             var baseClass = FindDiscriminatorBaseClass(path);
             var classDecl = CreateClassDeclaration(typeName, structNode!, baseClass);
@@ -91,12 +140,18 @@ public sealed class RoslynGenerator
             case CueStructValue s:
             {
                 // Avoid revisiting the same struct path to prevent infinite recursion on self-references
-                if (!visitedStructPaths.Add(s.Path)) return;
+                if (!visitedStructPaths.Add(s.Path))
+                {
+                    return;
+                }
 
                 var typeName = GenerateTypeName(s.Path);
                 _typeNames.TryAdd(s.Path, typeName);
 
-                foreach (var f in s.Fields) CollectStructs(f.Value, visitedStructPaths);
+                foreach (var f in s.Fields)
+                {
+                    CollectStructs(f.Value, visitedStructPaths);
+                }
 
                 break;
             }
@@ -111,17 +166,13 @@ public sealed class RoslynGenerator
                 {
                     CollectStructs(branch, visitedStructPaths);
                 }
+
                 break;
             }
         }
     }
 
-    private void CollectDiscriminatedUnions(CueValueNode node)
-    {
-        CollectDiscriminatedUnions(node, new HashSet<string>(StringComparer.Ordinal));
-    }
-
-    private void CollectDiscriminatedUnions(CueValueNode node, HashSet<string> visited)
+    private void CollectDiscriminatedUnions(CueValueNode node, HashSet<string> visited, TextWriter? debugWriter)
     {
         while (true)
         {
@@ -133,15 +184,16 @@ public sealed class RoslynGenerator
                 case CueDisjunction { IsDiscriminated: true } disjunction:
                 {
                     var baseClassName = GenerateBaseClassName(disjunction.Path);
-                    var branchPaths = disjunction.Branches.OfType<CueStructValue>()
-                        .Select(b => b.Path)
-                        .ToList();
 
-                    _discriminatedUnions[disjunction.Path] = (baseClassName, disjunction.DiscriminatorField!, branchPaths);
+                    // Map inline branches to named structs
+                    var branchPaths = MapBranchesToNamedStructs(disjunction, debugWriter);
+
+                    _discriminatedUnions[disjunction.Path] =
+                        (baseClassName, disjunction.DiscriminatorField!, branchPaths);
 
                     foreach (var branch in disjunction.Branches)
                     {
-                        CollectDiscriminatedUnions(branch, visited);
+                        CollectDiscriminatedUnions(branch, visited, debugWriter);
                     }
 
                     break;
@@ -152,7 +204,7 @@ public sealed class RoslynGenerator
                 {
                     foreach (var field in structValue.Fields)
                     {
-                        CollectDiscriminatedUnions(field.Value, visited);
+                        CollectDiscriminatedUnions(field.Value, visited, debugWriter);
                     }
 
                     break;
@@ -167,7 +219,7 @@ public sealed class RoslynGenerator
                 {
                     foreach (var branch in regularDisjunction.Branches)
                     {
-                        CollectDiscriminatedUnions(branch, visited);
+                        CollectDiscriminatedUnions(branch, visited, debugWriter);
                     }
 
                     break;
@@ -178,15 +230,119 @@ public sealed class RoslynGenerator
         }
     }
 
+    private List<string> MapBranchesToNamedStructs(CueDisjunction disjunction, TextWriter? debugWriter)
+    {
+        var branchPaths = new List<string>();
+
+        if (debugWriter != null)
+        {
+            debugWriter.WriteLine($"  MapBranchesToNamedStructs for {disjunction.Path}:");
+            debugWriter.WriteLine($"    DiscriminatorField: {disjunction.DiscriminatorField}");
+            debugWriter.WriteLine($"    Branches count: {disjunction.Branches.Count}");
+        }
+
+        // Get all inline struct branches
+        var inlineStructBranches = disjunction.Branches.OfType<CueStructValue>().ToList();
+
+        debugWriter?.WriteLine($"    Inline struct branches: {inlineStructBranches.Count}");
+
+        // Match each inline struct to a named struct
+        foreach (var inlineStruct in inlineStructBranches)
+        {
+            var matchedPath = FindMatchingNamedStruct(inlineStruct);
+            if (matchedPath != null)
+            {
+                if (debugWriter != null)
+                {
+                    var discriminatorField = inlineStruct.Fields
+                        .FirstOrDefault(f => f.Name == disjunction.DiscriminatorField);
+                    var discriminatorValue = (discriminatorField?.Value as CueStringValue)?.ConcreteValue ?? "unknown";
+                    debugWriter.WriteLine(
+                        $"  Mapped inline {inlineStruct.Path} ({discriminatorValue}) to {matchedPath}");
+                }
+
+                branchPaths.Add(matchedPath);
+            }
+            else
+            {
+                debugWriter?.WriteLine($"  Could not map inline {inlineStruct.Path} - using as-is");
+
+                branchPaths.Add(inlineStruct.Path);
+            }
+        }
+
+        debugWriter?.WriteLine($"    Total mapped branches: {branchPaths.Count}");
+
+        return branchPaths;
+    }
+
+    private string? FindMatchingNamedStruct(CueStructValue inlineStruct)
+    {
+        if (_currentRoot == null)
+        {
+            return null;
+        }
+
+        // Find a named struct that matches this inline struct by comparing fields
+        foreach (var (namedPath, _) in _typeNames)
+        {
+            if (!TryFindStruct(_currentRoot, namedPath, out var namedStruct) || namedStruct == null)
+            {
+                continue;
+            }
+
+            if (StructsAreIdentical(inlineStruct, namedStruct))
+            {
+                return namedPath;
+            }
+        }
+
+        return null;
+    }
+
+    private bool StructsAreIdentical(CueStructValue struct1, CueStructValue struct2)
+    {
+        // Two structs are identical if they have the same fields with the same types
+        if (struct1.Fields.Count != struct2.Fields.Count)
+        {
+            return false;
+        }
+
+        var fieldsDict2 = struct2.Fields.ToDictionary(f => f.Name, f => f.Value.GetType().Name);
+
+        foreach (var field in struct1.Fields)
+        {
+            if (!fieldsDict2.TryGetValue(field.Name, out var typeName2))
+            {
+                return false;
+            }
+
+            if (field.Value.GetType().Name != typeName2)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private string? FindDiscriminatorBaseClass(string structPath)
     {
-        foreach (var (_, (baseClassName, _, branchPaths)) in _discriminatedUnions)
+        // Check if this path is a discriminated union itself
+        if (_discriminatedUnions.TryGetValue(structPath, out var unionInfo))
+        {
+            return unionInfo.BaseClassName;
+        }
+
+        // Also check if this path is a branch of any discriminated union (for backward compatibility)
+        foreach (var (_, (baseClassName2, _, branchPaths)) in _discriminatedUnions)
         {
             if (branchPaths.Contains(structPath))
             {
-                return baseClassName;
+                return baseClassName2;
             }
         }
+
         return null;
     }
 
@@ -201,14 +357,22 @@ public sealed class RoslynGenerator
             case CueStructValue sv:
             {
                 foreach (var f in sv.Fields)
+                {
                     if (TryFindStruct(f.Value, path, out result))
+                    {
                         return true;
+                    }
+                }
+
                 break;
             }
             case CueListValue lv:
             {
                 if (TryFindStruct(lv.ElementType, path, out result))
+                {
                     return true;
+                }
+
                 break;
             }
             case CueDisjunction du:
@@ -216,8 +380,11 @@ public sealed class RoslynGenerator
                 foreach (var branch in du.Branches)
                 {
                     if (TryFindStruct(branch, path, out result))
+                    {
                         return true;
+                    }
                 }
+
                 break;
             }
         }
@@ -227,12 +394,20 @@ public sealed class RoslynGenerator
 
     private static string GenerateTypeName(string path)
     {
-        if (string.IsNullOrEmpty(path)) return "Root";
+        if (string.IsNullOrEmpty(path))
+        {
+            return "Root";
+        }
+
         // pick last meaningful segment
         var seg = path.Split('.', StringSplitOptions.RemoveEmptyEntries).Last();
         // remove indexers like scores[1]
         var idx = seg.IndexOf('[');
-        if (idx >= 0) seg = seg[..idx];
+        if (idx >= 0)
+        {
+            seg = seg[..idx];
+        }
+
         var typeName = ToPascalCase(SanitizeIdentifier(seg));
         return typeName;
     }
@@ -246,11 +421,19 @@ public sealed class RoslynGenerator
 
     private static string SanitizeIdentifier(string s)
     {
-        if (string.IsNullOrEmpty(s)) return "Anonymous" + _anonymousIndex++;
+        if (string.IsNullOrEmpty(s))
+        {
+            return "Anonymous" + _anonymousIndex++;
+        }
+
         // remove invalid chars
         var chars = s.Where(ch => char.IsLetterOrDigit(ch) || ch == '_').ToArray();
         var res = new string(chars);
-        if (char.IsDigit(res.FirstOrDefault())) res = "_" + res;
+        if (char.IsDigit(res.FirstOrDefault()))
+        {
+            res = "_" + res;
+        }
+
         return res;
     }
 
@@ -270,16 +453,20 @@ public sealed class RoslynGenerator
             .WithMembers(SyntaxFactory.List<MemberDeclarationSyntax>());
     }
 
-    private ClassDeclarationSyntax CreateClassDeclaration(string typeName, CueStructValue node, string? baseClass = null)
+    private ClassDeclarationSyntax CreateClassDeclaration(string typeName, CueStructValue node,
+        string? baseClass = null)
     {
         var classDecl = SyntaxFactory.ClassDeclaration(typeName)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
         // If this class extends a base class, add it
         if (string.IsNullOrEmpty(baseClass))
+        {
             return classDecl.AddMembers([
                 .. node.Fields.Select(DeclareProperty)
             ]);
+        }
+
         var baseTypeName = SyntaxFactory.ParseTypeName(baseClass);
         var baseTypeList = SyntaxFactory.BaseList(
             SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(
@@ -322,7 +509,8 @@ public sealed class RoslynGenerator
             CueNumberValue => "double",
             // TODO: Fix serialization of CueNullValue - currently serialized as object type
             CueNullValue => "object",
-            CueBottomValue => throw new InvalidOperationException($"CueBottomValue at {node.Path} cannot be serialized"),
+            CueBottomValue =>
+                throw new InvalidOperationException($"CueBottomValue at {node.Path} cannot be serialized"),
             _ => "object"
         };
     }
@@ -331,5 +519,35 @@ public sealed class RoslynGenerator
     {
         var elemType = GetTypeName(list.ElementType);
         return $"List<{elemType}>";
+    }
+
+    private static void FindAllDisjunctions(CueValueNode node, List<(string Path, CueDisjunction Disjunction)> result)
+    {
+        while (true)
+        {
+            switch (node)
+            {
+                case CueDisjunction d:
+                    result.Add((d.Path, d));
+                    foreach (var branch in d.Branches)
+                    {
+                        FindAllDisjunctions(branch, result);
+                    }
+
+                    break;
+                case CueStructValue s:
+                    foreach (var f in s.Fields)
+                    {
+                        FindAllDisjunctions(f.Value, result);
+                    }
+
+                    break;
+                case CueListValue l:
+                    node = l.ElementType;
+                    continue;
+            }
+
+            break;
+        }
     }
 }

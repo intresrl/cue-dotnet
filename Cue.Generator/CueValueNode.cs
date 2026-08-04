@@ -1,5 +1,3 @@
-using Cuelang.Cue;
-
 namespace Cue.Generator;
 
 public abstract record CueValueNode(string Path)
@@ -17,32 +15,32 @@ public sealed record CueNullValue(string Path) : CueValueNode(Path)
     public override string ToString() => $"Null at {Path}";
 }
 
-public sealed record CueBoolValue(string Path) : CueValueNode(Path)
+public sealed record CueBoolValue(string Path, bool? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Bool at {Path}";
 }
 
-public sealed record CueIntValue(string Path) : CueValueNode(Path)
+public sealed record CueIntValue(string Path, long? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Int at {Path}";
 }
 
-public sealed record CueFloatValue(string Path) : CueValueNode(Path)
+public sealed record CueFloatValue(string Path, double? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Float at {Path}";
 }
 
-public sealed record CueStringValue(string Path) : CueValueNode(Path)
+public sealed record CueStringValue(string Path, string? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"String at {Path}";
 }
 
-public sealed record CueBytesValue(string Path) : CueValueNode(Path)
+public sealed record CueBytesValue(string Path, byte[]? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Bytes at {Path}";
 }
 
-public sealed record CueNumberValue(string Path) : CueValueNode(Path)
+public sealed record CueNumberValue(string Path, double? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Number at {Path}";
 }
@@ -63,7 +61,8 @@ public sealed record CueStructField(string Name, CueValueNode Value);
 public sealed record CueDisjunction(
     string Path,
     IReadOnlyList<CueValueNode> Branches,
-    string? DiscriminatorField)
+    string? DiscriminatorField,
+    Dictionary<string, string> BranchPaths)
     : CueValueNode(Path)
 {
     public bool IsDiscriminated => DiscriminatorField != null;
@@ -84,4 +83,3 @@ public sealed record CueListValue(string Path, CueValueNode ElementType)
         return $"List<{elementTypeName}> at {Path}";
     }
 }
-

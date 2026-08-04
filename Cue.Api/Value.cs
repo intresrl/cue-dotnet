@@ -14,7 +14,8 @@ public sealed unsafe class Value : IDisposable
         [NativeMethods.CUE_KIND_STRUCT] = Cue.Kind.Struct,
         [NativeMethods.CUE_KIND_LIST] = Cue.Kind.List,
         [NativeMethods.CUE_KIND_NUMBER] = Cue.Kind.Number,
-        [NativeMethods.CUE_KIND_TOP] = Cue.Kind.Top
+        [NativeMethods.CUE_KIND_TOP] = Cue.Kind.Top,
+        [NativeMethods.CUE_KIND_UNKNOWN] = Cue.Kind.Unknown
     };
 
     private readonly CueResource _resource;
@@ -69,6 +70,11 @@ public sealed unsafe class Value : IDisposable
     internal nuint Handle => _resource.Handle;
 
     public CueContext Context { get; }
+
+    public void Dispose()
+    {
+        _resource.Dispose();
+    }
 
     public Result<Value, string> Error()
     {
@@ -152,8 +158,8 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// Looks up the element constraint value defined by the any-index (<c>[int]</c>) pattern selector.
-    /// Useful for retrieving the element type of list constraint.
+    ///     Looks up the element constraint value defined by the any-index (<c>[int]</c>) pattern selector.
+    ///     Useful for retrieving the element type of list constraint.
     /// </summary>
     public Value LookupAnyIndex()
     {
@@ -164,8 +170,8 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// Looks up the element constraint value defined by the any-string (<c>[string]</c>) pattern selector.
-    /// Useful for retrieving the value type of map/struct constraint keyed by arbitrary strings.
+    ///     Looks up the element constraint value defined by the any-string (<c>[string]</c>) pattern selector.
+    ///     Useful for retrieving the value type of map/struct constraint keyed by arbitrary strings.
     /// </summary>
     public Value LookupAnyString()
     {
@@ -241,7 +247,7 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// May be called only if Kind is Struct
+    ///     May be called only if Kind is Struct
     /// </summary>
     /// <returns>The list of properties on this object as Value objects</returns>
     public Value[] Fields(bool definitions = false)
@@ -252,7 +258,7 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// May be called only if Kind is List
+    ///     May be called only if Kind is List
     /// </summary>
     /// <returns>The elements of the list as Value objects</returns>
     public Value[] List()
@@ -263,11 +269,10 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// Returns all disjunctions for this value, or an empty array if the value contains no disjunctions.
-    /// 
-    /// For a value with a disjunction like `int | string | bool`, Disjunctions will
-    /// return an array containing three separate Value objects, one for each option.
-    /// For a non-disjunction value, it returns an empty array.
+    ///     Returns all disjunctions for this value, or an empty array if the value contains no disjunctions.
+    ///     For a value with a disjunction like `int | string | bool`, Disjunctions will
+    ///     return an array containing three separate Value objects, one for each option.
+    ///     For a non-disjunction value, it returns an empty array.
     /// </summary>
     /// <returns>An array of Value objects representing each disjunction option</returns>
     public Value[] Disjunctions()
@@ -278,7 +283,7 @@ public sealed unsafe class Value : IDisposable
     }
 
     /// <summary>
-    /// String representation of the path of this property in the payload
+    ///     String representation of the path of this property in the payload
     /// </summary>
     public string Path()
     {
@@ -291,38 +296,21 @@ public sealed unsafe class Value : IDisposable
         var attrs = NativeMethods.cue_attrs(Handle, (int)kind, &len);
 
         var count = checked((int)len);
-        if (count == 0)
-        {
-            return [];
-        }
+        if (count == 0) return [];
 
         var values = new Attribute[count];
-        for (var i = 0; i < count; i++)
-        {
-            values[i] = new Attribute(new CueResource(attrs[i]));
-        }
+        for (var i = 0; i < count; i++) values[i] = new Attribute(new CueResource(attrs[i]));
 
         return values;
     }
 
-    public void Dispose()
-    {
-        _resource.Dispose();
-    }
-
     private Value[] FromNativeValueArray(nuint* handles, nuint length)
     {
-        if (handles == null || length == 0)
-        {
-            return [];
-        }
+        if (handles == null || length == 0) return [];
 
         var count = checked((int)length);
         var values = new Value[count];
-        for (var i = 0; i < count; i++)
-        {
-            values[i] = new Value(Context, handles[i]);
-        }
+        for (var i = 0; i < count; i++) values[i] = new Value(Context, handles[i]);
 
         return values;
     }

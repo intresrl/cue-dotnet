@@ -13,7 +13,7 @@ public class DateTimeMessage : MessageBase
 
 public class Message
 {
-    public object Message { get; init; }
+    public MessageBase Message { get; init; }
 }
 
 public class Root

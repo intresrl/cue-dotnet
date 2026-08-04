@@ -27,10 +27,10 @@
 
   <ItemGroup>
     <None Include="..\libcue.so" Condition="'$(OS)' != 'Windows_NT'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\cue.dll" Condition="'$(OS)' == 'Windows_NT'">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

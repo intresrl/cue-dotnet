@@ -7,11 +7,11 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #DateTimeFormat: {type: "datetime", format: string}
-            #TextFormat: {type: "text", maxLength: int}
-            
-            valueFormat: #DateTimeFormat | #TextFormat
-            """);
+                                      #DateTimeFormat: {type: "datetime", format: string}
+                                      #TextFormat: {type: "text", maxLength: int}
+
+                                      valueFormat: #DateTimeFormat | #TextFormat
+                                      """);
 
         using var valueFormatField = value.Lookup("valueFormat");
         var node = valueFormatField.ToCueValueNode();
@@ -19,7 +19,7 @@ public sealed class DiscriminatedUnionTests
         Assert.NotNull(node);
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal("type", discriminator.DiscriminatorField);
         Assert.Equal(2, discriminator.Branches.Count);
@@ -30,18 +30,18 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #Option1: {type: "opt1", value: string}
-            #Option2: {type: "opt2", count: int}
-            
-            choice: #Option1 | #Option2
-            """);
+                                      #Option1: {type: "opt1", value: string}
+                                      #Option2: {type: "opt2", count: int}
+
+                                      choice: #Option1 | #Option2
+                                      """);
 
         using var choiceField = value.Lookup("choice");
         var node = choiceField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.All(discriminator.Branches, branch => Assert.IsType<CueStructValue>(branch));
     }
 
@@ -50,19 +50,19 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #TypeA: {type: "a", fieldA: string}
-            #TypeB: {type: "b", fieldB: int}
-            #TypeC: {type: "c", fieldC: bool}
-            
-            item: #TypeA | #TypeB | #TypeC
-            """);
+                                      #TypeA: {type: "a", fieldA: string}
+                                      #TypeB: {type: "b", fieldB: int}
+                                      #TypeC: {type: "c", fieldC: bool}
+
+                                      item: #TypeA | #TypeB | #TypeC
+                                      """);
 
         using var itemField = value.Lookup("item");
         var node = itemField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal(3, discriminator.Branches.Count);
     }
@@ -72,18 +72,18 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #TypeA: {kind: "a", data: string}
-            #TypeB: {kind: "b", data: int}
-            
-            message: #TypeA | #TypeB
-            """);
+                                      #TypeA: {kind: "a", data: string}
+                                      #TypeB: {kind: "b", data: int}
+
+                                      message: #TypeA | #TypeB
+                                      """);
 
         using var messageField = value.Lookup("message");
         var node = messageField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal("kind", discriminator.DiscriminatorField);
     }
@@ -93,18 +93,18 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #VarA: {variant: "a", value: string}
-            #VarB: {variant: "b", value: int}
-            
-            result: #VarA | #VarB
-            """);
+                                      #VarA: {variant: "a", value: string}
+                                      #VarB: {variant: "b", value: int}
+
+                                      result: #VarA | #VarB
+                                      """);
 
         using var resultField = value.Lookup("result");
         var node = resultField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal("variant", discriminator.DiscriminatorField);
     }
@@ -130,11 +130,11 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #StructA: {name: string}
-            #StructB: {count: int}
-            
-            value: #StructA | #StructB
-            """);
+                                      #StructA: {name: string}
+                                      #StructB: {count: int}
+
+                                      value: #StructA | #StructB
+                                      """);
 
         using var valueField = value.Lookup("value");
         var node = valueField.ToCueValueNode();
@@ -150,13 +150,13 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #TypeA: {type: "a", data: string}
-            #TypeB: {type: "b", data: int}
-            
-            config: {
-                item: #TypeA | #TypeB
-            }
-            """);
+                                      #TypeA: {type: "a", data: string}
+                                      #TypeB: {type: "b", data: int}
+
+                                      config: {
+                                          item: #TypeA | #TypeB
+                                      }
+                                      """);
 
         using var config = value.Lookup("config");
         using var itemField = config.Lookup("item");
@@ -164,7 +164,7 @@ public sealed class DiscriminatedUnionTests
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.Equal("config.item", discriminator.Path);
     }
 
@@ -173,25 +173,25 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #Status1: {
-                type: "active"
-                activeTime: string
-                description: string
-            }
-            #Status2: {
-                type: "inactive"
-                inactiveReason: string
-            }
-            
-            status: #Status1 | #Status2
-            """);
+                                      #Status1: {
+                                          type: "active"
+                                          activeTime: string
+                                          description: string
+                                      }
+                                      #Status2: {
+                                          type: "inactive"
+                                          inactiveReason: string
+                                      }
+
+                                      status: #Status1 | #Status2
+                                      """);
 
         using var statusField = value.Lookup("status");
         var node = statusField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.All(discriminator.Branches, branch =>
         {
             var structBranch = Assert.IsType<CueStructValue>(branch);
@@ -205,18 +205,18 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #FormatA: {type: "date", pattern: string}
-            #FormatB: {type: "time", pattern: string}
-            
-            format: #FormatA | #FormatB
-            """);
+                                      #FormatA: {type: "date", pattern: string}
+                                      #FormatB: {type: "time", pattern: string}
+
+                                      format: #FormatA | #FormatB
+                                      """);
 
         using var formatField = value.Lookup("format");
         var node = formatField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         // Extract discriminator values from each branch
         var discriminatorValues = new HashSet<string>();
         foreach (var branch in discriminator.Branches)
@@ -226,7 +226,7 @@ public sealed class DiscriminatedUnionTests
             Assert.True(typeField.Value is CueStringValue);
             discriminatorValues.Add(typeField.Value.Path);
         }
-        
+
         // Should have unique values for each branch
         Assert.Equal(discriminator.Branches.Count, discriminatorValues.Count);
     }
@@ -236,14 +236,14 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #FormatA: {type: "a", value: string}
-            #FormatB: {type: "b", value: int}
-            
-            config: {
-                name: string
-                format: #FormatA | #FormatB
-            }
-            """);
+                                      #FormatA: {type: "a", value: string}
+                                      #FormatB: {type: "b", value: int}
+
+                                      config: {
+                                          name: string
+                                          format: #FormatA | #FormatB
+                                      }
+                                      """);
 
         var node = (CueStructValue)value.ToCueValueNode();
         var configField = node.Fields.First(f => f.Name == "config");
@@ -260,11 +260,11 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #ItemA: {type: "a", data: string}
-            #ItemB: {type: "b", data: int}
-            
-            items: [#ItemA | #ItemB]
-            """);
+                                      #ItemA: {type: "a", data: string}
+                                      #ItemB: {type: "b", data: int}
+
+                                      items: [#ItemA | #ItemB]
+                                      """);
 
         var node = (CueStructValue)value.ToCueValueNode();
         var itemsField = node.Fields.First(f => f.Name == "items");
@@ -280,34 +280,34 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #DateTimeField: {
-                type: "datetime"
-                format: string
-                timezone?: string
-            }
-            #TextLineField: {
-                type: "text"
-                maxLength: int
-                pattern?: string
-            }
-            #InitialsField: {
-                type: "initials"
-                maxInitials: int
-            }
-            
-            field: #DateTimeField | #TextLineField | #InitialsField
-            """);
+                                      #DateTimeField: {
+                                          type: "datetime"
+                                          format: string
+                                          timezone?: string
+                                      }
+                                      #TextLineField: {
+                                          type: "text"
+                                          maxLength: int
+                                          pattern?: string
+                                      }
+                                      #InitialsField: {
+                                          type: "initials"
+                                          maxInitials: int
+                                      }
+
+                                      field: #DateTimeField | #TextLineField | #InitialsField
+                                      """);
 
         using var fieldProp = value.Lookup("field");
         var node = fieldProp.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal(3, discriminator.Branches.Count);
         Assert.Equal("type", discriminator.DiscriminatorField);
-        
+
         var types = new HashSet<string>();
         foreach (var branch in discriminator.Branches)
         {
@@ -315,6 +315,7 @@ public sealed class DiscriminatedUnionTests
             var typeField = structBranch.Fields.First(f => f.Name == "type");
             types.Add(typeField.Value.Path);
         }
+
         Assert.Equal(3, types.Count);
     }
 
@@ -324,18 +325,18 @@ public sealed class DiscriminatedUnionTests
         // If multiple fields could be discriminators, 'type' should be preferred
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #OptionA: {type: "a", kind: "kindA"}
-            #OptionB: {type: "b", kind: "kindB"}
-            
-            choice: #OptionA | #OptionB
-            """);
+                                      #OptionA: {type: "a", kind: "kindA"}
+                                      #OptionB: {type: "b", kind: "kindB"}
+
+                                      choice: #OptionA | #OptionB
+                                      """);
 
         using var choiceField = value.Lookup("choice");
         var node = choiceField.ToCueValueNode();
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         // Should prefer 'type' over 'kind'
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal("type", discriminator.DiscriminatorField);
@@ -346,27 +347,27 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #DateTimeDefinition: {
-                type: "datetime"
-                format: string
-            }
-            #InitialsDefinition: {
-                type: "initials"
-                maxInitials: int
-            }
-            #TextDefinition: {
-                type: "text"
-                maxLength?: int
-            }
-            
-            #AnnotationElement: {
-                position: {x: int, y: int}
-                size: {width: int, height: int}
-                valueFormat: #DateTimeDefinition | #InitialsDefinition | #TextDefinition
-            }
-            
-            element: #AnnotationElement
-            """);
+                                      #DateTimeDefinition: {
+                                          type: "datetime"
+                                          format: string
+                                      }
+                                      #InitialsDefinition: {
+                                          type: "initials"
+                                          maxInitials: int
+                                      }
+                                      #TextDefinition: {
+                                          type: "text"
+                                          maxLength?: int
+                                      }
+
+                                      #AnnotationElement: {
+                                          position: {x: int, y: int}
+                                          size: {width: int, height: int}
+                                          valueFormat: #DateTimeDefinition | #InitialsDefinition | #TextDefinition
+                                      }
+
+                                      element: #AnnotationElement
+                                      """);
 
         var node = (CueStructValue)value.ToCueValueNode();
         var elementField = node.Fields.First(f => f.Name == "element");
@@ -375,7 +376,7 @@ public sealed class DiscriminatedUnionTests
 
         Assert.IsType<CueDisjunction>(valueFormatField.Value);
         var discriminator = (CueDisjunction)valueFormatField.Value;
-        
+
         Assert.True(discriminator.IsDiscriminated);
         Assert.Equal(3, discriminator.Branches.Count);
         Assert.Equal("type", discriminator.DiscriminatorField);
@@ -386,13 +387,13 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            #TypeA: {type: "a"}
-            #TypeB: {type: "b"}
-            
-            config: {
-                variant: #TypeA | #TypeB
-            }
-            """);
+                                      #TypeA: {type: "a"}
+                                      #TypeB: {type: "b"}
+
+                                      config: {
+                                          variant: #TypeA | #TypeB
+                                      }
+                                      """);
 
         using var config = value.Lookup("config");
         using var variantField = config.Lookup("variant");
@@ -400,7 +401,7 @@ public sealed class DiscriminatedUnionTests
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
-        
+
         Assert.Contains("variant", discriminator.Path);
     }
 
@@ -409,34 +410,142 @@ public sealed class DiscriminatedUnionTests
     {
         using var ctx = new CueContext();
         using var value1 = ctx.Compile("""
-            #TypeA: {type: "a", data: string}
-            #TypeB: {type: "b", data: int}
-            
-            item: #TypeA | #TypeB
-            """);
+                                       #TypeA: {type: "a", data: string}
+                                       #TypeB: {type: "b", data: int}
+
+                                       item: #TypeA | #TypeB
+                                       """);
 
         using var itemField1 = value1.Lookup("item");
         var node1 = itemField1.ToCueValueNode();
-        
+
         Assert.IsType<CueDisjunction>(node1);
-        
+
         // Convert again with a fresh context
         using var ctx2 = new CueContext();
         using var value2 = ctx2.Compile("""
-            #TypeA: {type: "a", data: string}
-            #TypeB: {type: "b", data: int}
-            
-            item: #TypeA | #TypeB
-            """);
+                                        #TypeA: {type: "a", data: string}
+                                        #TypeB: {type: "b", data: int}
+
+                                        item: #TypeA | #TypeB
+                                        """);
 
         using var itemField2 = value2.Lookup("item");
         var node2 = itemField2.ToCueValueNode();
-        
+
         Assert.IsType<CueDisjunction>(node2);
         var d1 = (CueDisjunction)node1;
         var d2 = (CueDisjunction)node2;
-        
+
         Assert.Equal(d1.DiscriminatorField, d2.DiscriminatorField);
         Assert.Equal(d1.Branches.Count, d2.Branches.Count);
+    }
+
+    [Fact]
+    public void DiscriminatorRequiresDistinctConcreteValues()
+    {
+        // A field can only be a discriminator if all branches have distinct concrete values
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+                                      #TypeA: {type: "a", value: string}
+                                      #TypeB: {type: "b", value: int}
+
+                                      item: #TypeA | #TypeB
+                                      """);
+
+        using var itemField = value.Lookup("item");
+        var node = itemField.ToCueValueNode();
+
+        Assert.IsType<CueDisjunction>(node);
+        var discriminator = (CueDisjunction)node;
+
+        Assert.True(discriminator.IsDiscriminated);
+        Assert.Equal("type", discriminator.DiscriminatorField);
+
+        // Verify that each branch has a distinct concrete value
+        var concreteValues = new HashSet<string>();
+        foreach (var branch in discriminator.Branches)
+        {
+            var structBranch = Assert.IsType<CueStructValue>(branch);
+            var typeField = structBranch.Fields.First(f => f.Name == "type");
+            var stringValue = Assert.IsType<CueStringValue>(typeField.Value);
+            Assert.NotNull(stringValue.ConcreteValue);
+            concreteValues.Add(stringValue.ConcreteValue);
+        }
+
+        // All concrete values should be unique
+        Assert.Equal(discriminator.Branches.Count, concreteValues.Count);
+    }
+
+    [Fact]
+    public void FieldNotDiscriminatorIfConcreteValuesNotDistinct()
+    {
+        // If a common field doesn't have distinct concrete values, it shouldn't be selected as discriminator
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+                                      #TypeA: {kind: "same", type: "a", value: string}
+                                      #TypeB: {kind: "same", type: "b", value: int}
+
+                                      item: #TypeA | #TypeB
+                                      """);
+
+        using var itemField = value.Lookup("item");
+        var node = itemField.ToCueValueNode();
+
+        Assert.IsType<CueDisjunction>(node);
+        var discriminator = (CueDisjunction)node;
+
+        // 'kind' has the same value in both branches, so should not be selected
+        // 'type' has distinct values, so should be selected
+        Assert.True(discriminator.IsDiscriminated);
+        Assert.Equal("type", discriminator.DiscriminatorField);
+        Assert.NotEqual("kind", discriminator.DiscriminatorField);
+    }
+
+    [Fact]
+    public void FieldNotDiscriminatorIfValuesAreNotConcrete()
+    {
+        // A field can only be a discriminator if all branches have concrete string values
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+                                      #TypeA: {type: string, value: string}
+                                      #TypeB: {type: string, value: int}
+
+                                      item: #TypeA | #TypeB
+                                      """);
+
+        using var itemField = value.Lookup("item");
+        var node = itemField.ToCueValueNode();
+
+        Assert.IsType<CueDisjunction>(node);
+        var discriminator = (CueDisjunction)node;
+
+        // 'type' field has string type (not concrete values), so should not be discriminator
+        Assert.False(discriminator.IsDiscriminated);
+        Assert.Null(discriminator.DiscriminatorField);
+    }
+
+    [Fact]
+    public void SelectsFirstValidDiscriminatorWhenMultipleCandidates()
+    {
+        // When multiple fields could be discriminators, the first one with distinct concrete values wins
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+                                      #TypeA: {primary: "a", secondary: "x", data: string}
+                                      #TypeB: {primary: "b", secondary: "y", data: int}
+
+                                      item: #TypeA | #TypeB
+                                      """);
+
+        using var itemField = value.Lookup("item");
+        var node = itemField.ToCueValueNode();
+
+        Assert.IsType<CueDisjunction>(node);
+        var discriminator = (CueDisjunction)node;
+
+        // Should pick one of the valid discriminators
+        Assert.True(discriminator.IsDiscriminated);
+        Assert.NotNull(discriminator.DiscriminatorField);
+        Assert.True(discriminator.DiscriminatorField == "primary" || discriminator.DiscriminatorField == "secondary");
     }
 }

@@ -3,8 +3,31 @@
 #DateTimeMessage -> DateTimeMessage
 #TextMessage -> TextMessage
 #Message -> Message
+#Message.message -> Message
 
+  MapBranchesToNamedStructs for #Message.message:
+    DiscriminatorField: type
+    Branches count: 2
+    Inline struct branches: 2
+  Mapped inline #Message.message (datetime) to #DateTimeMessage
+  Mapped inline #Message.message (text) to #TextMessage
+    Total mapped branches: 2
 === Collected Discriminated Unions ===
 #Message.message -> BaseClass: MessageBase, Discriminator: type
   - #DateTimeMessage
   - #TextMessage
+
+=== Disjunction Details ===
+Disjunction at #Message.message:
+  IsDiscriminated: True
+  DiscriminatorField: type
+  BranchPaths (2):
+    datetime -> #Message.message
+    text -> #Message.message
+  Branches (2):
+    CueStructValue at #Message.message
+      - type: CueStringValue
+      - format: CueStringValue
+    CueStructValue at #Message.message
+      - type: CueStringValue
+      - maxLength: CueIntValue

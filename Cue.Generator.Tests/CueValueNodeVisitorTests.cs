@@ -93,21 +93,21 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            x: 1
-            y: true
-            z: "text"
-            """);
+                                      x: 1
+                                      y: true
+                                      z: "text"
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var structNode = (CueStructValue)node;
         Assert.Equal(3, structNode.Fields.Count);
-        
+
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
         Assert.Equal(["x", "y", "z"], fieldNames);
-        
-        Assert.All(structNode.Fields, field => 
+
+        Assert.All(structNode.Fields, field =>
         {
             Assert.NotNull(field.Value);
             Assert.True(GetKind(field.Value) is not (Kind.Struct or Kind.List));
@@ -119,21 +119,21 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            person: {
-                name: "Jane"
-                age: 30
-            }
-            """);
+                                      person: {
+                                          name: "Jane"
+                                          age: 30
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var rootStruct = (CueStructValue)node;
-        
+
         var personField = rootStruct.Fields.First(f => f.Name == "person");
         Assert.NotNull(personField);
         Assert.IsType<CueStructValue>(personField.Value);
-        
+
         var personStruct = (CueStructValue)personField.Value;
         Assert.Equal(2, personStruct.Fields.Count);
     }
@@ -143,19 +143,19 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            a: {
-                b: {
-                    c: {
-                        d: "deep"
-                    }
-                }
-            }
-            """);
+                                      a: {
+                                          b: {
+                                              c: {
+                                                  d: "deep"
+                                              }
+                                          }
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
-        
+
         var current = node as CueStructValue;
         for (var i = 0; i < 4; i++)
         {
@@ -194,15 +194,15 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            items: [1, 2, 3]
-            count: 3
-            """);
+                                      items: [1, 2, 3]
+                                      count: 3
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var structNode = (CueStructValue)node;
-        
+
         var itemsField = structNode.Fields.First(f => f.Name == "items");
         Assert.IsType<CueListValue>(itemsField.Value);
     }
@@ -230,7 +230,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.NotNull(node);
         Assert.IsType<CueDisjunction>(node);
         var disjunction = (CueDisjunction)node;
-        
+
         Assert.Equal(3, disjunction.Branches.Count);
         var kinds = disjunction.Branches.Select(GetKind).OrderBy(k => (int)k).ToList();
         Assert.Contains(Kind.Bool, kinds);
@@ -248,7 +248,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.NotNull(node);
         Assert.IsType<CueDisjunction>(node);
         var disjunction = (CueDisjunction)node;
-        
+
         Assert.Equal(3, disjunction.Branches.Count);
         Assert.All(disjunction.Branches, b => Assert.Equal(Kind.Int, GetKind(b)));
     }
@@ -280,12 +280,12 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            {
-                name: string
-                age: >0 & <150
-                email: string & =~"^.*@.*"
-            }
-            """);
+                                      {
+                                          name: string
+                                          age: >0 & <150
+                                          email: string & =~"^.*@.*"
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
@@ -299,17 +299,17 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            {
-                required: string
-                optional?: int
-            }
-            """);
+                                      {
+                                          required: string
+                                          optional?: int
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var structNode = (CueStructValue)node;
-        
+
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
         Assert.Equal(2, fieldNames.Count);
     }
@@ -330,26 +330,26 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            users: [
-                {
-                    name: "Alice"
-                    roles: ["admin", "user"]
-                    metadata: {
-                        created: "2024-01-01"
-                        tags: ["important"]
-                    }
-                }
-            ]
-            count: 1
-            """);
+                                      users: [
+                                          {
+                                              name: "Alice"
+                                              roles: ["admin", "user"]
+                                              metadata: {
+                                                  created: "2024-01-01"
+                                                  tags: ["important"]
+                                              }
+                                          }
+                                      ]
+                                      count: 1
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var rootStruct = (CueStructValue)node;
-        
+
         Assert.Equal(2, rootStruct.Fields.Count);
-        
+
         var usersField = rootStruct.Fields.First(f => f.Name == "users");
         Assert.IsType<CueListValue>(usersField.Value);
     }
@@ -361,13 +361,13 @@ public sealed class CueValueNodeVisitorTests
         using var schema = ctx.Compile("a: int\nb: string");
         using var concrete = ctx.Compile("a: 42\nb: \"hello\"");
         using var unified = schema.Unify(concrete);
-        
+
         var node = unified.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var structNode = (CueStructValue)node;
-        
+
         Assert.Equal(2, structNode.Fields.Count);
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
         Assert.Equal(["a", "b"], fieldNames);
@@ -378,11 +378,11 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var root = ctx.Compile("""
-            person: {
-                name: "Jane"
-                age: 30
-            }
-            """);
+                                     person: {
+                                         name: "Jane"
+                                         age: 30
+                                     }
+                                     """);
         using var person = root.Lookup("person");
         var node = person.ToCueValueNode();
 
@@ -421,10 +421,10 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            {
-                options: [string] | string
-            }
-            """);
+                                      {
+                                          options: [string] | string
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
@@ -501,10 +501,10 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var root = ctx.Compile("""
-            person: {
-                name: "Jane"
-            }
-            """);
+                                     person: {
+                                         name: "Jane"
+                                     }
+                                     """);
         using var person = root.Lookup("person");
         using var name = person.Lookup("name");
         var node = name.ToCueValueNode();
@@ -528,10 +528,10 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            firstName: "John"
-            lastName: "Doe"
-            age: 30
-            """);
+                                      firstName: "John"
+                                      lastName: "Doe"
+                                      age: 30
+                                      """);
         var node = (CueStructValue)value.ToCueValueNode();
 
         var fieldNames = node.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
@@ -543,14 +543,14 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            user: {
-                firstName: "Jane"
-                contact: {
-                    email: "jane@example.com"
-                    phone: "123-456-7890"
-                }
-            }
-            """);
+                                      user: {
+                                          firstName: "Jane"
+                                          contact: {
+                                              email: "jane@example.com"
+                                              phone: "123-456-7890"
+                                          }
+                                      }
+                                      """);
         using var user = value.Lookup("user");
         var node = (CueStructValue)user.ToCueValueNode();
 
@@ -575,24 +575,24 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            intField: 42
-            floatField: 3.14
-            stringField: "text"
-            boolField: true
-            nullField: null
-            listField: [1, 2, 3]
-            structField: {x: 1}
-            """);
+                                      intField: 42
+                                      floatField: 3.14
+                                      stringField: "text"
+                                      boolField: true
+                                      nullField: null
+                                      listField: [1, 2, 3]
+                                      structField: {x: 1}
+                                      """);
         var node = (CueStructValue)value.ToCueValueNode();
 
         Assert.Equal(7, node.Fields.Count);
-        
+
         var intField = node.Fields.First(f => f.Name == "intField");
         Assert.Equal(Kind.Int, GetKind(intField.Value));
-        
+
         var listField = node.Fields.First(f => f.Name == "listField");
         Assert.IsType<CueListValue>(listField.Value);
-        
+
         var structField = node.Fields.First(f => f.Name == "structField");
         Assert.IsType<CueStructValue>(structField.Value);
     }
@@ -602,33 +602,33 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            apiVersion: "v1"
-            kind: "Service"
-            metadata: {
-                name: "my-service"
-                namespace: "default"
-                labels: {
-                    app: "myapp"
-                }
-            }
-            spec: {
-                selector: {
-                    app: "myapp"
-                }
-                ports: [{
-                    protocol: "TCP"
-                    port: 80
-                    targetPort: 8080
-                }]
-                type: "ClusterIP"
-            }
-            """);
+                                      apiVersion: "v1"
+                                      kind: "Service"
+                                      metadata: {
+                                          name: "my-service"
+                                          namespace: "default"
+                                          labels: {
+                                              app: "myapp"
+                                          }
+                                      }
+                                      spec: {
+                                          selector: {
+                                              app: "myapp"
+                                          }
+                                          ports: [{
+                                              protocol: "TCP"
+                                              port: 80
+                                              targetPort: 8080
+                                          }]
+                                          type: "ClusterIP"
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.IsType<CueStructValue>(node);
         var rootStruct = (CueStructValue)node;
-        
+
         Assert.True(rootStruct.Fields.Count >= 4);
         Assert.Contains(rootStruct.Fields, f => f.Name == "metadata");
         Assert.Contains(rootStruct.Fields, f => f.Name == "spec");
@@ -672,14 +672,14 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            {
-                "key": "value"
-                "number": 123
-                "nested": {
-                    "deep": true
-                }
-            }
-            """);
+                                      {
+                                          "key": "value"
+                                          "number": 123
+                                          "nested": {
+                                              "deep": true
+                                          }
+                                      }
+                                      """);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
@@ -691,16 +691,144 @@ public sealed class CueValueNodeVisitorTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile("""
-            status: "active" | "inactive" | "pending"
-            priority: 1 | 2 | 3
-            enabled: bool
-            """);
+                                      status: "active" | "inactive" | "pending"
+                                      priority: 1 | 2 | 3
+                                      enabled: bool
+                                      """);
         var node = (CueStructValue)value.ToCueValueNode();
 
         Assert.NotNull(node);
         Assert.Equal(3, node.Fields.Count);
-        
+
         var statusField = node.Fields.First(f => f.Name == "status");
         Assert.IsType<CueDisjunction>(statusField.Value);
+    }
+
+    [Fact]
+    public void ConcreteBoolValueIsExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("true");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var boolNode = Assert.IsType<CueBoolValue>(node);
+        Assert.True(boolNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void ConcreteIntValueIsExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("42");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var intNode = Assert.IsType<CueIntValue>(node);
+        Assert.Equal(42, intNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void ConcreteFloatValueIsExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("3.14");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var floatNode = Assert.IsType<CueFloatValue>(node);
+        Assert.Equal(3.14, floatNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void ConcreteStringValueIsExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("\"hello world\"");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var stringNode = Assert.IsType<CueStringValue>(node);
+        Assert.Equal("hello world", stringNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void ConcreteBytesValueIsExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.ToValue(new byte[] { 1, 2, 3 });
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var bytesNode = Assert.IsType<CueBytesValue>(node);
+        Assert.Equal(new byte[] { 1, 2, 3 }, bytesNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void BoolTypeHasNullConcreteValue()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("bool");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var boolNode = Assert.IsType<CueBoolValue>(node);
+        Assert.Null(boolNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void IntTypeHasNullConcreteValue()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("int");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var intNode = Assert.IsType<CueIntValue>(node);
+        Assert.Null(intNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void StringTypeHasNullConcreteValue()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("string");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var stringNode = Assert.IsType<CueStringValue>(node);
+        Assert.Null(stringNode.ConcreteValue);
+    }
+
+    [Fact]
+    public void ConcreteValuesInStructFieldsAreExtracted()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+                                      name: "Alice"
+                                      age: 30
+                                      active: true
+                                      score: 95.5
+                                      """);
+        var node = (CueStructValue)value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        Assert.Equal(4, node.Fields.Count);
+
+        var nameField = node.Fields.First(f => f.Name == "name");
+        var nameNode = Assert.IsType<CueStringValue>(nameField.Value);
+        Assert.Equal("Alice", nameNode.ConcreteValue);
+
+        var ageField = node.Fields.First(f => f.Name == "age");
+        var ageNode = Assert.IsType<CueIntValue>(ageField.Value);
+        Assert.Equal(30, ageNode.ConcreteValue);
+
+        var activeField = node.Fields.First(f => f.Name == "active");
+        var activeNode = Assert.IsType<CueBoolValue>(activeField.Value);
+        Assert.True(activeNode.ConcreteValue);
+
+        var scoreField = node.Fields.First(f => f.Name == "score");
+        var scoreNode = Assert.IsType<CueFloatValue>(scoreField.Value);
+        Assert.Equal(95.5, scoreNode.ConcreteValue);
     }
 }
