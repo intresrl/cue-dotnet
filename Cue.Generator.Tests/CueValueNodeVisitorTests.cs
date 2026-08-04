@@ -2,6 +2,25 @@ namespace Cue.Generator.Tests;
 
 public sealed class CueValueNodeVisitorTests
 {
+    private static Kind GetKind(CueValueNode node)
+    {
+        return node switch
+        {
+            CueBottomValue => Kind.Bottom,
+            CueNullValue => Kind.Null,
+            CueBoolValue => Kind.Bool,
+            CueIntValue => Kind.Int,
+            CueFloatValue => Kind.Float,
+            CueStringValue => Kind.String,
+            CueBytesValue => Kind.Bytes,
+            CueNumberValue => Kind.Number,
+            CueTopValue => Kind.Top,
+            CueStructValue => Kind.Struct,
+            CueListValue => Kind.List,
+            _ => Kind.Top
+        };
+    }
+
     [Fact]
     public void VisitSimpleNullValue()
     {
@@ -10,8 +29,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Null, node.Kind);
+        Assert.Equal(Kind.Null, GetKind(node));
         Assert.Equal("", node.Path);
     }
 
@@ -23,8 +41,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Bool, node.Kind);
+        Assert.Equal(Kind.Bool, GetKind(node));
     }
 
     [Fact]
@@ -35,8 +52,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Int, node.Kind);
+        Assert.Equal(Kind.Int, GetKind(node));
     }
 
     [Fact]
@@ -47,8 +63,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Float, node.Kind);
+        Assert.Equal(Kind.Float, GetKind(node));
     }
 
     [Fact]
@@ -59,20 +74,18 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.String, node.Kind);
+        Assert.Equal(Kind.String, GetKind(node));
     }
 
     [Fact]
     public void VisitBytesValue()
     {
         using var ctx = new CueContext();
-        using var value = ctx.Compile("'\\xde\\xad\\xbe\\xef'");
+        using var value = ctx.Compile(@"'\xde\xad\xbe\xef'");
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Bytes, node.Kind);
+        Assert.Equal(Kind.Bytes, GetKind(node));
     }
 
     [Fact]
@@ -92,12 +105,12 @@ public sealed class CueValueNodeVisitorTests
         Assert.Equal(3, structNode.Fields.Count);
         
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
-        Assert.Equal(new[] { "x", "y", "z" }, fieldNames);
+        Assert.Equal(["x", "y", "z"], fieldNames);
         
         Assert.All(structNode.Fields, field => 
         {
             Assert.NotNull(field.Value);
-            Assert.IsType<CueSimpleValue>(field.Value);
+            Assert.True(GetKind(field.Value) is not (Kind.Struct or Kind.List));
         });
     }
 
@@ -144,7 +157,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.IsType<CueStructValue>(node);
         
         var current = node as CueStructValue;
-        for (int i = 0; i < 4; i++)
+        for (var i = 0; i < 4; i++)
         {
             Assert.NotNull(current);
             Assert.Single(current.Fields);
@@ -160,10 +173,8 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueListValue>(node);
-        var listNode = (CueListValue)node;
-        Assert.IsType<CueSimpleValue>(listNode.ElementType);
-        Assert.Equal(Kind.Int, listNode.ElementType.Kind);
+        var listNode = Assert.IsType<CueListValue>(node);
+        Assert.Equal(Kind.Int, GetKind(listNode.ElementType));
     }
 
     [Fact]
@@ -174,10 +185,8 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueListValue>(node);
-        var listNode = (CueListValue)node;
-        Assert.IsType<CueSimpleValue>(listNode.ElementType);
-        Assert.Equal(Kind.String, listNode.ElementType.Kind);
+        var listNode = Assert.IsType<CueListValue>(node);
+        Assert.Equal(Kind.String, GetKind(listNode.ElementType));
     }
 
     [Fact]
@@ -202,9 +211,7 @@ public sealed class CueValueNodeVisitorTests
     public void VisitListOfStructs()
     {
         using var ctx = new CueContext();
-        using var value = ctx.Compile("""
-            [{x: 1}, {x: 2}]
-            """);
+        using var value = ctx.Compile("[{x: 1}, {x: 2}]");
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
@@ -225,7 +232,7 @@ public sealed class CueValueNodeVisitorTests
         var disjunction = (CueDisjunction)node;
         
         Assert.Equal(3, disjunction.Branches.Count);
-        var kinds = disjunction.Branches.Select(b => b.Kind).OrderBy(k => (int)k).ToList();
+        var kinds = disjunction.Branches.Select(GetKind).OrderBy(k => (int)k).ToList();
         Assert.Contains(Kind.Bool, kinds);
         Assert.Contains(Kind.Int, kinds);
         Assert.Contains(Kind.String, kinds);
@@ -243,7 +250,7 @@ public sealed class CueValueNodeVisitorTests
         var disjunction = (CueDisjunction)node;
         
         Assert.Equal(3, disjunction.Branches.Count);
-        Assert.All(disjunction.Branches, b => Assert.Equal(Kind.Int, b.Kind));
+        Assert.All(disjunction.Branches, b => Assert.Equal(Kind.Int, GetKind(b)));
     }
 
     [Fact]
@@ -265,8 +272,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Int, node.Kind);
+        Assert.Equal(Kind.Int, GetKind(node));
     }
 
     [Fact]
@@ -364,11 +370,11 @@ public sealed class CueValueNodeVisitorTests
         
         Assert.Equal(2, structNode.Fields.Count);
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
-        Assert.Equal(new[] { "a", "b" }, fieldNames);
+        Assert.Equal(["a", "b"], fieldNames);
     }
 
     [Fact]
-    public void VisitLookupedValue()
+    public void VisitLookupValue()
     {
         using var ctx = new CueContext();
         using var root = ctx.Compile("""
@@ -433,8 +439,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Int, node.Kind);
+        Assert.Equal(Kind.Int, GetKind(node));
     }
 
     [Fact]
@@ -445,8 +450,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Bool, node.Kind);
+        Assert.Equal(Kind.Bool, GetKind(node));
     }
 
     [Fact]
@@ -457,8 +461,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.String, node.Kind);
+        Assert.Equal(Kind.String, GetKind(node));
     }
 
     [Fact]
@@ -469,20 +472,18 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Float, node.Kind);
+        Assert.Equal(Kind.Float, GetKind(node));
     }
 
     [Fact]
     public void VisitToValueConvertedBytes()
     {
         using var ctx = new CueContext();
-        using var value = ctx.ToValue(new byte[] { 1, 2, 3 });
+        using var value = ctx.ToValue([1, 2, 3]);
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Bytes, node.Kind);
+        Assert.Equal(Kind.Bytes, GetKind(node));
     }
 
     [Fact]
@@ -515,9 +516,7 @@ public sealed class CueValueNodeVisitorTests
     public void PathIsPreservedForListElement()
     {
         using var ctx = new CueContext();
-        using var root = ctx.Compile("""
-            items: [1, 2, 3]
-            """);
+        using var root = ctx.Compile("items: [1, 2, 3]");
         using var items = root.Lookup("items");
         var node = items.ToCueValueNode();
 
@@ -536,7 +535,7 @@ public sealed class CueValueNodeVisitorTests
         var node = (CueStructValue)value.ToCueValueNode();
 
         var fieldNames = node.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
-        Assert.Equal(new[] { "age", "firstName", "lastName" }, fieldNames);
+        Assert.Equal(["age", "firstName", "lastName"], fieldNames);
     }
 
     [Fact]
@@ -564,9 +563,7 @@ public sealed class CueValueNodeVisitorTests
     public void DisjunctionPreservesPath()
     {
         using var ctx = new CueContext();
-        using var value = ctx.Compile("""
-            value: int | string | bool
-            """);
+        using var value = ctx.Compile("value: int | string | bool");
         using var valueField = value.Lookup("value");
         var node = valueField.ToCueValueNode();
 
@@ -591,8 +588,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.Equal(7, node.Fields.Count);
         
         var intField = node.Fields.First(f => f.Name == "intField");
-        Assert.IsType<CueSimpleValue>(intField.Value);
-        Assert.Equal(Kind.Int, intField.Value.Kind);
+        Assert.Equal(Kind.Int, GetKind(intField.Value));
         
         var listField = node.Fields.First(f => f.Name == "listField");
         Assert.IsType<CueListValue>(listField.Value);
@@ -646,8 +642,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Top, node.Kind);
+        Assert.Equal(Kind.Top, GetKind(node));
     }
 
     [Fact]
@@ -658,8 +653,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.Int, node.Kind);
+        Assert.Equal(Kind.Int, GetKind(node));
     }
 
     [Fact]
@@ -670,8 +664,7 @@ public sealed class CueValueNodeVisitorTests
         var node = value.ToCueValueNode();
 
         Assert.NotNull(node);
-        Assert.IsType<CueSimpleValue>(node);
-        Assert.Equal(Kind.String, node.Kind);
+        Assert.Equal(Kind.String, GetKind(node));
     }
 
     [Fact]

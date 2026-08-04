@@ -2,6 +2,25 @@ namespace Cue.Generator.Tests;
 
 public sealed class MatchNPipelineTests
 {
+    private static Kind GetKind(CueValueNode node)
+    {
+        return node switch
+        {
+            CueBottomValue => Kind.Bottom,
+            CueNullValue => Kind.Null,
+            CueBoolValue => Kind.Bool,
+            CueIntValue => Kind.Int,
+            CueFloatValue => Kind.Float,
+            CueStringValue => Kind.String,
+            CueBytesValue => Kind.Bytes,
+            CueNumberValue => Kind.Number,
+            CueTopValue => Kind.Top,
+            CueStructValue => Kind.Struct,
+            CueListValue => Kind.List,
+            _ => Kind.Top
+        };
+    }
+
     [Fact]
     public void DiagnoseMatchNValue()
     {
@@ -21,7 +40,7 @@ public sealed class MatchNPipelineTests
         var disjunctions = resultField.Disjunctions();
         var fields = resultField.Fields(true);
         
-        Console.WriteLine($"=== MatchN Value Diagnostics ===");
+        Console.WriteLine("=== MatchN Value Diagnostics ===");
         Console.WriteLine($"Kind: {kind}");
         Console.WriteLine($"IncompleteKind: {incompleteKind}");
         Console.WriteLine($"Disjunctions count: {disjunctions.Length}");
@@ -31,7 +50,7 @@ public sealed class MatchNPipelineTests
         // Try to iterate fields
         if (fields.Length > 0)
         {
-            Console.WriteLine($"Fields:");
+            Console.WriteLine("Fields:");
             foreach (var f in fields)
             {
                 Console.WriteLine($"  - {f.Path()}");
@@ -75,7 +94,7 @@ public sealed class MatchNPipelineTests
         var matchDisjunctions = matchField.Disjunctions();
         var matchKind = matchField.Kind();
         
-        Console.WriteLine($"=== Pipe vs MatchN Comparison ===");
+        Console.WriteLine("=== Pipe vs MatchN Comparison ===");
         Console.WriteLine($"Pipe - Kind: {pipeKind}, Disjunctions: {pipeDisjunctions.Length}");
         Console.WriteLine($"MatchN - Kind: {matchKind}, Disjunctions: {matchDisjunctions.Length}");
         
@@ -105,7 +124,7 @@ public sealed class MatchNPipelineTests
             """);
 
         var node = value.ToCueValueNode();
-        Console.WriteLine($"\n=== String Value Inspection ===");
+        Console.WriteLine("\n=== String Value Inspection ===");
         Console.WriteLine($"Root: {node}\n");
 
         if (node is not CueStructValue root) return;
@@ -114,27 +133,35 @@ public sealed class MatchNPipelineTests
         {
             Console.WriteLine($"Field '{field.Name}': {field.Value}");
             
-            if (field.Value is CueSimpleValue simple)
+            switch (field.Value)
             {
-                Console.WriteLine($"  -> Simple value, kind={simple.Kind}");
-            }
-            else if (field.Value is CueDisjunction disj)
-            {
-                Console.WriteLine($"  -> Disjunction with {disj.Branches.Count} branches");
-                Console.WriteLine($"  -> Is discriminated: {disj.IsDiscriminated}");
-                foreach (var (idx, branch) in disj.Branches.Select((b, i) => (i, b)))
+                case CueDisjunction dis:
                 {
-                    Console.WriteLine($"     Branch {idx}: {branch}");
+                    Console.WriteLine($"  -> Disjunction with {dis.Branches.Count} branches");
+                    Console.WriteLine($"  -> Is discriminated: {dis.IsDiscriminated}");
+                    foreach (var (idx, branch) in dis.Branches.Select((b, i) => (i, b)))
+                    {
+                        Console.WriteLine($"     Branch {idx}: {branch}");
+                    }
+
+                    break;
                 }
-            }
-            
-            // For structs, inspect nested fields
-            if (field.Value is CueStructValue fieldStruct)
-            {
-                foreach (var inner in fieldStruct.Fields)
+                // For structs, inspect nested fields
+                case CueStructValue fieldStruct:
                 {
-                    Console.WriteLine($"  Nested '{inner.Name}': {inner.Value}");
+                    foreach (var inner in fieldStruct.Fields)
+                    {
+                        Console.WriteLine($"  Nested '{inner.Name}': {inner.Value}");
+                    }
+
+                    break;
                 }
+                case CueListValue or null:
+                    break;
+                default:
+                    Console.WriteLine($"  -> Simple value, kind={GetKind(field.Value)}");
+                    break;
+
             }
         }
     }
@@ -156,7 +183,7 @@ public sealed class MatchNPipelineTests
         Assert.Equal("hello", decodedStr);
         
         // Test constant int
-        using var constNum = ctx.Compile("""value: 42 """);
+        using var constNum = ctx.Compile("value: 42 ");
         var numField = constNum.Lookup("value");
         Assert.True(numField.IsConcrete(), "Constant number should be concrete");
         Assert.Equal(Kind.Int, numField.Kind());
@@ -165,7 +192,7 @@ public sealed class MatchNPipelineTests
         Assert.Equal(42L, decodedNum);
         
         // Test constant float
-        using var constFlt = ctx.Compile("""value: 3.14 """);
+        using var constFlt = ctx.Compile("value: 3.14 ");
         var fltField = constFlt.Lookup("value");
         Assert.True(fltField.IsConcrete(), "Constant float should be concrete");
         Assert.Equal(Kind.Float, fltField.Kind());
@@ -174,7 +201,7 @@ public sealed class MatchNPipelineTests
         Assert.True(Math.Abs(decodedFlt - 3.14) < 0.01);
         
         // Test constant boolean
-        using var constBool = ctx.Compile("""value: true """);
+        using var constBool = ctx.Compile("value: true ");
         var boolField = constBool.Lookup("value");
         Assert.True(boolField.IsConcrete(), "Constant boolean should be concrete");
         Assert.Equal(Kind.Bool, boolField.Kind());
@@ -185,13 +212,13 @@ public sealed class MatchNPipelineTests
         Console.WriteLine("\n=== Constraints (IsConcrete == false) ===\n");
         
         // Test string constraint
-        using var constraintStr = ctx.Compile("""value: string """);
+        using var constraintStr = ctx.Compile("value: string ");
         var strConstraint = constraintStr.Lookup("value");
         Assert.False(strConstraint.IsConcrete(), "String constraint should not be concrete");
         Console.WriteLine($"String constraint: {strConstraint.IsConcrete()} (kind: {strConstraint.Kind()})");
         
         // Test int constraint
-        using var constraintNum = ctx.Compile("""value: int """);
+        using var constraintNum = ctx.Compile("value: int ");
         var numConstraint = constraintNum.Lookup("value");
         Assert.False(numConstraint.IsConcrete(), "Int constraint should not be concrete");
         Console.WriteLine($"Int constraint: {numConstraint.IsConcrete()} (kind: {numConstraint.Kind()})");
@@ -211,7 +238,7 @@ public sealed class MatchNPipelineTests
         }
         
         // Test int union
-        using var unionNum = ctx.Compile("""value: 1 | 2 | 3 """);
+        using var unionNum = ctx.Compile("value: 1 | 2 | 3 ");
         var unionNumField = unionNum.Lookup("value");
         Assert.False(unionNumField.IsConcrete(), "Int union should not be concrete");
         var numDisjuncts = unionNumField.Disjunctions();

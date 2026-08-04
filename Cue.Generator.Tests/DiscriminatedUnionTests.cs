@@ -223,7 +223,7 @@ public sealed class DiscriminatedUnionTests
         {
             var structBranch = Assert.IsType<CueStructValue>(branch);
             var typeField = structBranch.Fields.First(f => f.Name == "type");
-            Assert.IsType<CueSimpleValue>(typeField.Value);
+            Assert.True(typeField.Value is CueStringValue);
             discriminatorValues.Add(typeField.Value.Path);
         }
         

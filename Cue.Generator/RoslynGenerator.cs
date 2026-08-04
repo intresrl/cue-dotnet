@@ -16,13 +16,38 @@ public sealed class RoslynGenerator
     private readonly Dictionary<string, (string BaseClassName, string DiscriminatorField, List<string> BranchPaths)> 
         _discriminatedUnions = new();
 
-    public string GenerateCode(CueValueNode root)
+    public string GenerateCode(CueValueNode root, TextWriter? debugWriter = null)
     {
         // collect struct nodes and assign type names
         CollectStructs(root);
         
+        // Debug: Check what we're collecting (if debug output is enabled)
+        if (debugWriter != null)
+        {
+            debugWriter.WriteLine("=== Collected Structs ===");
+            foreach (var (path, typeName) in _typeNames)
+            {
+                debugWriter.WriteLine($"{path} -> {typeName}");
+            }
+            debugWriter.WriteLine();
+        }
+        
         // collect discriminated unions
         CollectDiscriminatedUnions(root);
+        
+        if (debugWriter != null)
+        {
+            debugWriter.WriteLine("=== Collected Discriminated Unions ===");
+            foreach (var (path, (baseClass, discriminator, branches)) in _discriminatedUnions)
+            {
+                debugWriter.WriteLine($"{path} -> BaseClass: {baseClass}, Discriminator: {discriminator}");
+                foreach (var branch in branches)
+                {
+                    debugWriter.WriteLine($"  - {branch}");
+                }
+            }
+            debugWriter.Flush();
+        }
         
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddUsings(
@@ -65,8 +90,6 @@ public sealed class RoslynGenerator
         {
             case CueStructValue s:
             {
-                Console.WriteLine(s.Path);
-
                 // Avoid revisiting the same struct path to prevent infinite recursion on self-references
                 if (!visitedStructPaths.Add(s.Path)) return;
 
@@ -291,7 +314,15 @@ public sealed class RoslynGenerator
             CueStructValue s => _typeNames.GetValueOrDefault(s.Path, "object"),
             CueDisjunction { IsDiscriminated: true } d => FindDiscriminatorBaseClass(d.Path) ?? "object",
             CueListValue l => GetListTypeName(l),
-            CueSimpleValue sv => MapSimpleKindToCSharpType(sv.Kind),
+            CueBoolValue => "bool",
+            CueIntValue => "long",
+            CueFloatValue => "double",
+            CueStringValue => "string",
+            CueBytesValue => "byte[]",
+            CueNumberValue => "double",
+            // TODO: Fix serialization of CueNullValue - currently serialized as object type
+            CueNullValue => "object",
+            CueBottomValue => throw new InvalidOperationException($"CueBottomValue at {node.Path} cannot be serialized"),
             _ => "object"
         };
     }
@@ -300,19 +331,5 @@ public sealed class RoslynGenerator
     {
         var elemType = GetTypeName(list.ElementType);
         return $"List<{elemType}>";
-    }
-
-    private static string MapSimpleKindToCSharpType(Kind kind)
-    {
-        return kind switch
-        {
-            Kind.Int => "long",
-            Kind.Bool => "bool",
-            Kind.Float => "double",
-            Kind.Number => "double",
-            Kind.String => "string",
-            Kind.Bytes => "byte[]",
-            _ => "object"
-        };
     }
 }

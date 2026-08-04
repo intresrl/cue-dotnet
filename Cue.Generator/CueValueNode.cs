@@ -2,28 +2,60 @@ using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-public abstract record CueValueNode(Kind Kind, string Path)
+public abstract record CueValueNode(string Path)
 {
-    public override string ToString() => $"{GetType().Name} at {Path}";
+    public abstract override string ToString();
 }
 
-public sealed record CueTop(string Path) : CueValueNode(Kind.Top, Path)
+public sealed record CueBottomValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Bottom at {Path}";
+}
+
+public sealed record CueNullValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Null at {Path}";
+}
+
+public sealed record CueBoolValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Bool at {Path}";
+}
+
+public sealed record CueIntValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Int at {Path}";
+}
+
+public sealed record CueFloatValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Float at {Path}";
+}
+
+public sealed record CueStringValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"String at {Path}";
+}
+
+public sealed record CueBytesValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Bytes at {Path}";
+}
+
+public sealed record CueNumberValue(string Path) : CueValueNode(Path)
+{
+    public override string ToString() => $"Number at {Path}";
+}
+
+public sealed record CueTopValue(string Path) : CueValueNode(Path)
 {
     public override string ToString() => $"Top at {Path}";
 }
 
 public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> Fields)
-    : CueValueNode(Kind.Struct, Path)
+    : CueValueNode(Path)
 {
-    public override string ToString()
-    {
-        if (Fields.Count == 0)
-            return $"Struct() at {Path}";
-        
-        var fieldList = string.Join(", ", Fields.Select(f => $"{f.Name}: {f.Value.Kind}"));
-        
-        return $"Struct({fieldList}) at {Path}";
-    }
+    public override string ToString() => $"Struct({string.Join(", ", Fields.Select(f => $"{f.Name}: {f.Value}"))}) at {Path}";
 }
 
 public sealed record CueStructField(string Name, CueValueNode Value);
@@ -31,43 +63,25 @@ public sealed record CueStructField(string Name, CueValueNode Value);
 public sealed record CueDisjunction(
     string Path,
     IReadOnlyList<CueValueNode> Branches,
-    bool IsDiscriminated)
-    : CueValueNode(Kind.Top, Path)
+    string? DiscriminatorField)
+    : CueValueNode(Path)
 {
-    public string DiscriminatorField => "TODO remove";
+    public bool IsDiscriminated => DiscriminatorField != null;
 
-    public override string ToString()
-    {
-        var result = $"Disjunction({Branches.Count} branches";
-        result += string.Join("\n", Branches.Select(e => e.ToString()));
-        result += $") at {Path}";
-        return result;
-    }
+    public override string ToString() =>
+        $"""
+         Disjunction({Branches.Count} branches:
+         {string.Join("\n", Branches.Select(e => e.ToString()))}) at {Path}
+         """;
 }
 
 public sealed record CueListValue(string Path, CueValueNode ElementType)
-    : CueValueNode(Kind.List, Path)
+    : CueValueNode(Path)
 {
-    public override string ToString() => $"List<{ElementType.Kind}> at {Path}";
-}
-
-public sealed record CueSimpleValue : CueValueNode
-{
-    public CueSimpleValue(Kind kind, string path)
-        : base(EnsureSimpleKind(kind), path)
+    public override string ToString()
     {
+        var elementTypeName = ElementType.GetType().Name.Replace("Value", "").ToLowerInvariant();
+        return $"List<{elementTypeName}> at {Path}";
     }
-
-    private static Kind EnsureSimpleKind(Kind kind)
-    {
-        return kind switch
-        {
-            Kind.Struct => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Struct values must use CueStructValue."),
-            Kind.List => throw new ArgumentOutOfRangeException(nameof(kind), kind, "List values must use CueListValue."),
-            _ => kind
-        };
-    }
-
-    public override string ToString() => $"{Kind} at {Path}";
 }
 

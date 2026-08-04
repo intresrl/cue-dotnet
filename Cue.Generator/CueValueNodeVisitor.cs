@@ -4,6 +4,46 @@ namespace Cue.Generator;
 
 public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 {
+    protected override CueValueNode VisitBottom(Value value)
+    {
+        return new CueBottomValue(value.Path());
+    }
+
+    protected override CueValueNode VisitNull(Value value)
+    {
+        return new CueNullValue(value.Path());
+    }
+
+    protected override CueValueNode VisitBool(Value value)
+    {
+        return new CueBoolValue(value.Path());
+    }
+
+    protected override CueValueNode VisitInt(Value value)
+    {
+        return new CueIntValue(value.Path());
+    }
+
+    protected override CueValueNode VisitFloat(Value value)
+    {
+        return new CueFloatValue(value.Path());
+    }
+
+    protected override CueValueNode VisitString(Value value)
+    {
+        return new CueStringValue(value.Path());
+    }
+
+    protected override CueValueNode VisitBytes(Value value)
+    {
+        return new CueBytesValue(value.Path());
+    }
+
+    protected override CueValueNode VisitNumber(Value value)
+    {
+        return new CueNumberValue(value.Path());
+    }
+
     protected override CueValueNode VisitTop(Value value)
     {
         // Check for disjunctions at the top level
@@ -18,12 +58,18 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
             return Dispatch(value, value.IncompleteKind());
         }
 
-        return new CueTop(value.Path());
+        return new CueTopValue(value.Path());
     }
 
     protected override CueValueNode VisitStruct(Value value)
     {
         var path = value.Path();
+        
+        if (value.Disjunctions() is { Length: > 0 } disjunctions)
+        {
+            return VisitDisjunction(path, disjunctions);
+        }
+        
         var fieldValues = value.Fields(true);
         var fields = new List<CueStructField>(fieldValues.Length);
 
@@ -47,17 +93,39 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         return new CueListValue(path, elementType);
     }
 
-    protected override CueValueNode VisitSimple(Value value, Kind kind)
-    {
-        return new CueSimpleValue(kind, value.Path());
-    }
-
     private CueDisjunction VisitDisjunction(string path, Value[] disjunctions)
     {
         var branches = disjunctions.Select(Visit).ToList();
-        
-        // Create disjunction with optional discriminator
-        return new CueDisjunction(path, branches, true);
+        var discriminatorField = FindDiscriminatorField(branches);
+        return new CueDisjunction(path, branches, discriminatorField);
+    }
+
+    private string? FindDiscriminatorField(List<CueValueNode> branches)
+    {
+        if (branches.Count == 0)
+            return null;
+
+        // All branches must be structs to have a discriminator
+        if (branches.Any(b => b is not CueStructValue))
+            return null;
+
+        var structBranches = branches.Cast<CueStructValue>().ToList();
+
+        // Get common field names and try each in order
+        return GetDiscriminatorCandidates(structBranches).FirstOrDefault();
+    }
+
+    private IEnumerable<string> GetDiscriminatorCandidates(List<CueStructValue> branches)
+    {
+        var namesPerBranch = branches
+            .Select(e => e.Fields
+                .Where(f => f.Value is CueStringValue)
+                .Select(f => f.Name))
+            .ToArray();
+            
+        return namesPerBranch.Length == 0 
+            ? []
+            : namesPerBranch.Aggregate((a, b) => a.Intersect(b));
     }
 
     private static string GetFieldName(string parentPath, string childPath)
