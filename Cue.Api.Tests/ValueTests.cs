@@ -223,14 +223,35 @@ public sealed class ValueTests
             using var _ = listValue.LookupAnyString();
         });
     }
-
+    
     [Fact]
-    public void DisjunctionsExposesDisjunctionOptions()
+    public void WholeFileDisjunctionsNotSupported()
     {
         using var ctx = new CueContext();
         using var disjunction = ctx.Compile("int | string | bool");
          
         var options = disjunction.Disjunctions();
+
+        try
+        {
+            Assert.Empty(options);
+        }
+        finally
+        {
+            foreach (var option in options)
+            {
+                option.Dispose();
+            }
+        }
+    }
+
+    [Fact]
+    public void DisjunctionsExposesDisjunctionOptions()
+    {
+        using var ctx = new CueContext();
+        using var disjunction = ctx.Compile("x: int | string | bool");
+         
+        var options = disjunction.Lookup("x").Disjunctions();
 
         try
         {
@@ -267,8 +288,8 @@ public sealed class ValueTests
         using var ctx = new CueContext();
          
         // Test case 1: Basic type disjunction
-        using var typeDisjunction = ctx.Compile("int | string | bool");
-        var typeOptions = typeDisjunction.Disjunctions();
+        using var typeDisjunction = ctx.Compile("x: int | string | bool");
+        var typeOptions = typeDisjunction.Lookup("x").Disjunctions();
          
         try
         {
@@ -294,8 +315,8 @@ public sealed class ValueTests
         }
 
         // Test case 2: Value disjunction
-        using var valueDisjunction = ctx.Compile("1 | 2 | 3");
-        var valueOptions = valueDisjunction.Disjunctions();
+        using var valueDisjunction = ctx.Compile("x: 1 | 2 | 3");
+        var valueOptions = valueDisjunction.Lookup("x").Disjunctions();
          
         try
         {
@@ -303,15 +324,10 @@ public sealed class ValueTests
             Assert.Equal(3, valueOptions.Length);
              
             // Extract and verify values
-            var values = new List<long>();
-            foreach (var opt in valueOptions)
-            {
-                var val = opt.GetLong();
-                values.Add(val);
-            }
+            var values = valueOptions.Select(opt => opt.GetLong()).ToList();
             values.Sort();
              
-            Assert.Equal(new[] { 1L, 2L, 3L }, values);
+            Assert.Equal([1L, 2L, 3L], values);
         }
         finally
         {

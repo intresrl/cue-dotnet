@@ -12,6 +12,5 @@ public enum Kind
     Struct,
     List,
     Number,
-    Top,
-    Unknown
+    Top
 }

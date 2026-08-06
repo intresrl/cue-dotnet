@@ -223,8 +223,9 @@ public sealed class DiscriminatedUnionTests
         {
             var structBranch = Assert.IsType<CueStructValue>(branch);
             var typeField = structBranch.Fields.First(f => f.Name == "type");
-            Assert.True(typeField.Value is CueStringValue);
-            discriminatorValues.Add(typeField.Value.Path);
+            var s = Assert.IsType<CueStringValue>(typeField.Value);
+            Assert.NotNull(s.ConcreteValue);
+            discriminatorValues.Add(s.ConcreteValue);
         }
 
         // Should have unique values for each branch
@@ -263,7 +264,7 @@ public sealed class DiscriminatedUnionTests
                                       #ItemA: {type: "a", data: string}
                                       #ItemB: {type: "b", data: int}
 
-                                      items: [#ItemA | #ItemB]
+                                      items: [...(#ItemA | #ItemB)]
                                       """);
 
         var node = (CueStructValue)value.ToCueValueNode();
@@ -313,7 +314,9 @@ public sealed class DiscriminatedUnionTests
         {
             var structBranch = Assert.IsType<CueStructValue>(branch);
             var typeField = structBranch.Fields.First(f => f.Name == "type");
-            types.Add(typeField.Value.Path);
+            var s = Assert.IsType<CueStringValue>(typeField.Value);
+            Assert.NotNull(s.ConcreteValue);
+            types.Add(s.ConcreteValue);
         }
 
         Assert.Equal(3, types.Count);

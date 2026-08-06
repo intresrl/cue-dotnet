@@ -15,7 +15,6 @@ public sealed unsafe class Value : IDisposable
         [NativeMethods.CUE_KIND_LIST] = Cue.Kind.List,
         [NativeMethods.CUE_KIND_NUMBER] = Cue.Kind.Number,
         [NativeMethods.CUE_KIND_TOP] = Cue.Kind.Top,
-        [NativeMethods.CUE_KIND_UNKNOWN] = Cue.Kind.Unknown
     };
 
     private readonly CueResource _resource;

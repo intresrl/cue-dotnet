@@ -19,7 +19,6 @@ internal static unsafe partial class NativeMethods
     internal const int CUE_KIND_LIST = 8;
     internal const int CUE_KIND_NUMBER = 9;
     internal const int CUE_KIND_TOP = 10;
-    internal const int CUE_KIND_UNKNOWN = 11;
 
 
     internal const int CUE_OPT_ALL = 1;
