@@ -78,13 +78,10 @@ public sealed unsafe class Value : IDisposable
     public Result<Value, string> Error()
     {
         var error = NativeMethods.cue_value_error(Handle);
-        if (error != 0)
-        {
-            var msg = NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_error_string(error));
-            return new Result<Value, string>.Err(msg);
-        }
-
-        return new Result<Value, string>.Ok(this);
+        if (error == 0) return new Result<Value, string>.Ok(this);
+        
+        var msg = NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_error_string(error));
+        return new Result<Value, string>.Err(msg);
     }
 
     public Value Unify(Value value)
@@ -249,11 +246,19 @@ public sealed unsafe class Value : IDisposable
     ///     May be called only if Kind is Struct
     /// </summary>
     /// <returns>The list of properties on this object as Value objects</returns>
-    public Value[] Fields(bool definitions = false)
+    public Value[] Fields(params EvalOption[] options)
     {
-        nuint len = 0;
-        var fields = NativeMethods.cue_fields(Handle, definitions, &len);
-        return FromNativeValueArray(fields, len);
+        var evalOpts = OptionEncoder.EncodeEvalOptions(options);
+        try
+        {
+            nuint len = 0;
+            var fields = NativeMethods.cue_fields_raw(Handle, evalOpts.Options, evalOpts.Count, &len);
+            return FromNativeValueArray(fields, len);
+        }
+        finally
+        {
+            evalOpts.Dispose();
+        }
     }
 
     /// <summary>

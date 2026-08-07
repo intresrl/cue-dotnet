@@ -309,7 +309,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.Equal(3, structNode.Fields.Count);
     }
 
-    [Fact(Skip = "Optional fields are not read by Cuelang.Cue")]
+    [Fact]
     public void VisitOptionalField()
     {
         using var ctx = new CueContext();

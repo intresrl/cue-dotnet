@@ -38,7 +38,7 @@ public sealed class MatchNPipelineTests
         var kind = resultField.Kind();
         var incompleteKind = resultField.IncompleteKind();
         var disjunctions = resultField.Disjunctions();
-        var fields = resultField.Fields(true);
+        var fields = resultField.Fields(new EvalOption.Definitions(true), new EvalOption.Optionals(true));
         
         Console.WriteLine("=== MatchN Value Diagnostics ===");
         Console.WriteLine($"Kind: {kind}");

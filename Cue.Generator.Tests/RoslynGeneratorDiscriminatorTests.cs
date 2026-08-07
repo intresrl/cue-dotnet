@@ -267,7 +267,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
         Assert.Contains("public class StructB", code);
     }
 
-    [Fact(Skip = "bug on optional values being omitted from generation")]
+    [Fact]
     public void RealWorldAnnotationElementGeneration()
     {
         using var ctx = new CueContext();

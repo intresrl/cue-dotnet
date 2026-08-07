@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+// ReSharper disable InconsistentNaming
 
 namespace Cuelang.Cue;
 
@@ -147,8 +148,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint* cue_attrs(nuint value, int kind, nuint* length);
 
     [LibraryImport("cue")]
-    internal static partial nuint* cue_fields(nuint value, [MarshalAs(UnmanagedType.I1)] bool definitions,
-        nuint* length);
+    internal static partial nuint* cue_fields_raw(nuint value, cue_eopt* options, nuint count, nuint* length);
 
     [LibraryImport("cue")]
     internal static partial nuint* cue_list(nuint value, nuint* length);

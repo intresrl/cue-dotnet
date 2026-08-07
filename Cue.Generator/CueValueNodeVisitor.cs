@@ -95,7 +95,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
             return VisitDisjunction(path, disjunctions);
         }
         
-        var fieldValues = value.Fields(true);
+        var fieldValues = value.Fields(new EvalOption.Definitions(true), new EvalOption.Optionals(true));
         var fields = new List<CueStructField>(fieldValues.Length);
 
         foreach (var fieldValue in fieldValues)
