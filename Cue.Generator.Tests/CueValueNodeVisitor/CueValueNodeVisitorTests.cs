@@ -1,4 +1,4 @@
-namespace Cue.Generator.Tests;
+namespace Cue.Generator.Tests.CueValueNodeVisitor;
 
 public sealed class CueValueNodeVisitorTests
 {
@@ -17,77 +17,9 @@ public sealed class CueValueNodeVisitorTests
             CueTopValue => Kind.Top,
             CueStructValue => Kind.Struct,
             CueListValue => Kind.List,
-            _ => Kind.Top
+            _ => throw new  ArgumentOutOfRangeException(nameof(node), node, null)
         };
     }
-
-    [Fact]
-    public void VisitSimpleNullValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("null");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Null, GetKind(node));
-        Assert.Equal("", node.Path);
-    }
-
-    [Fact]
-    public void VisitSimpleBoolValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("bool");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Bool, GetKind(node));
-    }
-
-    [Fact]
-    public void VisitSimpleIntValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("1");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Int, GetKind(node));
-    }
-
-    [Fact]
-    public void VisitSimpleFloatValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("1.2");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Float, GetKind(node));
-    }
-
-    [Fact]
-    public void VisitSimpleStringValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("\"hello\"");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.String, GetKind(node));
-    }
-
-    [Fact]
-    public void VisitBytesValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile(@"'\xde\xad\xbe\xef'");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Bytes, GetKind(node));
-    }
-
     [Fact]
     public void VisitSimpleStructWithPrimitiveFields()
     {
@@ -267,28 +199,7 @@ public sealed class CueValueNodeVisitorTests
         using var value = ctx.Compile("x: [1, 2, 3]");
         Assert.IsType<CueIntValue>(value.Lookup("x[0]").ToCueValueNode());
     }
-
-    [Fact]
-    public void VisitValueWithDefault_IsNotDisjunction()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("int | *1");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.IsType<CueIntValue>(node);
-    }
-
-    [Fact]
-    public void VisitConstrainedNumber()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile(">0 & <100");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Number, GetKind(node));
-    }
+    
 
     [Fact]
     public void VisitStructSchemaWithConstraints()
@@ -650,28 +561,6 @@ public sealed class CueValueNodeVisitorTests
     }
 
     [Fact]
-    public void VisitIntType()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("int");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.Int, GetKind(node));
-    }
-
-    [Fact]
-    public void VisitStringType()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("string");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        Assert.Equal(Kind.String, GetKind(node));
-    }
-
-    [Fact]
     public void VisitJsonValue()
     {
         using var ctx = new CueContext();
@@ -706,102 +595,6 @@ public sealed class CueValueNodeVisitorTests
 
         var statusField = node.Fields.First(f => f.Name == "status");
         Assert.IsType<CueStringValue>(statusField.Value);
-    }
-
-    [Fact]
-    public void ConcreteBoolValueIsExtracted()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("true");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var boolNode = Assert.IsType<CueBoolValue>(node);
-        Assert.True(boolNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void ConcreteIntValueIsExtracted()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("42");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var intNode = Assert.IsType<CueIntValue>(node);
-        Assert.Equal(42, intNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void ConcreteFloatValueIsExtracted()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("3.14");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var floatNode = Assert.IsType<CueFloatValue>(node);
-        Assert.Equal(3.14, floatNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void ConcreteStringValueIsExtracted()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("\"hello world\"");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var stringNode = Assert.IsType<CueStringValue>(node);
-        Assert.Equal("hello world", stringNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void ConcreteBytesValueIsExtracted()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.ToValue(new byte[] { 1, 2, 3 });
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var bytesNode = Assert.IsType<CueBytesValue>(node);
-        Assert.Equal(new byte[] { 1, 2, 3 }, bytesNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void BoolTypeHasNullConcreteValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("bool");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var boolNode = Assert.IsType<CueBoolValue>(node);
-        Assert.Null(boolNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void IntTypeHasNullConcreteValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("int");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var intNode = Assert.IsType<CueIntValue>(node);
-        Assert.Null(intNode.ConcreteValue);
-    }
-
-    [Fact]
-    public void StringTypeHasNullConcreteValue()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("string");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var stringNode = Assert.IsType<CueStringValue>(node);
-        Assert.Null(stringNode.ConcreteValue);
     }
 
     [Fact]

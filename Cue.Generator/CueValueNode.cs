@@ -40,7 +40,7 @@ public sealed record CueBytesValue(string Path, byte[]? ConcreteValue = null) : 
     public override string ToString() => $"Bytes at {Path}";
 }
 
-public sealed record CueNumberValue(string Path, double? ConcreteValue = null) : CueValueNode(Path)
+public sealed record CueNumberValue(string Path) : CueValueNode(Path)
 {
     public override string ToString() => $"Number at {Path}";
 }

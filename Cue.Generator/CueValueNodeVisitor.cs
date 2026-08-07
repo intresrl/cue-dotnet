@@ -16,32 +16,12 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 
     private static T? GetConcrete<T>(Value value, Func<Value, T> getConcrete) where T : struct
     {
-        if (!value.IsConcrete()) return null;
-
-        try
-        {
-            return getConcrete(value);
-        }
-        catch
-        {
-            // Ignore errors if we can't extract the concrete value
-            return null;
-        }
+        return !value.IsConcrete() ? null : getConcrete(value);
     }
 
     private static T? GetConcreteReference<T>(Value value, Func<Value, T> getConcrete) where T : class
     {
-        if (!value.IsConcrete()) return null;
-
-        try
-        {
-            return getConcrete(value);
-        }
-        catch
-        {
-            // Ignore errors if we can't extract the concrete value
-            return null;
-        }
+        return !value.IsConcrete() ? null : getConcrete(value);
     }
 
     protected override CueValueNode VisitBool(Value value)
@@ -71,7 +51,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 
     protected override CueValueNode VisitNumber(Value value)
     {
-        return new CueNumberValue(value.Path(), GetConcrete(value, v => v.GetDouble()));
+        return new CueNumberValue(value.Path());
     }
 
     protected override CueValueNode VisitTop(Value value)
@@ -89,12 +69,12 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitStruct(Value value)
     {
         var path = value.Path();
-        
+
         if (value.Disjunctions() is { Length: > 0 } disjunctions)
         {
             return VisitDisjunction(path, disjunctions);
         }
-        
+
         var fieldValues = value.Fields(new EvalOption.Definitions(true), new EvalOption.Optionals(true));
         var fields = new List<CueStructField>(fieldValues.Length);
 
@@ -125,14 +105,26 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         return new CueDisjunction(path, branches, name, paths);
     }
 
-    private (string? name, Dictionary<string, string> branches) FindDiscriminatorField(List<CueValueNode> branches)
+    private static string GetDiscriminatorValue(CueStructValue branch, string name)
+    {
+        var field = branch.Fields.FirstOrDefault(f => f.Name == name);
+        return (field?.Value as CueStringValue)?.ConcreteValue
+               ?? throw new InvalidOperationException($"branch {branch} has no discriminator property '{name}'");
+    }
+
+    private static (string? name, Dictionary<string, string> branches) FindDiscriminatorField(
+        List<CueValueNode> branches)
     {
         if (branches.Count == 0)
+        {
             return (null, []);
+        }
 
         // All branches must be structs to have a discriminator
         if (branches.Any(b => b is not CueStructValue))
+        {
             return (null, []);
+        }
 
         var structBranches = branches.Cast<CueStructValue>().ToList();
 
@@ -144,6 +136,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
             )
             .ToArray();
 
+        // extract all discriminator candidates
         var fields = namesPerBranch
             .Aggregate((a, b) => a.IntersectBy(b.Select(e => e.Name), e => e.Name))
             .ToArray();
@@ -152,17 +145,20 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
             {
                 field,
                 allValues = structBranches
-                    .Select(b => ((CueStringValue)b.Fields.First(f => f.Name == field.Name).Value).ConcreteValue)
+                    .Select(b => GetDiscriminatorValue(b, field.Name))
                     .ToArray()
             })
             .Where(t => t.allValues.Distinct().Count() == t.allValues.Length)
             .Select(t => t.field.Name)
             .FirstOrDefault();
 
-        if (name == null) return (null, []);
+        if (name == null)
+        {
+            return (null, []);
+        }
 
         var branchDict = structBranches.ToDictionary(
-            b => ((CueStringValue)b.Fields.First(f => f.Name == name).Value).ConcreteValue!,
+            b => GetDiscriminatorValue(b, name),
             b => b.Path
         );
 

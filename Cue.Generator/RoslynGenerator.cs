@@ -506,9 +506,8 @@ public sealed class RoslynGenerator
             CueFloatValue => "double",
             CueStringValue => "string",
             CueBytesValue => "byte[]",
-            CueNumberValue => "double",
-            // TODO: Fix serialization of CueNullValue - currently serialized as object type
-            CueNullValue => "object",
+            CueNumberValue => "decimal", // todo: should support long + double
+            CueNullValue => "object", // TODO: Fix serialization of CueNullValue - currently serialized as object type
             CueBottomValue =>
                 throw new InvalidOperationException($"CueBottomValue at {node.Path} cannot be serialized"),
             _ => "object"
