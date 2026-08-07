@@ -16,12 +16,12 @@ public sealed unsafe class Attribute
 
     public string Name()
     {
-        return NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_attr_name(_resource.Handle));
+        return NativeDynamicAllocation.ToString(NativeMethods.cue_attr_name(_resource.Handle));
     }
 
     public string Value()
     {
-        return NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_attr_value(_resource.Handle));
+        return NativeDynamicAllocation.ToString(NativeMethods.cue_attr_value(_resource.Handle));
     }
 
     public Arg GetArg(int index)
@@ -34,8 +34,8 @@ public sealed unsafe class Attribute
         cue_attr_arg nativeArg = default;
         NativeMethods.cue_attr_getarg(_resource.Handle, (nuint)index, &nativeArg);
 
-        var key = NativeMarshalling.PtrToUtf8AndFree(nativeArg.key);
-        var val = NativeMarshalling.PtrToUtf8AndFree(nativeArg.val);
+        var key = NativeDynamicAllocation.ToString(nativeArg.key);
+        var val = NativeDynamicAllocation.ToString(nativeArg.val);
 
         if (string.IsNullOrEmpty(val))
         {

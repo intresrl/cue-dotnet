@@ -22,6 +22,7 @@ internal static unsafe partial class NativeMethods
     internal const int CUE_KIND_TOP = 10;
 
 
+    internal const int CUE_OPT_NONE = 0;
     internal const int CUE_OPT_ALL = 1;
     internal const int CUE_OPT_ATTR = 2;
     internal const int CUE_OPT_CONCRETE = 3;
@@ -36,6 +37,7 @@ internal static unsafe partial class NativeMethods
     internal const int CUE_OPT_RAW = 12;
     internal const int CUE_OPT_SCHEMA = 13;
 
+    internal const int CUE_BUILD_NONE = 0;
     internal const int CUE_BUILD_FILENAME = 1;
     internal const int CUE_BUILD_IMPORT_PATH = 2;
     internal const int CUE_BUILD_INFER_BUILTINS = 3;
@@ -51,12 +53,10 @@ internal static unsafe partial class NativeMethods
     internal static partial byte* cue_error_string(nuint error);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_compile_string_raw(nuint context, byte* source, cue_bopt* options, nuint count,
-        nuint* result);
+    internal static partial nuint cue_compile_string(nuint context, byte* source, cue_bopt* options, nuint* result);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_compile_bytes_raw(nuint context, byte* source, nuint size, cue_bopt* options,
-        nuint count, nuint* result);
+    internal static partial nuint cue_compile_bytes(nuint context, byte* source, nuint size, cue_bopt* options, nuint* result);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_top(nuint context);
@@ -68,7 +68,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_unify(nuint left, nuint right);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_instance_of_raw(nuint value, nuint schema, cue_eopt* options, nuint count);
+    internal static partial nuint cue_instance_of(nuint value, nuint schema, cue_eopt* options);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_lookup_string(nuint value, byte* path, nuint* result);
@@ -122,7 +122,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint cue_dec_json(nuint value, byte** result, nuint* length);
 
     [LibraryImport("cue")]
-    internal static partial nuint cue_validate_raw(nuint value, cue_eopt* options, nuint count);
+    internal static partial nuint cue_validate(nuint value, cue_eopt* options);
 
     [LibraryImport("cue")]
     internal static partial nuint cue_default(nuint value, byte* hasDefault);
@@ -148,7 +148,7 @@ internal static unsafe partial class NativeMethods
     internal static partial nuint* cue_attrs(nuint value, int kind, nuint* length);
 
     [LibraryImport("cue")]
-    internal static partial nuint* cue_fields_raw(nuint value, cue_eopt* options, nuint count, nuint* length);
+    internal static partial nuint* cue_fields(nuint value, cue_eopt* options, nuint* length);
 
     [LibraryImport("cue")]
     internal static partial nuint* cue_list(nuint value, nuint* length);

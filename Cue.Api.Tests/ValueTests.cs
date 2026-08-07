@@ -76,7 +76,7 @@ public sealed class ValueTests
 
         using var ctx = new CueContext();
         using var withDefault = ctx.Compile("int | *1");
-        using var bytesValue = ctx.Compile("'\\xde\\xad\\xbe\\xef'");
+        using var bytesValue = ctx.Compile(@"'\xde\xad\xbe\xef'");
         using var jsonValue = ctx.Compile("a: b: c: 42");
 
         var defaultValue = withDefault.DefaultValue();

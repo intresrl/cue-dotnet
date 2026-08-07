@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Cuelang.Cue;
 
 public sealed unsafe class Value : IDisposable
@@ -40,15 +42,8 @@ public sealed unsafe class Value : IDisposable
     public Value(CueContext context, string value)
     {
         Context = context;
-        var utf8 = NativeMarshalling.AllocUtf8(value);
-        try
-        {
-            _resource = new CueResource(NativeMethods.cue_from_string(context.Handle, utf8));
-        }
-        finally
-        {
-            NativeMarshalling.FreeUtf8(utf8);
-        }
+        using var utf8 = NativeUtf8String.From(value);
+        _resource = new CueResource(NativeMethods.cue_from_string(context.Handle, utf8.Str));
     }
 
     public Value(CueContext context, byte[] value)
@@ -80,7 +75,7 @@ public sealed unsafe class Value : IDisposable
         var error = NativeMethods.cue_value_error(Handle);
         if (error == 0) return new Result<Value, string>.Ok(this);
         
-        var msg = NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_error_string(error));
+        var msg = NativeDynamicAllocation.ToString(NativeMethods.cue_error_string(error));
         return new Result<Value, string>.Err(msg);
     }
 
@@ -111,46 +106,25 @@ public sealed unsafe class Value : IDisposable
 
     public void Validate(params EvalOption[] options)
     {
-        var evalOpts = OptionEncoder.EncodeEvalOptions(options);
-        try
-        {
-            var err = NativeMethods.cue_validate_raw(Handle, evalOpts.Options, evalOpts.Count);
-            Context.ThrowIfError(err);
-        }
-        finally
-        {
-            evalOpts.Dispose();
-        }
+        using var evalOpts = EncodedEvalOptions.From(options);
+        var err = NativeMethods.cue_validate(Handle, evalOpts.Options);
+        Context.ThrowIfError(err);
     }
 
     public void CheckSchema(Value value, params EvalOption[] options)
     {
-        var evalOpts = OptionEncoder.EncodeEvalOptions(options);
-        try
-        {
-            var err = NativeMethods.cue_instance_of_raw(Handle, value.Handle, evalOpts.Options, evalOpts.Count);
-            Context.ThrowIfError(err);
-        }
-        finally
-        {
-            evalOpts.Dispose();
-        }
+        using var evalOpts = EncodedEvalOptions.From(options);
+        var err = NativeMethods.cue_instance_of(Handle, value.Handle, evalOpts.Options);
+        Context.ThrowIfError(err);
     }
 
     public Value Lookup(string path)
     {
-        var utf8 = NativeMarshalling.AllocUtf8(path);
-        try
-        {
-            nuint result = 0;
-            var err = NativeMethods.cue_lookup_string(Handle, utf8, &result);
-            Context.ThrowIfError(err);
-            return new Value(Context, result);
-        }
-        finally
-        {
-            NativeMarshalling.FreeUtf8(utf8);
-        }
+        using var utf8 = NativeUtf8String.From(path);
+        nuint result = 0;
+        var err = NativeMethods.cue_lookup_string(Handle, utf8.Str, &result);
+        Context.ThrowIfError(err);
+        return new Value(Context, result);
     }
 
     /// <summary>
@@ -221,7 +195,7 @@ public sealed unsafe class Value : IDisposable
         byte* result = null;
         var err = NativeMethods.cue_dec_string(Handle, &result);
         Context.ThrowIfError(err);
-        return NativeMarshalling.PtrToUtf8AndFree(result);
+        return NativeDynamicAllocation.ToString(result);
     }
 
     public byte[] GetBytes()
@@ -230,7 +204,7 @@ public sealed unsafe class Value : IDisposable
         nuint len = 0;
         var err = NativeMethods.cue_dec_bytes(Handle, &result, &len);
         Context.ThrowIfError(err);
-        return NativeMarshalling.CopyBytesAndFree(result, len);
+        return NativeDynamicAllocation.ToByteArray(result, len);
     }
 
     public string GetJson()
@@ -239,7 +213,7 @@ public sealed unsafe class Value : IDisposable
         nuint len = 0;
         var err = NativeMethods.cue_dec_json(Handle, &result, &len);
         Context.ThrowIfError(err);
-        return NativeMarshalling.CopyUtf8BytesAndFree(result, len);
+        return Encoding.UTF8.GetString(NativeDynamicAllocation.ToByteArray(result, len));
     }
 
     /// <summary>
@@ -248,17 +222,10 @@ public sealed unsafe class Value : IDisposable
     /// <returns>The list of properties on this object as Value objects</returns>
     public Value[] Fields(params EvalOption[] options)
     {
-        var evalOpts = OptionEncoder.EncodeEvalOptions(options);
-        try
-        {
-            nuint len = 0;
-            var fields = NativeMethods.cue_fields_raw(Handle, evalOpts.Options, evalOpts.Count, &len);
-            return FromNativeValueArray(fields, len);
-        }
-        finally
-        {
-            evalOpts.Dispose();
-        }
+        using var evalOpts = EncodedEvalOptions.From(options);
+        nuint len = 0;
+        var fields = NativeMethods.cue_fields(Handle, evalOpts.Options, &len);
+        return FromNativeValueArray(fields, len);
     }
 
     /// <summary>
@@ -291,7 +258,7 @@ public sealed unsafe class Value : IDisposable
     /// </summary>
     public string Path()
     {
-        return NativeMarshalling.PtrToUtf8AndFree(NativeMethods.cue_path(Handle));
+        return NativeDynamicAllocation.ToString(NativeMethods.cue_path(Handle));
     }
 
     public Attribute[] Attributes(AttributeKind kind = AttributeKind.Value)

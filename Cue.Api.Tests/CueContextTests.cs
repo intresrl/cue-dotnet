@@ -57,7 +57,7 @@ public sealed class CueContextTests
         using var doubleValue = ctx.ToValue(0.123);
         using var stringValue = ctx.ToValue("hello");
         using var bytesValue = ctx.ToValue([1, 2, 3, 4, 5]);
-        using var unsignedValue = ctx.ToValueAsUnsigned(0xcafebabe);
+        using var unsignedValue = ctx.ToValueAsUnsigned(0xcafebabeUL);
 
         Assert.Equal(-1, longValue.GetLong());
         Assert.True(boolValue.GetBoolean());
