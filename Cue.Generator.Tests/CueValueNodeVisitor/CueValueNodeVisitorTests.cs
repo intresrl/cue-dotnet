@@ -20,6 +20,31 @@ public sealed class CueValueNodeVisitorTests
             _ => throw new  ArgumentOutOfRangeException(nameof(node), node, null)
         };
     }
+    
+    [Fact]
+    public void VisitListWithSimpleElements()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("[...(1 | 2 | 3)]");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var listNode = Assert.IsType<CueListValue>(node);
+        Assert.Equal(Kind.Int, GetKind(listNode.ElementType));
+    }
+
+    [Fact]
+    public void VisitListSchema()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("[...string]");
+        var node = value.ToCueValueNode();
+
+        Assert.NotNull(node);
+        var listNode = Assert.IsType<CueListValue>(node);
+        Assert.Equal(Kind.String, GetKind(listNode.ElementType));
+    }
+    
     [Fact]
     public void VisitSimpleStructWithPrimitiveFields()
     {
@@ -95,30 +120,6 @@ public sealed class CueValueNodeVisitorTests
             Assert.Single(current.Fields);
             current = current.Fields[0].Value as CueStructValue;
         }
-    }
-
-    [Fact]
-    public void VisitListWithSimpleElements()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("[...(1 | 2 | 3)]");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.Int, GetKind(listNode.ElementType));
-    }
-
-    [Fact]
-    public void VisitListSchema()
-    {
-        using var ctx = new CueContext();
-        using var value = ctx.Compile("[...string]");
-        var node = value.ToCueValueNode();
-
-        Assert.NotNull(node);
-        var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.String, GetKind(listNode.ElementType));
     }
 
     [Fact]

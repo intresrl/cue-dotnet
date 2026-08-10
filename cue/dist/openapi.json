@@ -1,0 +1,1995 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Document Management & Collaboration API",
+        "description": "Complete API with modular namespaces and CRUD patterns",
+        "servers": [
+            {
+                "url": "http://localhost:8080",
+                "description": "Development"
+            },
+            {
+                "url": "https://api.example.com",
+                "description": "Production"
+            }
+        ]
+    },
+    "paths": {
+        "/documents": {
+            "post": {
+                "operationId": "createDocument",
+                "summary": "Create a document",
+                "tags": [
+                    "documents"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Document"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Document created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "listDocuments",
+                "summary": "List documents",
+                "tags": [
+                    "documents"
+                ],
+                "parameters": [
+                    {
+                        "name": "pageNumber",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageNumber"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageSize"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortBy"
+                        }
+                    },
+                    {
+                        "name": "sortDirection",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortDirection"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Document list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{documentId}": {
+            "get": {
+                "operationId": "getDocument",
+                "summary": "Get a document",
+                "tags": [
+                    "documents"
+                ],
+                "parameters": [
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Document ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Document details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateDocument",
+                "summary": "Update a document",
+                "tags": [
+                    "documents"
+                ],
+                "parameters": [
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Document ID"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Document"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Document updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteDocument",
+                "summary": "Delete a document",
+                "tags": [
+                    "documents"
+                ],
+                "parameters": [
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Document ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Document deleted"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents:batch-create": {
+            "post": {
+                "operationId": "batchCreateDocuments",
+                "summary": "Batch create documents",
+                "tags": [
+                    "documents"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentBatchCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "207": {
+                        "description": "Batch creation result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchCreateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents:batch-update": {
+            "patch": {
+                "operationId": "batchUpdateDocuments",
+                "summary": "Batch update documents",
+                "tags": [
+                    "documents"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentBatchUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch update result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchUpdateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents:batch": {
+            "delete": {
+                "operationId": "batchDeleteDocuments",
+                "summary": "Batch delete documents",
+                "tags": [
+                    "documents"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocumentBatchDeleteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch delete result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchDeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teams": {
+            "post": {
+                "operationId": "createTeam",
+                "summary": "Create a team",
+                "tags": [
+                    "teams"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Team"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Team created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "listTeams",
+                "summary": "List teams",
+                "tags": [
+                    "teams"
+                ],
+                "parameters": [
+                    {
+                        "name": "pageNumber",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageNumber"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageSize"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortBy"
+                        }
+                    },
+                    {
+                        "name": "sortDirection",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortDirection"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Team list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teams/{teamId}": {
+            "get": {
+                "operationId": "getTeam",
+                "summary": "Get a team",
+                "tags": [
+                    "teams"
+                ],
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Team ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Team details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateTeam",
+                "summary": "Update a team",
+                "tags": [
+                    "teams"
+                ],
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Team ID"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Team"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Team updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteTeam",
+                "summary": "Delete a team",
+                "tags": [
+                    "teams"
+                ],
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Team ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Team deleted"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teams:batch-create": {
+            "post": {
+                "operationId": "batchCreateTeams",
+                "summary": "Batch create teams",
+                "tags": [
+                    "teams"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamBatchCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "207": {
+                        "description": "Batch creation result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchCreateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teams:batch-update": {
+            "patch": {
+                "operationId": "batchUpdateTeams",
+                "summary": "Batch update teams",
+                "tags": [
+                    "teams"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamBatchUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch update result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchUpdateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teams:batch": {
+            "delete": {
+                "operationId": "batchDeleteTeams",
+                "summary": "Batch delete teams",
+                "tags": [
+                    "teams"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamBatchDeleteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch delete result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchDeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "operationId": "createUser",
+                "summary": "Create a user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "listUsers",
+                "summary": "List users",
+                "parameters": [
+                    {
+                        "name": "pageNumber",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageNumber"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/pageSize"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortBy"
+                        }
+                    },
+                    {
+                        "name": "sortDirection",
+                        "schema": {
+                            "$ref": "#/components/schemas/sortDirection"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "operationId": "getUser",
+                "summary": "Get a user",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "User ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateUser",
+                "summary": "Update a user",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "User ID"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteUser",
+                "summary": "Delete a user",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "User ID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users:batch-create": {
+            "post": {
+                "operationId": "batchCreateUsers",
+                "summary": "Batch create users",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserBatchCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "207": {
+                        "description": "Batch creation result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchCreateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users:batch-update": {
+            "patch": {
+                "operationId": "batchUpdateUsers",
+                "summary": "Batch update users",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserBatchUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch update result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchUpdateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users:batch": {
+            "delete": {
+                "operationId": "batchDeleteUsers",
+                "summary": "Batch delete users",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserBatchDeleteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Batch delete result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchDeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BatchCreateResponse": {
+                "description": "BatchCreateResponse is the result of a batch-create operation (HTTP 207)",
+                "type": "object",
+                "required": [
+                    "succeeded",
+                    "failed",
+                    "results"
+                ],
+                "properties": {
+                    "succeeded": {
+                        "description": "Number of items successfully created",
+                        "type": "integer"
+                    },
+                    "failed": {
+                        "description": "Number of items that failed",
+                        "type": "integer"
+                    },
+                    "results": {
+                        "description": "Individual item results",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BatchItemResult"
+                        }
+                    }
+                }
+            },
+            "BatchDeleteResponse": {
+                "description": "BatchDeleteResponse is the result of a batch-delete operation",
+                "type": "object",
+                "required": [
+                    "deleted",
+                    "skipped"
+                ],
+                "properties": {
+                    "deleted": {
+                        "description": "Number of resources deleted",
+                        "type": "integer"
+                    },
+                    "skipped": {
+                        "description": "Number of resources skipped",
+                        "type": "integer"
+                    }
+                }
+            },
+            "BatchItemResult": {
+                "description": "BatchItemResult is the result of a single item in a batch operation",
+                "type": "object",
+                "required": [
+                    "index",
+                    "success"
+                ],
+                "properties": {
+                    "index": {
+                        "description": "Zero-based position of the item in the request array",
+                        "type": "integer"
+                    },
+                    "success": {
+                        "description": "Whether this item was processed successfully",
+                        "type": "boolean"
+                    },
+                    "resourceId": {
+                        "description": "ID of the newly created resource (present on success)",
+                        "type": "string"
+                    },
+                    "error": {
+                        "$ref": "#/components/schemas/ErrorDetail"
+                    }
+                }
+            },
+            "BatchUpdateResponse": {
+                "description": "BatchUpdateResponse is the result of a batch-update operation",
+                "type": "object",
+                "required": [
+                    "updated",
+                    "skipped",
+                    "dryRun"
+                ],
+                "properties": {
+                    "updated": {
+                        "description": "Number of resources updated",
+                        "type": "integer"
+                    },
+                    "skipped": {
+                        "description": "Number of resources skipped",
+                        "type": "integer"
+                    },
+                    "dryRun": {
+                        "description": "True when the request was a dry run and no changes were persisted",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Document": {
+                "description": "Document is a document managed by the system",
+                "type": "object",
+                "required": [
+                    "title",
+                    "status",
+                    "contentType"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique document identifier",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Document title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Optional human-readable description",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Publication status",
+                        "type": "string"
+                    },
+                    "contentType": {
+                        "description": "File/content type",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "description": "Free-form tag labels",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isPublic": {
+                        "description": "Whether the document is publicly visible",
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "description": "Creation timestamp (ISO 8601)",
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "description": "Last-update timestamp (ISO 8601)",
+                        "type": "string"
+                    }
+                }
+            },
+            "DocumentBatchCreateRequest": {
+                "description": "DocumentBatchCreateRequest is a batch create request for documents",
+                "type": "object",
+                "required": [
+                    "items"
+                ],
+                "properties": {
+                    "items": {
+                        "description": "Documents to create",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Document"
+                        }
+                    },
+                    "continueOnError": {
+                        "description": "Continue processing remaining items after a failure",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "DocumentBatchDeleteRequest": {
+                "description": "DocumentBatchDeleteRequest is a batch delete request for documents",
+                "type": "object",
+                "required": [
+                    "filter"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/DocumentFilter"
+                    },
+                    "confirmDeletion": {
+                        "description": "Must be true to confirm destructive batch delete",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "DocumentBatchUpdateRequest": {
+                "description": "DocumentBatchUpdateRequest is a batch update request for documents",
+                "type": "object",
+                "required": [
+                    "filter",
+                    "updates"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/DocumentFilter"
+                    },
+                    "updates": {
+                        "$ref": "#/components/schemas/Document"
+                    },
+                    "dryRun": {
+                        "description": "Preview changes without persisting them",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "DocumentFilter": {
+                "description": "DocumentFilter contains query parameters for filtering and paginating documents",
+                "type": "object",
+                "properties": {
+                    "search.query": {
+                        "description": "Full-text search query",
+                        "type": "string"
+                    },
+                    "search.caseSensitive": {
+                        "description": "Enable case-sensitive search",
+                        "type": "boolean"
+                    },
+                    "search.fuzzy": {
+                        "description": "Enable fuzzy matching",
+                        "type": "boolean"
+                    },
+                    "statusIn": {
+                        "description": "Filter by one or more statuses",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isPublic": {
+                        "description": "Filter by visibility",
+                        "type": "boolean"
+                    },
+                    "tagIds": {
+                        "description": "Filter by tag identifiers",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "dateRange.from": {
+                        "description": "Earliest createdAt to include",
+                        "type": "string"
+                    },
+                    "dateRange.to": {
+                        "description": "Latest createdAt to include",
+                        "type": "string"
+                    },
+                    "pageNumber": {
+                        "description": "Page number (1-based)",
+                        "type": "integer"
+                    },
+                    "pageSize": {
+                        "description": "Items per page",
+                        "type": "integer"
+                    },
+                    "sortBy": {
+                        "description": "Field to sort by",
+                        "type": "string"
+                    },
+                    "sortDirection": {
+                        "description": "Sort direction",
+                        "type": "string"
+                    }
+                }
+            },
+            "DocumentListItem": {
+                "description": "DocumentListItem is a lightweight document representation for list responses",
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "status",
+                    "createdAt"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique document identifier",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Document title",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Publication status",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "description": "Creation timestamp",
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "description": "Last-update timestamp",
+                        "type": "string"
+                    }
+                }
+            },
+            "DocumentListResponse": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DocumentListItem"
+                        }
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WithPagination"
+                    },
+                    {
+                        "required": [
+                            "items"
+                        ]
+                    }
+                ]
+            },
+            "ErrorDetail": {
+                "description": "ErrorDetail describes a single error in responses",
+                "type": "object",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "description": "Machine-readable error code",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "Human-readable error message",
+                        "type": "string"
+                    },
+                    "field": {
+                        "description": "Field that caused the error (if applicable)",
+                        "type": "string"
+                    },
+                    "suggestion": {
+                        "description": "Suggested fix",
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "description": "ErrorResponse is a standard error envelope for all 4xx/5xx responses",
+                "type": "object",
+                "required": [
+                    "error"
+                ],
+                "properties": {
+                    "error": {
+                        "$ref": "#/components/schemas/ErrorDetail"
+                    },
+                    "timestamp": {
+                        "description": "Time the error occurred",
+                        "type": "string"
+                    },
+                    "traceId": {
+                        "description": "Distributed trace identifier",
+                        "type": "string"
+                    }
+                }
+            },
+            "PaginationMeta": {
+                "description": "PaginationMeta is metadata included in every list response",
+                "type": "object",
+                "required": [
+                    "pageNumber",
+                    "pageSize",
+                    "totalCount",
+                    "hasMore"
+                ],
+                "properties": {
+                    "pageNumber": {
+                        "description": "Current page (1-based)",
+                        "type": "integer"
+                    },
+                    "pageSize": {
+                        "description": "Items per page",
+                        "type": "integer"
+                    },
+                    "totalCount": {
+                        "description": "Total items across all pages",
+                        "type": "integer"
+                    },
+                    "hasMore": {
+                        "description": "Whether more pages exist",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Team": {
+                "description": "Team is a team grouping users with shared access to resources",
+                "type": "object",
+                "required": [
+                    "name",
+                    "ownerIds",
+                    "memberIds"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique team identifier",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Team display name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Optional description of the team's purpose",
+                        "type": "string"
+                    },
+                    "ownerIds": {
+                        "description": "User IDs with owner privileges",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "memberIds": {
+                        "description": "User IDs who are members",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isPublic": {
+                        "description": "Whether the team is discoverable by non-members",
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "description": "Team creation timestamp",
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "description": "Last-update timestamp",
+                        "type": "string"
+                    }
+                }
+            },
+            "TeamBatchCreateRequest": {
+                "description": "TeamBatchCreateRequest is a batch create request for teams",
+                "type": "object",
+                "required": [
+                    "items"
+                ],
+                "properties": {
+                    "items": {
+                        "description": "Teams to create",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Team"
+                        }
+                    },
+                    "continueOnError": {
+                        "description": "Continue processing remaining items after a failure",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TeamBatchDeleteRequest": {
+                "description": "TeamBatchDeleteRequest is a batch delete request for teams",
+                "type": "object",
+                "required": [
+                    "filter"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/TeamFilter"
+                    },
+                    "confirmDeletion": {
+                        "description": "Must be true to confirm destructive batch delete",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TeamBatchUpdateRequest": {
+                "description": "TeamBatchUpdateRequest is a batch update request for teams",
+                "type": "object",
+                "required": [
+                    "filter",
+                    "updates"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/TeamFilter"
+                    },
+                    "updates": {
+                        "$ref": "#/components/schemas/Team"
+                    },
+                    "dryRun": {
+                        "description": "Preview changes without persisting them",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TeamFilter": {
+                "description": "TeamFilter contains query parameters for filtering and paginating teams",
+                "type": "object",
+                "properties": {
+                    "search.query": {
+                        "description": "Full-text search query",
+                        "type": "string"
+                    },
+                    "isPublic": {
+                        "description": "Filter by visibility",
+                        "type": "boolean"
+                    },
+                    "ownerIds": {
+                        "description": "Filter teams by owner user ID",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "hasMembers.userId": {
+                        "description": "Filter teams that include this user ID as a member",
+                        "type": "string"
+                    },
+                    "hasMembers.role": {
+                        "description": "Filter by the member's role within the team",
+                        "type": "string"
+                    },
+                    "dateRange.from": {
+                        "description": "Earliest createdAt to include",
+                        "type": "string"
+                    },
+                    "dateRange.to": {
+                        "description": "Latest createdAt to include",
+                        "type": "string"
+                    },
+                    "pageNumber": {
+                        "description": "Page number (1-based)",
+                        "type": "integer"
+                    },
+                    "pageSize": {
+                        "description": "Items per page",
+                        "type": "integer"
+                    },
+                    "sortBy": {
+                        "description": "Field to sort by",
+                        "type": "string"
+                    },
+                    "sortDirection": {
+                        "description": "Sort direction",
+                        "type": "string"
+                    }
+                }
+            },
+            "TeamListItem": {
+                "description": "TeamListItem is a lightweight team representation for list responses",
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "memberCount",
+                    "ownerCount",
+                    "isPublic",
+                    "createdAt"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Team identifier",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Team display name",
+                        "type": "string"
+                    },
+                    "memberCount": {
+                        "description": "Number of members",
+                        "type": "integer"
+                    },
+                    "ownerCount": {
+                        "description": "Number of owners",
+                        "type": "integer"
+                    },
+                    "isPublic": {
+                        "description": "Whether the team is discoverable",
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "description": "Team creation timestamp",
+                        "type": "string"
+                    }
+                }
+            },
+            "TeamListResponse": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TeamListItem"
+                        }
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WithPagination"
+                    },
+                    {
+                        "required": [
+                            "items"
+                        ]
+                    }
+                ]
+            },
+            "User": {
+                "description": "User is a user account in the system",
+                "type": "object",
+                "required": [
+                    "email",
+                    "firstName",
+                    "lastName",
+                    "role"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique user identifier",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "description": "Given name",
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "description": "Family name",
+                        "type": "string"
+                    },
+                    "role": {
+                        "description": "Access role",
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "user"
+                        ]
+                    },
+                    "isActive": {
+                        "description": "Whether the account is enabled",
+                        "type": "boolean"
+                    },
+                    "lastLoginAt": {
+                        "description": "Last successful login timestamp",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "description": "Account creation timestamp",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserBatchCreateRequest": {
+                "description": "UserBatchCreateRequest is a batch create request for users",
+                "type": "object",
+                "required": [
+                    "items"
+                ],
+                "properties": {
+                    "items": {
+                        "description": "Users to create",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "continueOnError": {
+                        "description": "Continue processing remaining items after a failure",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "UserBatchDeleteRequest": {
+                "description": "UserBatchDeleteRequest is a batch delete request for users",
+                "type": "object",
+                "required": [
+                    "filter"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/UserFilter"
+                    },
+                    "confirmDeletion": {
+                        "description": "Must be true to confirm destructive batch delete",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "UserBatchUpdateRequest": {
+                "description": "UserBatchUpdateRequest is a batch update request for users",
+                "type": "object",
+                "required": [
+                    "filter",
+                    "updates"
+                ],
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/UserFilter"
+                    },
+                    "updates": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "dryRun": {
+                        "description": "Preview changes without persisting them",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "UserFilter": {
+                "description": "UserFilter contains query parameters for filtering and paginating users",
+                "type": "object",
+                "properties": {
+                    "search.query": {
+                        "description": "Text search across email/firstName/lastName",
+                        "type": "string"
+                    },
+                    "search.fields": {
+                        "description": "Fields to search within",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "roleIn": {
+                        "description": "Filter by one or more roles",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isActive": {
+                        "description": "Filter by account status",
+                        "type": "boolean"
+                    },
+                    "dateRange.from": {
+                        "description": "Earliest createdAt to include",
+                        "type": "string"
+                    },
+                    "dateRange.to": {
+                        "description": "Latest createdAt to include",
+                        "type": "string"
+                    },
+                    "pageNumber": {
+                        "description": "Page number (1-based)",
+                        "type": "integer"
+                    },
+                    "pageSize": {
+                        "description": "Items per page",
+                        "type": "integer"
+                    },
+                    "sortBy": {
+                        "description": "Field to sort by",
+                        "type": "string"
+                    },
+                    "sortDirection": {
+                        "description": "Sort direction",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserListItem": {
+                "description": "UserListItem is a lightweight user representation for list responses",
+                "type": "object",
+                "required": [
+                    "id",
+                    "email",
+                    "firstName",
+                    "lastName",
+                    "role",
+                    "isActive"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "User identifier",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "description": "Given name",
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "description": "Family name",
+                        "type": "string"
+                    },
+                    "role": {
+                        "description": "Access role",
+                        "type": "string"
+                    },
+                    "isActive": {
+                        "description": "Whether the account is enabled",
+                        "type": "boolean"
+                    },
+                    "lastLoginAt": {
+                        "description": "Last successful login timestamp",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserListResponse": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserListItem"
+                        }
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WithPagination"
+                    },
+                    {
+                        "required": [
+                            "items"
+                        ]
+                    }
+                ]
+            },
+            "WithPagination": {
+                "type": "object",
+                "required": [
+                    "items",
+                    "pagination"
+                ],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "pagination": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                }
+            },
+            "pageNumber": {
+                "description": "Page number (1-based)",
+                "type": "integer"
+            },
+            "pageSize": {
+                "description": "Items per page",
+                "type": "integer"
+            },
+            "sortBy": {
+                "description": "Sort by field",
+                "type": "string"
+            },
+            "sortDirection": {
+                "description": "Sort direction",
+                "type": "string",
+                "enum": [
+                    "asc",
+                    "desc"
+                ]
+            }
+        }
+    }
+}

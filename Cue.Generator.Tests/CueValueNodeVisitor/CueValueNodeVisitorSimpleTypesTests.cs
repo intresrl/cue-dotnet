@@ -1,3 +1,8 @@
+using System.Text;
+using System.Text.Json;
+using FsCheck;
+using FsCheck.Fluent;
+
 namespace Cue.Generator.Tests.CueValueNodeVisitor;
 
 public sealed class CueValueNodeVisitorSimpleTypesTests
@@ -62,5 +67,102 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
         Assert.Equal(kind, GetKind(node));
         Assert.Equal(concrete, GetConcreteValue(node));
         Assert.Equal("", node.Path);
+    }
+
+
+    [Fact]
+    void RevRevIsOrig()
+    {
+        
+        
+        Prop.ForAll<int[]>(xs => xs.Reverse().Reverse().SequenceEqual(xs))
+            .QuickCheckThrowOnFailure();
+    }
+
+   
+}
+
+public static class CueArbitrary
+{
+    public static Arbitrary<CueValueNode> Arbitrar => Arb.;
+    
+    public static Gen<CueValueNode> Gen(
+        Arbitrary<bool> bools,
+        Arbitrary<byte> bytes,
+        Arbitrary<int> ints,
+        Arbitrary<double> doubles,
+        Arbitrary<string> strings)
+    {
+        return FsCheck.Fluent.Gen.OneOf(
+            FsCheck.Fluent.Gen.Elements<CueValueNode>(
+                new CueBottomValue(""), 
+                new CueTopValue(""), 
+                new CueNullValue(""),
+                new CueNumberValue(""),
+                new CueBoolValue(""), 
+                new CueBytesValue(""), 
+                new CueFloatValue(""),
+                new CueIntValue(""),
+                new CueStringValue("")),
+            
+            bools.Generator.
+                Select(CueValueNode (b) => new CueBoolValue("", b)),
+            
+            ints.Generator
+                .Select(CueValueNode (n) => new CueIntValue("", n)),
+            
+            doubles.Generator
+                .Select(CueValueNode (d) => new CueFloatValue("", d)),
+            
+            strings.Generator
+                .Select(CueValueNode (s) => new CueStringValue("", s)),
+            
+            bytes.Generator
+                .ArrayOf()
+                .Select(CueValueNode (bs) => new CueBytesValue("", bs))
+        );
+    }
+    
+    public static string Source(this CueValueNode node)
+    {
+        return node switch
+        {
+            CueBottomValue => "_|_",
+            CueTopValue => "_",
+            CueNullValue => "null",
+            CueNumberValue => "number",
+            
+            CueBoolValue { ConcreteValue: var v } => v?.ToString() ?? "bool",
+            CueBytesValue { ConcreteValue: var v } => v?.ToString() ?? "bytes",
+            CueFloatValue { ConcreteValue: var v } => v?.ToString() ?? "float",
+            CueIntValue { ConcreteValue: var v } => v?.ToString() ?? "int",
+            CueStringValue { ConcreteValue: var v } => v != null
+                ? JsonSerializer.Serialize(v)
+                : "string", // CUE string literals are a superset of JSON
+            
+            CueStructValue { Fields: var f } => string.Join("\n", [
+                "{",
+                .. f.Select(e =>
+                {
+                    var name = JsonSerializer.Serialize(e.Name);
+                    var delimiter = e.Optional ? "?:" : ":";
+                    var value = e.Value.Source();
+
+                    return $"  {name}{delimiter}{value}";
+                }),
+                "}"
+            ]),
+            
+            CueListValue { ElementType: var v } => $"""
+                                                    [
+                                                      ... {v.Source()}
+                                                    ]
+                                                    """,
+            
+            CueDisjunction { Branches: var bs } => string.Join(" | ", bs),
+
+            
+            _ => throw new ArgumentOutOfRangeException(nameof(node))
+        };
     }
 }
