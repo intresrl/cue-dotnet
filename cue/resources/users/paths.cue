@@ -30,9 +30,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
 			}
 			responses: {
-				"201": {description: "User created"}
-				"400": {description: "Bad request"}
-				"422": {description: "Validation error"}
+				"201": {
+					description: "User created"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"422": {
+					description: "Validation error"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		get: {
@@ -47,8 +56,20 @@ PathItems: {
 				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
 			]
 			responses: {
-				"200": {description: "User list"}
-				"400": {description: "Bad request"}
+				"200": {
+					description: "User list"
+					content: {"application/json": {schema: {
+						type: "object"
+						properties: {
+							items: {type: "array", items: {"$ref": "#/components/schemas/UserListItem"}}
+							pagination: {"$ref": "#/components/schemas/PaginationMeta"}
+						}
+					}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -59,8 +80,14 @@ PathItems: {
 			tags: ["users"]
 			parameters: [#PathParams.id]
 			responses: {
-				"200": {description: "User details"}
-				"404": {description: "Not found"}
+				"200": {
+					description: "User details"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		put: {
@@ -73,9 +100,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
 			}
 			responses: {
-				"200": {description: "User updated"}
-				"404": {description: "Not found"}
-				"409": {description: "Conflict"}
+				"200": {
+					description: "User updated"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"409": {
+					description: "Conflict"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		delete: {
@@ -84,8 +120,13 @@ PathItems: {
 			tags: ["users"]
 			parameters: [#PathParams.id]
 			responses: {
-				"204": {description: "User deleted"}
-				"404": {description: "Not found"}
+				"204": {
+					description: "User deleted"
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -99,8 +140,14 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/UserBatchCreateRequest"}}}
 			}
 			responses: {
-				"207": {description: "Batch creation result"}
-				"400": {description: "Bad request"}
+				"207": {
+					description: "Batch creation result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchCreateResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -114,9 +161,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/UserBatchUpdateRequest"}}}
 			}
 			responses: {
-				"200": {description: "Batch update result"}
-				"400": {description: "Bad request"}
-				"422": {description: "Validation error"}
+				"200": {
+					description: "Batch update result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchUpdateResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"422": {
+					description: "Validation error"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -130,8 +186,14 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/UserBatchDeleteRequest"}}}
 			}
 			responses: {
-				"200": {description: "Batch delete result"}
-				"400": {description: "Bad request"}
+				"200": {
+					description: "Batch delete result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchDeleteResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}

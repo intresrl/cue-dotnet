@@ -30,9 +30,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
 			}
 			responses: {
-				"201": {description: "Team created"}
-				"400": {description: "Bad request"}
-				"422": {description: "Validation error"}
+				"201": {
+					description: "Team created"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"422": {
+					description: "Validation error"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		get: {
@@ -47,8 +56,20 @@ PathItems: {
 				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
 			]
 			responses: {
-				"200": {description: "Team list"}
-				"400": {description: "Bad request"}
+				"200": {
+					description: "Team list"
+					content: {"application/json": {schema: {
+						type: "object"
+						properties: {
+							items: {type: "array", items: {"$ref": "#/components/schemas/TeamListItem"}}
+							pagination: {"$ref": "#/components/schemas/PaginationMeta"}
+						}
+					}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -59,8 +80,14 @@ PathItems: {
 			tags: ["teams"]
 			parameters: [#PathParams.id]
 			responses: {
-				"200": {description: "Team details"}
-				"404": {description: "Not found"}
+				"200": {
+					description: "Team details"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		put: {
@@ -73,9 +100,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
 			}
 			responses: {
-				"200": {description: "Team updated"}
-				"404": {description: "Not found"}
-				"409": {description: "Conflict"}
+				"200": {
+					description: "Team updated"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"409": {
+					description: "Conflict"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 		delete: {
@@ -84,8 +120,13 @@ PathItems: {
 			tags: ["teams"]
 			parameters: [#PathParams.id]
 			responses: {
-				"204": {description: "Team deleted"}
-				"404": {description: "Not found"}
+				"204": {
+					description: "Team deleted"
+				}
+				"404": {
+					description: "Not found"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -99,8 +140,14 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchCreateRequest"}}}
 			}
 			responses: {
-				"207": {description: "Batch creation result"}
-				"400": {description: "Bad request"}
+				"207": {
+					description: "Batch creation result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchCreateResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -114,9 +161,18 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchUpdateRequest"}}}
 			}
 			responses: {
-				"200": {description: "Batch update result"}
-				"400": {description: "Bad request"}
-				"422": {description: "Validation error"}
+				"200": {
+					description: "Batch update result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchUpdateResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
+				"422": {
+					description: "Validation error"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
@@ -130,8 +186,14 @@ PathItems: {
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchDeleteRequest"}}}
 			}
 			responses: {
-				"200": {description: "Batch delete result"}
-				"400": {description: "Bad request"}
+				"200": {
+					description: "Batch delete result"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/BatchDeleteResponse"}}}
+				}
+				"400": {
+					description: "Bad request"
+					content: {"application/json": {schema: {"$ref": "#/components/schemas/ErrorResponse"}}}
+				}
 			}
 		}
 	}
