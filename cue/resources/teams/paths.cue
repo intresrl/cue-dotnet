@@ -49,11 +49,11 @@ PathItems: {
 			summary: "List teams"
 			tags: ["teams"]
 			parameters: [
-				{name: "filter", in: "query", schema: {"$ref": "#/components/schemas/TeamFilter"}, description: "Filter teams"}
-				{name: "pageNumber", in: "query", schema: {type: "integer"}, description: "Page number (1-based)"}
-				{name: "pageSize", in: "query", schema: {type: "integer"}, description: "Items per page"}
-				{name: "sortBy", in: "query", schema: {type: "string"}, description: "Sort by field"}
-				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
+				{"$ref": "#/components/parameters/team_filter"}
+				{"$ref": "#/components/parameters/pageNumber"}
+				{"$ref": "#/components/parameters/pageSize"}
+				{"$ref": "#/components/parameters/sortBy"}
+				{"$ref": "#/components/parameters/sortDirection"}
 			]
 			responses: {
 				"200": {

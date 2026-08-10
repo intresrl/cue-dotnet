@@ -156,12 +156,79 @@ def extract_schema_definitions():
     return schemas
 
 
+def extract_parameters():
+    """Extract reusable parameter definitions from operations/schemas.cue.
+    
+    Returns a dict mapping parameter names to parameter definitions.
+    """
+    parameters = {}
+    
+    # List of parameter definitions to extract
+    param_names = [
+        "ListParams",
+        "DocumentFilterParam",
+        "UserFilterParam", 
+        "TeamFilterParam",
+    ]
+    
+    for param_name in param_names:
+        # Export the parameter definition
+        param_def = run_cue_export("./operations/...", param_name, skip_errors=True)
+        if param_def is not None:
+            # For ListParams (array), convert to individual named parameters
+            if param_name == "ListParams" and isinstance(param_def, list):
+                for param in param_def:
+                    if isinstance(param, dict) and "name" in param:
+                        parameters[param["name"]] = param
+            # For individual filter parameters, store with base name
+            elif param_name.endswith("FilterParam") and isinstance(param_def, dict):
+                resource = param_name.replace("FilterParam", "").lower()
+                parameters[f"{resource}_filter"] = param_def
+    
+    return parameters
+
+
+def convert_parameters_to_refs(obj, parameters_dict):
+    """Convert parameter objects to $ref references.
+    
+    Replaces parameter definitions with $ref pointers to components/parameters.
+    """
+    if isinstance(obj, dict):
+        result = {}
+        for key, value in obj.items():
+            if key == "parameters" and isinstance(value, list):
+                # Convert parameters array
+                new_params = []
+                for param in value:
+                    if isinstance(param, dict) and "name" in param:
+                        param_name = param["name"]
+                        # Try to find matching parameter in dict
+                        if param_name in parameters_dict:
+                            new_params.append({"$ref": f"#/components/parameters/{param_name}"})
+                        else:
+                            # If not found by name, skip (it's likely an inline parameter)
+                            new_params.append(param)
+                    else:
+                        new_params.append(param)
+                result[key] = new_params
+            else:
+                result[key] = convert_parameters_to_refs(value, parameters_dict)
+        return result
+    elif isinstance(obj, list):
+        return [convert_parameters_to_refs(item, parameters_dict) for item in obj]
+    else:
+        return obj
+
+
 def main():
     # Read API metadata from operations/api.cue
     api_spec = run_cue_export("./operations/...", "APISpec")
     
-    # Extract schemas from CUE types using cue def
+    # Extract schemas from CUE types
     schemas = extract_schema_definitions()
+    
+    # Extract parameters from CUE types
+    parameters = extract_parameters()
     
     # Auto-discover and collect from each resource package
     tags = []
@@ -180,6 +247,8 @@ def main():
         if path_items:
             # Expand schema references in path items (filters, path parameters)
             path_items = expand_schema_references(path_items, schemas)
+            # Convert parameters to use $ref where possible
+            path_items = convert_parameters_to_refs(path_items, parameters)
             paths.update(path_items)
     
     # Assemble complete OpenAPI 3.0 document
@@ -198,6 +267,10 @@ def main():
             "schemas": schemas,
         },
     }
+    
+    # Add parameters section if any parameters are defined
+    if parameters:
+        doc["components"]["parameters"] = parameters
     
     print(json.dumps(doc, indent=2))
 

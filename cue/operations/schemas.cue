@@ -233,6 +233,21 @@ TeamBatchDeleteRequest: {
 	confirmDeletion?: bool          @json(description: "Must be true to confirm destructive batch delete")
 }
 
+// ── Reusable Parameters ─────────────────────────────────────────────────
+
+// Common pagination and sorting parameters for list operations
+ListParams: [
+	{name: "pageNumber", in: "query", schema: {type: "integer"}, description: "Page number (1-based)"}
+	{name: "pageSize", in: "query", schema: {type: "integer"}, description: "Items per page"}
+	{name: "sortBy", in: "query", schema: {type: "string"}, description: "Sort by field"}
+	{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
+]
+
+// Filter parameters for each resource
+DocumentFilterParam: {name: "filter", in: "query", schema: {"$ref": "#/components/schemas/DocumentFilter"}, description: "Filter documents"}
+UserFilterParam: {name: "filter", in: "query", schema: {"$ref": "#/components/schemas/UserFilter"}, description: "Filter users"}
+TeamFilterParam: {name: "filter", in: "query", schema: {"$ref": "#/components/schemas/TeamFilter"}, description: "Filter teams"}
+
 // Schemas is an export that maps schema names to concrete example values
 // This allows the Python script to extract type information
 Schemas: {
