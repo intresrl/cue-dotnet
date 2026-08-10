@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project includes automated generation of OpenAPI 3.0 specification and interactive Swagger UI documentation from the CUE API specification.
+This project includes automated generation of OpenAPI 3.0 specification and interactive Swagger UI documentation from CUE types. The generation is **completely domain-agnostic** — add new resources without changing Python code.
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ just serve-docs
 
 ## Files
 
-- **scripts/gen_openapi.py** - Python script that generates OpenAPI 3.0 JSON
+- **scripts/gen_openapi.py** - Domain-agnostic Python script that generates OpenAPI 3.0 JSON
 - **swagger.html** - Static HTML page using Swagger UI from unpkg CDN
 - **dist/openapi.json** - Generated OpenAPI 3.0 specification (created by gen-docs)
 - **dist/index.html** - Generated Swagger UI documentation (created by gen-docs)
@@ -29,25 +29,36 @@ just serve-docs
 
 ### Generation Process
 
-1. **`just gen-openapi`** - Generates `dist/openapi.json` from the CUE API spec
+1. **`just gen-openapi`** - Generates `dist/openapi.json` from CUE spec
 2. **`just gen-docs`** - Runs gen-openapi, then copies `swagger.html` → `dist/index.html`
 3. **`just serve-docs`** - Serves the dist/ directory on localhost:8000
 
-### Architecture
+### Architecture (Simplified & Domain-Agnostic)
 
 ```
-CUE API Spec (operations/api.cue)
-         ↓
-  gen_openapi.py
-         ↓
+operations/api.cue (APISpec)
+    ↓
+operations/schemas.cue (Schemas)
+    ↓                      ↓
+resources/*/paths.cue (auto-discovered)
+    ↓
+gen_openapi.py (domain-agnostic, auto-discovers resources)
+    ↓
 dist/openapi.json (OpenAPI 3.0)
-         ↓
-swagger.html (Swagger UI with unpkg CDN)
-         ↓
-dist/index.html (Serves OpenAPI spec)
-         ↓
+    ↓
+swagger.html (Swagger UI)
+    ↓
+dist/index.html
+    ↓
 Browser (http://localhost:8000)
 ```
+
+### Key Design Points
+
+- **Domain-Agnostic**: No hardcoded resource names in Python
+- **Auto-Discovers Resources**: Scans `resources/` directory
+- **Auto-Discovers Tags & Paths**: Exports from each resource package
+- **Type-Driven Schemas**: All schemas come from CUE types via operations/schemas.cue
 
 ## OpenAPI 3.0 Structure
 
@@ -59,11 +70,17 @@ The generated `openapi.json` includes:
   "info": {
     "title": "Document Management & Collaboration API",
     "version": "1.0.0",
-    "description": "Complete API with modular namespaces and CRUD patterns"
+    "description": "Complete API with modular namespaces and CRUD patterns",
+    "x-generated-from": "CUE types (resources/*/types.cue via cue vet)"
   },
   "servers": [
     { "url": "http://localhost:8080", "description": "Development" },
     { "url": "https://api.example.com", "description": "Production" }
+  ],
+  "tags": [
+    { "name": "documents", "description": "Document management endpoints" },
+    { "name": "users", "description": "User account management endpoints" },
+    { "name": "teams", "description": "Team management endpoints" }
   ],
   "paths": {
     "/documents": { ... },
@@ -75,8 +92,11 @@ The generated `openapi.json` includes:
   },
   "components": {
     "schemas": {
-      "Error": { ... },
-      "Pagination": { ... }
+      "Document": { ... },
+      "User": { ... },
+      "Team": { ... },
+      "ErrorResponse": { ... },
+      "PaginationMeta": { ... }
     }
   }
 }
@@ -137,17 +157,74 @@ just gen-docs      # Regenerates openapi.json and copies HTML
 # Refresh browser - new spec is loaded automatically
 ```
 
+### Add a new resource
+
+The Python script is domain-agnostic, so adding a new resource is simple:
+
+```bash
+# 1. Create resource package
+mkdir -p resources/new-resource
+
+# 2. Create types.cue with Resource, ListItem, Filter types
+cat > resources/new-resource/types.cue << 'EOF'
+package new_resource
+import fw "example.com/apispec/framework"
+
+Resource: {
+  id?: string
+  name: string
+  ...
+}
+
+ListItem: {
+  id: string
+  name: string
+  ...
+}
+
+Filter: {
+  ...
+} & fw.PaginationRequest
+EOF
+
+# 3. Create schemas.cue to define OpenAPI schemas (optional, if using manual schemas)
+# 4. Create paths.cue with PathItems and Tag
+# 5. Run gen-openapi.py - it auto-discovers the resource!
+
+just gen-docs
+```
+
+No Python code changes needed!
+
 ## Customization
 
-### Change API servers
+### Change API metadata
 
-Edit `scripts/gen_openapi.py`, find the `servers` section:
+Edit `operations/api.cue`:
 
-```python
-"servers": [
-    {"url": "http://localhost:8080", "description": "Development"},
-    {"url": "https://prod-api.example.com", "description": "Production"},
-],
+```cue
+APISpec: {
+  version:     "2.0.0"
+  title:       "My Custom API"
+  description: "..."
+  servers: [
+    {url: "https://api.example.com", description: "Production"},
+  ]
+}
+```
+
+### Add custom schemas
+
+Edit `operations/schemas.cue`:
+
+```cue
+Schemas: {
+  // Framework & resource schemas are auto-merged
+  MyCustomSchema: {
+    type: "object"
+    properties: { ... }
+  }
+}
 ```
 
 ### Change Swagger UI theme
@@ -159,17 +236,25 @@ layout: "StandalonePreset",
 theme: "dark",  // or "light"
 ```
 
-### Add API key authentication
+## How It Generates Schemas from Types
 
-Edit `swagger.html`, add to SwaggerUIBundle config:
+The Python script works with CUE's type system:
 
-```html
-swaggerOptions: {
-    preAuthorizeApiKey: 'api_key',
-}
-```
+1. **CUE Types** (resources/*/types.cue): Define Resource, ListItem, Filter as CUE constraints
+2. **OpenAPI Schemas** (operations/schemas.cue): Framework translates types to JSON Schema
+3. **Auto-Export**: `cue export ./resources/... -e Schemas --out json` generates JSON Schema objects
+4. **Stitching**: Python script combines all exports into OpenAPI document
+
+This approach eliminates manual schema maintenance — types and schemas stay in sync.
 
 ## Technical Details
+
+### Why Domain-Agnostic Python?
+
+✓ **Reusable** - Works with any CUE API project
+✓ **Scalable** - Add resources without touching Python
+✓ **Maintainable** - Single source of truth (CUE types)
+✓ **Robust** - Auto-discovers and gracefully skips missing resources
 
 ### Why Swagger UI from unpkg?
 
@@ -178,17 +263,6 @@ swaggerOptions: {
 ✓ **Easy to customize** - Pure HTML/JavaScript
 ✓ **Standard** - Official Swagger UI library
 ✓ **Lightweight** - ~300KB total (cached by browser)
-
-### OpenAPI Generation
-
-The `gen_openapi.py` script:
-
-1. Reads the CUE API specification structure
-2. Transforms it to OpenAPI 3.0 format
-3. Adds standard schemas (Error, Pagination)
-4. Outputs valid JSON
-
-Currently, it provides a **template-based** generation because CUE has incomplete types (e.g., `string` without a value). A future enhancement could export fully concrete example values.
 
 ## Files Generated
 
@@ -262,7 +336,8 @@ cd dist && python -m http.server 9000
 2. **View locally**: Open `dist/index.html` in browser
 3. **Serve**: `just serve-docs` for interactive testing
 4. **Deploy**: Copy `dist/` to documentation server or CI/CD pipeline
-5. **Customize**: Modify `scripts/gen_openapi.py` or `swagger.html` as needed
+5. **Add resources**: Just create resource packages, no Python changes needed
+6. **Customize**: Modify `operations/api.cue` or `swagger.html` as needed
 
 ## Resources
 
@@ -270,3 +345,5 @@ cd dist && python -m http.server 9000
 - **Swagger UI Docs**: https://swagger.io/tools/swagger-ui/
 - **Swagger UI GitHub**: https://github.com/swagger-api/swagger-ui
 - **unpkg CDN**: https://unpkg.com/
+- **CUE Language**: https://cuelang.org/
+- **CUE JSON Schema**: https://cuelang.org/docs/concept/how-cue-works-with-json-schema/

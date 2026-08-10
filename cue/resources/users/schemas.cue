@@ -9,51 +9,41 @@ import fw "example.com/apispec/framework"
 // Merged into the global Schemas by operations/schemas.cue.
 Schemas: {
 
-	User: {
+	User: fw.#SchemaFromFields & {
 		description: "A user account in the system"
-		type:        "object"
 		required: ["email", "firstName", "lastName", "role"]
-		properties: {
-			id:          {type: "string", description: "Unique user identifier"}
-			email:       {type: "string", format: "email", description: "User's email address"}
-			firstName:   {type: "string", minLength: 1, description: "Given name (non-empty)"}
-			lastName:    {type: "string", minLength: 1, description: "Family name (non-empty)"}
-			role:        {type: "string", enum: ["admin", "editor", "viewer"], description: "Access role"}
-			isActive:    {type: "boolean", description: "Whether the account is enabled"}
-			lastLoginAt: {type: "string", format: "date-time", description: "Last successful login timestamp"}
-			createdAt:   {type: "string", format: "date-time", description: "Account creation timestamp"}
+		fields: {
+			id: {type: "string", description: "Unique user identifier", optional: true}
+			email: {type: "string", format: "email", description: "User's email address"}
+			firstName: {type: "string", minLength: 1, description: "Given name (non-empty)"}
+			lastName: {type: "string", minLength: 1, description: "Family name (non-empty)"}
+			role: {type: "string", enum: ["admin", "editor", "viewer"], description: "Access role"}
+			isActive: {type: "boolean", description: "Whether the account is enabled", optional: true}
+			lastLoginAt: {type: "string", format: "date-time", description: "Last successful login timestamp", optional: true}
+			createdAt: {type: "string", format: "date-time", description: "Account creation timestamp", optional: true}
 		}
 	}
 
-	UserListItem: {
+	UserListItem: fw.#SchemaFromFields & {
 		description: "Lightweight user representation used in list responses"
-		type:        "object"
 		required: ["id", "email", "firstName", "lastName", "role", "isActive"]
-		properties: {
-			id:          {type: "string"}
-			email:       {type: "string", format: "email"}
-			firstName:   {type: "string"}
-			lastName:    {type: "string"}
-			role:        {type: "string", enum: ["admin", "editor", "viewer"]}
-			isActive:    {type: "boolean"}
-			lastLoginAt: {type: "string", format: "date-time"}
+		fields: {
+			id: {type: "string", description: "User identifier"}
+			email: {type: "string", format: "email", description: "User's email address"}
+			firstName: {type: "string", description: "Given name"}
+			lastName: {type: "string", description: "Family name"}
+			role: {type: "string", enum: ["admin", "editor", "viewer"], description: "Access role"}
+			isActive: {type: "boolean", description: "Whether the account is enabled"}
+			lastLoginAt: {type: "string", format: "date-time", description: "Last successful login timestamp", optional: true}
 		}
 	}
 
-	UserFilter: {
-		description: "Query parameters for filtering and paginating users"
-		type:        "object"
-		properties: {
-			"search.query":  {type: "string", description: "Text search across email/firstName/lastName"}
+	UserFilter: fw.#FilterSchemaOf & {
+		resourceName: "User"
+		customFields: {
 			"search.fields": {type: "array", items: {type: "string", enum: ["email", "firstName", "lastName"]}, description: "Fields to search within"}
-			roleIn:          {type: "array", items: {type: "string", enum: ["admin", "editor", "viewer"]}, description: "Filter by one or more roles"}
-			isActive:        {type: "boolean", description: "Filter by account status"}
-			"dateRange.from":{type: "string", format: "date-time"}
-			"dateRange.to":  {type: "string", format: "date-time"}
-			pageNumber:      {type: "integer", minimum: 1}
-			pageSize:        {type: "integer", minimum: 1, maximum: 100}
-			sortBy:          {type: "string"}
-			sortDirection:   {type: "string", enum: ["asc", "desc"]}
+			roleIn: {type: "array", items: {type: "string", enum: ["admin", "editor", "viewer"]}, description: "Filter by one or more roles"}
+			isActive: {type: "boolean", description: "Filter by account status"}
 		}
 	}
 
@@ -68,7 +58,7 @@ Schemas: {
 	UserBatchUpdateRequest: fw.#BatchUpdateRequestOf & {
 		description: "Batch update request for users"
 		properties: {
-			filter:  "$ref": "#/components/schemas/UserFilter"
+			filter: "$ref":  "#/components/schemas/UserFilter"
 			updates: "$ref": "#/components/schemas/User"
 		}
 	}

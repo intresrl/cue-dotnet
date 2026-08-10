@@ -9,52 +9,40 @@ import fw "example.com/apispec/framework"
 // Merged into the global Schemas by operations/schemas.cue.
 Schemas: {
 
-	Document: {
+	Document: fw.#SchemaFromFields & {
 		description: "A document managed by the system"
-		type:        "object"
 		required: ["title", "status", "contentType"]
-		properties: {
-			id:          {type: "string", description: "Unique document identifier"}
+		fields: {
+			id:          {type: "string", description: "Unique document identifier", optional: true}
 			title:       {type: "string", minLength: 1, description: "Document title (non-empty)"}
-			description: {type: "string", description: "Optional human-readable description"}
+			description: {type: "string", description: "Optional human-readable description", optional: true}
 			status:      {type: "string", enum: ["draft", "published", "archived"], description: "Publication status"}
 			contentType: {type: "string", enum: ["pdf", "docx", "markdown", "plaintext"], description: "File/content type"}
-			tags:        {type: "array", items: {type: "string"}, description: "Free-form tag labels"}
-			isPublic:    {type: "boolean", description: "Whether the document is publicly visible"}
-			createdAt:   {type: "string", format: "date-time", description: "Creation timestamp (ISO 8601)"}
-			updatedAt:   {type: "string", format: "date-time", description: "Last-update timestamp (ISO 8601)"}
+			tags:        {type: "array", items: {type: "string"}, description: "Free-form tag labels", optional: true}
+			isPublic:    {type: "boolean", description: "Whether the document is publicly visible", optional: true}
+			createdAt:   {type: "string", format: "date-time", description: "Creation timestamp (ISO 8601)", optional: true}
+			updatedAt:   {type: "string", format: "date-time", description: "Last-update timestamp (ISO 8601)", optional: true}
 		}
 	}
 
-	DocumentListItem: {
+	DocumentListItem: fw.#SchemaFromFields & {
 		description: "Lightweight document representation used in list responses"
-		type:        "object"
 		required: ["id", "title", "status", "createdAt"]
-		properties: {
-			id:        {type: "string"}
-			title:     {type: "string"}
-			status:    {type: "string", enum: ["draft", "published", "archived"]}
-			createdAt: {type: "string", format: "date-time"}
-			updatedAt: {type: "string", format: "date-time"}
+		fields: {
+			id:        {type: "string", description: "Document identifier"}
+			title:     {type: "string", description: "Document title"}
+			status:    {type: "string", enum: ["draft", "published", "archived"], description: "Publication status"}
+			createdAt: {type: "string", format: "date-time", description: "Creation timestamp"}
+			updatedAt: {type: "string", format: "date-time", description: "Last-update timestamp", optional: true}
 		}
 	}
 
-	DocumentFilter: {
-		description: "Query parameters for filtering and paginating documents"
-		type:        "object"
-		properties: {
-			"search.query":         {type: "string",  description: "Full-text search query"}
-			"search.caseSensitive": {type: "boolean", description: "Enable case-sensitive search"}
-			"search.fuzzy":         {type: "boolean", description: "Enable fuzzy matching"}
-			statusIn:               {type: "array", items: {type: "string", enum: ["draft", "published", "archived"]}, description: "Filter by one or more statuses"}
-			isPublic:               {type: "boolean", description: "Filter by visibility"}
-			tagIds:                 {type: "array", items: {type: "string"}, description: "Filter by tag identifiers"}
-			"dateRange.from":       {type: "string", format: "date-time", description: "Earliest createdAt to include"}
-			"dateRange.to":         {type: "string", format: "date-time", description: "Latest createdAt to include"}
-			pageNumber:             {type: "integer", minimum: 1,   description: "Page number (1-based)"}
-			pageSize:               {type: "integer", minimum: 1, maximum: 100, description: "Items per page"}
-			sortBy:                 {type: "string",  description: "Field to sort by"}
-			sortDirection:          {type: "string",  enum: ["asc", "desc"], description: "Sort direction"}
+	DocumentFilter: fw.#FilterSchemaOf & {
+		resourceName: "Document"
+		customFields: {
+			statusIn: {type: "array", items: {type: "string", enum: ["draft", "published", "archived"]}, description: "Filter by one or more statuses"}
+			isPublic: {type: "boolean", description: "Filter by visibility"}
+			tagIds:   {type: "array", items: {type: "string"}, description: "Filter by tag identifiers"}
 		}
 	}
 

@@ -4,7 +4,7 @@
     "title": "Document Management & Collaboration API",
     "version": "1.0.0",
     "description": "Complete API with modular namespaces and CRUD patterns",
-    "x-generated-from": "CUE"
+    "x-generated-from": "CUE types (resources/*/types.cue via cue vet)"
   },
   "servers": [
     {
@@ -16,517 +16,25 @@
       "description": "Production"
     }
   ],
-  "paths": {
-    "/documents": {
-      "get": {
-        "summary": "List documents",
-        "tags": [
-          "documents"
-        ],
-        "parameters": [
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "enum": [
-                "draft",
-                "published",
-                "archived"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of documents",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Document"
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create document",
-        "tags": [
-          "documents"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Document created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Document"
-                }
-              }
-            }
-          }
-        }
-      }
+  "tags": [
+    {
+      "name": "documents",
+      "description": "Document management endpoints"
     },
-    "/documents/{id}": {
-      "get": {
-        "summary": "Get document",
-        "tags": [
-          "documents"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Document",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Document"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update document",
-        "tags": [
-          "documents"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentUpdate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Document"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete document",
-        "tags": [
-          "documents"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          }
-        }
-      }
+    {
+      "name": "teams",
+      "description": "Team management endpoints"
     },
-    "/users": {
-      "get": {
-        "summary": "List users",
-        "tags": [
-          "users"
-        ],
-        "parameters": [
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of users",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/User"
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create user",
-        "tags": [
-          "users"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "User created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "Get user",
-        "tags": [
-          "users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update user",
-        "tags": [
-          "users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete user",
-        "tags": [
-          "users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          }
-        }
-      }
-    },
-    "/teams": {
-      "get": {
-        "summary": "List teams",
-        "tags": [
-          "teams"
-        ],
-        "parameters": [
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of teams",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Team"
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create team",
-        "tags": [
-          "teams"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TeamCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Team created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/teams/{id}": {
-      "get": {
-        "summary": "Get team",
-        "tags": [
-          "teams"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Team",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update team",
-        "tags": [
-          "teams"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TeamUpdate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Team"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete team",
-        "tags": [
-          "teams"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          }
-        }
-      }
+    {
+      "name": "users",
+      "description": "User account management endpoints"
     }
-  },
+  ],
+  "paths": {},
   "components": {
     "schemas": {
-      "Error": {
+      "ErrorDetail": {
+        "description": "Details of a single error",
         "type": "object",
         "required": [
           "code",
@@ -534,20 +42,46 @@
         ],
         "properties": {
           "code": {
-            "type": "string"
+            "type": "string",
+            "description": "Machine-readable error code"
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable error message"
           },
           "field": {
-            "type": "string"
+            "type": "string",
+            "description": "Field that caused the error (if applicable)"
           },
           "suggestion": {
-            "type": "string"
+            "type": "string",
+            "description": "Suggested fix"
           }
         }
       },
-      "Pagination": {
+      "ErrorResponse": {
+        "description": "Standard error envelope returned for all 4xx/5xx responses",
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time the error occurred"
+          },
+          "traceId": {
+            "type": "string",
+            "description": "Distributed trace identifier"
+          }
+        }
+      },
+      "PaginationMeta": {
+        "description": "Pagination metadata included in every list response",
         "type": "object",
         "required": [
           "pageNumber",
@@ -558,29 +92,195 @@
         "properties": {
           "pageNumber": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1,
+            "description": "Current page (1-based)"
           },
           "pageSize": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 100
+            "maximum": 100,
+            "description": "Items per page"
           },
           "totalCount": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "description": "Total items across all pages"
           },
           "hasMore": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether more pages exist"
+          }
+        }
+      },
+      "BatchItemResult": {
+        "description": "Result of a single item in a batch-create operation",
+        "type": "object",
+        "required": [
+          "index",
+          "success"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Zero-based position of the item in the request array"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether this item was created successfully"
+          },
+          "resourceId": {
+            "type": "string",
+            "description": "ID of the newly created resource (present on success)"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        }
+      },
+      "BatchCreateResponse": {
+        "description": "Result of a batch-create operation (HTTP 207 Multi-Status)",
+        "type": "object",
+        "required": [
+          "succeeded",
+          "failed",
+          "results"
+        ],
+        "properties": {
+          "succeeded": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of items successfully created"
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of items that failed"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchItemResult"
+            }
+          }
+        }
+      },
+      "BatchUpdateResponse": {
+        "description": "Result of a batch-update operation",
+        "type": "object",
+        "required": [
+          "updated",
+          "skipped",
+          "dryRun"
+        ],
+        "properties": {
+          "updated": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of resources updated"
+          },
+          "skipped": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of resources skipped (did not match or unchanged)"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "True when the request was a dry run and no changes were persisted"
+          }
+        }
+      },
+      "BatchDeleteResponse": {
+        "description": "Result of a batch-delete operation",
+        "type": "object",
+        "required": [
+          "deleted",
+          "skipped"
+        ],
+        "properties": {
+          "deleted": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of resources deleted"
+          },
+          "skipped": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of resources skipped"
           }
         }
       },
       "Document": {
+        "description": "A document managed by the system",
+        "type": "object",
+        "required": [
+          "title",
+          "status",
+          "contentType"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique document identifier"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Document title (non-empty)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional human-readable description"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "description": "Publication status"
+          },
+          "contentType": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "docx",
+              "markdown",
+              "plaintext"
+            ],
+            "description": "File/content type"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Free-form tag labels"
+          },
+          "isPublic": {
+            "type": "boolean",
+            "description": "Whether the document is publicly visible"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp (ISO 8601)"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last-update timestamp (ISO 8601)"
+          }
+        }
+      },
+      "DocumentListItem": {
+        "description": "Lightweight document representation used in list responses",
         "type": "object",
         "required": [
           "id",
           "title",
           "status",
-          "contentType"
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -589,32 +289,13 @@
           "title": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
           "status": {
+            "type": "string",
             "enum": [
               "draft",
               "published",
               "archived"
             ]
-          },
-          "contentType": {
-            "enum": [
-              "pdf",
-              "docx",
-              "markdown",
-              "plaintext"
-            ]
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "isPublic": {
-            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -626,89 +307,200 @@
           }
         }
       },
-      "DocumentCreate": {
+      "DocumentFilter": {
+        "description": "Query parameters for filtering and paginating documents",
         "type": "object",
-        "required": [
-          "title",
-          "status",
-          "contentType"
-        ],
         "properties": {
-          "title": {
-            "type": "string"
+          "search.query": {
+            "type": "string",
+            "description": "Full-text search query"
           },
-          "description": {
-            "type": "string"
+          "search.caseSensitive": {
+            "type": "boolean",
+            "description": "Enable case-sensitive search"
           },
-          "status": {
-            "enum": [
-              "draft",
-              "published",
-              "archived"
-            ]
+          "search.fuzzy": {
+            "type": "boolean",
+            "description": "Enable fuzzy matching"
           },
-          "contentType": {
-            "enum": [
-              "pdf",
-              "docx",
-              "markdown",
-              "plaintext"
-            ]
+          "statusIn": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published",
+                "archived"
+              ]
+            },
+            "description": "Filter by one or more statuses"
           },
-          "tags": {
+          "isPublic": {
+            "type": "boolean",
+            "description": "Filter by visibility"
+          },
+          "tagIds": {
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Filter by tag identifiers"
           },
-          "isPublic": {
-            "type": "boolean"
+          "dateRange.from": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Earliest createdAt to include"
+          },
+          "dateRange.to": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Latest createdAt to include"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Page number (1-based)"
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Items per page"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Field to sort by"
+          },
+          "sortDirection": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "description": "Sort direction"
           }
         }
       },
-      "DocumentUpdate": {
+      "DocumentBatchUpdateRequest": {
+        "description": "Batch update request: filter selects documents, updates are applied to all matches",
         "type": "object",
+        "required": [
+          "filter",
+          "updates"
+        ],
         "properties": {
-          "title": {
-            "type": "string"
+          "filter": {
+            "$ref": "#/components/schemas/DocumentFilter"
           },
-          "description": {
-            "type": "string"
+          "updates": {
+            "$ref": "#/components/schemas/Document"
           },
-          "status": {
-            "enum": [
-              "draft",
-              "published",
-              "archived"
-            ]
+          "dryRun": {
+            "type": "boolean",
+            "description": "Preview changes without persisting them"
+          }
+        }
+      },
+      "DocumentBatchDeleteRequest": {
+        "description": "Batch delete request: filter selects documents to delete",
+        "type": "object",
+        "required": [
+          "filter"
+        ],
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/DocumentFilter"
           },
-          "contentType": {
-            "enum": [
-              "pdf",
-              "docx",
-              "markdown",
-              "plaintext"
-            ]
-          },
-          "tags": {
+          "confirmDeletion": {
+            "type": "boolean",
+            "description": "Must be true to confirm destructive batch delete"
+          }
+        }
+      },
+      "DocumentBatchCreateRequest": {
+        "description": "Batch create request for documents",
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
             "type": "array",
             "items": {
-              "type": "string"
-            }
+              "$ref": "#/components/schemas/Document"
+            },
+            "description": "Documents to create"
           },
-          "isPublic": {
-            "type": "boolean"
+          "continueOnError": {
+            "type": "boolean",
+            "description": "Continue processing remaining items after a failure"
           }
         }
       },
       "User": {
+        "description": "A user account in the system",
+        "type": "object",
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "role"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique user identifier"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Given name (non-empty)"
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Family name (non-empty)"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "editor",
+              "viewer"
+            ],
+            "description": "Access role"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether the account is enabled"
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last successful login timestamp"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          }
+        }
+      },
+      "UserListItem": {
+        "description": "Lightweight user representation used in list responses",
         "type": "object",
         "required": [
           "id",
           "email",
           "firstName",
           "lastName",
-          "role"
+          "role",
+          "isActive"
         ],
         "properties": {
           "id": {
@@ -725,6 +517,7 @@
             "type": "string"
           },
           "role": {
+            "type": "string",
             "enum": [
               "admin",
               "editor",
@@ -737,72 +530,188 @@
           "lastLoginAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
-      "UserCreate": {
+      "UserFilter": {
+        "description": "Query parameters for filtering and paginating users",
         "type": "object",
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "role"
-        ],
         "properties": {
-          "email": {
+          "search.query": {
             "type": "string",
-            "format": "email"
+            "description": "Text search across email/firstName/lastName"
           },
-          "firstName": {
-            "type": "string"
+          "search.fields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "email",
+                "firstName",
+                "lastName"
+              ]
+            },
+            "description": "Fields to search within"
           },
-          "lastName": {
-            "type": "string"
-          },
-          "role": {
-            "enum": [
-              "admin",
-              "editor",
-              "viewer"
-            ]
+          "roleIn": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "admin",
+                "editor",
+                "viewer"
+              ]
+            },
+            "description": "Filter by one or more roles"
           },
           "isActive": {
+            "type": "boolean",
+            "description": "Filter by account status"
+          },
+          "dateRange.from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateRange.to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "sortBy": {
+            "type": "string"
+          },
+          "sortDirection": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      },
+      "UserBatchUpdateRequest": {
+        "description": "Batch update request for users",
+        "type": "object",
+        "required": [
+          "filter",
+          "updates"
+        ],
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/UserFilter"
+          },
+          "updates": {
+            "$ref": "#/components/schemas/User"
+          },
+          "dryRun": {
             "type": "boolean"
           }
         }
       },
-      "UserUpdate": {
+      "UserBatchDeleteRequest": {
+        "description": "Batch delete request for users",
         "type": "object",
+        "required": [
+          "filter"
+        ],
         "properties": {
-          "firstName": {
-            "type": "string"
+          "filter": {
+            "$ref": "#/components/schemas/UserFilter"
           },
-          "lastName": {
-            "type": "string"
+          "confirmDeletion": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserBatchCreateRequest": {
+        "description": "Batch create request for users",
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
           },
-          "role": {
-            "enum": [
-              "admin",
-              "editor",
-              "viewer"
-            ]
-          },
-          "isActive": {
+          "continueOnError": {
             "type": "boolean"
           }
         }
       },
       "Team": {
+        "description": "A team grouping users with shared access to resources",
+        "type": "object",
+        "required": [
+          "name",
+          "ownerIds",
+          "memberIds"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique team identifier"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Team display name (non-empty)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the team's purpose"
+          },
+          "ownerIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "User IDs with owner privileges"
+          },
+          "memberIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "User IDs who are members"
+          },
+          "isPublic": {
+            "type": "boolean",
+            "description": "Whether the team is discoverable by non-members"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Team creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last-update timestamp"
+          }
+        }
+      },
+      "TeamListItem": {
+        "description": "Lightweight team representation used in list responses",
         "type": "object",
         "required": [
           "id",
           "name",
-          "ownerIds",
-          "memberIds"
+          "memberCount",
+          "ownerCount",
+          "isPublic",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -811,20 +720,13 @@
           "name": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
+          "memberCount": {
+            "type": "integer",
+            "minimum": 0
           },
-          "ownerIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "memberIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "ownerCount": {
+            "type": "integer",
+            "minimum": 1
           },
           "isPublic": {
             "type": "boolean"
@@ -832,65 +734,115 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
-      "TeamCreate": {
+      "TeamFilter": {
+        "description": "Query parameters for filtering and paginating teams",
         "type": "object",
-        "required": [
-          "name",
-          "ownerIds"
-        ],
         "properties": {
-          "name": {
+          "search.query": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
+          "isPublic": {
+            "type": "boolean"
           },
           "ownerIds": {
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Filter teams by owner user ID"
           },
-          "memberIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "hasMembers.userId": {
+            "type": "string",
+            "description": "Filter teams that include this user ID as a member"
           },
-          "isPublic": {
+          "hasMembers.role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "member"
+            ],
+            "description": "Filter by the member's role within the team"
+          },
+          "dateRange.from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateRange.to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "sortBy": {
+            "type": "string"
+          },
+          "sortDirection": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      },
+      "TeamBatchUpdateRequest": {
+        "description": "Batch update request for teams",
+        "type": "object",
+        "required": [
+          "filter",
+          "updates"
+        ],
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/TeamFilter"
+          },
+          "updates": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "dryRun": {
             "type": "boolean"
           }
         }
       },
-      "TeamUpdate": {
+      "TeamBatchDeleteRequest": {
+        "description": "Batch delete request for teams",
         "type": "object",
+        "required": [
+          "filter"
+        ],
         "properties": {
-          "name": {
-            "type": "string"
+          "filter": {
+            "$ref": "#/components/schemas/TeamFilter"
           },
-          "description": {
-            "type": "string"
-          },
-          "ownerIds": {
+          "confirmDeletion": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TeamBatchCreateRequest": {
+        "description": "Batch create request for teams",
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Team"
             }
           },
-          "memberIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "isPublic": {
+          "continueOnError": {
             "type": "boolean"
           }
         }

@@ -56,7 +56,7 @@ public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> F
     public override string ToString() => $"Struct({string.Join(", ", Fields.Select(f => $"{f.Name}: {f.Value}"))}) at {Path}";
 }
 
-public sealed record CueStructField(string Name, CueValueNode Value);
+public sealed record CueStructField(string Name, CueValueNode Value, bool Optional = false);
 
 public sealed record CueDisjunction(
     string Path,

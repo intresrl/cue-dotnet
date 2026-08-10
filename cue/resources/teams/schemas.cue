@@ -9,51 +9,41 @@ import fw "example.com/apispec/framework"
 // Merged into the global Schemas by operations/schemas.cue.
 Schemas: {
 
-	Team: {
+	Team: fw.#SchemaFromFields & {
 		description: "A team grouping users with shared access to resources"
-		type:        "object"
 		required: ["name", "ownerIds", "memberIds"]
-		properties: {
-			id:          {type: "string", description: "Unique team identifier"}
+		fields: {
+			id:          {type: "string", description: "Unique team identifier", optional: true}
 			name:        {type: "string", minLength: 1, description: "Team display name (non-empty)"}
-			description: {type: "string", description: "Optional description of the team's purpose"}
+			description: {type: "string", description: "Optional description of the team's purpose", optional: true}
 			ownerIds:    {type: "array", items: {type: "string"}, description: "User IDs with owner privileges"}
 			memberIds:   {type: "array", items: {type: "string"}, description: "User IDs who are members"}
-			isPublic:    {type: "boolean", description: "Whether the team is discoverable by non-members"}
-			createdAt:   {type: "string", format: "date-time", description: "Team creation timestamp"}
-			updatedAt:   {type: "string", format: "date-time", description: "Last-update timestamp"}
+			isPublic:    {type: "boolean", description: "Whether the team is discoverable by non-members", optional: true}
+			createdAt:   {type: "string", format: "date-time", description: "Team creation timestamp", optional: true}
+			updatedAt:   {type: "string", format: "date-time", description: "Last-update timestamp", optional: true}
 		}
 	}
 
-	TeamListItem: {
+	TeamListItem: fw.#SchemaFromFields & {
 		description: "Lightweight team representation used in list responses"
-		type:        "object"
 		required: ["id", "name", "memberCount", "ownerCount", "isPublic", "createdAt"]
-		properties: {
-			id:          {type: "string"}
-			name:        {type: "string"}
-			memberCount: {type: "integer", minimum: 0}
-			ownerCount:  {type: "integer", minimum: 1}
-			isPublic:    {type: "boolean"}
-			createdAt:   {type: "string", format: "date-time"}
+		fields: {
+			id:          {type: "string", description: "Team identifier"}
+			name:        {type: "string", description: "Team display name"}
+			memberCount: {type: "integer", minimum: 0, description: "Number of members"}
+			ownerCount:  {type: "integer", minimum: 1, description: "Number of owners"}
+			isPublic:    {type: "boolean", description: "Whether the team is public"}
+			createdAt:   {type: "string", format: "date-time", description: "Team creation timestamp"}
 		}
 	}
 
-	TeamFilter: {
-		description: "Query parameters for filtering and paginating teams"
-		type:        "object"
-		properties: {
-			"search.query":      {type: "string"}
-			isPublic:            {type: "boolean"}
+	TeamFilter: fw.#FilterSchemaOf & {
+		resourceName: "Team"
+		customFields: {
+			isPublic:            {type: "boolean", description: "Filter by team visibility"}
 			ownerIds:            {type: "array", items: {type: "string"}, description: "Filter teams by owner user ID"}
 			"hasMembers.userId": {type: "string", description: "Filter teams that include this user ID as a member"}
 			"hasMembers.role":   {type: "string", enum: ["owner", "member"], description: "Filter by the member's role within the team"}
-			"dateRange.from":    {type: "string", format: "date-time"}
-			"dateRange.to":      {type: "string", format: "date-time"}
-			pageNumber:          {type: "integer", minimum: 1}
-			pageSize:            {type: "integer", minimum: 1, maximum: 100}
-			sortBy:              {type: "string"}
-			sortDirection:       {type: "string", enum: ["asc", "desc"]}
 		}
 	}
 

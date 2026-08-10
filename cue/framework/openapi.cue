@@ -237,3 +237,195 @@ ErrorBody: {
 
 // _errResp is package-private: used inside CRUDPaths above.
 _errResp: {_d: string, description: _d, content: ErrorBody}
+
+// ---------------------------------------------------------------------------
+// OpenAPI Endpoint Generators — Convert endpoint specs to OpenAPI operations
+// ---------------------------------------------------------------------------
+
+// #OpenAPICreateOperation generates a POST operation for creating a resource.
+// Usage in endpoints.cue:
+//   Create: fw.#OpenAPICreateOperation & {
+//     resourceSchema: "Document"
+//     operationId: "createDocument"
+//     tag: "documents"
+//   }
+#OpenAPICreateOperation: {
+	resourceSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Create resource"
+		operationId: operationId
+		tags: [tag]
+		requestBody: {
+			required: true
+			content: "application/json": schema: "$ref": "#/components/schemas/\(resourceSchema)"
+		}
+		responses: {
+			"201": {description: "Created", content: "application/json": schema: {
+				type: "object"
+				required: ["resourceId"]
+				properties: resourceId: {type: "string", description: "ID of created resource"}
+			}}
+			"400": _errResp & {_d: "Validation error"}
+			"409": _errResp & {_d: "Conflict"}
+			"422": _errResp & {_d: "Unprocessable entity"}
+		}
+	}
+}
+
+// #OpenAPIReadOperation generates a GET operation for reading a single resource.
+#OpenAPIReadOperation: {
+	resourceSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Get resource by ID"
+		operationId: operationId
+		tags: [tag]
+		parameters: [IdParam]
+		responses: {
+			"200": {description: "OK", content: "application/json": schema: "$ref": "#/components/schemas/\(resourceSchema)"}
+			"400": _errResp & {_d: "Invalid ID"}
+			"401": _errResp & {_d: "Unauthorized"}
+			"404": _errResp & {_d: "Not found"}
+		}
+	}
+}
+
+// #OpenAPIListOperation generates a GET operation for listing resources with filters.
+#OpenAPIListOperation: {
+	listItemSchema: string
+	filterParams?: [...{}]
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "List resources"
+		operationId: operationId
+		tags: [tag]
+		parameters: list.Concat([CommonListParams, filterParams])
+		responses: {
+			"200": {description: "OK", content: "application/json": schema: {
+				type: "object"
+				required: ["items", "pagination"]
+				properties: {
+					items:      {type: "array", items: "$ref": "#/components/schemas/\(listItemSchema)"}
+					pagination: "$ref": "#/components/schemas/PaginationMeta"
+				}
+			}}
+			"400": _errResp & {_d: "Invalid query parameters"}
+			"401": _errResp & {_d: "Unauthorized"}
+		}
+	}
+}
+
+// #OpenAPIUpdateOperation generates a PUT operation for updating a resource.
+#OpenAPIUpdateOperation: {
+	resourceSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Replace resource"
+		operationId: operationId
+		tags: [tag]
+		parameters: [IdParam]
+		requestBody: {
+			required: true
+			content: "application/json": schema: "$ref": "#/components/schemas/\(resourceSchema)"
+		}
+		responses: {
+			"200": {description: "OK", content: "application/json": schema: "$ref": "#/components/schemas/\(resourceSchema)"}
+			"400": _errResp & {_d: "Validation error"}
+			"401": _errResp & {_d: "Unauthorized"}
+			"404": _errResp & {_d: "Not found"}
+			"409": _errResp & {_d: "Conflict"}
+		}
+	}
+}
+
+// #OpenAPIDeleteOperation generates a DELETE operation for deleting a resource.
+#OpenAPIDeleteOperation: {
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Delete resource"
+		operationId: operationId
+		tags: [tag]
+		parameters: [IdParam]
+		responses: {
+			"204": {description: "Deleted successfully"}
+			"400": _errResp & {_d: "Invalid ID"}
+			"401": _errResp & {_d: "Unauthorized"}
+			"404": _errResp & {_d: "Not found"}
+		}
+	}
+}
+
+// #OpenAPIBatchCreateOperation generates a POST operation for batch-creating resources.
+#OpenAPIBatchCreateOperation: {
+	batchRequestSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Batch create"
+		operationId: operationId
+		tags: [tag]
+		requestBody: {
+			required: true
+			content: "application/json": schema: "$ref": "#/components/schemas/\(batchRequestSchema)"
+		}
+		responses: {
+			"207": {description: "Multi-status batch result", content: "application/json": schema: "$ref": "#/components/schemas/BatchCreateResponse"}
+			"400": _errResp & {_d: "Validation error"}
+		}
+	}
+}
+
+// #OpenAPIBatchUpdateOperation generates a PATCH operation for batch-updating resources.
+#OpenAPIBatchUpdateOperation: {
+	batchRequestSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Batch update"
+		operationId: operationId
+		tags: [tag]
+		requestBody: {
+			required: true
+			content: "application/json": schema: "$ref": "#/components/schemas/\(batchRequestSchema)"
+		}
+		responses: {
+			"200": {description: "Batch update result", content: "application/json": schema: "$ref": "#/components/schemas/BatchUpdateResponse"}
+			"400": _errResp & {_d: "Validation error"}
+			"422": _errResp & {_d: "Unprocessable entity"}
+		}
+	}
+}
+
+// #OpenAPIBatchDeleteOperation generates a DELETE operation for batch-deleting resources.
+#OpenAPIBatchDeleteOperation: {
+	batchRequestSchema: string
+	operationId: string
+	tag: string
+	
+	output: {
+		summary:     "Batch delete"
+		operationId: operationId
+		tags: [tag]
+		requestBody: {
+			required: true
+			content: "application/json": schema: "$ref": "#/components/schemas/\(batchRequestSchema)"
+		}
+		responses: {
+			"200": {description: "Batch delete result", content: "application/json": schema: "$ref": "#/components/schemas/BatchDeleteResponse"}
+			"400": _errResp & {_d: "Validation error"}
+		}
+	}
+}

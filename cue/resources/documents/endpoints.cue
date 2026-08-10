@@ -1,45 +1,22 @@
-// resources/documents/endpoints.cue - Document CRUD endpoints
+// resources/documents/endpoints.cue - Document CRUD endpoint operations (OpenAPI)
 
 package documents
 
 import fw "example.com/apispec/framework"
 
-// Specialize CRUD template for documents
-Endpoints: {
-	Create: fw.CRUDTemplate.Create & {
-		request: Resource
-	}
-
-	Read: fw.CRUDTemplate.Read & {
-		response: "200": Resource
-	}
-
-	List: fw.CRUDTemplate.List & {
-		request: filter?: Filter
-		response: "200": {
-			items: [...ListItem]
-			pagination: fw.PaginationMeta
-		}
-	}
-
-	Update: fw.CRUDTemplate.Update & {
-		response: "200": Resource
-	}
-
-	Delete: fw.CRUDTemplate.Delete
-
-	BatchCreate: fw.CRUDTemplate.BatchCreate & {
-		request: items: [...Resource]
-	}
-
-	BatchUpdate: fw.CRUDTemplate.BatchUpdate & {
-		request: {
-			filter: Filter
-			updates: Resource
-		}
-	}
-
-	BatchDelete: fw.CRUDTemplate.BatchDelete & {
-		request: filter: Filter
-	}
+// Generate complete OpenAPI operation objects for all 8 CRUD + batch operations.
+// These are ready to be merged into PathItems in paths.cue.
+Endpoints: fw.#OpenAPIEndpoints & {
+	#ResourceSchema: "Document"
+	#ListItemSchema: "DocumentListItem"
+	#FilterParams: [
+		{name: "statusIn", in: "query", schema: {type: "array", items: {type: "string", enum: ["draft", "published", "archived"]}}, description: "Filter by one or more statuses"},
+		{name: "isPublic", in: "query", schema: {type: "boolean"}, description: "Filter by visibility"},
+		{name: "tagIds",   in: "query", schema: {type: "array", items: {type: "string"}}, description: "Filter by tag IDs"},
+	]
+	#BatchCreateRequest: "DocumentBatchCreateRequest"
+	#BatchUpdateRequest: "DocumentBatchUpdateRequest"
+	#BatchDeleteRequest: "DocumentBatchDeleteRequest"
+	operationIdPrefix: "document"
+	tag: "documents"
 }
