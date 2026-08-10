@@ -71,7 +71,7 @@ The generated `openapi.json` includes:
     "title": "Document Management & Collaboration API",
     "version": "1.0.0",
     "description": "Complete API with modular namespaces and CRUD patterns",
-    "x-generated-from": "CUE types (resources/*/types.cue via cue vet)"
+    "x-generated-from": "CUE types (operations/schemas.cue)"
   },
   "servers": [
     { "url": "http://localhost:8080", "description": "Development" },
@@ -165,32 +165,27 @@ The Python script is domain-agnostic, so adding a new resource is simple:
 # 1. Create resource package
 mkdir -p resources/new-resource
 
-# 2. Create types.cue with Resource, ListItem, Filter types
-cat > resources/new-resource/types.cue << 'EOF'
+# 2. Create paths.cue with Tag and empty PathItems
+cat > resources/new-resource/paths.cue << 'EOF'
 package new_resource
-import fw "example.com/apispec/framework"
 
-Resource: {
-  id?: string
-  name: string
-  ...
+Tag: {
+	name: "new-resource"
+	description: "Resource description"
 }
 
-ListItem: {
-  id: string
-  name: string
-  ...
-}
-
-Filter: {
-  ...
-} & fw.PaginationRequest
+PathItems: {}
 EOF
 
-# 3. Create schemas.cue to define OpenAPI schemas (optional, if using manual schemas)
-# 4. Create paths.cue with PathItems and Tag
-# 5. Run gen-openapi.py - it auto-discovers the resource!
+# 3. Add types to operations/schemas.cue:
+#    - NewResource (main type)
+#    - NewResourceListItem (for list responses)
+#    - NewResourceFilter (for filtering)
+#    - NewResourceBatchCreateRequest
+#    - NewResourceBatchUpdateRequest
+#    - NewResourceBatchDeleteRequest
 
+# 4. Run gen-openapi.py - it auto-discovers the resource!
 just gen-docs
 ```
 
@@ -238,14 +233,14 @@ theme: "dark",  // or "light"
 
 ## How It Generates Schemas from Types
 
-The Python script works with CUE's type system:
+All schemas are defined as plain CUE types in `operations/schemas.cue` and exported to JSON Schema:
 
-1. **CUE Types** (resources/*/types.cue): Define Resource, ListItem, Filter as CUE constraints
-2. **OpenAPI Schemas** (operations/schemas.cue): Framework translates types to JSON Schema
-3. **Auto-Export**: `cue export ./resources/... -e Schemas --out json` generates JSON Schema objects
+1. **CUE Types** (operations/schemas.cue): Plain CUE type definitions (no constraints)
+2. **Type Instances** (operations/schemas.cue Schemas export): Concrete instances with example values
+3. **JSON Schema Generation**: Python script exports instances and converts them to JSON Schema
 4. **Stitching**: Python script combines all exports into OpenAPI document
 
-This approach eliminates manual schema maintenance — types and schemas stay in sync.
+This approach keeps types and schemas in sync with a single source of truth.
 
 ## Technical Details
 
