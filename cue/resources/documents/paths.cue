@@ -8,6 +8,16 @@ Tag: {
 	description: "Document management endpoints"
 }
 
+// Path parameter schema definitions that Python script will expand
+#PathParams: {
+	id: {
+		name: "id"
+		in: "path"
+		required: true
+		schema: {type: "string", description: "Document ID"}
+	}
+}
+
 // PathItems defines all document REST endpoints
 PathItems: {
 	"/documents": {
@@ -30,9 +40,11 @@ PathItems: {
 			summary: "List documents"
 			tags: ["documents"]
 			parameters: [
-				{name: "pageNumber", in: "query", schema: {type: "integer"}}
-				{name: "pageSize", in: "query", schema: {type: "integer"}}
-				{name: "sortBy", in: "query", schema: {type: "string"}}
+				{name: "filter", in: "query", schema: {"$ref": "#/components/schemas/DocumentFilter"}, description: "Filter documents"}
+				{name: "pageNumber", in: "query", schema: {type: "integer"}, description: "Page number (1-based)"}
+				{name: "pageSize", in: "query", schema: {type: "integer"}, description: "Items per page"}
+				{name: "sortBy", in: "query", schema: {type: "string"}, description: "Sort by field"}
+				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
 			]
 			responses: {
 				"200": {description: "Document list"}
@@ -45,7 +57,7 @@ PathItems: {
 			operationId: "getDocument"
 			summary: "Get a document"
 			tags: ["documents"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"200": {description: "Document details"}
 				"404": {description: "Not found"}
@@ -55,7 +67,7 @@ PathItems: {
 			operationId: "updateDocument"
 			summary: "Update a document"
 			tags: ["documents"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			requestBody: {
 				required: true
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/Document"}}}
@@ -70,7 +82,7 @@ PathItems: {
 			operationId: "deleteDocument"
 			summary: "Delete a document"
 			tags: ["documents"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"204": {description: "Document deleted"}
 				"404": {description: "Not found"}

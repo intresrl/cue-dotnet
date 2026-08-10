@@ -42,6 +42,42 @@ def run_cue_export(package, symbol, out_format="json", skip_errors=False):
     return json.loads(result.stdout)
 
 
+def expand_schema_references(obj, all_schemas):
+    """Recursively expand $ref references and path parameter schemas.
+    
+    - Expands {"$ref": "#/components/schemas/SchemaName"} to full schema
+    - For query parameters with schema refs, keeps the ref as-is
+    - For path parameters (objects with name/in/required/schema), inlines the schema
+    """
+    if isinstance(obj, dict):
+        # If this is a parameter object (has name/in/schema keys)
+        if "name" in obj and "in" in obj and "schema" in obj:
+            param = obj.copy()
+            schema = param["schema"]
+            # If schema is a ref, resolve it
+            if isinstance(schema, dict) and "$ref" in schema:
+                ref = schema["$ref"]
+                schema_name = ref.split("/")[-1]
+                if schema_name in all_schemas:
+                    param["schema"] = all_schemas[schema_name].copy()
+                    # For query parameters with complex schemas, keep inline
+                    if param["in"] == "query":
+                        # Query parameters should have simple schemas, resolve ref
+                        param["schema"] = all_schemas[schema_name]
+            return param
+        
+        # Recursively expand in dictionaries
+        result = {}
+        for key, value in obj.items():
+            result[key] = expand_schema_references(value, all_schemas)
+        return result
+    elif isinstance(obj, list):
+        # Recursively expand in lists
+        return [expand_schema_references(item, all_schemas) for item in obj]
+    else:
+        return obj
+
+
 def instance_to_json_schema(value):
     """Convert a CUE instance value to a JSON Schema object.
     
@@ -142,6 +178,8 @@ def main():
         # Try to export PathItems and merge into global paths (skip if not available)
         path_items = run_cue_export(resource_path, "PathItems", skip_errors=True)
         if path_items:
+            # Expand schema references in path items (filters, path parameters)
+            path_items = expand_schema_references(path_items, schemas)
             paths.update(path_items)
     
     # Assemble complete OpenAPI 3.0 document

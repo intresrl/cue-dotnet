@@ -8,6 +8,16 @@ Tag: {
 	description: "Team management endpoints"
 }
 
+// Path parameter schema definitions that Python script will expand
+#PathParams: {
+	id: {
+		name: "id"
+		in: "path"
+		required: true
+		schema: {type: "string", description: "Team ID"}
+	}
+}
+
 // PathItems defines all team REST endpoints
 PathItems: {
 	"/teams": {
@@ -30,9 +40,11 @@ PathItems: {
 			summary: "List teams"
 			tags: ["teams"]
 			parameters: [
-				{name: "pageNumber", in: "query", schema: {type: "integer"}}
-				{name: "pageSize", in: "query", schema: {type: "integer"}}
-				{name: "sortBy", in: "query", schema: {type: "string"}}
+				{name: "filter", in: "query", schema: {"$ref": "#/components/schemas/TeamFilter"}, description: "Filter teams"}
+				{name: "pageNumber", in: "query", schema: {type: "integer"}, description: "Page number (1-based)"}
+				{name: "pageSize", in: "query", schema: {type: "integer"}, description: "Items per page"}
+				{name: "sortBy", in: "query", schema: {type: "string"}, description: "Sort by field"}
+				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
 			]
 			responses: {
 				"200": {description: "Team list"}
@@ -45,7 +57,7 @@ PathItems: {
 			operationId: "getTeam"
 			summary: "Get a team"
 			tags: ["teams"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"200": {description: "Team details"}
 				"404": {description: "Not found"}
@@ -55,7 +67,7 @@ PathItems: {
 			operationId: "updateTeam"
 			summary: "Update a team"
 			tags: ["teams"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			requestBody: {
 				required: true
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
@@ -70,7 +82,7 @@ PathItems: {
 			operationId: "deleteTeam"
 			summary: "Delete a team"
 			tags: ["teams"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"204": {description: "Team deleted"}
 				"404": {description: "Not found"}

@@ -8,6 +8,16 @@ Tag: {
 	description: "User account management endpoints"
 }
 
+// Path parameter schema definitions that Python script will expand
+#PathParams: {
+	id: {
+		name: "id"
+		in: "path"
+		required: true
+		schema: {type: "string", description: "User ID"}
+	}
+}
+
 // PathItems defines all user REST endpoints
 PathItems: {
 	"/users": {
@@ -30,9 +40,11 @@ PathItems: {
 			summary: "List users"
 			tags: ["users"]
 			parameters: [
-				{name: "pageNumber", in: "query", schema: {type: "integer"}}
-				{name: "pageSize", in: "query", schema: {type: "integer"}}
-				{name: "sortBy", in: "query", schema: {type: "string"}}
+				{name: "filter", in: "query", schema: {"$ref": "#/components/schemas/UserFilter"}, description: "Filter users"}
+				{name: "pageNumber", in: "query", schema: {type: "integer"}, description: "Page number (1-based)"}
+				{name: "pageSize", in: "query", schema: {type: "integer"}, description: "Items per page"}
+				{name: "sortBy", in: "query", schema: {type: "string"}, description: "Sort by field"}
+				{name: "sortDirection", in: "query", schema: {type: "string", enum: ["asc", "desc"]}, description: "Sort direction"}
 			]
 			responses: {
 				"200": {description: "User list"}
@@ -45,7 +57,7 @@ PathItems: {
 			operationId: "getUser"
 			summary: "Get a user"
 			tags: ["users"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"200": {description: "User details"}
 				"404": {description: "Not found"}
@@ -55,7 +67,7 @@ PathItems: {
 			operationId: "updateUser"
 			summary: "Update a user"
 			tags: ["users"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			requestBody: {
 				required: true
 				content: {"application/json": {schema: {"$ref": "#/components/schemas/User"}}}
@@ -70,7 +82,7 @@ PathItems: {
 			operationId: "deleteUser"
 			summary: "Delete a user"
 			tags: ["users"]
-			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			parameters: [#PathParams.id]
 			responses: {
 				"204": {description: "User deleted"}
 				"404": {description: "Not found"}
