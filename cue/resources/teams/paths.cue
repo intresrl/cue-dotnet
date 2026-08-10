@@ -8,6 +8,119 @@ Tag: {
 	description: "Team management endpoints"
 }
 
-// PathItems are empty in this simplified approach
-// The Python script generates complete OpenAPI specs from operations/schemas.cue
-PathItems: {}
+// PathItems defines all team REST endpoints
+PathItems: {
+	"/teams": {
+		post: {
+			operationId: "createTeam"
+			summary: "Create a team"
+			tags: ["teams"]
+			requestBody: {
+				required: true
+				content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
+			}
+			responses: {
+				"201": {description: "Team created"}
+				"400": {description: "Bad request"}
+				"422": {description: "Validation error"}
+			}
+		}
+		get: {
+			operationId: "listTeams"
+			summary: "List teams"
+			tags: ["teams"]
+			parameters: [
+				{name: "pageNumber", in: "query", schema: {type: "integer"}}
+				{name: "pageSize", in: "query", schema: {type: "integer"}}
+				{name: "sortBy", in: "query", schema: {type: "string"}}
+			]
+			responses: {
+				"200": {description: "Team list"}
+				"400": {description: "Bad request"}
+			}
+		}
+	}
+	"/teams/{id}": {
+		get: {
+			operationId: "getTeam"
+			summary: "Get a team"
+			tags: ["teams"]
+			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			responses: {
+				"200": {description: "Team details"}
+				"404": {description: "Not found"}
+			}
+		}
+		put: {
+			operationId: "updateTeam"
+			summary: "Update a team"
+			tags: ["teams"]
+			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			requestBody: {
+				required: true
+				content: {"application/json": {schema: {"$ref": "#/components/schemas/Team"}}}
+			}
+			responses: {
+				"200": {description: "Team updated"}
+				"404": {description: "Not found"}
+				"409": {description: "Conflict"}
+			}
+		}
+		delete: {
+			operationId: "deleteTeam"
+			summary: "Delete a team"
+			tags: ["teams"]
+			parameters: [{name: "id", in: "path", required: true, schema: {type: "string"}}]
+			responses: {
+				"204": {description: "Team deleted"}
+				"404": {description: "Not found"}
+			}
+		}
+	}
+	"/teams:batch-create": {
+		post: {
+			operationId: "batchCreateTeams"
+			summary: "Batch create teams"
+			tags: ["teams"]
+			requestBody: {
+				required: true
+				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchCreateRequest"}}}
+			}
+			responses: {
+				"207": {description: "Batch creation result"}
+				"400": {description: "Bad request"}
+			}
+		}
+	}
+	"/teams:batch-update": {
+		patch: {
+			operationId: "batchUpdateTeams"
+			summary: "Batch update teams"
+			tags: ["teams"]
+			requestBody: {
+				required: true
+				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchUpdateRequest"}}}
+			}
+			responses: {
+				"200": {description: "Batch update result"}
+				"400": {description: "Bad request"}
+				"422": {description: "Validation error"}
+			}
+		}
+	}
+	"/teams:batch": {
+		delete: {
+			operationId: "batchDeleteTeams"
+			summary: "Batch delete teams"
+			tags: ["teams"]
+			requestBody: {
+				required: true
+				content: {"application/json": {schema: {"$ref": "#/components/schemas/TeamBatchDeleteRequest"}}}
+			}
+			responses: {
+				"200": {description: "Batch delete result"}
+				"400": {description: "Bad request"}
+			}
+		}
+	}
+}
