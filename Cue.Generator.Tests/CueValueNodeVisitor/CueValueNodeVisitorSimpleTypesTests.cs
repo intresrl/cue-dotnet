@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using FsCheck;
 using FsCheck.Fluent;
@@ -23,7 +22,7 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
             _ => throw new ArgumentOutOfRangeException(nameof(node), node, null)
         };
     }
-    
+
     private static object? GetConcreteValue(CueValueNode node)
     {
         return node switch
@@ -36,7 +35,7 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
             _ => null
         };
     }
-    
+
     [Theory]
     [InlineData("false", Kind.Bool, false)]
     [InlineData("bool", Kind.Bool, null)]
@@ -56,7 +55,8 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
     [InlineData("null", Kind.Null, null)]
     [InlineData("_", Kind.Top, null)]
     [InlineData("int | bool | string", Kind.Top, null)] // when type is heterogeneous, kind is top 
-    [InlineData("int | null", Kind.Top, null)] // nullable types are top // TODO: handle tops caused by this as nullable types
+    [InlineData("int | null", Kind.Top,
+        null)] // nullable types are top // TODO: handle tops caused by this as nullable types
     public void VisitSimpleValuesInRoot(string cueSource, Kind kind, object? concrete)
     {
         using var ctx = new CueContext();
@@ -69,24 +69,81 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
         Assert.Equal("", node.Path);
     }
 
-
     [Fact]
-    void RevRevIsOrig()
+    private void SourceRoundTripsToIdenticalTree()
     {
-        
-        
-        Prop.ForAll<int[]>(xs => xs.Reverse().Reverse().SequenceEqual(xs))
+        using var ctx = new CueContext();
+
+        Prop.ForAll(
+                CueArbitrary.Arbitrary,
+                node =>
+                {
+                    using var value = ctx.Compile(node.Source(), new BuildOption.InferBuiltins(true));
+                    var roundTripped = value.ToCueValueNode();
+                    return TreesIdentical(node, roundTripped);
+                })
             .QuickCheckThrowOnFailure();
     }
 
-   
+    private static bool TreesIdentical(CueValueNode left, CueValueNode right)
+    {
+        if (left.GetType() != right.GetType())
+            return false;
+
+        if (left.Path != right.Path)
+            return false;
+
+        return (left, right) switch
+        {
+            (CueBottomValue, CueBottomValue) => true,
+            (CueTopValue, CueTopValue) => true,
+            (CueNullValue, CueNullValue) => true,
+            (CueNumberValue, CueNumberValue) => true,
+            (CueBoolValue x, CueBoolValue y) => x.ConcreteValue == y.ConcreteValue,
+            (CueIntValue x, CueIntValue y) => x.ConcreteValue == y.ConcreteValue,
+            (CueFloatValue x, CueFloatValue y) => x.ConcreteValue.Equals(y.ConcreteValue),
+            (CueStringValue x, CueStringValue y) => x.ConcreteValue == y.ConcreteValue,
+            (CueBytesValue { ConcreteValue: var a }, CueBytesValue { ConcreteValue: var b }) => (a, b) switch
+            {
+                (null, null) => true,
+                (not null, not null) => a.SequenceEqual(b),
+                _ => false
+            },
+
+            (CueStructValue x, CueStructValue y) =>
+                x.Fields.Count == y.Fields.Count &&
+                x.Fields.Zip(y.Fields).All(pair =>
+                    pair.First.Name == pair.Second.Name &&
+                    pair.First.Optional == pair.Second.Optional &&
+                    TreesIdentical(pair.First.Value, pair.Second.Value)),
+
+            (CueListValue x, CueListValue y) =>
+                TreesIdentical(x.ElementType, y.ElementType),
+
+            (CueDisjunction x, CueDisjunction y) =>
+                x.Branches.Count == y.Branches.Count &&
+                x.Branches.Zip(y.Branches).All(pair =>
+                    TreesIdentical(pair.First, pair.Second)),
+
+            _ => false
+        };
+    }
 }
 
 public static class CueArbitrary
 {
-    public static Arbitrary<CueValueNode> Arbitrar => Arb.;
-    
-    public static Gen<CueValueNode> Gen(
+    public static Arbitrary<CueValueNode> Arbitrary =>
+        Arb.From(
+            Gen(
+                ArbMap.Default.ArbFor<bool>(),
+                ArbMap.Default.ArbFor<byte>(),
+                ArbMap.Default.ArbFor<int>(),
+                ArbMap.Default.ArbFor<double>(),
+                ArbMap.Default.ArbFor<string>()
+            )
+        );
+
+    private static Gen<CueValueNode> Gen(
         Arbitrary<bool> bools,
         Arbitrary<byte> bytes,
         Arbitrary<int> ints,
@@ -95,34 +152,28 @@ public static class CueArbitrary
     {
         return FsCheck.Fluent.Gen.OneOf(
             FsCheck.Fluent.Gen.Elements<CueValueNode>(
-                new CueBottomValue(""), 
-                new CueTopValue(""), 
+                new CueBottomValue(""),
+                new CueTopValue(""),
                 new CueNullValue(""),
                 new CueNumberValue(""),
-                new CueBoolValue(""), 
-                new CueBytesValue(""), 
+                new CueBoolValue(""),
+                new CueBytesValue(""),
                 new CueFloatValue(""),
                 new CueIntValue(""),
                 new CueStringValue("")),
-            
-            bools.Generator.
-                Select(CueValueNode (b) => new CueBoolValue("", b)),
-            
+            bools.Generator.Select(CueValueNode (b) => new CueBoolValue("", b)),
             ints.Generator
                 .Select(CueValueNode (n) => new CueIntValue("", n)),
-            
             doubles.Generator
                 .Select(CueValueNode (d) => new CueFloatValue("", d)),
-            
             strings.Generator
                 .Select(CueValueNode (s) => new CueStringValue("", s)),
-            
             bytes.Generator
                 .ArrayOf()
                 .Select(CueValueNode (bs) => new CueBytesValue("", bs))
         );
     }
-    
+
     public static string Source(this CueValueNode node)
     {
         return node switch
@@ -131,7 +182,7 @@ public static class CueArbitrary
             CueTopValue => "_",
             CueNullValue => "null",
             CueNumberValue => "number",
-            
+
             CueBoolValue { ConcreteValue: var v } => v?.ToString() ?? "bool",
             CueBytesValue { ConcreteValue: var v } => v?.ToString() ?? "bytes",
             CueFloatValue { ConcreteValue: var v } => v?.ToString() ?? "float",
@@ -139,7 +190,7 @@ public static class CueArbitrary
             CueStringValue { ConcreteValue: var v } => v != null
                 ? JsonSerializer.Serialize(v)
                 : "string", // CUE string literals are a superset of JSON
-            
+
             CueStructValue { Fields: var f } => string.Join("\n", [
                 "{",
                 .. f.Select(e =>
@@ -152,16 +203,16 @@ public static class CueArbitrary
                 }),
                 "}"
             ]),
-            
+
             CueListValue { ElementType: var v } => $"""
                                                     [
                                                       ... {v.Source()}
                                                     ]
                                                     """,
-            
+
             CueDisjunction { Branches: var bs } => string.Join(" | ", bs),
 
-            
+
             _ => throw new ArgumentOutOfRangeException(nameof(node))
         };
     }

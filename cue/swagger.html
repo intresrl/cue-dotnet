@@ -53,7 +53,7 @@
                 })
                 .catch(error => {
                     console.error('Failed to load OpenAPI spec:', error);
-                    document.getElementById('swagger-ui').innerHTML = 
+                    document.getElementById('swagger-ui').innerHTML =
                         '<div style="padding: 20px; color: red;"><strong>Error:</strong> Could not load openapi.json. Make sure to run: <code>just gen-openapi</code></div>';
                 });
         };
