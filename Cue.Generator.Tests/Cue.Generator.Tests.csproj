@@ -3,18 +3,18 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
     <LangVersion>preview</LangVersion>
     <AssemblyName>Cue.Generator.Tests</AssemblyName>
     <RootNamespace>Cue.Generator.Tests</RootNamespace>
     <UseTestingPlatform>true</UseTestingPlatform>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FsCheck" Version="3.3.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="Microsoft.Testing.Platform" Version="2.0.2" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="YTest.MTP.XUnit2" Version="1.0.3" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

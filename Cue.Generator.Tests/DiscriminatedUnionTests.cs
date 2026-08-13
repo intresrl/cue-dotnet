@@ -549,6 +549,6 @@ public sealed class DiscriminatedUnionTests
         // Should pick one of the valid discriminators
         Assert.True(discriminator.IsDiscriminated);
         Assert.NotNull(discriminator.DiscriminatorField);
-        Assert.True(discriminator.DiscriminatorField == "primary" || discriminator.DiscriminatorField == "secondary");
+        Assert.True(discriminator.DiscriminatorField is "primary" or "secondary");
     }
 }

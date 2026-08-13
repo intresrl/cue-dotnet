@@ -1,4 +1,3 @@
-using System.Text.Json;
 using FsCheck;
 using FsCheck.Fluent;
 
@@ -74,146 +73,20 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
     {
         using var ctx = new CueContext();
 
-        Prop.ForAll(
-                CueArbitrary.Arbitrary,
-                node =>
-                {
-                    using var value = ctx.Compile(node.Source(), new BuildOption.InferBuiltins(true));
-                    var roundTripped = value.ToCueValueNode();
-                    return TreesIdentical(node, roundTripped);
-                })
-            .QuickCheckThrowOnFailure();
-    }
-
-    private static bool TreesIdentical(CueValueNode left, CueValueNode right)
-    {
-        if (left.GetType() != right.GetType())
-            return false;
-
-        if (left.Path != right.Path)
-            return false;
-
-        return (left, right) switch
-        {
-            (CueBottomValue, CueBottomValue) => true,
-            (CueTopValue, CueTopValue) => true,
-            (CueNullValue, CueNullValue) => true,
-            (CueNumberValue, CueNumberValue) => true,
-            (CueBoolValue x, CueBoolValue y) => x.ConcreteValue == y.ConcreteValue,
-            (CueIntValue x, CueIntValue y) => x.ConcreteValue == y.ConcreteValue,
-            (CueFloatValue x, CueFloatValue y) => x.ConcreteValue.Equals(y.ConcreteValue),
-            (CueStringValue x, CueStringValue y) => x.ConcreteValue == y.ConcreteValue,
-            (CueBytesValue { ConcreteValue: var a }, CueBytesValue { ConcreteValue: var b }) => (a, b) switch
+        var property = Prop.ForAll(
+            CueValueNodeArbitrary.Arbitrary,
+            node =>
             {
-                (null, null) => true,
-                (not null, not null) => a.SequenceEqual(b),
-                _ => false
-            },
-
-            (CueStructValue x, CueStructValue y) =>
-                x.Fields.Count == y.Fields.Count &&
-                x.Fields.Zip(y.Fields).All(pair =>
-                    pair.First.Name == pair.Second.Name &&
-                    pair.First.Optional == pair.Second.Optional &&
-                    TreesIdentical(pair.First.Value, pair.Second.Value)),
-
-            (CueListValue x, CueListValue y) =>
-                TreesIdentical(x.ElementType, y.ElementType),
-
-            (CueDisjunction x, CueDisjunction y) =>
-                x.Branches.Count == y.Branches.Count &&
-                x.Branches.Zip(y.Branches).All(pair =>
-                    TreesIdentical(pair.First, pair.Second)),
-
-            _ => false
-        };
-    }
-}
-
-public static class CueArbitrary
-{
-    public static Arbitrary<CueValueNode> Arbitrary =>
-        Arb.From(
-            Gen(
-                ArbMap.Default.ArbFor<bool>(),
-                ArbMap.Default.ArbFor<byte>(),
-                ArbMap.Default.ArbFor<int>(),
-                ArbMap.Default.ArbFor<double>(),
-                ArbMap.Default.ArbFor<string>()
-            )
-        );
-
-    private static Gen<CueValueNode> Gen(
-        Arbitrary<bool> bools,
-        Arbitrary<byte> bytes,
-        Arbitrary<int> ints,
-        Arbitrary<double> doubles,
-        Arbitrary<string> strings)
-    {
-        return FsCheck.Fluent.Gen.OneOf(
-            FsCheck.Fluent.Gen.Elements<CueValueNode>(
-                new CueBottomValue(""),
-                new CueTopValue(""),
-                new CueNullValue(""),
-                new CueNumberValue(""),
-                new CueBoolValue(""),
-                new CueBytesValue(""),
-                new CueFloatValue(""),
-                new CueIntValue(""),
-                new CueStringValue("")),
-            bools.Generator.Select(CueValueNode (b) => new CueBoolValue("", b)),
-            ints.Generator
-                .Select(CueValueNode (n) => new CueIntValue("", n)),
-            doubles.Generator
-                .Select(CueValueNode (d) => new CueFloatValue("", d)),
-            strings.Generator
-                .Select(CueValueNode (s) => new CueStringValue("", s)),
-            bytes.Generator
-                .ArrayOf()
-                .Select(CueValueNode (bs) => new CueBytesValue("", bs))
-        );
-    }
-
-    public static string Source(this CueValueNode node)
-    {
-        return node switch
-        {
-            CueBottomValue => "_|_",
-            CueTopValue => "_",
-            CueNullValue => "null",
-            CueNumberValue => "number",
-
-            CueBoolValue { ConcreteValue: var v } => v?.ToString() ?? "bool",
-            CueBytesValue { ConcreteValue: var v } => v?.ToString() ?? "bytes",
-            CueFloatValue { ConcreteValue: var v } => v?.ToString() ?? "float",
-            CueIntValue { ConcreteValue: var v } => v?.ToString() ?? "int",
-            CueStringValue { ConcreteValue: var v } => v != null
-                ? JsonSerializer.Serialize(v)
-                : "string", // CUE string literals are a superset of JSON
-
-            CueStructValue { Fields: var f } => string.Join("\n", [
-                "{",
-                .. f.Select(e =>
-                {
-                    var name = JsonSerializer.Serialize(e.Name);
-                    var delimiter = e.Optional ? "?:" : ":";
-                    var value = e.Value.Source();
-
-                    return $"  {name}{delimiter}{value}";
-                }),
-                "}"
-            ]),
-
-            CueListValue { ElementType: var v } => $"""
-                                                    [
-                                                      ... {v.Source()}
-                                                    ]
-                                                    """,
-
-            CueDisjunction { Branches: var bs } => string.Join(" | ", bs),
-
-
-            _ => throw new ArgumentOutOfRangeException(nameof(node))
-        };
+                var source = node.Source();
+                using var value = ctx.Compile(source, new BuildOption.InferBuiltins(true));
+                Assert.Equal(node, value.ToCueValueNode(), new CueValueNodeComparer(x => x.Source()));
+            });
+        
+        var config = Config.Quick
+            .WithMaxTest(1_000_000)
+            .WithEvery((n, test) => $"Test {n}: {test}")
+            .WithEveryShrink(config => $"Shrink");
+        
+        Check.One(config, property);
     }
 }
