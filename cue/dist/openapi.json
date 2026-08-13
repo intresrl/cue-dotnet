@@ -18,8 +18,8 @@
     "paths": {
         "/documents": {
             "post": {
-                "operationId": "createDocument",
-                "summary": "Create a document",
+                "operationId": "documentsCreate",
+                "summary": "Create single documents",
                 "tags": [
                     "documents"
                 ],
@@ -35,7 +35,6 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Document created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -67,8 +66,8 @@
                 }
             },
             "get": {
-                "operationId": "listDocuments",
-                "summary": "List documents",
+                "operationId": "documentsList",
+                "summary": "List documentss",
                 "tags": [
                     "documents"
                 ],
@@ -102,7 +101,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Document list",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -126,8 +124,8 @@
         },
         "/documents/{documentId}": {
             "get": {
-                "operationId": "getDocument",
-                "summary": "Get a document",
+                "operationId": "documentsGet",
+                "summary": "Get single documents",
                 "tags": [
                     "documents"
                 ],
@@ -138,13 +136,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Document ID"
+                            "description": "documents ID"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Document details",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -166,8 +163,8 @@
                 }
             },
             "put": {
-                "operationId": "updateDocument",
-                "summary": "Update a document",
+                "operationId": "documentsUpdate",
+                "summary": "Update single documents",
                 "tags": [
                     "documents"
                 ],
@@ -178,7 +175,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Document ID"
+                            "description": "documents ID"
                         }
                     }
                 ],
@@ -194,7 +191,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Document updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -226,8 +222,8 @@
                 }
             },
             "delete": {
-                "operationId": "deleteDocument",
-                "summary": "Delete a document",
+                "operationId": "documentsDelete",
+                "summary": "Delete single documents",
                 "tags": [
                     "documents"
                 ],
@@ -238,14 +234,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Document ID"
+                            "description": "documents ID"
                         }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Document deleted"
-                    },
+                    "204": {},
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -259,10 +253,10 @@
                 }
             }
         },
-        "/documents:batch-create": {
+        "/documents:batch": {
             "post": {
-                "operationId": "batchCreateDocuments",
-                "summary": "Batch create documents",
+                "operationId": "documentsBatchCreate",
+                "summary": "Batch create documentss",
                 "tags": [
                     "documents"
                 ],
@@ -278,7 +272,6 @@
                 },
                 "responses": {
                     "207": {
-                        "description": "Batch creation result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -296,24 +289,12 @@
                                 }
                             }
                         }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
                     }
                 }
-            }
-        },
-        "/documents:batch-update": {
+            },
             "patch": {
-                "operationId": "batchUpdateDocuments",
-                "summary": "Batch update documents",
+                "operationId": "documentsBatchUpdate",
+                "summary": "Batch update documentss",
                 "tags": [
                     "documents"
                 ],
@@ -329,7 +310,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch update result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -359,12 +339,10 @@
                         }
                     }
                 }
-            }
-        },
-        "/documents:batch": {
+            },
             "delete": {
-                "operationId": "batchDeleteDocuments",
-                "summary": "Batch delete documents",
+                "operationId": "documentsBatchDelete",
+                "summary": "Batch delete documentss",
                 "tags": [
                     "documents"
                 ],
@@ -380,7 +358,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch delete result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -404,8 +381,8 @@
         },
         "/teams": {
             "post": {
-                "operationId": "createTeam",
-                "summary": "Create a team",
+                "operationId": "teamsCreate",
+                "summary": "Create single teams",
                 "tags": [
                     "teams"
                 ],
@@ -421,7 +398,6 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Team created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -453,8 +429,8 @@
                 }
             },
             "get": {
-                "operationId": "listTeams",
-                "summary": "List teams",
+                "operationId": "teamsList",
+                "summary": "List teamss",
                 "tags": [
                     "teams"
                 ],
@@ -488,7 +464,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team list",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -512,8 +487,8 @@
         },
         "/teams/{teamId}": {
             "get": {
-                "operationId": "getTeam",
-                "summary": "Get a team",
+                "operationId": "teamsGet",
+                "summary": "Get single teams",
                 "tags": [
                     "teams"
                 ],
@@ -524,13 +499,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Team ID"
+                            "description": "teams ID"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team details",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -552,8 +526,8 @@
                 }
             },
             "put": {
-                "operationId": "updateTeam",
-                "summary": "Update a team",
+                "operationId": "teamsUpdate",
+                "summary": "Update single teams",
                 "tags": [
                     "teams"
                 ],
@@ -564,7 +538,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Team ID"
+                            "description": "teams ID"
                         }
                     }
                 ],
@@ -580,7 +554,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Team updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -612,8 +585,8 @@
                 }
             },
             "delete": {
-                "operationId": "deleteTeam",
-                "summary": "Delete a team",
+                "operationId": "teamsDelete",
+                "summary": "Delete single teams",
                 "tags": [
                     "teams"
                 ],
@@ -624,14 +597,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Team ID"
+                            "description": "teams ID"
                         }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Team deleted"
-                    },
+                    "204": {},
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -645,10 +616,10 @@
                 }
             }
         },
-        "/teams:batch-create": {
+        "/teams:batch": {
             "post": {
-                "operationId": "batchCreateTeams",
-                "summary": "Batch create teams",
+                "operationId": "teamsBatchCreate",
+                "summary": "Batch create teamss",
                 "tags": [
                     "teams"
                 ],
@@ -664,7 +635,6 @@
                 },
                 "responses": {
                     "207": {
-                        "description": "Batch creation result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -684,12 +654,10 @@
                         }
                     }
                 }
-            }
-        },
-        "/teams:batch-update": {
+            },
             "patch": {
-                "operationId": "batchUpdateTeams",
-                "summary": "Batch update teams",
+                "operationId": "teamsBatchUpdate",
+                "summary": "Batch update teamss",
                 "tags": [
                     "teams"
                 ],
@@ -705,7 +673,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch update result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -735,12 +702,10 @@
                         }
                     }
                 }
-            }
-        },
-        "/teams:batch": {
+            },
             "delete": {
-                "operationId": "batchDeleteTeams",
-                "summary": "Batch delete teams",
+                "operationId": "teamsBatchDelete",
+                "summary": "Batch delete teamss",
                 "tags": [
                     "teams"
                 ],
@@ -756,7 +721,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch delete result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -780,8 +744,11 @@
         },
         "/users": {
             "post": {
-                "operationId": "createUser",
-                "summary": "Create a user",
+                "operationId": "usersCreate",
+                "summary": "Create single users",
+                "tags": [
+                    "users"
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -794,7 +761,6 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -826,8 +792,11 @@
                 }
             },
             "get": {
-                "operationId": "listUsers",
-                "summary": "List users",
+                "operationId": "usersList",
+                "summary": "List userss",
+                "tags": [
+                    "users"
+                ],
                 "parameters": [
                     {
                         "name": "pageNumber",
@@ -858,7 +827,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User list",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -882,8 +850,11 @@
         },
         "/users/{userId}": {
             "get": {
-                "operationId": "getUser",
-                "summary": "Get a user",
+                "operationId": "usersGet",
+                "summary": "Get single users",
+                "tags": [
+                    "users"
+                ],
                 "parameters": [
                     {
                         "name": "userId",
@@ -891,13 +862,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "User ID"
+                            "description": "users ID"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "User details",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -919,8 +889,11 @@
                 }
             },
             "put": {
-                "operationId": "updateUser",
-                "summary": "Update a user",
+                "operationId": "usersUpdate",
+                "summary": "Update single users",
+                "tags": [
+                    "users"
+                ],
                 "parameters": [
                     {
                         "name": "userId",
@@ -928,7 +901,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "User ID"
+                            "description": "users ID"
                         }
                     }
                 ],
@@ -944,7 +917,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -976,8 +948,11 @@
                 }
             },
             "delete": {
-                "operationId": "deleteUser",
-                "summary": "Delete a user",
+                "operationId": "usersDelete",
+                "summary": "Delete single users",
+                "tags": [
+                    "users"
+                ],
                 "parameters": [
                     {
                         "name": "userId",
@@ -985,14 +960,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "User ID"
+                            "description": "users ID"
                         }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "User deleted"
-                    },
+                    "204": {},
                     "404": {
                         "description": "Not found",
                         "content": {
@@ -1006,10 +979,13 @@
                 }
             }
         },
-        "/users:batch-create": {
+        "/users:batch": {
             "post": {
-                "operationId": "batchCreateUsers",
-                "summary": "Batch create users",
+                "operationId": "usersBatchCreate",
+                "summary": "Batch create userss",
+                "tags": [
+                    "users"
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1022,7 +998,6 @@
                 },
                 "responses": {
                     "207": {
-                        "description": "Batch creation result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1042,12 +1017,13 @@
                         }
                     }
                 }
-            }
-        },
-        "/users:batch-update": {
+            },
             "patch": {
-                "operationId": "batchUpdateUsers",
-                "summary": "Batch update users",
+                "operationId": "usersBatchUpdate",
+                "summary": "Batch update userss",
+                "tags": [
+                    "users"
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1060,7 +1036,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch update result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1090,12 +1065,13 @@
                         }
                     }
                 }
-            }
-        },
-        "/users:batch": {
+            },
             "delete": {
-                "operationId": "batchDeleteUsers",
-                "summary": "Batch delete users",
+                "operationId": "usersBatchDelete",
+                "summary": "Batch delete userss",
+                "tags": [
+                    "users"
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1108,7 +1084,6 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Batch delete result",
                         "content": {
                             "application/json": {
                                 "schema": {

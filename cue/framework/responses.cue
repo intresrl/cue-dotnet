@@ -8,6 +8,22 @@ package framework
 	}
 }
 
+#R404: {
+	...
+	"404": {
+		description: "Not found"
+		content:     _schemas.ErrorResponse
+	}
+}
+
+#R409: {
+	...
+	"409": {
+		description: "Conflict"
+		content:     _schemas.ErrorResponse
+	}
+}
+
 #R422: {
 	...
 	"422": {

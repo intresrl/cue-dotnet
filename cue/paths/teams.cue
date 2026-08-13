@@ -1,177 +1,37 @@
 package paths
 
 import (
-    F  "example.com/apispec/framework"
+	F "example.com/apispec/framework"
 )
 
-// Tag definition for OpenAPI
-_teams: Tag: {
-	name: "teams"
-	description: "Team management endpoints"
+_teamsCfg: F.#CRUDNaming & {resourceName: "teams"} & {
+	schemaResource:            "Team"
+	schemaListResponse:        "TeamListResponse"
+	schemaErrorResponse:       "ErrorResponse"
+	schemaListItem:            "TeamListItem"
+	schemaBatchCreateRequest:  "TeamBatchCreateRequest"
+	schemaBatchCreateResponse: "BatchCreateResponse"
+	schemaBatchUpdateRequest:  "TeamBatchUpdateRequest"
+	schemaBatchUpdateResponse: "BatchUpdateResponse"
+	schemaBatchDeleteRequest:  "TeamBatchDeleteRequest"
+	schemaBatchDeleteResponse: "BatchDeleteResponse"
 }
 
-// Path parameter schema definitions that Python script will expand
-#PathParams: {
-	teamId: {
-		name: "teamId"
-		in: "path"
-		required: true
-		schema: {type: "string", description: "Team ID"}
-	}
+paths: "/teams": {
+	post: (F.#GenCreateEndpoint & _teamsCfg).post
+	get:  (F.#GenListEndpoint & _teamsCfg).get
 }
 
-_schemaRefs: F.#SchemaRefs & {
-    Team: _
-    TeamListResponse: _
-    ErrorResponse: _
-    TeamListItem: _
-    TeamBatchCreateRequest: _
-    BatchCreateResponse: _
-    TeamBatchUpdateRequest: _
-    BatchUpdateResponse: _
-    TeamBatchDeleteRequest: _
-    BatchDeleteResponse: _
+paths: "/teams/{teamId}": {
+    _cfg: _teamsCfg & { idName: "teamId" }
+
+	get:    (F.#GenReadEndpoint & _cfg).get
+	put:    (F.#GenUpdateEndpoint & _cfg).put
+	delete: (F.#GenDeleteEndpoint & _cfg).delete
 }
 
-// PathItems defines all team REST endpoints
-paths: {
-    ...,
-	"/teams": {
-		post: {
-			operationId: "createTeam"
-			summary: "Create a team"
-			tags: ["teams"]
-			requestBody: {
-				required: true
-				content: _schemaRefs.Team
-			}
-			responses: F.#R400 & F.#R422 & {
-				"201": {
-					description: "Team created"
-					content: _schemaRefs.Team
-				}
-			}
-		}
-		get: {
-			operationId: "listTeams"
-			summary: "List teams"
-			tags: ["teams"]
-			parameters: F.#Pagination
-				//{"$ref": "#/components/parameters/team_filter"}
-			responses: F.#R400 & {
-				"200": {
-					description: "Team list"
-					content: _schemaRefs.TeamListResponse
-				}
-			}
-		}
-	}
-	"/teams/{teamId}": {
-		get: {
-			operationId: "getTeam"
-			summary: "Get a team"
-			tags: ["teams"]
-			parameters: [#PathParams.teamId]
-			responses: {
-				"200": {
-					description: "Team details"
-					content: _schemaRefs.Team
-				}
-				"404": {
-					description: "Not found"
-					content: _schemaRefs.ErrorResponse
-				}
-			}
-		}
-		put: {
-			operationId: "updateTeam"
-			summary: "Update a team"
-			tags: ["teams"]
-			parameters: [#PathParams.teamId]
-			requestBody: {
-				required: true
-				content: _schemaRefs.Team
-			}
-			responses: {
-				"200": {
-					description: "Team updated"
-					content: _schemaRefs.Team
-				}
-				"404": {
-					description: "Not found"
-					content: _schemaRefs.ErrorResponse
-				}
-				"409": {
-					description: "Conflict"
-					content: _schemaRefs.ErrorResponse
-				}
-			}
-		}
-		delete: {
-			operationId: "deleteTeam"
-			summary: "Delete a team"
-			tags: ["teams"]
-			parameters: [#PathParams.teamId]
-			responses: {
-				"204": {
-					description: "Team deleted"
-				}
-				"404": {
-					description: "Not found"
-					content: _schemaRefs.ErrorResponse
-				}
-			}
-		}
-	}
-	"/teams:batch-create": {
-		post: {
-			operationId: "batchCreateTeams"
-			summary: "Batch create teams"
-			tags: ["teams"]
-			requestBody: {
-				required: true
-				content: _schemaRefs.TeamBatchCreateRequest
-			}
-			responses: F.#R400 & {
-				"207": {
-					description: "Batch creation result"
-					content: _schemaRefs.BatchCreateResponse
-				}
-			}
-		}
-	}
-	"/teams:batch-update": {
-		patch: {
-			operationId: "batchUpdateTeams"
-			summary: "Batch update teams"
-			tags: ["teams"]
-			requestBody: {
-				required: true
-				content: _schemaRefs.TeamBatchUpdateRequest
-			}
-			responses: F.#R400 & F.#R422 & {
-				"200": {
-					description: "Batch update result"
-					content: _schemaRefs.BatchUpdateResponse
-				}
-			}
-		}
-	}
-	"/teams:batch": {
-		delete: {
-			operationId: "batchDeleteTeams"
-			summary: "Batch delete teams"
-			tags: ["teams"]
-			requestBody: {
-				required: true
-				content: _schemaRefs.TeamBatchDeleteRequest
-			}
-			responses: F.#R400 & {
-				"200": {
-					description: "Batch delete result"
-					content: _schemaRefs.BatchDeleteResponse
-				}
-			}
-		}
-	}
+paths: "/teams:batch": {
+	post: (F.#GenBatchCreateEndpoint & _teamsCfg).post
+	patch: (F.#GenBatchUpdateEndpoint & _teamsCfg).patch
+	delete: (F.#GenBatchDeleteEndpoint & _teamsCfg).delete
 }

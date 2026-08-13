@@ -66,9 +66,12 @@ package api
 
 // Page number (1-based)
 #pageNumber: int
+
 // Items per page
 #pageSize: int
+
 // Sort by field
 #sortBy: string
+
 // Sort direction
 #sortDirection: "asc" | "desc"

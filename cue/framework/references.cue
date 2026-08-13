@@ -7,6 +7,6 @@ _refs: #Refs & {
 	sortDirection: _
 }
 
-_schemas: #SchemaRefs & {
-	ErrorResponse: _
+_schemas: {
+	ErrorResponse: (#ContentSchema & {_schemaName: "ErrorResponse"})
 }

@@ -1,7 +1,7 @@
 package api
 
 import (
-    F "example.com/apispec/framework"
+	F "example.com/apispec/framework"
 )
 
 // Team is a team grouping users with shared access to resources
@@ -24,7 +24,7 @@ import (
 	updatedAt?: string
 }
 
-#TeamListResponse: F.#WithPagination & { items: [... #TeamListItem] }
+#TeamListResponse: F.#WithPagination & {items: [... #TeamListItem]}
 
 // TeamListItem is a lightweight team representation for list responses
 #TeamListItem: {

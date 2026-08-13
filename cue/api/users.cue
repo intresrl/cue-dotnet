@@ -1,7 +1,7 @@
 package api
 
 import (
-    F "example.com/apispec/framework"
+	F "example.com/apispec/framework"
 )
 
 // User is a user account in the system
@@ -24,7 +24,7 @@ import (
 	createdAt?: string
 }
 
-#UserListResponse: F.#WithPagination & { items: [... #UserListItem] }
+#UserListResponse: F.#WithPagination & {items: [... #UserListItem]}
 
 // UserListItem is a lightweight user representation for list responses
 #UserListItem: {

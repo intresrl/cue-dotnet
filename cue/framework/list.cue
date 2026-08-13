@@ -13,6 +13,6 @@ package framework
 }
 
 #WithPagination: {
-    items: [... _]
-    pagination: #PaginationMeta
+	items: [...]
+	pagination: #PaginationMeta
 }

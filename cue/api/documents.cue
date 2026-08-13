@@ -1,7 +1,7 @@
 package api
 
 import (
-    F "example.com/apispec/framework"
+	F "example.com/apispec/framework"
 )
 
 // Document is a document managed by the system
@@ -26,7 +26,7 @@ import (
 	updatedAt?: string
 }
 
-#DocumentListResponse: F.#WithPagination & { items: [... #DocumentListItem] }
+#DocumentListResponse: F.#WithPagination & {items: [... #DocumentListItem]}
 
 // DocumentListItem is a lightweight document representation for list responses
 #DocumentListItem: {
