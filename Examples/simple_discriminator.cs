@@ -9,6 +9,7 @@ public class DateTimeMessage : MessageBase
 {
     public string Type { get; init; }
     public string Format { get; init; }
+    public string Timezone { get; init; }
 }
 
 public class Message
@@ -27,4 +28,5 @@ public class TextMessage : MessageBase
 {
     public string Type { get; init; }
     public long MaxLength { get; init; }
+    public string Pattern { get; init; }
 }

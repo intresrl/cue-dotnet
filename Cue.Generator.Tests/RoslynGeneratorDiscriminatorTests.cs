@@ -1,3 +1,5 @@
+using Cue.Generator.Roslyn;
+
 namespace Cue.Generator.Tests;
 
 public sealed class RoslynGeneratorDiscriminatorTests

@@ -1,10 +1,3 @@
-=== Collected Structs ===
- -> Root
-#DateTimeMessage -> DateTimeMessage
-#TextMessage -> TextMessage
-#Message -> Message
-#Message.message -> Message
-
   MapBranchesToNamedStructs for #Message.message:
     DiscriminatorField: type
     Branches count: 2
@@ -12,6 +5,12 @@
   Mapped inline #Message.message (datetime) to #DateTimeMessage
   Mapped inline #Message.message (text) to #TextMessage
     Total mapped branches: 2
+=== Collected Structs ===
+ -> Root
+#DateTimeMessage -> DateTimeMessage
+#TextMessage -> TextMessage
+#Message -> Message
+
 === Collected Discriminated Unions ===
 #Message.message -> BaseClass: MessageBase, Discriminator: type
   - #DateTimeMessage
@@ -28,6 +27,8 @@ Disjunction at #Message.message:
     CueStructValue at #Message.message
       - type: CueStringValue
       - format: CueStringValue
+      - timezone: CueStringValue
     CueStructValue at #Message.message
       - type: CueStringValue
       - maxLength: CueIntValue
+      - pattern: CueStringValue

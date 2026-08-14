@@ -1,5 +1,7 @@
 using Cuelang.Cue;
 using Cue.Generator;
+using Cue.Generator.Roslyn;
+using Microsoft.Extensions.DependencyInjection;
 
 // Parse optional --debug flag
 var (input, output, debugOutputPath) = args switch
@@ -30,8 +32,6 @@ var node = value.ToCueValueNode();
 TextWriter? debugWriter = null;
 try
 {
-    var gen = new RoslynGenerator();
-    
     if (debugOutputPath != null)
     {
         var dir = Path.GetDirectoryName(debugOutputPath);
@@ -42,7 +42,13 @@ try
         debugWriter = new StreamWriter(debugOutputPath, append: false);
     }
     
-    var code = gen.GenerateCode(node, debugWriter);
+    var services = new ServiceCollection();
+    services.RegisterGenerator(debugWriter);
+    using var serviceProvider = services.BuildServiceProvider();
+
+    var gen = serviceProvider.GetRequiredService<IRoslynGenerator>();
+    
+    var code = gen.GenerateCode(node);
     
     File.WriteAllText(output, code);
     Console.WriteLine($"Wrote {output}");
