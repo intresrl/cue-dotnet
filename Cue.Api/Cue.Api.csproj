@@ -10,12 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\cue.dll" Condition="'$(OS)' == 'Windows_NT'">
+    <None Include="..\libcue.dll" Condition="'$(OS)' == 'Windows_NT'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>cue.dll</TargetPath>
     </None>
     <None Include="..\libcue.so" Condition="'$(OS)' != 'Windows_NT'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="NativeResolver.cs" />
   </ItemGroup>
 </Project>
 

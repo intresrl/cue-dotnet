@@ -7,30 +7,15 @@
     <AssemblyName>Cuelang.Cue.Tests</AssemblyName>
     <RootNamespace>Cuelang.Cue.Tests</RootNamespace>
     <UseTestingPlatform>true</UseTestingPlatform>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="Microsoft.Testing.Platform" Version="2.0.2" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="YTest.MTP.XUnit2" Version="1.0.3" />
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cue.Api\Cue.Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\cue.dll" Condition="'$(OS)' == 'Windows_NT'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\libcue.so" Condition="'$(OS)' != 'Windows_NT'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
-
