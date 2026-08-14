@@ -12,7 +12,9 @@
 #Message -> Message
 
 === Collected Discriminated Unions ===
-#Message.message -> BaseClass: MessageBase, Discriminator: type
+#Message.message -> BaseClass: Disjunction(2 branches:
+Struct(type: String at #Message.message.type, format: String at #Message.message.format, timezone: String at #Message.message.timezone) at #Message.message
+Struct(type: String at #Message.message.type, maxLength: Int at #Message.message.maxLength, pattern: String at #Message.message.pattern) at #Message.message) at #Message.message, Discriminator: MessageBase
   - #DateTimeMessage
   - #TextMessage
 

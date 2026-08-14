@@ -1,9 +1,21 @@
 using Cue.Generator.Roslyn;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cue.Generator.Tests;
 
 public sealed class RoslynGeneratorDiscriminatorTests
 {
+    private readonly IRoslynGenerator _sut;
+
+    public RoslynGeneratorDiscriminatorTests()
+    {
+        // TODO: unit test this as well
+        var services = new ServiceCollection();
+        services.RegisterGenerator(null);
+        using var serviceProvider = services.BuildServiceProvider();
+        _sut = serviceProvider.GetRequiredService<IRoslynGenerator>();
+    }
+    
     [Fact]
     public void GeneratesAbstractBaseClassForDiscriminatedUnion()
     {
@@ -18,8 +30,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should contain abstract base class
         Assert.Contains("public abstract class", code);
@@ -38,8 +49,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should contain concrete classes
         Assert.Contains("public class OptionA : ", code);
@@ -58,8 +68,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should include the type field in generated classes
         Assert.Contains("public string Type", code);
@@ -77,8 +86,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should convert field names to PascalCase
         Assert.Contains("public string DatePattern", code);
@@ -98,8 +106,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should generate all three concrete classes
         Assert.Contains("public class TypeA", code);
@@ -125,8 +132,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should generate multiple abstract base classes
         Assert.Contains("public abstract class FormatBase", code);
@@ -145,8 +151,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should map Cue types to C# types correctly
         Assert.Contains("public long Value", code); // int -> long
@@ -175,8 +180,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should generate nested class types
         Assert.Contains("public class", code);
@@ -194,8 +198,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should generate List properties
         Assert.Contains("List<string>", code);
@@ -216,8 +219,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should be valid C# (basic check)
         Assert.Contains("public abstract class", code);
@@ -240,8 +242,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should use get; init; pattern
         Assert.Contains("get;", code);
@@ -261,8 +262,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should still generate the classes
         Assert.Contains("public class StructA", code);
@@ -295,8 +295,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // Should generate abstract base class and concrete implementations
         Assert.Contains("public abstract class ValueFormatBase", code);
@@ -322,8 +321,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             """);
 
         var node = value.ToCueValueNode();
-        var gen = new RoslynGenerator();
-        var code = gen.GenerateCode(node);
+        var code = _sut.GenerateCode(node);
 
         // All classes and properties should be public
         Assert.Contains("public abstract class", code);
