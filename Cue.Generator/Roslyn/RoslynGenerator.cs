@@ -24,13 +24,13 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
 
         // create abstract base classes for discriminated unions first
         var members = typeStore.GetAbstractDefinitions()
-            .Select(d => CreateAbstractBaseClass(d.TypeName))
+            .Select(d => CreateAbstractBaseClass(namer.BaseClassName(d.Disjunction.Path)))
             .Cast<MemberDeclarationSyntax>()
             .ToList();
 
         // create classes for each struct (keep deterministic order)
         members.AddRange(typeStore.GetConcreteDefinitions()
-            .Select(d => CreateClassDeclaration(d.TypeName, d.StructNode, d.BaseClassName)));
+            .Select(d => CreateClassDeclaration(d.StructNode.Path, d.StructNode, d.BaseClassPath)));
 
         compilationUnit = compilationUnit.AddMembers([.. members]);
         return compilationUnit.NormalizeWhitespace().ToFullString();
@@ -47,11 +47,11 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     }
 
     private ClassDeclarationSyntax CreateClassDeclaration(
-        string typeName,
+        string typePath,
         CueStructValue node,
         string? baseClass = null)
     {
-        var classDecl = SyntaxFactory.ClassDeclaration(typeName)
+        var classDecl = SyntaxFactory.ClassDeclaration(namer.TypeName(typePath))
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
         // If this class extends a base class, add it
@@ -62,7 +62,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
             ]);
         }
 
-        var baseTypeName = SyntaxFactory.ParseTypeName(baseClass);
+        var baseTypeName = SyntaxFactory.ParseTypeName(namer.BaseClassName(baseClass));
         var baseTypeList = SyntaxFactory.BaseList(
             SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(
                 SyntaxFactory.SimpleBaseType(baseTypeName)
@@ -78,7 +78,9 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     private PropertyDeclarationSyntax DeclareProperty(CueStructField field)
     {
         var propName = namer.Identifier(field.Name);
-        var typeSyntax = SyntaxFactory.ParseTypeName(typeStore.GetTypeName(field.Value));
+        var valueName = typeStore.GetTypeName(field.Value).Format(namer.TypeName, namer.BaseClassName);
+        
+        var typeSyntax = SyntaxFactory.ParseTypeName(valueName);
         var semicolonToken = SyntaxFactory.Token(SyntaxKind.SemicolonToken);
 
         return SyntaxFactory.PropertyDeclaration(typeSyntax, propName)
