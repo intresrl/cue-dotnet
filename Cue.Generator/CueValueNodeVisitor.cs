@@ -57,7 +57,34 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     protected override CueValueNode VisitTop(Value value)
     {
         // Check for disjunctions at the top level
-        if (value.Disjunctions() is { Length: > 0 } disjunctions) return VisitDisjunction(value.Path(), disjunctions);
+        var expr = value.Expr();
+
+        if (expr.Op == ExprOp.Or)
+        {
+            return VisitDisjunction(value, expr.Values);
+        }
+
+        // expr is `matchN(1, [...])
+        if (expr is
+            {
+                Op: ExprOp.Call, 
+                CallName: "matchN",
+                Values: [{ } howMany, { } branches]
+            } 
+            && howMany.Kind() == Kind.Int 
+            && howMany.GetLong() == 1L
+            && branches.Kind() == Kind.List
+            && branches.Len() is { } len && len.Kind() == Kind.Int && len.IsConcrete()
+            )
+        {
+            var branchCount = len.GetLong();
+            
+            Enumerable.Range(0, (int) branchCount).Select(i => ctx branches.Path())
+            
+            
+            var val = expr.Values[0];
+            Console.WriteLine(val.Kind());
+        }
 
         if (value.IncompleteKind() != Kind.Top)
             // Delegate to base class incomplete kind dispatch
@@ -72,7 +99,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 
         if (value.Disjunctions() is { Length: > 0 } disjunctions)
         {
-            return VisitDisjunction(path, disjunctions);
+            return VisitDisjunction(value, disjunctions);
         }
 
         var fieldValues = value.Fields(new EvalOption.Definitions(true), new EvalOption.Optionals(true));
@@ -98,11 +125,21 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         return new CueListValue(path, elementType);
     }
 
-    private CueDisjunction VisitDisjunction(string path, Value[] disjunctions)
+    private CueDisjunction VisitDisjunction(Value value, Value[] branches)
     {
-        var branches = disjunctions.Select(Visit).ToList();
-        var (name, paths) = FindDiscriminatorField(branches);
-        return new CueDisjunction(path, branches, name, paths);
+        try
+        {
+            var nodes = branches.Select(Visit).ToList();
+            var (name, paths) = FindDiscriminatorField(nodes);
+            return new CueDisjunction(value.Path(), nodes, name, paths);
+        }
+        finally
+        {
+            foreach (var branch in branches)
+            {
+                branch.Dispose();
+            }
+        }
     }
 
     private static string GetDiscriminatorValue(CueStructValue branch, string name)
@@ -142,12 +179,12 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
             .ToArray();
 
         var name = fields.Select(field => new
-            {
-                field,
-                allValues = structBranches
+        {
+            field,
+            allValues = structBranches
                     .Select(b => GetDiscriminatorValue(b, field.Name))
                     .ToArray()
-            })
+        })
             .Where(t => t.allValues.Distinct().Count() == t.allValues.Length)
             .Select(t => t.field.Name)
             .FirstOrDefault();

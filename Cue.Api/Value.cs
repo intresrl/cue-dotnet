@@ -19,6 +19,34 @@ public sealed unsafe class Value : IDisposable
         [NativeMethods.CUE_KIND_TOP] = Cue.Kind.Top,
     };
 
+    private static readonly Dictionary<int, ExprOp> ExprOpMap = new()
+    {
+        [NativeMethods.CUE_OP_NO] = ExprOp.No,
+        [NativeMethods.CUE_OP_AND] = ExprOp.And,
+        [NativeMethods.CUE_OP_OR] = ExprOp.Or,
+        [NativeMethods.CUE_OP_SELECTOR] = ExprOp.Selector,
+        [NativeMethods.CUE_OP_INDEX] = ExprOp.Index,
+        [NativeMethods.CUE_OP_SLICE] = ExprOp.Slice,
+        [NativeMethods.CUE_OP_CALL] = ExprOp.Call,
+        [NativeMethods.CUE_OP_BOOLEAN_AND] = ExprOp.BooleanAnd,
+        [NativeMethods.CUE_OP_BOOLEAN_OR] = ExprOp.BooleanOr,
+        [NativeMethods.CUE_OP_EQUAL] = ExprOp.Equal,
+        [NativeMethods.CUE_OP_NOT] = ExprOp.Not,
+        [NativeMethods.CUE_OP_NOT_EQUAL] = ExprOp.NotEqual,
+        [NativeMethods.CUE_OP_LESS_THAN] = ExprOp.LessThan,
+        [NativeMethods.CUE_OP_LESS_THAN_EQUAL] = ExprOp.LessThanEqual,
+        [NativeMethods.CUE_OP_GREATER_THAN] = ExprOp.GreaterThan,
+        [NativeMethods.CUE_OP_GREATER_THAN_EQUAL] = ExprOp.GreaterThanEqual,
+        [NativeMethods.CUE_OP_REGEX_MATCH] = ExprOp.RegexMatch,
+        [NativeMethods.CUE_OP_NOT_REGEX_MATCH] = ExprOp.NotRegexMatch,
+        [NativeMethods.CUE_OP_ADD] = ExprOp.Add,
+        [NativeMethods.CUE_OP_SUBTRACT] = ExprOp.Subtract,
+        [NativeMethods.CUE_OP_MULTIPLY] = ExprOp.Multiply,
+        [NativeMethods.CUE_OP_FLOAT_QUOTIENT] = ExprOp.FloatQuotient,
+        [NativeMethods.CUE_OP_INTERPOLATION] = ExprOp.Interpolation,
+        [NativeMethods.CUE_OP_SPREAD] = ExprOp.Spread,
+    };
+
     private readonly CueResource _resource;
 
     public Value(CueContext context, long value)
@@ -190,7 +218,7 @@ public sealed unsafe class Value : IDisposable
         return result;
     }
 
-    public string GetString()
+    public string? GetString()
     {
         byte* result = null;
         var err = NativeMethods.cue_dec_string(Handle, &result);
@@ -225,7 +253,7 @@ public sealed unsafe class Value : IDisposable
         using var evalOpts = EncodedEvalOptions.From(options);
         nuint len = 0;
         var fields = NativeMethods.cue_fields(Handle, evalOpts.Options, &len);
-        return FromNativeValueArray(fields, len);
+        return NativeDynamicAllocation.ToArray(fields, len, handle => new Value(Context, handle));
     }
 
     /// <summary>
@@ -236,7 +264,7 @@ public sealed unsafe class Value : IDisposable
     {
         nuint len = 0;
         var elements = NativeMethods.cue_list(Handle, &len);
-        return FromNativeValueArray(elements, len);
+        return NativeDynamicAllocation.ToArray(elements, len, handle => new Value(Context, handle));
     }
 
     /// <summary>
@@ -250,7 +278,7 @@ public sealed unsafe class Value : IDisposable
     {
         nuint len = 0;
         var disjuncts = NativeMethods.cue_disjunctions(Handle, &len);
-        return FromNativeValueArray(disjuncts, len);
+        return NativeDynamicAllocation.ToArray(disjuncts, len, handle => new Value(Context, handle));
     }
 
     /// <summary>
@@ -258,7 +286,8 @@ public sealed unsafe class Value : IDisposable
     /// </summary>
     public string Path()
     {
-        return NativeDynamicAllocation.ToString(NativeMethods.cue_path(Handle));
+        return NativeDynamicAllocation.ToString(NativeMethods.cue_path(Handle))
+            ?? throw new InvalidDataException("libcue path should always be non-null");
     }
 
     public Attribute[] Attributes(AttributeKind kind = AttributeKind.Value)
@@ -266,23 +295,20 @@ public sealed unsafe class Value : IDisposable
         nuint len = 0;
         var attrs = NativeMethods.cue_attrs(Handle, (int)kind, &len);
 
-        var count = checked((int)len);
-        if (count == 0) return [];
-
-        var values = new Attribute[count];
-        for (var i = 0; i < count; i++) values[i] = new Attribute(new CueResource(attrs[i]));
-
-        return values;
+        return NativeDynamicAllocation.ToArray(attrs, len, attr => new Attribute(new CueResource(attr)));
     }
 
-    private Value[] FromNativeValueArray(nuint* handles, nuint length)
+    public ExprResult Expr()
     {
-        if (handles == null || length == 0) return [];
-
-        var count = checked((int)length);
-        var values = new Value[count];
-        for (var i = 0; i < count; i++) values[i] = new Value(Context, handles[i]);
-
-        return values;
+        var result = NativeMethods.cue_expr(Handle);
+        var name = NativeDynamicAllocation.ToString(result.call_name);
+        var values = NativeDynamicAllocation.ToArray(result.values, result.count, handle => new Value(Context, handle));
+        return new ExprResult(ExprOpMap[result.op], name, values);
+    }
+    
+    public Value Len()
+    {
+        var handle = NativeMethods.cue_len(Handle);
+        return new Value(Context, handle);
     }
 }

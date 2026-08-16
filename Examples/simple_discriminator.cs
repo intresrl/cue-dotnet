@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public abstract class MessageBase
+public abstract class SimpleOrMessageBase
 {
 }
 
@@ -12,7 +12,7 @@ public class Root
     public Message Message { get; init; }
 }
 
-public class DateTimeMessage : MessageBase
+public class DateTimeMessage : SimpleOrMessageBase
 {
     public string Type { get; init; }
     public string Format { get; init; }
@@ -21,10 +21,11 @@ public class DateTimeMessage : MessageBase
 
 public class Message
 {
-    public MessageBase Message { get; init; }
+    public object MatchNMessage { get; init; }
+    public SimpleOrMessageBase SimpleOrMessage { get; init; }
 }
 
-public class TextMessage : MessageBase
+public class TextMessage : SimpleOrMessageBase
 {
     public string Type { get; init; }
     public long MaxLength { get; init; }

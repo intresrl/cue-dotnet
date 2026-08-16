@@ -19,14 +19,14 @@ internal static unsafe class NativeDynamicAllocation
 
         var str = Marshal.PtrToStringUTF8((IntPtr)value);
 
-        if ((nint) value != IntPtr.Zero)
+        if ((nint)value != IntPtr.Zero)
         {
             NativeMemory.Free(value);
         }
 
         return str;
     }
-    
+
     /// <summary>
     /// Given a native "malloc"ed byte array, returns a C# byte array with its contents and frees "malloc"ed byte array
     /// </summary>
@@ -41,12 +41,40 @@ internal static unsafe class NativeDynamicAllocation
         }
 
         var value = new ReadOnlySpan<byte>(source, checked((int)length)).ToArray();
-        
-        if ((nint) source != IntPtr.Zero)
+
+        if ((nint)source != IntPtr.Zero)
         {
             NativeMemory.Free(source);
         }
 
         return value;
+    }
+
+    public static TResult[] ToArray<TNative, TResult>(
+        TNative* source,
+        nuint length,
+        Func<TNative, TResult> mapper)
+        where TNative : unmanaged
+    {
+        if (source == null || length == 0)
+            return [];
+
+        try
+        {
+            var count = checked((int)length);
+            var values = new ReadOnlySpan<TNative>(source, count);
+            var result = new TResult[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                result[i] = mapper(values[i]);
+            }
+
+            return result;
+        }
+        finally
+        {
+            NativeMemory.Free(source);
+        }
     }
 }

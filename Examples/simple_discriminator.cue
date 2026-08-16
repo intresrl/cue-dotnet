@@ -12,5 +12,6 @@
 
 
 #Message: {
-	message: #DateTimeMessage | #TextMessage	
+	matchNMessage: matchN(1, [#DateTimeMessage, #TextMessage])
+	simpleOrMessage: #DateTimeMessage | #TextMessage
 }
