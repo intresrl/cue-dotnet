@@ -2,6 +2,7 @@ namespace Cuelang.Cue;
 
 public sealed unsafe class CueContext : IDisposable
 {
+    // TODO: CueContext should remember cue values and dispose them when it is disposed
     private readonly CueResource _resource = new(NativeMethods.cue_newctx());
     private bool _disposed;
 

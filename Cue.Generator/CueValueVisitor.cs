@@ -11,9 +11,17 @@ public abstract class CueValueVisitor<TResult>
         return Dispatch(value, kind);
     }
 
-    protected TResult Dispatch(Value value, Kind kind)
+    private TResult Dispatch(Value value, Kind kind)
     {
-        return kind switch
+        if (kind is Kind.Top or Kind.Struct && DisjunctionBranches(value) is { } branches)
+        {
+            return VisitDisjunction(value, branches);
+        }
+
+        // Delegate to base class incomplete kind dispatch
+        var visitKind = kind == Kind.Top ? value.IncompleteKind() : kind;
+
+        return visitKind switch
         {
             Kind.Bottom => VisitBottom(value),
             Kind.Null => VisitNull(value),
@@ -28,6 +36,46 @@ public abstract class CueValueVisitor<TResult>
             Kind.List => VisitList(value),
             _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Unexpected kind")
         };
+    }
+    
+    private static IEnumerable<Value>? DisjunctionBranches(Value value)
+    {
+        // Check for disjunctions at the top level
+        var expr = value.Expr();
+
+        if (expr.Op == ExprOp.Or)
+        {
+            return expr.Values;
+        }
+
+        // expr is `matchN(1, [...])`, where list is concrete length
+        if (expr is
+            {
+                Op: ExprOp.Call, 
+                CallName: "matchN",
+                Values: [{ } n, { } l]
+            } 
+            && n.Kind() == Kind.Int && n.GetLong() == 1L
+            && l.Kind() == Kind.List && l.Len() is { } len && len.Kind() == Kind.Int && len.IsConcrete()
+           )
+        {
+            var branches = new List<Value>();
+            var branchCount = len.GetLong();
+            
+            for (long i = 0; i < branchCount; i++)
+            {
+                branches.Add(l.Lookup($"[{i}]"));
+            }
+
+            return branches;
+        }
+        
+        // we don't care about this expression, dispose values
+        foreach (var v in expr.Values)
+        {
+            v.Dispose();
+        }
+        return null;
     }
 
     protected abstract TResult VisitBottom(Value value);
@@ -51,4 +99,6 @@ public abstract class CueValueVisitor<TResult>
     protected abstract TResult VisitStruct(Value value);
 
     protected abstract TResult VisitList(Value value);
+    
+    protected abstract TResult VisitDisjunction(Value value, IEnumerable<Value> branches);
 }
