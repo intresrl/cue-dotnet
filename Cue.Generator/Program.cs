@@ -27,7 +27,7 @@ if (input is null || output is null)
 using var ctx = new CueContext();
 using var value = ctx.Compile(File.ReadAllText(input));
 
-var node = value.ToCueValueNode();
+var node = CueValueVisitor.VisitRoot(value);
 
 TextWriter? debugWriter = null;
 try

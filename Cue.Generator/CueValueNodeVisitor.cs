@@ -2,18 +2,30 @@ using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
+public sealed class CueValueVisitor(Value[] rootDefinitions)
 {
-    protected override CueValueNode VisitBottom(Value value)
+    private readonly HashSet<string> _definedPaths = [];
+    
+    public static IEnumerable<CueValueNode> VisitRoot(Value value)
     {
-        return new CueBottomValue(value.Path());
+        var definitions = value.Fields(new EvalOption.Definitions(true));
+
+        try
+        {
+            var visitor = new CueValueVisitor(definitions);
+            return definitions.Select(visitor.Visit).ToArray();
+        }
+        finally
+        {
+            foreach (var definition in definitions)
+            {
+                definition.Dispose();
+            }
+            value.Dispose();
+        }
     }
 
-    protected override CueValueNode VisitNull(Value value)
-    {
-        return new CueNullValue(value.Path());
-    }
-
+    
     private static T? GetConcrete<T>(Value value, Func<Value, T> getConcrete) where T : struct
     {
         return !value.IsConcrete() ? null : getConcrete(value);
@@ -24,42 +36,95 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         return !value.IsConcrete() ? null : getConcrete(value);
     }
 
-    protected override CueValueNode VisitBool(Value value)
+    private CueValueNode Visit(Value value)
     {
-        return new CueBoolValue(value.Path(), GetConcrete(value, v => v.GetBoolean()));
+        foreach (var rootValue in rootDefinitions)
+        {
+            if (value.Equals(rootValue) && _definedPaths.Contains(rootValue.Path()))
+            {
+                return new CueDefinitionReference(value.Path(), rootValue.Path());
+            }
+        }
+        
+        _definedPaths.Add(value.Path());
+        
+        var kind = value.Kind() is Kind.Bottom
+            ? value.IncompleteKind()
+            : value.Kind();
+
+        if (kind is Kind.Top or Kind.Struct &&
+            DisjunctionBranches(value) is { } branches)
+        {
+            return VisitDisjunction(value, branches);
+        }
+
+        var visitKind = kind == Kind.Top
+            ? value.IncompleteKind()
+            : kind;
+
+        return visitKind switch
+        {
+            Kind.Bottom => new CueBottomValue(value.Path()),
+            Kind.Null => new CueNullValue(value.Path()),
+            Kind.Number => new CueNumberValue(value.Path()),
+            Kind.Top => new CueTopValue(value.Path()),
+
+            Kind.Bool => new CueBoolValue(value.Path(), GetConcrete(value, v => v.GetBoolean())),
+            Kind.Int => new CueIntValue(value.Path(), GetConcrete(value, v => v.GetLong())),
+            Kind.Float => new CueFloatValue(value.Path(), GetConcrete(value, v => v.GetDouble())),
+            Kind.String => new CueStringValue(value.Path(), GetConcreteReference(value, v => v.GetString()!)),
+            Kind.Bytes => new CueBytesValue(value.Path(), GetConcreteReference(value, v => v.GetBytes())),
+
+            Kind.Struct => VisitStruct(value),
+            Kind.List => VisitList(value),
+
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Unexpected kind")
+        };
     }
 
-    protected override CueValueNode VisitInt(Value value)
+    private static IEnumerable<Value>? DisjunctionBranches(Value value)
     {
-        return new CueIntValue(value.Path(), GetConcrete(value, v => v.GetLong()));
+        var expr = value.Expr();
+
+        if (expr.Op == ExprOp.Or)
+        {
+            return expr.Values;
+        }
+
+        // expr is `matchN(1, [...])`, where list is concrete length
+        if (expr is
+            {
+                Op: ExprOp.Call,
+                CallName: "matchN",
+                Values: [{ } n, { } l]
+            }
+            && n.Kind() == Kind.Int
+            && n.GetLong() == 1L
+            && l.Kind() == Kind.List
+            && l.Len() is { } len
+            && len.Kind() == Kind.Int
+            && len.IsConcrete())
+        {
+            var branchCount = len.GetLong();
+            var branches = new List<Value>();
+
+            for (long i = 0; i < branchCount; i++)
+            {
+                branches.Add(l.Lookup($"[{i}]"));
+            }
+
+            return branches;
+        }
+
+        foreach (var v in expr.Values)
+        {
+            v.Dispose();
+        }
+
+        return null;
     }
 
-    protected override CueValueNode VisitFloat(Value value)
-    {
-        return new CueFloatValue(value.Path(), GetConcrete(value, v => v.GetDouble()));
-    }
-
-    protected override CueValueNode VisitString(Value value)
-    {
-        return new CueStringValue(value.Path(), GetConcreteReference(value, v => v.GetString()!));
-    }
-
-    protected override CueValueNode VisitBytes(Value value)
-    {
-        return new CueBytesValue(value.Path(), GetConcreteReference(value, v => v.GetBytes()));
-    }
-
-    protected override CueValueNode VisitNumber(Value value)
-    {
-        return new CueNumberValue(value.Path());
-    }
-
-    protected override CueValueNode VisitTop(Value value)
-    {
-        return new CueTopValue(value.Path());
-    }
-
-    protected override CueValueNode VisitStruct(Value value)
+    private CueStructValue VisitStruct(Value value)
     {
         var path = value.Path();
 
@@ -78,18 +143,20 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         return new CueStructValue(path, fields);
     }
 
-    protected override CueValueNode VisitList(Value value)
+    private CueListValue VisitList(Value value)
     {
         var path = value.Path();
+
         using var elementValue = value.LookupAnyIndex();
         var elementType = Visit(elementValue);
+
         return new CueListValue(path, elementType);
     }
 
-    protected override CueValueNode VisitDisjunction(Value value, IEnumerable<Value> branches)
+    private CueDisjunction VisitDisjunction(Value value, IEnumerable<Value> branches)
     {
         var branchArray = branches.ToArray();
-        
+
         try
         {
             var nodes = branchArray.Select(Visit).ToList();
@@ -108,47 +175,48 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
     private static string GetDiscriminatorValue(CueStructValue branch, string name)
     {
         var field = branch.Fields.FirstOrDefault(f => f.Name == name);
+
         return (field?.Value as CueStringValue)?.ConcreteValue
-               ?? throw new InvalidOperationException($"branch {branch} has no discriminator property '{name}'");
+            ?? throw new InvalidOperationException($"branch {branch} has no discriminator property '{name}'");
     }
 
-    private static (string? name, Dictionary<string, string> branches) FindDiscriminatorField(
-        List<CueValueNode> branches)
+    private static (string? name, Dictionary<string, string> branches) FindDiscriminatorField(List<CueValueNode> branches)
     {
-        if (branches.Count == 0)
-        {
-            return (null, []);
-        }
-
-        // All branches must be structs to have a discriminator
-        if (branches.Any(b => b is not CueStructValue))
+        if (branches.Count == 0 || branches.Any(b => b is not CueStructValue))
         {
             return (null, []);
         }
 
         var structBranches = branches.Cast<CueStructValue>().ToList();
 
-        // for each branch, extract strings that have a constant value
         var namesPerBranch = structBranches
             .Select(e => e.Fields
-                .Where(f => f.Value is CueStringValue { ConcreteValue: not null })
-                .Select(f => new { f.Name, Value = (CueStringValue)f.Value })
-            )
+                .Where(f => f.Value is CueStringValue
+                {
+                    ConcreteValue: not null
+                })
+                .Select(f => new
+                {
+                    f.Name,
+                    Value = (CueStringValue)f.Value
+                }))
             .ToArray();
 
-        // extract all discriminator candidates
         var fields = namesPerBranch
-            .Aggregate((a, b) => a.IntersectBy(b.Select(e => e.Name), e => e.Name))
+            .Aggregate((a, b) =>
+                a.IntersectBy(b.Select(e => e.Name), e => e.Name))
             .ToArray();
 
-        var name = fields.Select(field => new
-        {
-            field,
-            allValues = structBranches
+        var name = fields
+            .Select(field => new
+            {
+                field,
+                allValues = structBranches
                     .Select(b => GetDiscriminatorValue(b, field.Name))
                     .ToArray()
-        })
-            .Where(t => t.allValues.Distinct().Count() == t.allValues.Length)
+            })
+            .Where(t =>
+                t.allValues.Distinct().Count() == t.allValues.Length)
             .Select(t => t.field.Name)
             .FirstOrDefault();
 
@@ -159,8 +227,7 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
 
         var branchDict = structBranches.ToDictionary(
             b => GetDiscriminatorValue(b, name),
-            b => b.Path
-        );
+            b => b.Path);
 
         return (name, branchDict);
     }
@@ -173,16 +240,9 @@ public sealed class CueValueNodeVisitor : CueValueVisitor<CueValueNode>
         }
 
         var prefix = parentPath + ".";
+
         return childPath.StartsWith(prefix, StringComparison.Ordinal)
             ? childPath[prefix.Length..]
             : childPath;
-    }
-}
-
-public static class CueValueExtensions
-{
-    public static CueValueNode ToCueValueNode(this Value value)
-    {
-        return new CueValueNodeVisitor().Visit(value);
     }
 }

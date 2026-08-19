@@ -1,17 +1,15 @@
 ﻿namespace Cue.Generator.Roslyn;
 
-public sealed record ConcreteDefinition(CueStructValue StructNode, string? BaseClassPath);
+public sealed record DisjunctionDefinition(string DisjunctionPath, string[] BranchPaths);
+public sealed record ConcreteDefinition(CueStructValue StructNode);
 
 public interface ITypeStore
 {
     void Collect(CueValueNode node);
-    void CollectionReport();
     TypeName GetTypeName(CueValueNode fieldValue);
     IEnumerable<DisjunctionDefinition> GetAbstractDefinitions();
     IEnumerable<ConcreteDefinition> GetConcreteDefinitions();
 }
-
-public sealed record DisjunctionDefinition(CueDisjunction Disjunction, List<string> BranchPaths);
 
 public class TypeStore(
     IEqualityComparer<CueStructValue> comparer,
@@ -39,11 +37,8 @@ public class TypeStore(
         // collect discriminated unions and map inline branches to named structs
         var discriminations = node.BreadthFirstSearch<DisjunctionDefinition>(n => n switch
         {
-            CueDisjunction { IsDiscriminated: true } d => (d.Branches, [
-                new DisjunctionDefinition(
-                    d,
-                    MapBranchesToNamedStructs(d)
-                )
+            CueDisjunction d => (d.Branches, [
+                new DisjunctionDefinition(d.Path, d.Branches.Select(b => b.Path).ToArray())
             ]),
             CueStructValue s => (s.Fields.Select(f => f.Value), []),
             CueListValue l => ([l.ElementType], []),
@@ -54,62 +49,22 @@ public class TypeStore(
         {
             // Remove inline discriminated union definitions from the type names
             // They should not generate their own classes
-            _concreteTypes.Remove(d.Disjunction.Path);
+            _concreteTypes.Remove(d.DisjunctionPath);
             
-            _discriminatedUnions[d.Disjunction.Path] = d;
+            _discriminatedUnions[d.DisjunctionPath] = d;
         }
     }
 
     public IEnumerable<DisjunctionDefinition> GetAbstractDefinitions()
     {
-        return _discriminatedUnions.Values.OrderBy(kv => kv.Disjunction.Path);
-    }
-
-    public void CollectionReport()
-    {
-        if (debugWriter == null) return;
-
-        debugWriter.WriteLine("=== Collected Structs ===");
-        foreach (var path in _concreteTypes) debugWriter.WriteLine($"{path}");
-
-        debugWriter.WriteLine();
-
-        debugWriter.WriteLine("=== Collected Discriminated Unions ===");
-        foreach (var (path, (baseClass, branches)) in _discriminatedUnions)
-        {
-            debugWriter.WriteLine($"{path} -> BaseClass: {baseClass}");
-            foreach (var branch in branches) debugWriter.WriteLine($"  - {branch}");
-        }
-
-        debugWriter.WriteLine();
-        debugWriter.WriteLine("=== Disjunction Details ===");
-        foreach (var (disjunction, _) in _discriminatedUnions.Values)
-        {
-            debugWriter.WriteLine($"Disjunction at {disjunction.Path}:");
-            debugWriter.WriteLine($"  IsDiscriminated: {disjunction.IsDiscriminated}");
-            debugWriter.WriteLine($"  DiscriminatorField: {disjunction.DiscriminatorField}");
-            debugWriter.WriteLine($"  BranchPaths ({disjunction.BranchPaths.Count}):");
-            foreach (var (key, value) in disjunction.BranchPaths) debugWriter.WriteLine($"    {key} -> {value}");
-
-            debugWriter.WriteLine($"  Branches ({disjunction.Branches.Count}):");
-            foreach (var branch in disjunction.Branches)
-            {
-                debugWriter.WriteLine($"    {branch.GetType().Name} at {branch.Path}");
-                if (branch is not CueStructValue sv) continue;
-
-                foreach (var field in sv.Fields)
-                    debugWriter.WriteLine($"      - {field.Name}: {field.Value.GetType().Name}");
-            }
-        }
-
-        debugWriter.Flush();
+        return _discriminatedUnions.Values.OrderBy(kv => kv.DisjunctionPath);
     }
 
     public TypeName GetTypeName(CueValueNode node)
     {
         return node switch
         {
-            CueDisjunction { IsDiscriminated: true } d => 
+            CueDisjunction d => 
                 FindDiscriminatorBaseClass(d.Path) is {} p 
                     ? TypeName.FromBaseTypePath(p)
                     : $"object",
@@ -127,55 +82,20 @@ public class TypeStore(
             _ => $"object"
         };
     }
-
+    
     private string? FindDiscriminatorBaseClass(string structPath)
     {
-        // Check if this path is a discriminated union itself
-        if (_discriminatedUnions.TryGetValue(structPath, out var unionInfo))
-        {
-            return unionInfo.Disjunction.Path;
-        }
-
-        // Also check if this path is a branch of any discriminated union (for backward compatibility)
-        foreach (var (_, (d, branchPaths)) in _discriminatedUnions)
-        {
-            if (branchPaths.Contains(structPath))
-            {
-                return d.Path;
-            }
-        }
-
-        return null;
+        return _discriminatedUnions.TryGetValue(structPath, out var unionInfo) 
+            ? unionInfo.DisjunctionPath
+            : null;
     }
 
     public IEnumerable<ConcreteDefinition> GetConcreteDefinitions()
     {
         // create classes for each struct (keep deterministic order)
-        foreach (var (path, str) in _concreteTypes.OrderBy(kv => kv.Key))
+        foreach (var (_, str) in _concreteTypes.OrderBy(kv => kv.Key))
         {
-            // Check if this struct is part of a discriminated union
-            var baseClass = FindDiscriminatorBaseClass(path);
-            yield return new ConcreteDefinition(str, baseClass);
+            yield return new ConcreteDefinition(str);
         }
-    }
-
-    private List<string> MapBranchesToNamedStructs(CueDisjunction disjunction)
-    {
-        // Get all inline struct branches
-        var branches = disjunction.Branches.OfType<CueStructValue>().ToList();
-
-        // Match each inline struct to a named struct
-        return branches
-            .Select(inlineStruct => new
-            {
-                inlineStruct,
-
-                // Find a named struct that matches this inline struct by comparing fields
-                matchedPath = _concreteTypes.Values
-                    .FirstOrDefault(s => comparer.Equals(inlineStruct, s))
-                    ?.Path
-            })
-            .Select(t => t.matchedPath ?? t.inlineStruct.Path)
-            .ToList();
     }
 }

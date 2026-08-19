@@ -1,22 +1,27 @@
 using System;
 using System.Collections.Generic;
 
-public abstract class MatchNMessageBase
+public interface MatchNMessageBase
 {
+    public record AsMatchNMessage(MatchNMessage value) : MatchNMessageBase;
+    public record AsMatchNMessage(MatchNMessage value) : MatchNMessageBase;
+    public record Value(MatchNMessageBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
 }
 
-public abstract class SimpleOrMessageBase
+public interface SimpleOrMessageBase
 {
+    public record AsSimpleOrMessage(SimpleOrMessage value) : SimpleOrMessageBase;
+    public record AsSimpleOrMessage(SimpleOrMessage value) : SimpleOrMessageBase;
+    public record Value(SimpleOrMessageBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
 }
 
-public class Root
-{
-    public DateTimeMessage DateTimeMessage { get; init; }
-    public TextMessage TextMessage { get; init; }
-    public Message Message { get; init; }
-}
-
-public class DateTimeMessage : MatchNMessageBase
+public class DateTimeMessage
 {
     public string Type { get; init; }
     public string Format { get; init; }
@@ -29,21 +34,7 @@ public class Message
     public SimpleOrMessageBase SimpleOrMessage { get; init; }
 }
 
-public class MatchNMessage
-{
-    public string Type { get; init; }
-    public string Format { get; init; }
-    public string Timezone { get; init; }
-}
-
-public class MatchNMessage
-{
-    public string Type { get; init; }
-    public long MaxLength { get; init; }
-    public string Pattern { get; init; }
-}
-
-public class TextMessage : MatchNMessageBase
+public class TextMessage
 {
     public string Type { get; init; }
     public long MaxLength { get; init; }
