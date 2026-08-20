@@ -41,6 +41,9 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         var branchRecords = definition.BranchPaths
             .Select(branchPath =>
             {
+                // TODO: this generator is buggy as it assumes all branches are references. Rewrite TypeStore so it resolves
+                //  non reference branches, a.k.a. anonymous definitions, with a base name and a reference to that base name 
+                //  is inferred here
                 var branchTypeName = namer.TypeName(branchPath);
                 var recordName = $"As{branchTypeName}";
 

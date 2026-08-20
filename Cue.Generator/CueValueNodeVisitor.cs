@@ -52,10 +52,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         }
         
         _definedPaths.Add(value.Path());
-        
-        var kind = value.Kind() is Kind.Bottom
-            ? value.IncompleteKind()
-            : value.Kind();
+
+        var kind = value.IncompleteKind();
 
         if (kind is Kind.Top or Kind.Struct &&
             DisjunctionBranches(value) is { } branches)
@@ -63,11 +61,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             return VisitDisjunction(value, branches);
         }
 
-        var visitKind = kind == Kind.Top
-            ? value.IncompleteKind()
-            : kind;
-
-        return visitKind switch
+        return kind switch
         {
             Kind.Bottom => new CueBottomValue(value.Path()),
             Kind.Null => new CueNullValue(value.Path()),
@@ -103,11 +97,11 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
                 CallName: "matchN",
                 Values: [{ } n, { } l]
             }
-            && n.Kind() == Kind.Int
+            && n.IncompleteKind() == Kind.Int
             && n.GetLong() == 1L
-            && l.Kind() == Kind.List
+            && l.IncompleteKind() == Kind.List
             && l.Len() is { } len
-            && len.Kind() == Kind.Int
+            && len.IncompleteKind() == Kind.Int
             && len.IsConcrete())
         {
             var branchCount = len.GetLong();

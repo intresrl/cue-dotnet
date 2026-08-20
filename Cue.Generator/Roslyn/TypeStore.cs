@@ -68,7 +68,7 @@ public class TypeStore : ITypeStore
                     : $"object",
 
             CueStructValue s => TypeName.FromTypePath(s.Path),
-            CueListValue l => $"List<{GetTypeName(l.ElementType)}>",
+            CueListValue l => $"List<{GetTypeName(l.ElementType)}>", // TODO: fix bug where this gets rendered as List<{ 0 }> in code
             CueBoolValue => $"bool",
             CueIntValue => $"long",
             CueFloatValue => $"double",
