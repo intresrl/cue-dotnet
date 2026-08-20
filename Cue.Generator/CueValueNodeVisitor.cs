@@ -24,7 +24,12 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             value.Dispose();
         }
     }
-
+    
+    [Obsolete]
+    public static CueValueNode ForTests(Value value)
+    {
+        return new CueValueVisitor([]).Visit(value);
+    }
     
     private static T? GetConcrete<T>(Value value, Func<Value, T> getConcrete) where T : struct
     {
@@ -42,7 +47,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         {
             if (value.Equals(rootValue) && _definedPaths.Contains(rootValue.Path()))
             {
-                return new CueDefinitionReference(value.Path(), rootValue.Path());
+                return new CueDefinitionReference(rootValue.Path());
             }
         }
         

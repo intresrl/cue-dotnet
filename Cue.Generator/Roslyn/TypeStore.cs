@@ -11,9 +11,7 @@ public interface ITypeStore
     IEnumerable<ConcreteDefinition> GetConcreteDefinitions();
 }
 
-public class TypeStore(
-    IEqualityComparer<CueStructValue> comparer,
-    TextWriter? debugWriter = null) : ITypeStore
+public class TypeStore : ITypeStore
 {
     // map from disjunction path -> (base class name, discriminator field, branch paths)
     private readonly Dictionary<string, DisjunctionDefinition> _discriminatedUnions = new();

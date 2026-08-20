@@ -1,3 +1,5 @@
+using Cue.Generator.Tests.CueValueNodeVisitor;
+
 namespace Cue.Generator.Tests;
 
 public sealed class DiscriminatedUnionTests
@@ -14,7 +16,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var valueFormatField = value.Lookup("valueFormat");
-        var node = valueFormatField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(valueFormatField);
 
         Assert.NotNull(node);
         Assert.IsType<CueDisjunction>(node);
@@ -37,7 +39,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var choiceField = value.Lookup("choice");
-        var node = choiceField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(choiceField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -58,7 +60,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var itemField = value.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -79,7 +81,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var messageField = value.Lookup("message");
-        var node = messageField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(messageField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -100,7 +102,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var resultField = value.Lookup("result");
-        var node = resultField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(resultField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -116,7 +118,7 @@ public sealed class DiscriminatedUnionTests
         using var value = ctx.Compile("value: int | string | bool");
 
         using var valueField = value.Lookup("value");
-        var node = valueField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(valueField);
 
         // Should be a disjunction without discriminator
         Assert.IsType<CueDisjunction>(node);
@@ -137,7 +139,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var valueField = value.Lookup("value");
-        var node = valueField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(valueField);
 
         // Should be a disjunction without discriminator
         Assert.IsType<CueDisjunction>(node);
@@ -160,7 +162,7 @@ public sealed class DiscriminatedUnionTests
 
         using var config = value.Lookup("config");
         using var itemField = config.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -187,7 +189,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var statusField = value.Lookup("status");
-        var node = statusField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(statusField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -212,7 +214,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var formatField = value.Lookup("format");
-        var node = formatField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(formatField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -246,7 +248,7 @@ public sealed class DiscriminatedUnionTests
                                       }
                                       """);
 
-        var node = (CueStructValue)value.ToCueValueNode();
+        var node = (CueStructValue)CueValueVisitor.ForTests(value);
         var configField = node.Fields.First(f => f.Name == "config");
         var configStruct = (CueStructValue)configField.Value;
         var formatField = configStruct.Fields.First(f => f.Name == "format");
@@ -267,7 +269,7 @@ public sealed class DiscriminatedUnionTests
                                       items: [...(#ItemA | #ItemB)]
                                       """);
 
-        var node = (CueStructValue)value.ToCueValueNode();
+        var node = (CueStructValue)CueValueVisitor.ForTests(value);
         var itemsField = node.Fields.First(f => f.Name == "items");
         var listValue = (CueListValue)itemsField.Value;
 
@@ -300,7 +302,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var fieldProp = value.Lookup("field");
-        var node = fieldProp.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(fieldProp);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -335,7 +337,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var choiceField = value.Lookup("choice");
-        var node = choiceField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(choiceField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -372,7 +374,7 @@ public sealed class DiscriminatedUnionTests
                                       element: #AnnotationElement
                                       """);
 
-        var node = (CueStructValue)value.ToCueValueNode();
+        var node = (CueStructValue)CueValueVisitor.ForTests(value);
         var elementField = node.Fields.First(f => f.Name == "element");
         var elementStruct = (CueStructValue)elementField.Value;
         var valueFormatField = elementStruct.Fields.First(f => f.Name == "valueFormat");
@@ -400,7 +402,7 @@ public sealed class DiscriminatedUnionTests
 
         using var config = value.Lookup("config");
         using var variantField = config.Lookup("variant");
-        var node = variantField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(variantField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -420,7 +422,7 @@ public sealed class DiscriminatedUnionTests
                                        """);
 
         using var itemField1 = value1.Lookup("item");
-        var node1 = itemField1.ToCueValueNode();
+        var node1 = CueValueVisitor.ForTests(itemField1);
 
         Assert.IsType<CueDisjunction>(node1);
 
@@ -434,7 +436,7 @@ public sealed class DiscriminatedUnionTests
                                         """);
 
         using var itemField2 = value2.Lookup("item");
-        var node2 = itemField2.ToCueValueNode();
+        var node2 = CueValueVisitor.ForTests(itemField2);
 
         Assert.IsType<CueDisjunction>(node2);
         var d1 = (CueDisjunction)node1;
@@ -457,7 +459,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var itemField = value.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -493,7 +495,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var itemField = value.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -518,7 +520,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var itemField = value.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;
@@ -541,7 +543,7 @@ public sealed class DiscriminatedUnionTests
                                       """);
 
         using var itemField = value.Lookup("item");
-        var node = itemField.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(itemField);
 
         Assert.IsType<CueDisjunction>(node);
         var discriminator = (CueDisjunction)node;

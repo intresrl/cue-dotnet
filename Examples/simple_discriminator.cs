@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public interface MatchNMessageBase
 {
-    public record AsMatchNMessage(MatchNMessage value) : MatchNMessageBase;
-    public record AsMatchNMessage(MatchNMessage value) : MatchNMessageBase;
+    public record AsDateTimeMessage(DateTimeMessage value) : MatchNMessageBase;
+    public record AsTextMessage(TextMessage value) : MatchNMessageBase;
     public record Value(MatchNMessageBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
@@ -13,8 +13,8 @@ public interface MatchNMessageBase
 
 public interface SimpleOrMessageBase
 {
-    public record AsSimpleOrMessage(SimpleOrMessage value) : SimpleOrMessageBase;
-    public record AsSimpleOrMessage(SimpleOrMessage value) : SimpleOrMessageBase;
+    public record AsDateTimeMessage(DateTimeMessage value) : SimpleOrMessageBase;
+    public record AsTextMessage(TextMessage value) : SimpleOrMessageBase;
     public record Value(SimpleOrMessageBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;

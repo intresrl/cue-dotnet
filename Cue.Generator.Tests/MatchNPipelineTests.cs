@@ -1,3 +1,5 @@
+using Cue.Generator.Tests.CueValueNodeVisitor;
+
 namespace Cue.Generator.Tests;
 
 public sealed class MatchNPipelineTests
@@ -123,7 +125,7 @@ public sealed class MatchNPipelineTests
             }
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(value);
         Console.WriteLine("\n=== String Value Inspection ===");
         Console.WriteLine($"Root: {node}\n");
 

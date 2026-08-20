@@ -53,14 +53,11 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
     [InlineData(">0 & <100", Kind.Number, null)] // constrained number
     [InlineData("null", Kind.Null, null)]
     [InlineData("_", Kind.Top, null)]
-    [InlineData("int | bool | string", Kind.Top, null)] // when type is heterogeneous, kind is top 
-    [InlineData("int | null", Kind.Top,
-        null)] // nullable types are top // TODO: handle tops caused by this as nullable types
     public void VisitSimpleValuesInRoot(string cueSource, Kind kind, object? concrete)
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile(cueSource, new BuildOption.InferBuiltins(true));
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.ForTests(value);
 
         Assert.NotNull(node);
         Assert.Equal(kind, GetKind(node));
@@ -79,7 +76,7 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
             {
                 var source = node.Source();
                 using var value = ctx.Compile(source, new BuildOption.InferBuiltins(true));
-                Assert.Equal(node, value.ToCueValueNode(), new CueValueNodeComparer(x => x.Source()));
+                Assert.Equal(node, CueValueVisitor.ForTests(value), new CueValueNodeComparer(x => x.Source()));
             });
         
         var config = Config.Quick

@@ -50,9 +50,9 @@ public sealed record CueTopValue(string Path) : CueValueNode(Path)
     public override string ToString() => $"Top at {Path}";
 }
 
-public sealed record CueDefinitionReference(string Path, string Definition) : CueValueNode(Path)
+public sealed record CueDefinitionReference(string Definition) : CueValueNode(Definition)
 {
-    public override string ToString() => $"Reference to {Definition} at {Path}";
+    public override string ToString() => $"Reference to {Definition}";
 }
 
 public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> Fields)

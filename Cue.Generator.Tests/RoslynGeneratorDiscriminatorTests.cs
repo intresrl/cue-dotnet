@@ -1,5 +1,7 @@
 using Cue.Generator.Roslyn;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit.MicrosoftTestingPlatform;
+using Xunit.Sdk;
 
 namespace Cue.Generator.Tests;
 
@@ -24,16 +26,15 @@ public sealed class RoslynGeneratorDiscriminatorTests
             #TypeA: {type: "a", data: string}
             #TypeB: {type: "b", data: int}
             
-            config: {
+            #config: {
                 format: #TypeA | #TypeB
             }
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
-        // Should contain abstract base class
-        Assert.Contains("public abstract class", code);
+        Assert.Contains("public interface", code);
         Assert.Contains("FormatBase", code);
     }
 
@@ -45,15 +46,15 @@ public sealed class RoslynGeneratorDiscriminatorTests
             #OptionA: {type: "a", valueA: string}
             #OptionB: {type: "b", valueB: int}
             
-            item: #OptionA | #OptionB
+            #item: {opt: #OptionA | #OptionB}
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should contain concrete classes
-        Assert.Contains("public class OptionA : ", code);
-        Assert.Contains("public class OptionB : ", code);
+        Assert.Contains("public record AsOptionA", code);
+        Assert.Contains("public record AsOptionB", code);
     }
 
     [Fact]
@@ -67,7 +68,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             status: #StatusActive | #StatusInactive
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should include the type field in generated classes
@@ -85,7 +86,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             format: #FormatA | #FormatB
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should convert field names to PascalCase
@@ -105,7 +106,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             choice: #TypeA | #TypeB | #TypeC
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should generate all three concrete classes
@@ -125,18 +126,18 @@ public sealed class RoslynGeneratorDiscriminatorTests
             #StatusX: {kind: "x"}
             #StatusY: {kind: "y"}
             
-            config: {
+            #config: {
                 format: #FormatA | #FormatB
                 status: #StatusX | #StatusY
             }
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should generate multiple abstract base classes
-        Assert.Contains("public abstract class FormatBase", code);
-        Assert.Contains("public abstract class StatusBase", code);
+        Assert.Contains("public interface FormatBase", code);
+        Assert.Contains("public interface StatusBase", code);
     }
 
     [Fact]
@@ -150,7 +151,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             data: #NumberOption | #StringOption
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should map Cue types to C# types correctly
@@ -179,7 +180,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             data: #ComplexA | #ComplexB
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should generate nested class types
@@ -197,7 +198,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             item: #ItemA | #ItemB
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should generate List properties
@@ -218,11 +219,11 @@ public sealed class RoslynGeneratorDiscriminatorTests
             }
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should be valid C# (basic check)
-        Assert.Contains("public abstract class", code);
+        Assert.Contains("public interface", code);
         Assert.Contains("{", code);
         Assert.Contains("}", code);
         Assert.Contains("public class", code);
@@ -241,7 +242,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             value: #Option1 | #Option2
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should use get; init; pattern
@@ -261,7 +262,7 @@ public sealed class RoslynGeneratorDiscriminatorTests
             choice: #StructA | #StructB
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should still generate the classes
@@ -294,14 +295,14 @@ public sealed class RoslynGeneratorDiscriminatorTests
             }
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // Should generate abstract base class and concrete implementations
-        Assert.Contains("public abstract class ValueFormatBase", code);
-        Assert.Contains("public class DateTimeDefinition : ValueFormatBase", code);
-        Assert.Contains("public class InitialsDefinition : ValueFormatBase", code);
-        Assert.Contains("public class TextDefinition : ValueFormatBase", code);
+        Assert.Contains("public interface ValueFormatBase", code);
+        Assert.Contains("public record AsDateTimeDefinition", code);
+        Assert.Contains("public record AsInitialsDefinition", code);
+        Assert.Contains("public record AsTextDefinition", code);
         
         // Should include all properties
         Assert.Contains("public string Format", code);
@@ -317,14 +318,14 @@ public sealed class RoslynGeneratorDiscriminatorTests
             #TypeA: {type: "a", value: string}
             #TypeB: {type: "b", value: int}
             
-            item: #TypeA | #TypeB
+            #root: {item: #TypeA | #TypeB}
             """);
 
-        var node = value.ToCueValueNode();
+        var node = CueValueVisitor.VisitRoot(value);
         var code = _sut.GenerateCode(node);
 
         // All classes and properties should be public
-        Assert.Contains("public abstract class", code);
+        Assert.Contains("public interface", code);
         Assert.Contains("public class", code);
         Assert.Contains("public string", code);
         Assert.Contains("public long", code);
