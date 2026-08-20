@@ -72,7 +72,7 @@ public static class CueValueNodeArbitrary
             .Filter(s => !s.Contains('\0'));
     }
 
-    // TODO: figure out if cue supports infinities and NaN as literals
+    // cue does not support infinities and NaN as values for float. float is arbitrary precision
     private static Arbitrary<double> FiniteDoubles()
     {
         return ArbMap.Default.ArbFor<double>()
