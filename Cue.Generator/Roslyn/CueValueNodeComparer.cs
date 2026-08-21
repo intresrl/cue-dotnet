@@ -4,6 +4,12 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
 {
     public bool Equals(CueValueNode? x, CueValueNode? y)
     {
+        if (x is CueDisjunctionReference || y is CueDisjunctionReference)
+        {
+            throw new InvalidOperationException(
+                "this comparator should be used at a stage when CueDisjunctionReference instances don't exist yet");
+        }
+        
         if (ReferenceEquals(x, y)) return true;
         if (x is null || y is null) return false;
 
@@ -32,6 +38,12 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
 
     public int GetHashCode(CueValueNode obj)
     {
+        if (obj is CueDisjunctionReference)
+        {
+            throw new InvalidOperationException(
+                "this comparator should be used at a stage when CueDisjunctionReference instances don't exist yet");
+        }    
+
         var hash = new HashCode();
         hash.Add(obj.GetType());
 

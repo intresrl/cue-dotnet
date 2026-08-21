@@ -1,26 +1,83 @@
 ﻿namespace Cue.Generator.Roslyn;
 
+public record CollectionResult(
+    IReadOnlyList<CueStructValue> Structs,
+    IReadOnlyList<CueDisjunction> Disjunctions,
+    
+    // TODO: consider how to use this in the future when primitive type expression constraints will be implemented
+    IReadOnlyList<CueValueNode> Other
+);
+
 public class DisjunctionCollector
 {
-    private readonly Dictionary<CueDisjunction, CueDisjunction> _disjunctions = new(new CueValueNodeComparer());
+    private readonly Dictionary<CueValueNode, CueValueNode> _definitions = new(new CueValueNodeComparer());
 
-    public (IReadOnlyList<CueValueNode>, IReadOnlyList<CueDisjunction>) Visit(IEnumerable<CueValueNode> nodes)
+    public CollectionResult Visit(IEnumerable<CueValueNode> nodes)
     {
         var nodeArray = nodes.ToArray();
-
-        var allDisjunctions = nodeArray
-            .BreadthFirstSearch<CueDisjunction>(n => n switch
+        
+        var allDefinitions = nodeArray
+            .BreadthFirstSearch<CueValueNode>(n => n switch
             {
                 CueDisjunction d => (d.Branches, [d]),
-                CueStructValue s => (s.Fields.Select(f => f.Value), []),
+                CueStructValue s => (s.Fields.Select(f => f.Value), [s]),
                 CueListValue l => ([l.ElementType], []),
                 _ => ([], [])
             })
             .ToArray();
 
-        foreach (var d in allDisjunctions) _disjunctions.TryAdd(d, d);
+        // first pass - deduplicate definitions
+        var definitionDict = new Dictionary<CueValueNode, CueValueNode>(new CueValueNodeComparer());
+        foreach (var s in allDefinitions) definitionDict.TryAdd(s, s);
 
-        return (nodeArray.Select(Visit).ToArray(), _disjunctions.Keys.ToArray());
+        var sList = new List<CueStructValue>();
+        var dList = new List<CueDisjunction>();
+        
+        // second pass - at top level, replace all struct fields with a reference to the path
+        foreach (var s in definitionDict.Keys)
+        {
+            switch (s)
+            {
+                case CueStructValue sVal:
+                {
+                    var structWithRef = new CueStructValue(s.Path, sVal.Fields
+                        .Select(f => f.Value switch
+                        {
+                            CueDisjunction dd => f with { Value = new CueDisjunctionReference(definitionDict[dd].Path) },
+                            CueStructValue ss => f with { Value = new CueDefinitionReference(definitionDict[ss].Path) },
+                            _ => f
+                        })
+                        .ToList());
+                    
+                    _definitions[s] = structWithRef;
+                    sList.Add(structWithRef);
+                    break;
+                }
+                case CueDisjunction dVal:
+                    // TODO: consider what to do if a disjunction branch is itself a disjunction. Should probably resolved
+                    //  as libcue discovery time
+
+                    var disjunctionWithRef = new CueDisjunction(
+                        dVal.Path,
+                        dVal.Branches
+                            .Select(f => f switch
+                            {
+                                CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
+                                CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
+                                _ => f
+                            })
+                            .ToList(),
+                        dVal.DiscriminatorField,
+                        dVal.BranchPaths
+                    );
+
+                    _definitions[s] = disjunctionWithRef;
+                    dList.Add(disjunctionWithRef);
+                    break;
+            }
+        }
+
+        return new CollectionResult(sList, dList, nodeArray.Select(Visit).ToList());
     }
 
     private CueValueNode Visit(CueValueNode node)
@@ -29,19 +86,9 @@ public class DisjunctionCollector
         {
             CueBottomValue or CueTopValue or CueTopValue or CueNullValue => node,
 
-            CueStructValue value =>
-                new CueStructValue(
-                    value.Path,
-                    value.Fields
-                        .Select(field => field with { Value = Visit(field.Value) })
-                        .ToArray()),
-
-            CueListValue value =>
-                new CueListValue(
-                    value.Path,
-                    Visit(value.ElementType)),
-
-            CueDisjunction d => new CueDefinitionReference(_disjunctions[d].Path),
+            CueStructValue s => new CueDefinitionReference(_definitions[s].Path),
+            CueListValue l => new CueListValue(l.Path, Visit(l.ElementType)),
+            CueDisjunction d => new CueDisjunctionReference(_definitions[d].Path),
 
             // be careful about these in the future. They will contain constraints potentially
             _ => node

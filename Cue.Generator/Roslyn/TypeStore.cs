@@ -22,26 +22,17 @@ public class TypeStore : ITypeStore
     public void Collect(IEnumerable<CueValueNode> node)
     {
         var dd = new DisjunctionCollector();
-        var (nodeArray, disjunctions) = dd.Visit(node);
+        var (structs, disjunctions, _) = dd.Visit(node);
         
         // collect struct nodes and assign type names
-        var concreteDefs = nodeArray.BreadthFirstSearch<CueStructValue>(n => n switch
+        foreach (var v in structs)
         {
-            CueStructValue s => (s.Fields.Select(f => f.Value), [s]),
-            CueListValue l => ([l.ElementType], []),
-            CueDisjunction d => (d.Branches, []),
-            _ => ([], [])
-        });
-
-        foreach (var v in concreteDefs) _concreteTypes.Add(v.Path, v);
+            _concreteTypes.Add(v.Path, v);
+        }
 
         // collect discriminated unions and map inline branches to named structs
         foreach (var d in disjunctions)
         {
-            // Remove inline discriminated union definitions from the type names
-            // They should not generate their own classes
-            _concreteTypes.Remove(d.Path);
-
             _discriminatedUnions[d.Path] = new DisjunctionDefinition(d.Path, d.Branches.Select(b => b.Path).ToArray());
         }
     }
@@ -55,11 +46,13 @@ public class TypeStore : ITypeStore
     {
         return node switch
         {
-            CueDefinitionReference {Definition: var def} => _discriminatedUnions.ContainsKey(def) 
-                ? TypeName.FromBaseTypePath(def) 
-                : TypeName.FromTypePath(def),
-            CueDisjunction d => TypeName.FromBaseTypePath(d.Path),
-            CueStructValue s => TypeName.FromTypePath(s.Path),
+            // we need these branches only to handle the actual interface and class definitions
+            CueDisjunction d => TypeName.FromDisjunctionRef(d.Path),
+            CueStructValue s => TypeName.FromDefinitionRef(s.Path),
+            
+            // these branches are instead to fetch the type of struct fields
+            CueDisjunctionReference {Definition: var def} => TypeName.FromDisjunctionRef(def),
+            CueDefinitionReference {Definition: var def} => TypeName.FromDefinitionRef(def),
             CueListValue l => $"List<{GetTypeName(l.ElementType)}>",
             CueBoolValue => $"bool",
             CueIntValue => $"long",
@@ -68,8 +61,8 @@ public class TypeStore : ITypeStore
             CueBytesValue => $"byte[]",
             CueNumberValue => $"decimal",
             CueNullValue => $"object",
-            CueBottomValue => throw new InvalidOperationException($"CueBottomValue at {node.Path} cannot be serialized"),
-            _ => $"object"
+            
+            _ => throw new ArgumentOutOfRangeException(nameof(node), node, node.GetType() + " not supported")
         };
     }
 

@@ -55,6 +55,11 @@ public sealed record CueDefinitionReference(string Definition) : CueValueNode(De
     public override string ToString() => $"Reference to {Definition}";
 }
 
+public sealed record CueDisjunctionReference(string Definition) : CueValueNode(Definition)
+{
+    public override string ToString() => $"Disjunction reference to {Definition}";
+}
+
 public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> Fields)
     : CueValueNode(Path)
 {

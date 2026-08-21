@@ -16,14 +16,14 @@ public class TypeName
         _typePath = null;
     }
 
-    public static TypeName FromTypePath(string path)
+    public static TypeName FromDefinitionRef(string path)
     { 
         var tn = new TypeName(4, 0) { _typePath = path };
         tn._template.Append("{0}");
         return tn;
     }
     
-    public static TypeName FromBaseTypePath(string path)
+    public static TypeName FromDisjunctionRef(string path)
     { 
         var tn = new TypeName(4, 0) { _baseTypePath = path };
         tn._template.Append("{0}");
