@@ -24,11 +24,11 @@ public partial class IdentifierNamer : IIdentifierNamer
     {
         if (string.IsNullOrEmpty(path)) return "Root";
 
-        // pick last meaningful segment and remove indexers
-        var seg = LastSegmentNoIndexer().Match(path).Groups[1].Value;
+        // Remove dots and indexers
+        var name = Indexer().Replace(path, string.Empty)
+            .Replace(".", string.Empty);
 
-        var typeName = ToPascalCase(SanitizeIdentifier(seg));
-        return typeName;
+        return ToPascalCase(SanitizeIdentifier(name));
     }
 
     public string Identifier(string name)
@@ -46,14 +46,17 @@ public partial class IdentifierNamer : IIdentifierNamer
     {
         if (string.IsNullOrEmpty(s)) return "Anonymous" + _anonymousIndex++;
 
-        // remove invalid chars
         var chars = s.Where(ch => char.IsLetterOrDigit(ch) || ch == '_').ToArray();
         var res = new string(chars);
-        if (char.IsDigit(res.FirstOrDefault())) res = "_" + res;
+
+        if (char.IsDigit(res.FirstOrDefault()))
+        {
+            res = "_" + res;
+        }
 
         return res;
     }
-    
-    [GeneratedRegex(@"(?:^|\.)([^.\[]+)(?=\[|$)")]
-    private static partial Regex LastSegmentNoIndexer();
+
+    [GeneratedRegex(@"\[[^\]]*\]")]
+    private static partial Regex Indexer();
 }

@@ -45,6 +45,7 @@ public class TypeName
         }
         
         _typePath = value._typePath;
+        _baseTypePath = value._baseTypePath;
     }
 
     public string Format(Func<string, string> typeFormatter, Func<string, string> baseTypeFormatter)

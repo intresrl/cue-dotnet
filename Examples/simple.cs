@@ -1,23 +1,908 @@
 using System;
 using System.Collections.Generic;
 
+public interface AnnotationElementDefinitionvalueFormatBase
+{
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record AsAnnotationElementDefinitionvalueFormat(AnnotationElementDefinitionvalueFormat value) : AnnotationElementDefinitionvalueFormatBase;
+    public record Value(AnnotationElementDefinitionvalueFormatBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface AnnotationFieldfontBase
+{
+    public record AsAnnotationFieldfont(AnnotationFieldfont value) : AnnotationFieldfontBase;
+    public record AsAnnotationFieldfont(AnnotationFieldfont value) : AnnotationFieldfontBase;
+    public record Value(AnnotationFieldfontBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface AnnotationFieldDtoannotationConfigBase
+{
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record AsAnnotationFieldDtoannotationConfig(AnnotationFieldDtoannotationConfig value) : AnnotationFieldDtoannotationConfigBase;
+    public record Value(AnnotationFieldDtoannotationConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface ATrustCertificateDtophoneNumberBase
+{
+    public record AsATrustCertificateDtophoneNumber(ATrustCertificateDtophoneNumber value) : ATrustCertificateDtophoneNumberBase;
+    public record AsATrustCertificateDtophoneNumber(ATrustCertificateDtophoneNumber value) : ATrustCertificateDtophoneNumberBase;
+    public record Value(ATrustCertificateDtophoneNumberBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeDetailDtodocumentsBase
+{
+    public record AsBulkEnvelopeDetailDtodocuments(BulkEnvelopeDetailDtodocuments value) : BulkEnvelopeDetailDtodocumentsBase;
+    public record AsBulkEnvelopeDetailDtodocuments(BulkEnvelopeDetailDtodocuments value) : BulkEnvelopeDetailDtodocumentsBase;
+    public record Value(BulkEnvelopeDetailDtodocumentsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeDetailDtostagesrecipientsBase
+{
+    public record AsBulkEnvelopeDetailDtostagesrecipients(BulkEnvelopeDetailDtostagesrecipients value) : BulkEnvelopeDetailDtostagesrecipientsBase;
+    public record AsBulkEnvelopeDetailDtostagesrecipients(BulkEnvelopeDetailDtostagesrecipients value) : BulkEnvelopeDetailDtostagesrecipientsBase;
+    public record Value(BulkEnvelopeDetailDtostagesrecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeFieldTaskItemfieldBase
+{
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsAttachmentFieldDto(AttachmentFieldDto value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsAnnotationFieldDto(AnnotationFieldDto value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsAreaReadConfirmationFieldDto(AreaReadConfirmationFieldDto value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsApprovalFieldDto(ApprovalFieldDto value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record AsBulkEnvelopeFieldTaskItemfield(BulkEnvelopeFieldTaskItemfield value) : BulkEnvelopeFieldTaskItemfieldBase;
+    public record Value(BulkEnvelopeFieldTaskItemfieldBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase
+{
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBiometricSignature(BiometricSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsAutomaticSignature(AutomaticSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record Value(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeFieldTaskItemfieldtextInputConfigBase
+{
+    public record AsBulkEnvelopeFieldTaskItemfieldtextInputConfig(BulkEnvelopeFieldTaskItemfieldtextInputConfig value) : BulkEnvelopeFieldTaskItemfieldtextInputConfigBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldtextInputConfig(BulkEnvelopeFieldTaskItemfieldtextInputConfig value) : BulkEnvelopeFieldTaskItemfieldtextInputConfigBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldtextInputConfig(BulkEnvelopeFieldTaskItemfieldtextInputConfig value) : BulkEnvelopeFieldTaskItemfieldtextInputConfigBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldtextInputConfig(BulkEnvelopeFieldTaskItemfieldtextInputConfig value) : BulkEnvelopeFieldTaskItemfieldtextInputConfigBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldtextInputConfig(BulkEnvelopeFieldTaskItemfieldtextInputConfig value) : BulkEnvelopeFieldTaskItemfieldtextInputConfigBase;
+    public record Value(BulkEnvelopeFieldTaskItemfieldtextInputConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase
+{
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record Value(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface BulkStageDtorecipientsBase
+{
+    public record AsBulkStageDtorecipients(BulkStageDtorecipients value) : BulkStageDtorecipientsBase;
+    public record AsBulkStageDtorecipients(BulkStageDtorecipients value) : BulkStageDtorecipientsBase;
+    public record Value(BulkStageDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface ClickToSignStampImprintDtofontSizeInPtBase
+{
+    public record AsClickToSignStampImprintDtofontSizeInPt(ClickToSignStampImprintDtofontSizeInPt value) : ClickToSignStampImprintDtofontSizeInPtBase;
+    public record AsClickToSignStampImprintDtofontSizeInPt(ClickToSignStampImprintDtofontSizeInPt value) : ClickToSignStampImprintDtofontSizeInPtBase;
+    public record Value(ClickToSignStampImprintDtofontSizeInPtBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateEnvelopeStageAutomaticRecipientRequestmetadataBase
+{
+    public record AsCreateEnvelopeStageAutomaticRecipientRequestmetadata(CreateEnvelopeStageAutomaticRecipientRequestmetadata value) : CreateEnvelopeStageAutomaticRecipientRequestmetadataBase;
+    public record AsCreateEnvelopeStageAutomaticRecipientRequestmetadata(CreateEnvelopeStageAutomaticRecipientRequestmetadata value) : CreateEnvelopeStageAutomaticRecipientRequestmetadataBase;
+    public record Value(CreateEnvelopeStageAutomaticRecipientRequestmetadataBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase
+{
+    public record AsCreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange value) : CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase;
+    public record AsCreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange value) : CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase;
+    public record Value(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateEnvelopeStageStandardRecipientRequestauthenticationBase
+{
+    public record AsCreateEnvelopeStageStandardRecipientRequestauthentication(CreateEnvelopeStageStandardRecipientRequestauthentication value) : CreateEnvelopeStageStandardRecipientRequestauthenticationBase;
+    public record AsATrustCertificateDto(ATrustCertificateDto value) : CreateEnvelopeStageStandardRecipientRequestauthenticationBase;
+    public record Value(CreateEnvelopeStageStandardRecipientRequestauthenticationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase
+{
+    public record AsCreateOAuthJwtConfigRequestoAuthFieldDefinitions(CreateOAuthJwtConfigRequestoAuthFieldDefinitions value) : CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase;
+    public record AsCreateOAuthJwtConfigRequestoAuthFieldDefinitions(CreateOAuthJwtConfigRequestoAuthFieldDefinitions value) : CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase;
+    public record Value(CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase
+{
+    public record AsCreateOAuthSignerProviderDetailsRequestoAuthJwtConfig(CreateOAuthSignerProviderDetailsRequestoAuthJwtConfig value) : CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase;
+    public record AsCreateOAuthJwtConfigRequest(CreateOAuthJwtConfigRequest value) : CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase;
+    public record Value(CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase
+{
+    public record AsCreateOAuthSignerProviderDetailsRequestoAuthResourceUris(CreateOAuthSignerProviderDetailsRequestoAuthResourceUris value) : CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase;
+    public record AsCreateOAuthSignerProviderDetailsRequestoAuthResourceUris(CreateOAuthSignerProviderDetailsRequestoAuthResourceUris value) : CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase;
+    public record Value(CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface CreatePolicyRequestconditionsBase
+{
+    public record AsCreatePolicyRequestconditions(CreatePolicyRequestconditions value) : CreatePolicyRequestconditionsBase;
+    public record AsCreatePolicyRequestconditions(CreatePolicyRequestconditions value) : CreatePolicyRequestconditionsBase;
+    public record Value(CreatePolicyRequestconditionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface DateInputConfigformatBase
+{
+    public record AsDateInputConfigformat(DateInputConfigformat value) : DateInputConfigformatBase;
+    public record AsDateFormatSwaggerEnumProvider(DateFormatSwaggerEnumProvider value) : DateInputConfigformatBase;
+    public record Value(DateInputConfigformatBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface DateInputConfigvalueBase
+{
+    public record AsDateInputConfigvalue(DateInputConfigvalue value) : DateInputConfigvalueBase;
+    public record AsDateInputConfigvalue(DateInputConfigvalue value) : DateInputConfigvalueBase;
+    public record Value(DateInputConfigvalueBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface DropDownElementDtoitemsBase
+{
+    public record AsDropDownElementDtoitems(DropDownElementDtoitems value) : DropDownElementDtoitemsBase;
+    public record AsDropDownElementDtoitems(DropDownElementDtoitems value) : DropDownElementDtoitemsBase;
+    public record Value(DropDownElementDtoitemsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface DropDownFieldoptionsBase
+{
+    public record AsDropDownFieldoptions(DropDownFieldoptions value) : DropDownFieldoptionsBase;
+    public record AsDropDownFieldoptions(DropDownFieldoptions value) : DropDownFieldoptionsBase;
+    public record Value(DropDownFieldoptionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface DropDownFieldDtooptionsBase
+{
+    public record AsDropDownFieldDtooptions(DropDownFieldDtooptions value) : DropDownFieldDtooptionsBase;
+    public record AsDropDownFieldDtooptions(DropDownFieldDtooptions value) : DropDownFieldDtooptionsBase;
+    public record Value(DropDownFieldDtooptionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDetailDtodefaultActionBase
+{
+    public record AsEnvelopeDetailDtodefaultAction(EnvelopeDetailDtodefaultAction value) : EnvelopeDetailDtodefaultActionBase;
+    public record AsEnvelopeAction(EnvelopeAction value) : EnvelopeDetailDtodefaultActionBase;
+    public record Value(EnvelopeDetailDtodefaultActionBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDetailDtodocumentsBase
+{
+    public record AsEnvelopeDetailDtodocuments(EnvelopeDetailDtodocuments value) : EnvelopeDetailDtodocumentsBase;
+    public record AsEnvelopeDetailDtodocuments(EnvelopeDetailDtodocuments value) : EnvelopeDetailDtodocumentsBase;
+    public record Value(EnvelopeDetailDtodocumentsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDetailDtostagesBase
+{
+    public record AsEnvelopeDetailDtostages(EnvelopeDetailDtostages value) : EnvelopeDetailDtostagesBase;
+    public record AsEnvelopeDetailDtostages(EnvelopeDetailDtostages value) : EnvelopeDetailDtostagesBase;
+    public record Value(EnvelopeDetailDtostagesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDetailRecipientDtotypeBase
+{
+    public record AsEnvelopeDetailRecipientDtotype(EnvelopeDetailRecipientDtotype value) : EnvelopeDetailRecipientDtotypeBase;
+    public record AsDbRecipientType(DbRecipientType value) : EnvelopeDetailRecipientDtotypeBase;
+    public record Value(EnvelopeDetailRecipientDtotypeBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDtoagreementsBase
+{
+    public record AsEnvelopeDtoagreements(EnvelopeDtoagreements value) : EnvelopeDtoagreementsBase;
+    public record AsEnvelopeDtoagreements(EnvelopeDtoagreements value) : EnvelopeDtoagreementsBase;
+    public record Value(EnvelopeDtoagreementsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDtorecipientsBase
+{
+    public record AsEnvelopeDtorecipients(EnvelopeDtorecipients value) : EnvelopeDtorecipientsBase;
+    public record AsEnvelopeDtorecipients(EnvelopeDtorecipients value) : EnvelopeDtorecipientsBase;
+    public record Value(EnvelopeDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeDtostagesBase
+{
+    public record AsEnvelopeDtostages(EnvelopeDtostages value) : EnvelopeDtostagesBase;
+    public record AsEnvelopeDtostages(EnvelopeDtostages value) : EnvelopeDtostagesBase;
+    public record Value(EnvelopeDtostagesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeFileDetailDocumentClassDtometadataValuesBase
+{
+    public record AsEnvelopeFileDetailDocumentClassDtometadataValues(EnvelopeFileDetailDocumentClassDtometadataValues value) : EnvelopeFileDetailDocumentClassDtometadataValuesBase;
+    public record AsEnvelopeFileDetailDocumentClassDtometadataValues(EnvelopeFileDetailDocumentClassDtometadataValues value) : EnvelopeFileDetailDocumentClassDtometadataValuesBase;
+    public record Value(EnvelopeFileDetailDocumentClassDtometadataValuesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopePartialDtorecipientsBase
+{
+    public record AsEnvelopePartialDtorecipients(EnvelopePartialDtorecipients value) : EnvelopePartialDtorecipientsBase;
+    public record AsEnvelopePartialDtorecipients(EnvelopePartialDtorecipients value) : EnvelopePartialDtorecipientsBase;
+    public record Value(EnvelopePartialDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeStageItemDtorecipientsBase
+{
+    public record AsEnvelopeStageItemDtorecipients(EnvelopeStageItemDtorecipients value) : EnvelopeStageItemDtorecipientsBase;
+    public record AsEnvelopeStageAutomaticRecipientResponse(EnvelopeStageAutomaticRecipientResponse value) : EnvelopeStageItemDtorecipientsBase;
+    public record Value(EnvelopeStageItemDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase
+{
+    public record AsEnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides(EnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides value) : EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase;
+    public record AsEnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides(EnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides value) : EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase;
+    public record Value(EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface FileElementsDtotextBoxElementsvalidationBase
+{
+    public record AsFileElementsDtotextBoxElementsvalidation(FileElementsDtotextBoxElementsvalidation value) : FileElementsDtotextBoxElementsvalidationBase;
+    public record AsFileElementsDtotextBoxElementsvalidation(FileElementsDtotextBoxElementsvalidation value) : FileElementsDtotextBoxElementsvalidationBase;
+    public record Value(FileElementsDtotextBoxElementsvalidationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface FileElementsFieldValidationdateValidationConfigurationBase
+{
+    public record AsFileElementsFieldValidationdateValidationConfiguration(FileElementsFieldValidationdateValidationConfiguration value) : FileElementsFieldValidationdateValidationConfigurationBase;
+    public record AsFileElementDateValidationConfiguration(FileElementDateValidationConfiguration value) : FileElementsFieldValidationdateValidationConfigurationBase;
+    public record Value(FileElementsFieldValidationdateValidationConfigurationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface FileElementsFieldValidationnumberValidationConfigurationBase
+{
+    public record AsFileElementsFieldValidationnumberValidationConfiguration(FileElementsFieldValidationnumberValidationConfiguration value) : FileElementsFieldValidationnumberValidationConfigurationBase;
+    public record AsFileElementNumberValidationConfiguration(FileElementNumberValidationConfiguration value) : FileElementsFieldValidationnumberValidationConfigurationBase;
+    public record Value(FileElementsFieldValidationnumberValidationConfigurationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface FileElementsFieldValidationphoneValidationConfigurationBase
+{
+    public record AsFileElementsFieldValidationphoneValidationConfiguration(FileElementsFieldValidationphoneValidationConfiguration value) : FileElementsFieldValidationphoneValidationConfigurationBase;
+    public record AsFileElementPhoneValidationConfiguration(FileElementPhoneValidationConfiguration value) : FileElementsFieldValidationphoneValidationConfigurationBase;
+    public record Value(FileElementsFieldValidationphoneValidationConfigurationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface GenericSigningPluginDtosignatureFriendlyNamesBase
+{
+    public record AsGenericSigningPluginDtosignatureFriendlyNames(GenericSigningPluginDtosignatureFriendlyNames value) : GenericSigningPluginDtosignatureFriendlyNamesBase;
+    public record AsGenericSigningPluginDtosignatureFriendlyNames(GenericSigningPluginDtosignatureFriendlyNames value) : GenericSigningPluginDtosignatureFriendlyNamesBase;
+    public record Value(GenericSigningPluginDtosignatureFriendlyNamesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase
+{
+    public record AsGenericSigningPluginSenderSettingsDtopredefinedSenderDataFields(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFields value) : GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase;
+    public record AsGenericSigningPluginSenderSettingsDtopredefinedSenderDataFields(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFields value) : GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase;
+    public record Value(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface GenericSigningPluginSenderSettingsDtoprofilesBase
+{
+    public record AsGenericSigningPluginSenderSettingsDtoprofiles(GenericSigningPluginSenderSettingsDtoprofiles value) : GenericSigningPluginSenderSettingsDtoprofilesBase;
+    public record AsGenericSigningPluginSenderSettingsDtoprofiles(GenericSigningPluginSenderSettingsDtoprofiles value) : GenericSigningPluginSenderSettingsDtoprofilesBase;
+    public record Value(GenericSigningPluginSenderSettingsDtoprofilesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface GenericSigningPluginSenderSettingsDtosenderDataFieldsBase
+{
+    public record AsGenericSigningPluginSenderSettingsDtosenderDataFields(GenericSigningPluginSenderSettingsDtosenderDataFields value) : GenericSigningPluginSenderSettingsDtosenderDataFieldsBase;
+    public record AsGenericSigningPluginSenderSettingsDtosenderDataFields(GenericSigningPluginSenderSettingsDtosenderDataFields value) : GenericSigningPluginSenderSettingsDtosenderDataFieldsBase;
+    public record Value(GenericSigningPluginSenderSettingsDtosenderDataFieldsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface InvisibleSignatureElementDtoallowedSignatureTypesBase
+{
+    public record AsInvisibleSignatureElementDtoallowedSignatureTypes(InvisibleSignatureElementDtoallowedSignatureTypes value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record AsInvisibleSignatureElementDtoallowedSignatureTypes(InvisibleSignatureElementDtoallowedSignatureTypes value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record Value(InvisibleSignatureElementDtoallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface ListBoxFieldfontBase
+{
+    public record AsListBoxFieldfont(ListBoxFieldfont value) : ListBoxFieldfontBase;
+    public record AsFontStyle(FontStyle value) : ListBoxFieldfontBase;
+    public record Value(ListBoxFieldfontBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface NamedSignatureAppearanceLayoutDtobackgroundImageBase
+{
+    public record AsNamedSignatureAppearanceLayoutDtobackgroundImage(NamedSignatureAppearanceLayoutDtobackgroundImage value) : NamedSignatureAppearanceLayoutDtobackgroundImageBase;
+    public record AsBackgroundImageDto(BackgroundImageDto value) : NamedSignatureAppearanceLayoutDtobackgroundImageBase;
+    public record Value(NamedSignatureAppearanceLayoutDtobackgroundImageBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface NumberInputConfigsymbolBase
+{
+    public record AsNumberInputConfigsymbol(NumberInputConfigsymbol value) : NumberInputConfigsymbolBase;
+    public record AsNumberInputConfigsymbol(NumberInputConfigsymbol value) : NumberInputConfigsymbolBase;
+    public record Value(NumberInputConfigsymbolBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface NumberInputConfigvalueBase
+{
+    public record AsNumberInputConfigvalue(NumberInputConfigvalue value) : NumberInputConfigvalueBase;
+    public record AsNumberInputConfigvalue(NumberInputConfigvalue value) : NumberInputConfigvalueBase;
+    public record Value(NumberInputConfigvalueBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface OAuthJwtConfigDtooAuthFieldDefinitionsBase
+{
+    public record AsOAuthJwtConfigDtooAuthFieldDefinitions(OAuthJwtConfigDtooAuthFieldDefinitions value) : OAuthJwtConfigDtooAuthFieldDefinitionsBase;
+    public record AsOAuthJwtConfigDtooAuthFieldDefinitions(OAuthJwtConfigDtooAuthFieldDefinitions value) : OAuthJwtConfigDtooAuthFieldDefinitionsBase;
+    public record Value(OAuthJwtConfigDtooAuthFieldDefinitionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface OAuthSignerProviderDetailsResponseoAuthJwtConfigBase
+{
+    public record AsOAuthSignerProviderDetailsResponseoAuthJwtConfig(OAuthSignerProviderDetailsResponseoAuthJwtConfig value) : OAuthSignerProviderDetailsResponseoAuthJwtConfigBase;
+    public record AsOAuthJwtConfigDto(OAuthJwtConfigDto value) : OAuthSignerProviderDetailsResponseoAuthJwtConfigBase;
+    public record Value(OAuthSignerProviderDetailsResponseoAuthJwtConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface OAuthSignerProviderDetailsResponseoAuthResourceUrisBase
+{
+    public record AsOAuthSignerProviderDetailsResponseoAuthResourceUris(OAuthSignerProviderDetailsResponseoAuthResourceUris value) : OAuthSignerProviderDetailsResponseoAuthResourceUrisBase;
+    public record AsOAuthSignerProviderDetailsResponseoAuthResourceUris(OAuthSignerProviderDetailsResponseoAuthResourceUris value) : OAuthSignerProviderDetailsResponseoAuthResourceUrisBase;
+    public record Value(OAuthSignerProviderDetailsResponseoAuthResourceUrisBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface OrganizationRecipientOAuthProviderDtoupdateFieldsBase
+{
+    public record AsOrganizationRecipientOAuthProviderDtoupdateFields(OrganizationRecipientOAuthProviderDtoupdateFields value) : OrganizationRecipientOAuthProviderDtoupdateFieldsBase;
+    public record AsOrganizationRecipientOAuthProviderDtoupdateFields(OrganizationRecipientOAuthProviderDtoupdateFields value) : OrganizationRecipientOAuthProviderDtoupdateFieldsBase;
+    public record Value(OrganizationRecipientOAuthProviderDtoupdateFieldsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface PolicyDtoactionsBase
+{
+    public record AsPolicyDtoactions(PolicyDtoactions value) : PolicyDtoactionsBase;
+    public record AsPolicyDtoactions(PolicyDtoactions value) : PolicyDtoactionsBase;
+    public record Value(PolicyDtoactionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface PolicyDtoconditionsBase
+{
+    public record AsPolicyDtoconditions(PolicyDtoconditions value) : PolicyDtoconditionsBase;
+    public record AsPolicyDtoconditions(PolicyDtoconditions value) : PolicyDtoconditionsBase;
+    public record Value(PolicyDtoconditionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface PolicyRecipientSourceDtorecipientsBase
+{
+    public record AsPolicyRecipientSourceDtorecipients(PolicyRecipientSourceDtorecipients value) : PolicyRecipientSourceDtorecipientsBase;
+    public record AsPolicyRecipientSourceDtorecipients(PolicyRecipientSourceDtorecipients value) : PolicyRecipientSourceDtorecipientsBase;
+    public record Value(PolicyRecipientSourceDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface RecipientDtogeneralPoliciesOverridesBase
+{
+    public record AsRecipientDtogeneralPoliciesOverrides(RecipientDtogeneralPoliciesOverrides value) : RecipientDtogeneralPoliciesOverridesBase;
+    public record AsOrganizationGeneralPoliciesDto(OrganizationGeneralPoliciesDto value) : RecipientDtogeneralPoliciesOverridesBase;
+    public record Value(RecipientDtogeneralPoliciesOverridesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface RecipientDtoguidingOrderModeBase
+{
+    public record AsRecipientDtoguidingOrderMode(RecipientDtoguidingOrderMode value) : RecipientDtoguidingOrderModeBase;
+    public record AsGuidingOrderMode(GuidingOrderMode value) : RecipientDtoguidingOrderModeBase;
+    public record Value(RecipientDtoguidingOrderModeBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface RecipientDtonotificationChannelBase
+{
+    public record AsRecipientDtonotificationChannel(RecipientDtonotificationChannel value) : RecipientDtonotificationChannelBase;
+    public record AsNotificationChannel(NotificationChannel value) : RecipientDtonotificationChannelBase;
+    public record Value(RecipientDtonotificationChannelBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface RecipientDtoworkstepResultBase
+{
+    public record AsRecipientDtoworkstepResult(RecipientDtoworkstepResult value) : RecipientDtoworkstepResultBase;
+    public record AsDbWorkstepResult(DbWorkstepResult value) : RecipientDtoworkstepResultBase;
+    public record Value(RecipientDtoworkstepResultBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface SignatureFieldDtoallowedSignatureTypesBase
+{
+    public record AsClickToSignSignature(ClickToSignSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsDrawToSignSignature(DrawToSignSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsSignatureFieldDtoallowedSignatureTypes(SignatureFieldDtoallowedSignatureTypes value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsLocalCertificateSignature(LocalCertificateSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsDisposableCertificateSignature(DisposableCertificateSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsBiometricSignature(BiometricSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsRemoteCertificateSignature(RemoteCertificateSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsOneTimePasswordSignature(OneTimePasswordSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsPluginSignature(PluginSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record AsAutomaticSignature(AutomaticSignature value) : SignatureFieldDtoallowedSignatureTypesBase;
+    public record Value(SignatureFieldDtoallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface SignaturePluginSignatureTypeDtostampImprintConfigurationBase
+{
+    public record AsSignaturePluginSignatureTypeDtostampImprintConfiguration(SignaturePluginSignatureTypeDtostampImprintConfiguration value) : SignaturePluginSignatureTypeDtostampImprintConfigurationBase;
+    public record AsClickToSignStampImprintDto(ClickToSignStampImprintDto value) : SignaturePluginSignatureTypeDtostampImprintConfigurationBase;
+    public record Value(SignaturePluginSignatureTypeDtostampImprintConfigurationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface SignatureTaskUpdateRequestsignatureBase
+{
+    public record AsClickToSignSignature(ClickToSignSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsDrawToSignSignature(DrawToSignSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsSignatureTaskUpdateRequestsignature(SignatureTaskUpdateRequestsignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsLocalCertificateSignature(LocalCertificateSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsDisposableCertificateSignature(DisposableCertificateSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsBiometricSignature(BiometricSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsRemoteCertificateSignature(RemoteCertificateSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsOneTimePasswordSignature(OneTimePasswordSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsPluginSignature(PluginSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record AsAutomaticSignature(AutomaticSignature value) : SignatureTaskUpdateRequestsignatureBase;
+    public record Value(SignatureTaskUpdateRequestsignatureBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface SignatureTaskUpdateRequestsignaturepositionBase
+{
+    public record AsSignatureTaskUpdateRequestsignatureposition(SignatureTaskUpdateRequestsignatureposition value) : SignatureTaskUpdateRequestsignaturepositionBase;
+    public record AsSignatureTaskUpdateRequestsignatureposition(SignatureTaskUpdateRequestsignatureposition value) : SignatureTaskUpdateRequestsignaturepositionBase;
+    public record Value(SignatureTaskUpdateRequestsignaturepositionBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TemplateDtodefaultActionBase
+{
+    public record AsTemplateDtodefaultAction(TemplateDtodefaultAction value) : TemplateDtodefaultActionBase;
+    public record AsTemplateAction(TemplateAction value) : TemplateDtodefaultActionBase;
+    public record Value(TemplateDtodefaultActionBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TemplateStageStandardRecipientResponsemetadataBase
+{
+    public record AsTemplateStageStandardRecipientResponsemetadata(TemplateStageStandardRecipientResponsemetadata value) : TemplateStageStandardRecipientResponsemetadataBase;
+    public record AsTemplateStageStandardRecipientResponsemetadata(TemplateStageStandardRecipientResponsemetadata value) : TemplateStageStandardRecipientResponsemetadataBase;
+    public record Value(TemplateStageStandardRecipientResponsemetadataBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TextBoxElementDtovalidationBase
+{
+    public record AsTextBoxElementDtovalidation(TextBoxElementDtovalidation value) : TextBoxElementDtovalidationBase;
+    public record AsFileElementsFieldValidation(FileElementsFieldValidation value) : TextBoxElementDtovalidationBase;
+    public record Value(TextBoxElementDtovalidationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TextFieldDtotextInputConfigBase
+{
+    public record AsStringInputConfig(StringInputConfig value) : TextFieldDtotextInputConfigBase;
+    public record AsDateInputConfig(DateInputConfig value) : TextFieldDtotextInputConfigBase;
+    public record AsNumberInputConfig(NumberInputConfig value) : TextFieldDtotextInputConfigBase;
+    public record AsPhoneNumberInputConfig(PhoneNumberInputConfig value) : TextFieldDtotextInputConfigBase;
+    public record AsTextFieldDtotextInputConfig(TextFieldDtotextInputConfig value) : TextFieldDtotextInputConfigBase;
+    public record Value(TextFieldDtotextInputConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TextFieldDtotextInputConfigformatBase
+{
+    public record AsTextFieldDtotextInputConfigformat(TextFieldDtotextInputConfigformat value) : TextFieldDtotextInputConfigformatBase;
+    public record AsTextFieldDtotextInputConfigformat(TextFieldDtotextInputConfigformat value) : TextFieldDtotextInputConfigformatBase;
+    public record Value(TextFieldDtotextInputConfigformatBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TextTaskUpdateRequesttextInputValueBase
+{
+    public record AsTextTaskUpdateRequesttextInputValue(TextTaskUpdateRequesttextInputValue value) : TextTaskUpdateRequesttextInputValueBase;
+    public record AsTextTaskUpdateRequesttextInputValue(TextTaskUpdateRequesttextInputValue value) : TextTaskUpdateRequesttextInputValueBase;
+    public record AsTextTaskUpdateRequesttextInputValue(TextTaskUpdateRequesttextInputValue value) : TextTaskUpdateRequesttextInputValueBase;
+    public record Value(TextTaskUpdateRequesttextInputValueBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface TimeInputConfigformatBase
+{
+    public record AsTimeInputConfigformat(TimeInputConfigformat value) : TimeInputConfigformatBase;
+    public record AsTimeFormatSwaggerEnumProvider(TimeFormatSwaggerEnumProvider value) : TimeInputConfigformatBase;
+    public record Value(TimeInputConfigformatBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface UpdateBulkEnvelopeDtorecipientsBase
+{
+    public record AsUpdateBulkEnvelopeDtorecipients(UpdateBulkEnvelopeDtorecipients value) : UpdateBulkEnvelopeDtorecipientsBase;
+    public record AsUpdateBulkEnvelopeDtorecipients(UpdateBulkEnvelopeDtorecipients value) : UpdateBulkEnvelopeDtorecipientsBase;
+    public record Value(UpdateBulkEnvelopeDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface UpdateBulkEnvelopeDtosignatureFormatBase
+{
+    public record AsUpdateBulkEnvelopeDtosignatureFormat(UpdateBulkEnvelopeDtosignatureFormat value) : UpdateBulkEnvelopeDtosignatureFormatBase;
+    public record AsSignatureFormat(SignatureFormat value) : UpdateBulkEnvelopeDtosignatureFormatBase;
+    public record Value(UpdateBulkEnvelopeDtosignatureFormatBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface UpdateBulkEnvelopeDtostagesBase
+{
+    public record AsUpdateBulkEnvelopeDtostages(UpdateBulkEnvelopeDtostages value) : UpdateBulkEnvelopeDtostagesBase;
+    public record AsUpdateBulkEnvelopeDtostages(UpdateBulkEnvelopeDtostages value) : UpdateBulkEnvelopeDtostagesBase;
+    public record Value(UpdateBulkEnvelopeDtostagesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface UpdateBulkEnvelopeForIntegrationDtoexpirationBase
+{
+    public record AsAbsoluteIntegrationExpirationDto(AbsoluteIntegrationExpirationDto value) : UpdateBulkEnvelopeForIntegrationDtoexpirationBase;
+    public record AsRelativeIntegrationExpirationDto(RelativeIntegrationExpirationDto value) : UpdateBulkEnvelopeForIntegrationDtoexpirationBase;
+    public record Value(UpdateBulkEnvelopeForIntegrationDtoexpirationBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase
+{
+    public record AsUpdateBulkEnvelopeForIntegrationDtonotificationMessages(UpdateBulkEnvelopeForIntegrationDtonotificationMessages value) : UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase;
+    public record AsUpdateBulkEnvelopeForIntegrationDtonotificationMessages(UpdateBulkEnvelopeForIntegrationDtonotificationMessages value) : UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase;
+    public record Value(UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitDropDownFieldResponseoptionsBase
+{
+    public record AsWorkUnitDropDownFieldResponseoptions(WorkUnitDropDownFieldResponseoptions value) : WorkUnitDropDownFieldResponseoptionsBase;
+    public record AsWorkUnitDropDownFieldResponseoptions(WorkUnitDropDownFieldResponseoptions value) : WorkUnitDropDownFieldResponseoptionsBase;
+    public record Value(WorkUnitDropDownFieldResponseoptionsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitFieldTaskResponsefieldBase
+{
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsCheckboxFieldDto(CheckboxFieldDto value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitDropDownFieldResponse(WorkUnitDropDownFieldResponse value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsAttachmentFieldDto(AttachmentFieldDto value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitFieldTaskResponsefield(WorkUnitFieldTaskResponsefield value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsWorkUnitAreaReadConfirmationFieldResponse(WorkUnitAreaReadConfirmationFieldResponse value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsRadioButtonFieldDto(RadioButtonFieldDto value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsApprovalFieldDto(ApprovalFieldDto value) : WorkUnitFieldTaskResponsefieldBase;
+    public record AsInvisibleSignatureFieldDto(InvisibleSignatureFieldDto value) : WorkUnitFieldTaskResponsefieldBase;
+    public record Value(WorkUnitFieldTaskResponsefieldBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitFieldTaskResponsefieldtextInputConfigBase
+{
+    public record AsStringInputConfig(StringInputConfig value) : WorkUnitFieldTaskResponsefieldtextInputConfigBase;
+    public record AsDateInputConfig(DateInputConfig value) : WorkUnitFieldTaskResponsefieldtextInputConfigBase;
+    public record AsWorkUnitFieldTaskResponsefieldtextInputConfig(WorkUnitFieldTaskResponsefieldtextInputConfig value) : WorkUnitFieldTaskResponsefieldtextInputConfigBase;
+    public record AsWorkUnitFieldTaskResponsefieldtextInputConfig(WorkUnitFieldTaskResponsefieldtextInputConfig value) : WorkUnitFieldTaskResponsefieldtextInputConfigBase;
+    public record AsTimeInputConfig(TimeInputConfig value) : WorkUnitFieldTaskResponsefieldtextInputConfigBase;
+    public record Value(WorkUnitFieldTaskResponsefieldtextInputConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase
+{
+    public record AsWorkUnitNumberInputConfigResponseResponsedecimalSeparator(WorkUnitNumberInputConfigResponseResponsedecimalSeparator value) : WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase;
+    public record AsWorkUnitDecimalSeparatorTypeResponse(WorkUnitDecimalSeparatorTypeResponse value) : WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase;
+    public record Value(WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitNumberInputConfigResponseResponsesymbolBase
+{
+    public record AsWorkUnitNumberInputConfigResponseResponsesymbol(WorkUnitNumberInputConfigResponseResponsesymbol value) : WorkUnitNumberInputConfigResponseResponsesymbolBase;
+    public record AsNumberSymbol(NumberSymbol value) : WorkUnitNumberInputConfigResponseResponsesymbolBase;
+    public record Value(WorkUnitNumberInputConfigResponseResponsesymbolBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitSignatureFieldResponseallowedSignatureTypesBase
+{
+    public record AsClickToSignSignature(ClickToSignSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsDrawToSignSignature(DrawToSignSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsTypeToSignSignature(TypeToSignSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsLocalCertificateSignature(LocalCertificateSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsDisposableCertificateSignature(DisposableCertificateSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsBiometricSignature(BiometricSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsRemoteCertificateSignature(RemoteCertificateSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsOneTimePasswordSignature(OneTimePasswordSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsPluginSignature(PluginSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record AsAutomaticSignature(AutomaticSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
+    public record Value(WorkUnitSignatureFieldResponseallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface WorkUnitTextFieldResponsetextInputConfigBase
+{
+    public record AsStringInputConfig(StringInputConfig value) : WorkUnitTextFieldResponsetextInputConfigBase;
+    public record AsDateInputConfig(DateInputConfig value) : WorkUnitTextFieldResponsetextInputConfigBase;
+    public record AsWorkUnitNumberInputConfigResponseResponse(WorkUnitNumberInputConfigResponseResponse value) : WorkUnitTextFieldResponsetextInputConfigBase;
+    public record AsWorkUnitPhoneNumberInputConfigResponseResponse(WorkUnitPhoneNumberInputConfigResponseResponse value) : WorkUnitTextFieldResponsetextInputConfigBase;
+    public record AsTimeInputConfig(TimeInputConfig value) : WorkUnitTextFieldResponsetextInputConfigBase;
+    public record Value(WorkUnitTextFieldResponsetextInputConfigBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
 public class AbsoluteIntegrationExpirationDto
 {
+    public ATrustCertificateDtophoneNumberBase ExpiresAt { get; init; }
     public string Mode { get; init; }
-}
-
-public class AccessCode
-{
-}
-
-public class Actor
-{
-    public string Email { get; init; }
-}
-
-public class Actor
-{
-    public string Email { get; init; }
 }
 
 public class AddDefaultUserGroupDto
@@ -31,19 +916,10 @@ public class AddedEnvelopeFileResponse
     public string Id { get; init; }
 }
 
-public class AddedTemplateFileResponse
-{
-    public string Id { get; init; }
-}
-
 public class AddUserGroupUserDto
 {
     public List<string> AddedUsers { get; init; }
     public List<string> SkippedUsers { get; init; }
-}
-
-public class AddUsersToUserGroupDto
-{
 }
 
 public class AdminMeDto
@@ -53,7 +929,15 @@ public class AdminMeDto
     public string Surname { get; init; }
     public bool IsInstanceAdmin { get; init; }
     public bool IsAdminUser { get; init; }
-    public List<Anonymous1> Users { get; init; }
+    public List<AdminMeDtousers> Users { get; init; }
+}
+
+public class AdminMeDtousers
+{
+    public string UserId { get; init; }
+    public string OrganizationId { get; init; }
+    public string OrganizationName { get; init; }
+    public bool IsEnabled { get; init; }
 }
 
 public class AdminMeUserDto
@@ -68,71 +952,68 @@ public class Agreement
 {
     public string Language { get; init; }
     public string Body { get; init; }
-}
-
-public class AgreementRequest
-{
-    public string Language { get; init; }
-    public string Body { get; init; }
-}
-
-public class AgreementResponse
-{
-    public string Language { get; init; }
-    public string Body { get; init; }
+    public ATrustCertificateDtophoneNumberBase Title { get; init; }
 }
 
 public class AgreementSettingsRequest
 {
     public bool Enabled { get; init; }
     public bool Overridable { get; init; }
-    public List<Anonymous2> Agreements { get; init; }
-}
-
-public class AgreementSettingsResponse
-{
-    public bool Enabled { get; init; }
-    public bool Overridable { get; init; }
-    public List<Anonymous3> Agreements { get; init; }
-}
-
-public class AllowedSignatureTypes
-{
-}
-
-public class AllowedSignatureTypes
-{
-}
-
-public class AllowedSignatureTypesDto
-{
+    public List<Agreement> Agreements { get; init; }
 }
 
 public class AnnotationElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public object ValueFormat { get; init; }
+    public AnnotationElementDefinitionposition Position { get; init; }
+    public AnnotationElementDefinitionsize Size { get; init; }
+    public AnnotationElementDefinitiontextFormat TextFormat { get; init; }
+    public AnnotationElementDefinitionvalueFormatBase ValueFormat { get; init; }
+}
+
+public class AnnotationElementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class AnnotationElementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+}
+
+public class AnnotationElementDefinitiontextFormat
+{
+    public string TextColor { get; init; }
+    public decimal FontSizeInPt { get; init; }
+    public string FontName { get; init; }
+    public bool Bold { get; init; }
+    public bool Italic { get; init; }
+    public string TextAlign { get; init; }
 }
 
 public class AnnotationElementDto
 {
     public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
+    public AnnotationElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
 }
 
 public class AnnotationField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public object ValueFormat { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public AnnotationElementDefinitionvalueFormatBase ValueFormat { get; init; }
+    public AnnotationFieldfontBase Font { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -141,794 +1022,14 @@ public class AnnotationFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public object AnnotationConfig { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public AnnotationFieldDtoannotationConfigBase AnnotationConfig { get; init; }
+    public AnnotationFieldfontBase Font { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
     public string FieldType { get; init; }
-}
-
-public class Anonymous1
-{
-    public string UserId { get; init; }
-    public string OrganizationId { get; init; }
-    public string OrganizationName { get; init; }
-    public bool IsEnabled { get; init; }
-}
-
-public class Anonymous10
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-    public string CultureIsoCode { get; init; }
-}
-
-public class Anonymous100
-{
-    public long Row { get; init; }
-    public string Field { get; init; }
-    public string Message { get; init; }
-}
-
-public class Anonymous101
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public string UserId { get; init; }
-}
-
-public class Anonymous102
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-    public bool Completed { get; init; }
-}
-
-public class Anonymous103
-{
-    public long DocumentNumber { get; init; }
-    public string Name { get; init; }
-    public List<Anonymous104> Tasks { get; init; }
-}
-
-public class Anonymous104
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-    public bool Completed { get; init; }
-}
-
-public class Anonymous11
-{
-    public long Id { get; init; }
-    public string IsoCode { get; init; }
-    public string EnglishName { get; init; }
-}
-
-public class Anonymous12
-{
-    public string Name { get; init; }
-    public string Code { get; init; }
-}
-
-public class Anonymous13
-{
-    public string Name { get; init; }
-    public string DataType { get; init; }
-    public bool Required { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous14
-{
-    public string Entity { get; init; }
-    public string Action { get; init; }
-}
-
-public class Anonymous15
-{
-    public string Name { get; init; }
-}
-
-public class Anonymous16
-{
-    public long Id { get; init; }
-    public string Name { get; init; }
-    public string Sample { get; init; }
-}
-
-public class Anonymous17
-{
-    public string Code { get; init; }
-    public string Example { get; init; }
-}
-
-public class Anonymous18
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous19
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous2
-{
-    public string Language { get; init; }
-    public string Body { get; init; }
-}
-
-public class Anonymous20
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous21
-{
-    public string DeviceId { get; init; }
-    public string OtpDeviceType { get; init; }
-    public string OtpDeviceTypeId { get; init; }
-    public string IdentificationInformation { get; init; }
-}
-
-public class Anonymous22
-{
-    public string Id { get; init; }
-    public string ErrorId { get; init; }
-}
-
-public class Anonymous23
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-    public bool RequiresDelegationCompletion { get; init; }
-}
-
-public class Anonymous24
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public string Type { get; init; }
-}
-
-public class Anonymous25
-{
-    public string Id { get; init; }
-    public string Type { get; init; }
-    public string OccurredAt { get; init; }
-    public Actor Actor { get; init; }
-    public Data Data { get; init; }
-}
-
-public class Anonymous26
-{
-    public string FieldDefinitionId { get; init; }
-}
-
-public class Anonymous27
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-}
-
-public class Anonymous28
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous29
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public bool ExpiringSoon { get; init; }
-    public SenderUser SenderUser { get; init; }
-    public string UpdatedAt { get; init; }
-    public string Status { get; init; }
-    public List<string> Actions { get; init; }
-    public string CreatedAt { get; init; }
-}
-
-public class Anonymous3
-{
-    public string Language { get; init; }
-    public string Body { get; init; }
-}
-
-public class Anonymous30
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-    public long RequiredRecipientCompletions { get; init; }
-    public string Type { get; init; }
-    public List<object> Recipients { get; init; }
-}
-
-public class Anonymous31
-{
-    public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public bool Required { get; init; }
-    public string Value { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous32
-{
-    public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public bool Required { get; init; }
-    public bool IsChecked { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous33
-{
-    public string ElementId { get; init; }
-    public AllowedSignatureTypes AllowedSignatureTypes { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-    public bool IsApprove { get; init; }
-}
-
-public class Anonymous34
-{
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public string ElementId { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous35
-{
-    public ElementDefinition ElementDefinition { get; init; }
-    public string ElementId { get; init; }
-    public List<Anonymous36> Items { get; init; }
-    public bool IsRequired { get; init; }
-    public bool IsEditable { get; init; }
-    public bool IsMultiselect { get; init; }
-    public bool IsChecked { get; init; }
-    public string Source { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous36
-{
-    public string Key { get; init; }
-    public string Value { get; init; }
-    public bool IsSelected { get; init; }
-}
-
-public class Anonymous37
-{
-    public string ElementId { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous38
-{
-    public string ElementId { get; init; }
-    public long PageNumber { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous39
-{
-    public string ElementId { get; init; }
-    public bool Required { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous4
-{
-    public string Id { get; init; }
-    public long MandatoryRecipientsNumber { get; init; }
-    public string StageMode { get; init; }
-}
-
-public class Anonymous40
-{
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public string ElementId { get; init; }
-    public string Value { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous41
-{
-    public string ElementId { get; init; }
-    public bool Required { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public string Label { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous42
-{
-    public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-}
-
-public class Anonymous43
-{
-    public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public string GroupName { get; init; }
-    public bool IsChecked { get; init; }
-    public bool IsSelectInUnison { get; init; }
-    public bool Required { get; init; }
-    public string Value { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous44
-{
-    public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous45
-{
-    public string ElementId { get; init; }
-    public string Source { get; init; }
-    public bool Required { get; init; }
-    public long GuidingOrder { get; init; }
-}
-
-public class Anonymous46
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public bool Canceled { get; init; }
-}
-
-public class Anonymous47
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
-    public bool Enabled { get; init; }
-}
-
-public class Anonymous48
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
-    public bool Enabled { get; init; }
-}
-
-public class Anonymous49
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous5
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-}
-
-public class Anonymous50
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous51
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous52
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous53
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous54
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous55
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous56
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous57
-{
-    public string Id { get; init; }
-    public string Code { get; init; }
-    public string Name { get; init; }
-    public bool IsActive { get; init; }
-}
-
-public class Anonymous58
-{
-    public string Code { get; init; }
-    public bool IsActive { get; init; }
-}
-
-public class Anonymous59
-{
-    public string Key { get; init; }
-    public string Value { get; init; }
-    public bool IsSelected { get; init; }
-}
-
-public class Anonymous6
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public string Status { get; init; }
-    public string CreatedAt { get; init; }
-    public string UpdatedAt { get; init; }
-}
-
-public class Anonymous60
-{
-    public Recipient Recipient { get; init; }
-    public string Link { get; init; }
-}
-
-public class Anonymous61
-{
-}
-
-public class Anonymous62
-{
-    public long Id { get; init; }
-    public string ExternalId { get; init; }
-    public string Name { get; init; }
-    public string ClientId { get; init; }
-    public string AuthorizationUri { get; init; }
-    public string TokenUri { get; init; }
-    public long AuthenticationType { get; init; }
-}
-
-public class Anonymous63
-{
-    public long Id { get; init; }
-    public bool Enabled { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous64
-{
-    public string PluginId { get; init; }
-    public string Name { get; init; }
-    public bool AllowUserSigning { get; init; }
-    public bool AllowBatchUserSigning { get; init; }
-    public bool AllowAutomaticSigning { get; init; }
-    public string Category { get; init; }
-}
-
-public class Anonymous65
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public bool IsSystemRole { get; init; }
-}
-
-public class Anonymous66
-{
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-}
-
-public class Anonymous67
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public string CreatedAt { get; init; }
-    public string ExpiresAt { get; init; }
-}
-
-public class Anonymous68
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public bool IsActive { get; init; }
-}
-
-public class Anonymous69
-{
-    public string Name { get; init; }
-    public bool IsEnabled { get; init; }
-}
-
-public class Anonymous7
-{
-    public long Row { get; init; }
-    public string Field { get; init; }
-    public string Message { get; init; }
-}
-
-public class Anonymous70
-{
-    public string Entity { get; init; }
-    public string Action { get; init; }
-}
-
-public class Anonymous71
-{
-    public string SubjectName { get; init; }
-    public string Thumbprint { get; init; }
-    public string ExpirationDate { get; init; }
-    public string Issuer { get; init; }
-}
-
-public class Anonymous72
-{
-    public string LanguageCode { get; init; }
-    public string Text { get; init; }
-}
-
-public class Anonymous73
-{
-    public string ClientId { get; init; }
-    public string Email { get; init; }
-    public string UserId { get; init; }
-}
-
-public class Anonymous74
-{
-    public string Id { get; init; }
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class Anonymous75
-{
-    public string Type { get; init; }
-    public string Country { get; init; }
-}
-
-public class Anonymous76
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-}
-
-public class Anonymous77
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous78
-{
-    public string Id { get; init; }
-    public string CreatorUserId { get; init; }
-    public string Name { get; init; }
-    public List<string> Actions { get; init; }
-    public string CreatedAt { get; init; }
-    public string UpdatedAt { get; init; }
-}
-
-public class Anonymous79
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-    public long RequiredRecipientCompletions { get; init; }
-    public string Type { get; init; }
-    public List<object> Recipients { get; init; }
-}
-
-public class Anonymous8
-{
-    public string Id { get; init; }
-    public string OrganizationId { get; init; }
-    public string Name { get; init; }
-    public long AssignmentCount { get; init; }
-    public string CreatedAt { get; init; }
-    public string UpdatedAt { get; init; }
-}
-
-public class Anonymous80
-{
-    public string TimeZone { get; init; }
-    public string Code { get; init; }
-    public string UtcOffset { get; init; }
-}
-
-public class Anonymous81
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous82
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous83
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous84
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous85
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous86
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous87
-{
-    public long Id { get; init; }
-    public bool Enabled { get; init; }
-}
-
-public class Anonymous88
-{
-    public string Entity { get; init; }
-    public string Action { get; init; }
-}
-
-public class Anonymous89
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous9
-{
-    public long Row { get; init; }
-    public string Field { get; init; }
-    public string Message { get; init; }
-}
-
-public class Anonymous90
-{
-    public string Id { get; init; }
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class Anonymous91
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous92
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class Anonymous93
-{
-    public string PluginId { get; init; }
-    public string Name { get; init; }
-    public bool AllowUserSigning { get; init; }
-    public bool AllowBatchUserSigning { get; init; }
-    public bool AllowAutomaticSigning { get; init; }
-    public string Category { get; init; }
-}
-
-public class Anonymous94
-{
-    public string Id { get; init; }
-    public string UserGroupId { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous95
-{
-    public long Row { get; init; }
-    public string Field { get; init; }
-    public string Message { get; init; }
-}
-
-public class Anonymous96
-{
-    public string Id { get; init; }
-    public string UserGroupId { get; init; }
-}
-
-public class Anonymous97
-{
-    public string UserGroupId { get; init; }
-    public string Name { get; init; }
-}
-
-public class Anonymous98
-{
-    public string Id { get; init; }
-    public string Email { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public Permissions Permissions { get; init; }
-}
-
-public class Anonymous99
-{
-    public string Id { get; init; }
-    public string OrganizationId { get; init; }
-    public string Name { get; init; }
 }
 
 public class ApprovalField
@@ -936,10 +1037,10 @@ public class ApprovalField
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -948,10 +1049,10 @@ public class ApprovalFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string FieldType { get; init; }
 }
@@ -959,30 +1060,43 @@ public class ApprovalFieldDto
 public class ApproveElementDto
 {
     public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
+    public ApproveElementDtoelementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public long GuidingOrder { get; init; }
 }
 
-public class AreaReadConfirmationDto
+public class ApproveElementDtoelementDefinition
 {
-    public string ElementId { get; init; }
-    public bool Required { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
-    public long GuidingOrder { get; init; }
+    public ApproveElementDtoelementDefinitionposition Position { get; init; }
+    public ApproveElementDtoelementDefinitionsize Size { get; init; }
+}
+
+public class ApproveElementDtoelementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class ApproveElementDtoelementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class AreaReadConfirmationField
 {
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -991,11 +1105,12 @@ public class AreaReadConfirmationFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -1006,8 +1121,21 @@ public class AreaReadConfirmationTaskUpdateRequest
 
 public class AreaReadElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public AreaReadElementDefinitionposition Position { get; init; }
+    public AreaReadElementDefinitionsize Size { get; init; }
+}
+
+public class AreaReadElementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class AreaReadElementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class AssociateMyNamirialIdDto
@@ -1017,24 +1145,16 @@ public class AssociateMyNamirialIdDto
 
 public class ATrustCertificateDto
 {
-}
-
-public class ATrustCertificateSignatureTypeDto
-{
-}
-
-public class AttachmentElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class AttachmentElementDto
 {
     public string ElementId { get; init; }
     public bool Required { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
+    public AreaReadElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public string Label { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -1045,10 +1165,10 @@ public class AttachmentField
     public string Label { get; init; }
     public string FieldType { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -1057,10 +1177,10 @@ public class AttachmentFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string FieldType { get; init; }
 }
@@ -1075,16 +1195,6 @@ public class AttachmentTaskUpdateRequest
 public class AuditTrailModeResponse
 {
     public string AuditTrailMode { get; init; }
-}
-
-public class AutomaticESealing
-{
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class AutomaticESealing
-{
-    public bool CreateUpdateDelete { get; init; }
 }
 
 public class AutomaticESealingPermissions
@@ -1115,15 +1225,8 @@ public class AutomaticSealingProfileResponse
 
 public class AutomaticSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class AutomaticSignatureDataDto
-{
-}
-
-public class AutomaticSignatureTypeDto
-{
 }
 
 public class BackgroundImageDto
@@ -1132,25 +1235,16 @@ public class BackgroundImageDto
     public string DataBase64 { get; init; }
 }
 
-public class BankIdSettingsDto
-{
-}
-
 public class BaseField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
-}
-
-public class BaseFieldDto
-{
-    public string Id { get; init; }
 }
 
 public class BatchAssignUserGroupUserRoleDto
@@ -1169,39 +1263,65 @@ public class BiometricSignature
     public string SignatureType { get; init; }
 }
 
-public class BiometricSignatureTypeDto
-{
-}
-
 public class BulkEnvelopeDetailDto
 {
     public string Id { get; init; }
     public string Name { get; init; }
-    public List<Anonymous4> Stages { get; init; }
+    public List<BulkEnvelopeDetailDtostages> Stages { get; init; }
+    public BulkEnvelopeDetailDtodocumentsBase Documents { get; init; }
+}
+
+public class BulkEnvelopeDetailDtostages
+{
+    public string Id { get; init; }
+    public long MandatoryRecipientsNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string StageMode { get; init; }
+    public BulkEnvelopeDetailDtostagesrecipientsBase Recipients { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItem
 {
-    public object Field { get; init; }
+    public BulkEnvelopeFieldTaskItemfieldBase Field { get; init; }
     public long SortOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItemRequest
 {
-    public object Field { get; init; }
+    public BulkEnvelopeFieldTaskItemfieldBase Field { get; init; }
     public long SortOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
 }
 
 public class BulkEnvelopeFileTasksResponse
 {
-    public List<Anonymous5> Tasks { get; init; }
+    public List<BulkEnvelopeFieldTaskItem> Tasks { get; init; }
 }
 
 public class BulkEnvelopeListDto
 {
-    public List<Anonymous6> BulkEnvelopes { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<BulkEnvelopeListDtobulkEnvelopes> BulkEnvelopes { get; init; }
+    public BulkEnvelopeListDtopagination Pagination { get; init; }
+}
+
+public class BulkEnvelopeListDtobulkEnvelopes
+{
+    public string Id { get; init; }
+    public string Name { get; init; }
+    public string Status { get; init; }
+    public string CreatedAt { get; init; }
+    public string UpdatedAt { get; init; }
+}
+
+public class BulkEnvelopeListDtopagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class BulkEnvelopePartialDto
@@ -1218,11 +1338,16 @@ public class BulkRecipientDefinition
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class BulkRecipientDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
     public string RecipientType { get; init; }
     public string NotificationChannel { get; init; }
     public long Order { get; init; }
@@ -1230,19 +1355,29 @@ public class BulkRecipientDto
 
 public class BulkRecipientValidationErrorResponse
 {
-    public List<Anonymous7> Errors { get; init; }
+    public List<BulkRecipientValidationErrorResponseerrors> Errors { get; init; }
+}
+
+public class BulkRecipientValidationErrorResponseerrors
+{
+    public long Row { get; init; }
+    public string Field { get; init; }
+    public string Message { get; init; }
 }
 
 public class BulkStageDto
 {
     public string Id { get; init; }
     public long MandatoryRecipientsNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
     public string StageMode { get; init; }
+    public BulkStageDtorecipientsBase Recipients { get; init; }
 }
 
 public class BusinessRoleCreateDto
 {
     public string Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
 }
 
 public class BusinessRoleDto
@@ -1250,6 +1385,7 @@ public class BusinessRoleDto
     public string Id { get; init; }
     public string OrganizationId { get; init; }
     public string Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
     public long AssignmentCount { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
@@ -1257,17 +1393,15 @@ public class BusinessRoleDto
 
 public class BusinessRolesListDto
 {
-    public List<Anonymous8> Items { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<BusinessRoleDto> Items { get; init; }
+    public BusinessRolesListDtopagination Pagination { get; init; }
 }
 
-public class BusinessRoleUpdateDto
+public class BusinessRolesListDtopagination
 {
-    public string Name { get; init; }
-}
-
-public class CallbackConfigurationDto
-{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class CertificateDetailsResponse
@@ -1280,19 +1414,33 @@ public class CertificateDetailsResponse
 
 public class CheckBoxElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public CheckBoxElementDefinitionposition Position { get; init; }
+    public CheckBoxElementDefinitionsize Size { get; init; }
     public string ExportValue { get; init; }
     public bool ReadOnly { get; init; }
+}
+
+public class CheckBoxElementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class CheckBoxElementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class CheckBoxElementDto
 {
     public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
+    public CheckBoxElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
     public bool Required { get; init; }
     public bool IsChecked { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public long GuidingOrder { get; init; }
 }
 
@@ -1300,14 +1448,14 @@ public class CheckboxField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
     public bool Checked { get; init; }
     public string Value { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -1316,10 +1464,10 @@ public class CheckboxFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Checked { get; init; }
     public string Value { get; init; }
     public bool Required { get; init; }
@@ -1336,16 +1484,14 @@ public class CheckboxTaskUpdateRequest
 public class ClickToSignEnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
+    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
     public string SignatureType { get; init; }
 }
 
 public class ClickToSignSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class ClickToSignSignatureTypeDto
-{
 }
 
 public class ClickToSignStampImprintDto
@@ -1353,18 +1499,10 @@ public class ClickToSignStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
+    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayIp { get; init; }
-}
-
-public class ClonedEnvelopeDto
-{
-    public string Id { get; init; }
-}
-
-public class Completed
-{
-    public long EnvelopeCount { get; init; }
 }
 
 public class ContactDto
@@ -1374,6 +1512,7 @@ public class ContactDto
     public string Surname { get; init; }
     public string Email { get; init; }
     public string CultureIsoCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class ContactImportResultDto
@@ -1381,15 +1520,17 @@ public class ContactImportResultDto
     public long Imported { get; init; }
 }
 
-public class ContactImportValidationErrorResponse
-{
-    public List<Anonymous9> Errors { get; init; }
-}
-
 public class ContactListDto
 {
-    public List<Anonymous10> Contacts { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<ContactDto> Contacts { get; init; }
+    public ContactListDtopagination Pagination { get; init; }
+}
+
+public class ContactListDtopagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class ContactRequest
@@ -1398,44 +1539,32 @@ public class ContactRequest
     public string Surname { get; init; }
     public string Email { get; init; }
     public string CultureIsoCode { get; init; }
-}
-
-public class Contacts
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Customize { get; init; }
-}
-
-public class Contacts
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Customize { get; init; }
-}
-
-public class Contacts
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Customize { get; init; }
-}
-
-public class Contacts
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Customize { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class CountriesDto
 {
-    public List<Anonymous11> Options { get; init; }
+    public List<CountriesDtooptions> Options { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase SelectedId { get; init; }
+    public ATrustCertificateDtophoneNumberBase SelectedIsoCode { get; init; }
+}
+
+public class CountriesDtooptions
+{
+    public long Id { get; init; }
+    public string IsoCode { get; init; }
+    public string EnglishName { get; init; }
 }
 
 public class CountriesLookupResponse
 {
-    public List<Anonymous12> Countries { get; init; }
+    public List<CountriesLookupResponsecountries> Countries { get; init; }
+}
+
+public class CountriesLookupResponsecountries
+{
+    public string Name { get; init; }
+    public string Code { get; init; }
 }
 
 public class CountryDto
@@ -1451,36 +1580,12 @@ public class CountryListItemDto
     public string EnglishName { get; init; }
 }
 
-public class CreateAccessCodeDto
-{
-}
-
-public class CreateATrustCertificateDto
-{
-}
-
-public class CreateAuthenticationConfigurationDto
-{
-}
-
-public class CreateAutomaticSignatureDataDto
-{
-}
-
 public class CreateBulkEnvelopeStageRequest
 {
     public string Type { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase RequiredRecipientCompletions { get; init; }
     public string Mode { get; init; }
-}
-
-public class CreatedDocumentClassDto
-{
-    public string Id { get; init; }
-}
-
-public class CreatedEnvelopeDto
-{
-    public string Id { get; init; }
 }
 
 public class CreatedEnvelopeFromTemplateDto
@@ -1488,20 +1593,19 @@ public class CreatedEnvelopeFromTemplateDto
     public string CreatedEnvelopeId { get; init; }
 }
 
-public class CreateDisposableCertificateDto
-{
-}
-
 public class CreateDocumentClassRequest
 {
     public string Name { get; init; }
     public string Description { get; init; }
-    public List<Anonymous13> Metadata { get; init; }
+    public List<CreateDocumentClassRequestmetadata> Metadata { get; init; }
 }
 
-public class CreatedOrganizationDto
+public class CreateDocumentClassRequestmetadata
 {
-    public string Id { get; init; }
+    public string Name { get; init; }
+    public string DataType { get; init; }
+    public bool Required { get; init; }
+    public long SortOrder { get; init; }
 }
 
 public class CreatedPersonalAccessTokenResponse
@@ -1513,61 +1617,43 @@ public class CreatedPersonalAccessTokenResponse
     public string ExpiresAt { get; init; }
 }
 
-public class CreatedPolicyResponse
-{
-    public string Id { get; init; }
-}
-
-public class CreatedRecipientResponse
-{
-    public string Id { get; init; }
-}
-
-public class CreatedStageResponse
-{
-    public string Id { get; init; }
-}
-
-public class CreatedTemplateDto
-{
-    public string Id { get; init; }
-}
-
-public class CreatedTemplateStageRecipientDto
-{
-    public string Id { get; init; }
-}
-
-public class CreatedUserDto
-{
-    public string Id { get; init; }
-}
-
 public class CreateEnvelopeStageAutomaticRecipientRequest
 {
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
     public string Type { get; init; }
-}
-
-public class CreateEnvelopeStageRecipientRequest
-{
 }
 
 public class CreateEnvelopeStageRequest
 {
     public string Type { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase RequiredRecipientCompletions { get; init; }
 }
 
 public class CreateEnvelopeStageStandardRecipientRequest
 {
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
     public string Type { get; init; }
-}
-
-public class CreateGenericSigningPluginsSenderDataDto
-{
 }
 
 public class CreateOAuthAuthenticationDto
 {
+    public ATrustCertificateDtophoneNumberBase ProviderName { get; init; }
     public string ExternalId { get; init; }
 }
 
@@ -1576,6 +1662,9 @@ public class CreateOAuthFieldDefinitionRequest
     public string Path { get; init; }
     public string Mode { get; init; }
     public string Target { get; init; }
+    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
+    public ATrustCertificateDtophoneNumberBase GenericSigningPluginId { get; init; }
+    public ATrustCertificateDtophoneNumberBase GenericSigningPluginFieldKey { get; init; }
 }
 
 public class CreateOAuthJwtConfigRequest
@@ -1586,17 +1675,33 @@ public class CreateOAuthJwtConfigRequest
     public bool ValidateAudience { get; init; }
     public bool ValidateIssuer { get; init; }
     public bool ValidateLifetime { get; init; }
+    public CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
 }
 
 public class CreateOAuthResourceUriRequest
 {
     public string Uri { get; init; }
     public string AccessTokenParamName { get; init; }
+    public ATrustCertificateDtophoneNumberBase EIdServiceCombination { get; init; }
+    public CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
 }
 
 public class CreateOAuthSignerProviderDetailsRequest
 {
-    public OAuthSignerProvider OAuthSignerProvider { get; init; }
+    public CreateOAuthSignerProviderDetailsRequestoAuthSignerProvider OAuthSignerProvider { get; init; }
+    public CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase OAuthJwtConfig { get; init; }
+    public CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase OAuthResourceUris { get; init; }
+}
+
+public class CreateOAuthSignerProviderDetailsRequestoAuthSignerProvider
+{
+    public string Name { get; init; }
+    public string ClientId { get; init; }
+    public string ClientSecret { get; init; }
+    public string AuthorizationUri { get; init; }
+    public string TokenUri { get; init; }
+    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
+    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
 }
 
 public class CreateOAuthSignerProviderRequest
@@ -1606,15 +1711,25 @@ public class CreateOAuthSignerProviderRequest
     public string ClientSecret { get; init; }
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
+    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
+    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
 }
 
 public class CreateOrganizationDto
 {
     public string Name { get; init; }
     public string IsoCulture { get; init; }
-    public License License { get; init; }
+    public CreateOrganizationDtolicense License { get; init; }
     public string OnePlatformBusinessRelationIdentifier { get; init; }
     public List<string> FeatureFlagsNames { get; init; }
+}
+
+public class CreateOrganizationDtolicense
+{
+    public string Type { get; init; }
+    public string ExpirationDate { get; init; }
+    public long UserLimit { get; init; }
+    public long DocumentLimit { get; init; }
 }
 
 public class CreateOrganizationUserRequestDto
@@ -1622,16 +1737,16 @@ public class CreateOrganizationUserRequestDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
+    public CreateOrganizationUserRequestDtoregionalSettings RegionalSettings { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
-public class CreateOrganizationUserResponse
+public class CreateOrganizationUserRequestDtoregionalSettings
 {
-    public string Id { get; init; }
-}
-
-public class CreateOtpSignatureDataDto
-{
+    public string TimeZone { get; init; }
+    public string DateTimeFormat { get; init; }
+    public string Language { get; init; }
+    public string Country { get; init; }
 }
 
 public class CreatePersonalAccessTokenRequest
@@ -1644,31 +1759,37 @@ public class CreatePolicyRequest
 {
     public string Name { get; init; }
     public bool IsActive { get; init; }
-}
-
-public class CreateRemoteCertificateDto
-{
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
+    public CreatePolicyRequestconditionsBase Conditions { get; init; }
 }
 
 public class CreateRoleRequest
 {
     public string Name { get; init; }
-    public List<Anonymous14> Permissions { get; init; }
+    public List<CreateRoleRequestpermissions> Permissions { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
 }
 
-public class CreateSenderGenericSigningPluginDto
+public class CreateRoleRequestpermissions
 {
-}
-
-public class CreateSenderGenericSigningPluginSettingsDto
-{
+    public string Entity { get; init; }
+    public Action Action { get; init; }
 }
 
 public class CreateServiceAccountRequest
 {
     public string ClientId { get; init; }
     public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
+    public CreateServiceAccountRequestregionalSettings RegionalSettings { get; init; }
+}
+
+public class CreateServiceAccountRequestregionalSettings
+{
+    public string WorldTimeZone { get; init; }
+    public long DateTimeFormatId { get; init; }
+    public string UiLanguage { get; init; }
+    public long CountryId { get; init; }
 }
 
 public class CreateServiceAccountResponse
@@ -1678,50 +1799,30 @@ public class CreateServiceAccountResponse
     public string UserId { get; init; }
 }
 
-public class CreateSignatureDataConfigurationDto
-{
-}
-
-public class CreateSmsOneTimePasswordDto
-{
-}
-
-public class CreateStageResponse
-{
-    public string Id { get; init; }
-}
-
 public class CreateSubstituteDelegationDto
 {
     public string DelegateeUserEmail { get; init; }
     public bool UtilizeAlsoOnCCRecipients { get; init; }
-}
-
-public class CreateSwedishBankIdDto
-{
-}
-
-public class CreateSwissComOnDemandDto
-{
-}
-
-public class CreateTemplateStageAutomaticRecipientRequest
-{
-    public string Type { get; init; }
-}
-
-public class CreateTemplateStageRecipientRequest
-{
-}
-
-public class CreateTemplateStageRequest
-{
-    public string Type { get; init; }
+    public ATrustCertificateDtophoneNumberBase Reason { get; init; }
+    public ATrustCertificateDtophoneNumberBase StartDate { get; init; }
+    public ATrustCertificateDtophoneNumberBase EndDate { get; init; }
 }
 
 public class CreateTemplateStageStandardRecipientRequest
 {
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
     public bool IsDelegationEnabled { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -1732,19 +1833,7 @@ public class CreateUserDto
     public string Email { get; init; }
     public string IsoLanguage { get; init; }
     public bool Enabled { get; init; }
-    public List<Anonymous15> RoleNames { get; init; }
-}
-
-public class Data
-{
-}
-
-public class Data
-{
-}
-
-public class Data
-{
+    public List<BusinessRoleCreateDto> RoleNames { get; init; }
 }
 
 public class DateAnnotationConfigDto
@@ -1755,6 +1844,10 @@ public class DateAnnotationConfigDto
 
 public class DateInputConfig
 {
+    public DateInputConfigvalueBase Value { get; init; }
+    public DateInputConfigformatBase Format { get; init; }
+    public DateInputConfigvalueBase MinValue { get; init; }
+    public DateInputConfigvalueBase MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -1770,14 +1863,9 @@ public class DateTimeFormatDto
     public string Example { get; init; }
 }
 
-public class DateTimeFormatsDto
-{
-    public List<Anonymous16> Options { get; init; }
-}
-
 public class DateTimeFormatsLookupResponse
 {
-    public List<Anonymous17> DateTimeFormats { get; init; }
+    public List<DateTimeFormatDto> DateTimeFormats { get; init; }
 }
 
 public class DateTimeOptionDto
@@ -1787,67 +1875,32 @@ public class DateTimeOptionDto
     public string Sample { get; init; }
 }
 
-public class DefaultLayout
-{
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class DefaultLayout
-{
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class DefaultSignatureType
-{
-    public string SignatureType { get; init; }
-}
-
 public class DefaultUserGroupsDto
 {
-    public List<Anonymous18> EnvelopesShare { get; init; }
-    public List<Anonymous19> TemplatesShare { get; init; }
+    public List<AutomaticSealingProfileResponse> EnvelopesShare { get; init; }
+    public List<AutomaticSealingProfileResponse> TemplatesShare { get; init; }
 }
 
 public class DelegationInfo
 {
     public bool Enabled { get; init; }
-}
-
-public class DelegationInfo
-{
-    public bool Enabled { get; init; }
-}
-
-public class DisposableCertificateDto
-{
+    public ATrustCertificateDtophoneNumberBase DefaultDelegationPolicy { get; init; }
 }
 
 public class DisposableCertificateSettingsDto
 {
+    public ATrustCertificateDtophoneNumberBase LraId { get; init; }
+    public ATrustCertificateDtophoneNumberBase User { get; init; }
     public bool HasPassword { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisposableType { get; init; }
     public bool ShowDisclaimerBeforeCertificateRequest { get; init; }
     public bool SendDisposableDisclaimerDocumentNotifications { get; init; }
 }
 
 public class DisposableCertificateSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class DisposableCertificateSignatureTypeDto
-{
 }
 
 public class DisposableCertificateStampImprintDto
@@ -1855,6 +1908,8 @@ public class DisposableCertificateStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
+    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
     public bool DisplayIp { get; init; }
 }
 
@@ -1863,30 +1918,20 @@ public class Document
     public string Id { get; init; }
     public string Name { get; init; }
     public long SortOrder { get; init; }
-}
-
-public class DocumentClassDto
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
 }
 
 public class DocumentClassesResponse
 {
-    public List<Anonymous20> DocumentClasses { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<AutomaticSealingProfileResponse> DocumentClasses { get; init; }
+    public DocumentClassesResponsepagination Pagination { get; init; }
 }
 
-public class DocumentClassListItemDto
+public class DocumentClassesResponsepagination
 {
-    public string Id { get; init; }
-    public string Name { get; init; }
-}
-
-public class DocumentClassLookupResponse
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class DocumentClassMetadataDto
@@ -1910,7 +1955,9 @@ public class DocumentReadConfirmationDto
 {
     public string ElementId { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public long GuidingOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
 }
 
 public class DocumentsUploadRequest
@@ -1918,56 +1965,70 @@ public class DocumentsUploadRequest
     public List<string> Files { get; init; }
 }
 
-public class Draft
-{
-    public long EnvelopeCount { get; init; }
-}
-
 public class DrawToSignSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class DrawToSignSignatureTypeDto
-{
-}
-
-public class DrawToSignStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayIp { get; init; }
 }
 
 public class DropDownElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public DropDownElementDefinitionposition Position { get; init; }
+    public DropDownElementDefinitionsize Size { get; init; }
     public bool ReadOnly { get; init; }
-    public TextFormat TextFormat { get; init; }
+    public DropDownElementDefinitiontextFormat TextFormat { get; init; }
+}
+
+public class DropDownElementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class DropDownElementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+}
+
+public class DropDownElementDefinitiontextFormat
+{
+    public string TextColor { get; init; }
+    public decimal FontSizeInPt { get; init; }
+    public string FontName { get; init; }
+    public bool Bold { get; init; }
+    public bool Italic { get; init; }
+    public string TextAlign { get; init; }
 }
 
 public class DropDownElementDto
 {
-    public ElementDefinition ElementDefinition { get; init; }
+    public DropDownElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
     public string ElementId { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Editable { get; init; }
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
     public long GuidingOrder { get; init; }
+    public DropDownElementDtoitemsBase Items { get; init; }
 }
 
 public class DropDownField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
+    public AnnotationFieldfontBase Font { get; init; }
+    public DropDownFieldoptionsBase Options { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Editable { get; init; }
+    public ATrustCertificateDtophoneNumberBase SelectedValue { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -1976,186 +2037,38 @@ public class DropDownFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public DropDownFieldDtofont Font { get; init; }
+    public DropDownFieldDtooptionsBase Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
+}
+
+public class DropDownFieldDtofont
+{
+    public string TextColor { get; init; }
+    public decimal FontSizeInPt { get; init; }
+    public string FontName { get; init; }
+    public bool Bold { get; init; }
+    public bool Italic { get; init; }
+    public long TextAlign { get; init; }
 }
 
 public class DropDownItemEntry
 {
     public string Value { get; init; }
     public string Label { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase IsSelected { get; init; }
 }
 
 public class DropDownTaskUpdateRequest
 {
     public string Value { get; init; }
     public string FieldType { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public object ValueFormat { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public string ExportValue { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public bool ReadOnly { get; init; }
-    public TextFormat TextFormat { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public bool ReadOnly { get; init; }
-    public bool IsMultiline { get; init; }
-    public bool IsPassword { get; init; }
-    public long MaxLength { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public string ExportValue { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public bool ReadOnly { get; init; }
-    public TextFormat TextFormat { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public object ValueFormat { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
-public class ElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public bool ReadOnly { get; init; }
-    public bool IsMultiline { get; init; }
-    public bool IsPassword { get; init; }
-    public long MaxLength { get; init; }
 }
 
 public class EmailAnnotationConfigDto
@@ -2168,11 +2081,6 @@ public class EmailDefinition
     public string ValueFormat { get; init; }
 }
 
-public class EnabledOrganizationDto
-{
-    public string Id { get; init; }
-}
-
 public class EnableOrganizationDto
 {
     public string OnePlatformBusinessRelationIdentifier { get; init; }
@@ -2182,6 +2090,7 @@ public class EnvelopeActionResponse
 {
     public string EnvelopeId { get; init; }
     public long StatusCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase Message { get; init; }
 }
 
 public class EnvelopeActorDto
@@ -2207,28 +2116,32 @@ public class EnvelopeBulkSignDeviceDto
 
 public class EnvelopeBulkSignDevicesResponseDto
 {
-    public List<Anonymous21> Devices { get; init; }
+    public List<EnvelopeBulkSignDeviceDto> Devices { get; init; }
 }
 
 public class EnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
+    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
 }
 
 public class EnvelopeBulkSignResultDto
 {
     public List<string> SignedEnvelopes { get; init; }
-    public List<Anonymous22> FailedEnvelopes { get; init; }
+    public List<EnvelopeBulkSignResultDtofailedEnvelopes> FailedEnvelopes { get; init; }
+}
+
+public class EnvelopeBulkSignResultDtofailedEnvelopes
+{
+    public string Id { get; init; }
+    public string ErrorId { get; init; }
 }
 
 public class EnvelopeBulkSignTransactionDto
 {
     public string TransactionId { get; init; }
     public string PayloadFileId { get; init; }
-}
-
-public class EnvelopeCancelRequestDto
-{
+    public ATrustCertificateDtophoneNumberBase ExpiresAt { get; init; }
 }
 
 public class EnvelopeDetailDto
@@ -2238,8 +2151,13 @@ public class EnvelopeDetailDto
     public string Status { get; init; }
     public bool ExpiringSoon { get; init; }
     public bool SendCopyToAllRecipients { get; init; }
-    public List<string> Actions { get; init; }
+    public List<EnvelopeAction> Actions { get; init; }
     public string UpdatedAt { get; init; }
+    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
+    public ATrustCertificateDtophoneNumberBase ExpirationDate { get; init; }
+    public EnvelopeDetailDtodefaultActionBase DefaultAction { get; init; }
+    public EnvelopeDetailDtodocumentsBase Documents { get; init; }
+    public EnvelopeDetailDtostagesBase Stages { get; init; }
     public bool PreventFieldsEditingWhenFinished { get; init; }
 }
 
@@ -2249,6 +2167,16 @@ public class EnvelopeDetailRecipientDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase Order { get; init; }
+    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
+    public ATrustCertificateDtophoneNumberBase Status { get; init; }
+    public ATrustCertificateDtophoneNumberBase StatusReason { get; init; }
+    public ATrustCertificateDtophoneNumberBase LastAction { get; init; }
+    public ATrustCertificateDtophoneNumberBase LastActionDate { get; init; }
+    public ATrustCertificateDtophoneNumberBase ViewerLink { get; init; }
+    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
     public bool RequiresDelegationCompletion { get; init; }
 }
 
@@ -2257,7 +2185,8 @@ public class EnvelopeDetailStageDto
     public string Id { get; init; }
     public long SortOrder { get; init; }
     public long RequiredRecipientCompletions { get; init; }
-    public List<Anonymous23> Recipients { get; init; }
+    public List<EnvelopeDetailRecipientDto> Recipients { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
 }
 
 public class EnvelopeDownloadDto
@@ -2269,26 +2198,44 @@ public class EnvelopeDownloadDto
 
 public class EnvelopeDownloadsResponse
 {
-    public List<Anonymous24> Downloads { get; init; }
+    public List<EnvelopeDownloadDto> Downloads { get; init; }
 }
 
 public class EnvelopeDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
     public bool SendCopyToAllRecipients { get; init; }
     public bool LateIdent { get; init; }
     public bool UseInvisibleSignatureWithTimestampForAllDocumentsAndRecipients { get; init; }
     public bool ShowOrganizationAgreements { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
+    public EnvelopeDtoreminderConfiguration ReminderConfiguration { get; init; }
+    public ATrustCertificateDto ExpirationConfiguration { get; init; }
+    public EnvelopeDtorecipientsBase Recipients { get; init; }
+    public EnvelopeDtostagesBase Stages { get; init; }
+    public EnvelopeDetailDtodocumentsBase Documents { get; init; }
+    public EnvelopeDtoagreementsBase Agreements { get; init; }
     public List<string> UserGroupSharingIds { get; init; }
-    public string Status { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CallbackConfiguration { get; init; }
+    public DbEnvelopeStatus Status { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
     public bool PreventFieldsEditingWhenFinished { get; init; }
+    public ATrustCertificateDtophoneNumberBase AfterSendRedirectUrl { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
     public bool SignatureReasonAllowChange { get; init; }
     public string SignatureFormat { get; init; }
     public bool FileRestrictedVisibility { get; init; }
+}
+
+public class EnvelopeDtoreminderConfiguration
+{
+    public bool Enabled { get; init; }
+    public long FirstReminderInDays { get; init; }
+    public long ReminderResendIntervalInDays { get; init; }
+    public long BeforeExpirationInDays { get; init; }
 }
 
 public class EnvelopeEventDto
@@ -2296,63 +2243,108 @@ public class EnvelopeEventDto
     public string Id { get; init; }
     public string Type { get; init; }
     public string OccurredAt { get; init; }
-    public Actor Actor { get; init; }
-    public Data Data { get; init; }
+    public EnvelopeActorDto Actor { get; init; }
+    public ATrustCertificateDto Data { get; init; }
 }
 
 public class EnvelopeEventsDto
 {
-    public List<Anonymous25> Events { get; init; }
-}
-
-public class EnvelopeFieldTaskItem
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
+    public List<EnvelopeEventDto> Events { get; init; }
 }
 
 public class EnvelopeFileDetailDocumentClassDto
 {
     public string DocumentClassId { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public EnvelopeFileDetailDocumentClassDtometadataValuesBase MetadataValues { get; init; }
 }
 
 public class EnvelopeFileDetailDocumentClassRequest
 {
     public string DocumentClassId { get; init; }
-    public List<Anonymous26> MetadataValues { get; init; }
+    public List<EnvelopeFileDetailDocumentClassRequestmetadataValues> MetadataValues { get; init; }
+}
+
+public class EnvelopeFileDetailDocumentClassRequestmetadataValues
+{
+    public string FieldDefinitionId { get; init; }
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
 }
 
 public class EnvelopeFileMetadataValueDto
 {
     public string FieldDefinitionId { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
     public string Type { get; init; }
-}
-
-public class EnvelopeFilesResponse
-{
-    public List<Anonymous28> Files { get; init; }
-}
-
-public class EnvelopeFileTasksResponse
-{
-    public List<Anonymous27> Tasks { get; init; }
 }
 
 public class EnvelopeInsights
 {
-    public WaitingForYou WaitingForYou { get; init; }
-    public WaitingForOthers WaitingForOthers { get; init; }
-    public Draft Draft { get; init; }
-    public Completed Completed { get; init; }
-    public Rejected Rejected { get; init; }
-    public Expired Expired { get; init; }
+    public EnvelopeInsightswaitingForYou WaitingForYou { get; init; }
+    public EnvelopeInsightswaitingForOthers WaitingForOthers { get; init; }
+    public EnvelopeInsightsdraft Draft { get; init; }
+    public EnvelopeInsightscompleted Completed { get; init; }
+    public EnvelopeInsightsrejected Rejected { get; init; }
+    public EnvelopeInsightsexpired Expired { get; init; }
+}
+
+public class EnvelopeInsightscompleted
+{
+    public long EnvelopeCount { get; init; }
+}
+
+public class EnvelopeInsightsdraft
+{
+    public long EnvelopeCount { get; init; }
+}
+
+public class EnvelopeInsightsexpired
+{
+    public long EnvelopeCount { get; init; }
+}
+
+public class EnvelopeInsightsrejected
+{
+    public long EnvelopeCount { get; init; }
+}
+
+public class EnvelopeInsightswaitingForOthers
+{
+    public long EnvelopeCount { get; init; }
+}
+
+public class EnvelopeInsightswaitingForYou
+{
+    public long EnvelopeCount { get; init; }
 }
 
 public class EnvelopeListDto
 {
-    public List<Anonymous29> Envelopes { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<EnvelopeListDtoenvelopes> Envelopes { get; init; }
+    public EnvelopeListDtopagination Pagination { get; init; }
+}
+
+public class EnvelopeListDtoenvelopes
+{
+    public string Id { get; init; }
+    public string Name { get; init; }
+    public bool ExpiringSoon { get; init; }
+    public ATrustCertificateDto SenderUser { get; init; }
+    public string UpdatedAt { get; init; }
+    public EnvelopeDetailStatus Status { get; init; }
+    public List<EnvelopeAction> Actions { get; init; }
+    public string CreatedAt { get; init; }
+    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
+    public EnvelopePartialDtorecipientsBase Recipients { get; init; }
+    public EnvelopeDetailDtodefaultActionBase DefaultAction { get; init; }
+}
+
+public class EnvelopeListDtopagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class EnvelopePartialDto
@@ -2360,11 +2352,14 @@ public class EnvelopePartialDto
     public string Id { get; init; }
     public string Name { get; init; }
     public bool ExpiringSoon { get; init; }
-    public SenderUser SenderUser { get; init; }
+    public ATrustCertificateDto SenderUser { get; init; }
     public string UpdatedAt { get; init; }
-    public string Status { get; init; }
-    public List<string> Actions { get; init; }
+    public EnvelopeDetailStatus Status { get; init; }
+    public List<EnvelopeAction> Actions { get; init; }
     public string CreatedAt { get; init; }
+    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
+    public EnvelopePartialDtorecipientsBase Recipients { get; init; }
+    public EnvelopeDetailDtodefaultActionBase DefaultAction { get; init; }
 }
 
 public class EnvelopePermissions
@@ -2376,54 +2371,6 @@ public class EnvelopePermissions
 public class EnvelopePoliciesVerifyDto
 {
     public bool Compliant { get; init; }
-}
-
-public class EnvelopeRejectDto
-{
-}
-
-public class EnvelopeResumeDto
-{
-}
-
-public class Envelopes
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Envelopes
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Envelopes
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Envelopes
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Envelopes
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Envelopes
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class EnvelopeSenderDto
-{
 }
 
 public class EnvelopeSignatureTypeDto
@@ -2441,42 +2388,45 @@ public class EnvelopeSignatureTypesRequestDto
 public class EnvelopeStageAutomaticRecipientResponse
 {
     public string Id { get; init; }
-    public string Type { get; init; }
-}
-
-public class EnvelopeStageAutomaticRecipientSummaryDto
-{
-    public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
     public string Type { get; init; }
 }
 
 public class EnvelopeStageItemDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
     public long SortOrder { get; init; }
     public long RequiredRecipientCompletions { get; init; }
     public string Type { get; init; }
-    public List<object> Recipients { get; init; }
+    public List<EnvelopeStageItemDtorecipientsBase> Recipients { get; init; }
 }
 
 public class EnvelopeStageListDto
 {
-    public List<Anonymous30> Stages { get; init; }
-}
-
-public class EnvelopeStageRecipientResponse
-{
-    public string Id { get; init; }
-}
-
-public class EnvelopeStageRecipientSummaryDto
-{
-    public string Id { get; init; }
+    public List<EnvelopeStageItemDto> Stages { get; init; }
 }
 
 public class EnvelopeStageStandardRecipientResponse
 {
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
     public string Type { get; init; }
 }
 
@@ -2486,6 +2436,8 @@ public class EnvelopeStageStandardRecipientSummaryDto
     public string Id { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
     public string Type { get; init; }
 }
 
@@ -2496,93 +2448,32 @@ public class EnvelopeViewerLinkDto
 
 public class ErrorResult
 {
-    public string ErrorId { get; init; }
+    public ErrorCode ErrorId { get; init; }
     public string Description { get; init; }
-}
-
-public class Errors
-{
-}
-
-public class ESealingRemoteSignatureProfileDto
-{
-    public string Id { get; init; }
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfiguration
-{
-}
-
-public class ExpirationConfigurationDto
-{
-}
-
-public class Expired
-{
-    public long EnvelopeCount { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Errors { get; init; }
+    public ATrustCertificateDtophoneNumberBase Field { get; init; }
 }
 
 public class FailedEnvelope
 {
     public string Id { get; init; }
-    public string ErrorId { get; init; }
-}
-
-public class FieldTask
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class FieldTaskItemRequest
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class FileDetailResponse
-{
+    public ErrorCode ErrorId { get; init; }
 }
 
 public class FileElementDateValidationConfiguration
 {
-    public Range Range { get; init; }
-}
-
-public class FileElementFieldValidationRange
-{
+    public ATrustCertificateDto Range { get; init; }
+    public ATrustCertificateDtophoneNumberBase DateFormat { get; init; }
 }
 
 public class FileElementNumberValidationConfiguration
 {
     public string SymbolPosition { get; init; }
-    public Range Range { get; init; }
+    public ATrustCertificateDto Range { get; init; }
+    public ATrustCertificateDtophoneNumberBase Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
-    public string DecimalSeparator { get; init; }
+    public DecimalSeparatorType DecimalSeparator { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase Decimals { get; init; }
 }
 
 public class FileElementPhoneValidationConfiguration
@@ -2592,53 +2483,190 @@ public class FileElementPhoneValidationConfiguration
 
 public class FileElementsDto
 {
-    public List<Anonymous31> TextBoxElements { get; init; }
-    public List<Anonymous32> CheckBoxElements { get; init; }
-    public List<Anonymous33> SignatureElements { get; init; }
-    public List<Anonymous34> DropDownElements { get; init; }
-    public List<Anonymous35> ListElements { get; init; }
-    public List<Anonymous37> DocumentReadConfirmations { get; init; }
-    public List<Anonymous38> PageReadConfirmations { get; init; }
-    public List<Anonymous39> AreaReadConfirmations { get; init; }
-    public List<Anonymous40> LinkElements { get; init; }
-    public List<Anonymous41> AttachmentElements { get; init; }
-    public List<Anonymous42> AnnotationElements { get; init; }
-    public List<Anonymous43> RadioButtonElements { get; init; }
-    public List<Anonymous44> ApproveElements { get; init; }
-    public List<Anonymous45> InvisibleSignatureElements { get; init; }
+    public List<FileElementsDtotextBoxElements> TextBoxElements { get; init; }
+    public List<CheckBoxElementDto> CheckBoxElements { get; init; }
+    public List<FileElementsDtosignatureElements> SignatureElements { get; init; }
+    public List<DropDownElementDto> DropDownElements { get; init; }
+    public List<FileElementsDtolistElements> ListElements { get; init; }
+    public List<DocumentReadConfirmationDto> DocumentReadConfirmations { get; init; }
+    public List<FileElementsDtopageReadConfirmations> PageReadConfirmations { get; init; }
+    public List<ApproveElementDto> AreaReadConfirmations { get; init; }
+    public List<FileElementsDtolinkElements> LinkElements { get; init; }
+    public List<AttachmentElementDto> AttachmentElements { get; init; }
+    public List<AnnotationElementDto> AnnotationElements { get; init; }
+    public List<FileElementsDtoradioButtonElements> RadioButtonElements { get; init; }
+    public List<ApproveElementDto> ApproveElements { get; init; }
+    public List<FileElementsDtoinvisibleSignatureElements> InvisibleSignatureElements { get; init; }
+}
+
+public class FileElementsDtoinvisibleSignatureElements
+{
+    public string ElementId { get; init; }
+    public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public bool Required { get; init; }
+    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public long GuidingOrder { get; init; }
+}
+
+public class FileElementsDtolinkElements
+{
+    public AreaReadElementDefinition ElementDefinition { get; init; }
+    public string Source { get; init; }
+    public string ElementId { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string Value { get; init; }
+    public long GuidingOrder { get; init; }
+}
+
+public class FileElementsDtolistElements
+{
+    public DropDownElementDefinition ElementDefinition { get; init; }
+    public string ElementId { get; init; }
+    public List<FileElementsDtolistElementsitems> Items { get; init; }
+    public bool IsRequired { get; init; }
+    public bool IsEditable { get; init; }
+    public bool IsMultiselect { get; init; }
+    public bool IsChecked { get; init; }
+    public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public long GuidingOrder { get; init; }
+}
+
+public class FileElementsDtolistElementsitems
+{
+    public string Key { get; init; }
+    public string Value { get; init; }
+    public bool IsSelected { get; init; }
+}
+
+public class FileElementsDtopageReadConfirmations
+{
+    public string ElementId { get; init; }
+    public long PageNumber { get; init; }
+    public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public long GuidingOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+}
+
+public class FileElementsDtoradioButtonElements
+{
+    public string ElementId { get; init; }
+    public FileElementsDtoradioButtonElementselementDefinition ElementDefinition { get; init; }
+    public string Source { get; init; }
+    public string GroupName { get; init; }
+    public bool IsChecked { get; init; }
+    public bool IsSelectInUnison { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public bool Required { get; init; }
+    public string Value { get; init; }
+    public long GuidingOrder { get; init; }
+}
+
+public class FileElementsDtoradioButtonElementselementDefinition
+{
+    public FileElementsDtoradioButtonElementselementDefinitionposition Position { get; init; }
+    public FileElementsDtoradioButtonElementselementDefinitionsize Size { get; init; }
+    public bool ReadOnly { get; init; }
+}
+
+public class FileElementsDtoradioButtonElementselementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class FileElementsDtoradioButtonElementselementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+}
+
+public class FileElementsDtosignatureElements
+{
+    public string ElementId { get; init; }
+    public ATrustCertificateDto AllowedSignatureTypes { get; init; }
+    public AreaReadElementDefinition ElementDefinition { get; init; }
+    public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
+    public long GuidingOrder { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
+    public bool IsApprove { get; init; }
+}
+
+public class FileElementsDtotextBoxElements
+{
+    public string ElementId { get; init; }
+    public FileElementsDtotextBoxElementselementDefinition ElementDefinition { get; init; }
+    public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public bool Required { get; init; }
+    public string Value { get; init; }
+    public long GuidingOrder { get; init; }
+    public FileElementsDtotextBoxElementsvalidationBase Validation { get; init; }
+}
+
+public class FileElementsDtotextBoxElementselementDefinition
+{
+    public FileElementsDtotextBoxElementselementDefinitionposition Position { get; init; }
+    public FileElementsDtotextBoxElementselementDefinitionsize Size { get; init; }
+    public FileElementTextFormat TextFormat { get; init; }
+    public bool ReadOnly { get; init; }
+    public bool IsMultiline { get; init; }
+    public bool IsPassword { get; init; }
+    public long MaxLength { get; init; }
+}
+
+public class FileElementsDtotextBoxElementselementDefinitionposition
+{
+    public long PageNumber { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+}
+
+public class FileElementsDtotextBoxElementselementDefinitionsize
+{
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class FileElementsFieldValidation
 {
-    public string Type { get; init; }
+    public FieldValidationType Type { get; init; }
+    public FileElementsFieldValidationdateValidationConfigurationBase DateValidationConfiguration { get; init; }
+    public FileElementsFieldValidationnumberValidationConfigurationBase NumberValidationConfiguration { get; init; }
+    public FileElementsFieldValidationphoneValidationConfigurationBase PhoneValidationConfiguration { get; init; }
+    public FileElementsFieldValidationdateValidationConfigurationBase TimeValidationConfiguration { get; init; }
 }
 
 public class FileElementsPosition
 {
     public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
 }
 
 public class FileElementsSize
 {
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class FileElementTextFormat
 {
     public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
+    public decimal FontSizeInPt { get; init; }
     public string FontName { get; init; }
     public bool Bold { get; init; }
     public bool Italic { get; init; }
     public string TextAlign { get; init; }
-}
-
-public class FileElementTimeValidationConfiguration
-{
-    public Range Range { get; init; }
 }
 
 public class FileOrderItem
@@ -2649,13 +2677,14 @@ public class FileOrderItem
 
 public class FileReadConfirmationField
 {
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public string Source { get; init; }
 }
@@ -2664,18 +2693,13 @@ public class FileReadConfirmationFieldDto
 {
     public string Id { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
 public class FileReadConfirmationTaskUpdateRequest
 {
     public string FieldType { get; init; }
-}
-
-public class FileTaskItem
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
 }
 
 public class FirstNameAnnotationConfigDto
@@ -2688,70 +2712,10 @@ public class FirstNameDefinition
     public string ValueFormat { get; init; }
 }
 
-public class Font
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public long TextAlign { get; init; }
-}
-
-public class Font
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public long TextAlign { get; init; }
-}
-
-public class Font
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public long TextAlign { get; init; }
-}
-
-public class Font
-{
-    public string Color { get; init; }
-    public double Size { get; init; }
-    public string Name { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string Align { get; init; }
-}
-
-public class Font
-{
-    public string Color { get; init; }
-    public double Size { get; init; }
-    public string Name { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string Align { get; init; }
-}
-
-public class Font
-{
-    public string Color { get; init; }
-    public double Size { get; init; }
-    public string Name { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string Align { get; init; }
-}
-
 public class FontStyle
 {
     public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
+    public decimal FontSizeInPt { get; init; }
     public string FontName { get; init; }
     public bool Bold { get; init; }
     public bool Italic { get; init; }
@@ -2760,18 +2724,11 @@ public class FontStyle
 
 public class ForcedAuthenticationRulesRequest
 {
-    public string AuthenticationMode { get; init; }
+    public ForceAuthenticationModeApi AuthenticationMode { get; init; }
     public bool ForceInputSmsAuthentication { get; init; }
     public bool AllowBiometricWithoutAuthentication { get; init; }
     public bool AllowComplexSignaturesWithoutAuthentication { get; init; }
-}
-
-public class ForcedAuthenticationRulesResponse
-{
-    public string AuthenticationMode { get; init; }
-    public bool ForceInputSmsAuthentication { get; init; }
-    public bool AllowBiometricWithoutAuthentication { get; init; }
-    public bool AllowComplexSignaturesWithoutAuthentication { get; init; }
+    public ATrustCertificateDtophoneNumberBase AuthenticationProviderId { get; init; }
 }
 
 public class FullNameAnnotationConfigDto
@@ -2784,19 +2741,11 @@ public class FullNameDefinition
     public string ValueFormat { get; init; }
 }
 
-public class GeneralPolicies
-{
-    public bool AllowSaveDocument { get; init; }
-    public bool AllowSaveAuditTrail { get; init; }
-    public bool AllowPrintDocument { get; init; }
-    public bool AllowAdhocPdfAttachments { get; init; }
-    public bool AllowRejectWorkstep { get; init; }
-    public bool AllowUndoLastAction { get; init; }
-}
-
 public class GeneralSettingsDto
 {
     public string Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase ContactUrl { get; init; }
+    public ATrustCertificateDtophoneNumberBase SupportUrl { get; init; }
     public bool AllowSendCC { get; init; }
     public bool PreventEmailFromBeingSent { get; init; }
     public bool CustomStampImprintEnabled { get; init; }
@@ -2809,6 +2758,7 @@ public class GenericSigningPluginDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
+    public GenericSigningPluginDtosignatureFriendlyNamesBase SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
 }
 
@@ -2819,8 +2769,13 @@ public class GenericSigningPluginSenderSettingsDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
+    public GenericSigningPluginDtosignatureFriendlyNamesBase SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
     public string PluginFriendlyName { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureFriendlyName { get; init; }
+    public GenericSigningPluginSenderSettingsDtosenderDataFieldsBase SenderDataFields { get; init; }
+    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase PredefinedSenderDataFields { get; init; }
+    public GenericSigningPluginSenderSettingsDtoprofilesBase Profiles { get; init; }
 }
 
 public class GenericSigningPluginSettingLabelDto
@@ -2829,31 +2784,66 @@ public class GenericSigningPluginSettingLabelDto
     public string Text { get; init; }
 }
 
-public class GenericSigningPluginsSenderDataDto
-{
-}
-
 public class GetOrganizationsListResponse
 {
-    public List<Anonymous46> Organizations { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<GetOrganizationsListResponseorganizations> Organizations { get; init; }
+    public GetOrganizationsListResponsepagination Pagination { get; init; }
+}
+
+public class GetOrganizationsListResponseorganizations
+{
+    public string Id { get; init; }
+    public string Name { get; init; }
+    public bool Canceled { get; init; }
+}
+
+public class GetOrganizationsListResponsepagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class GetUsersListResponse
 {
-    public List<Anonymous47> Users { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<GetUsersListResponseusers> Users { get; init; }
+    public GetUsersListResponsepagination Pagination { get; init; }
 }
 
-public class GetUsersResponse
+public class GetUsersListResponsepagination
 {
-    public List<Anonymous48> Users { get; init; }
-    public Pagination Pagination { get; init; }
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
+}
+
+public class GetUsersListResponseusers
+{
+    public string Id { get; init; }
+    public string GivenName { get; init; }
+    public string Surname { get; init; }
+    public string Email { get; init; }
+    public GetUsersListResponseusersregionalSettings RegionalSettings { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public bool Enabled { get; init; }
+}
+
+public class GetUsersListResponseusersregionalSettings
+{
+    public string TimeZone { get; init; }
+    public string Language { get; init; }
+    public string Country { get; init; }
+    public DateTimeFormatSwaggerEnumProvider DateTimeFormat { get; init; }
 }
 
 public class HttpValidationProblemDetails
 {
-    public Errors Errors { get; init; }
+    public ATrustCertificateDtophoneNumberBase Type { get; init; }
+    public ATrustCertificateDtophoneNumberBase Title { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase Status { get; init; }
+    public ATrustCertificateDtophoneNumberBase Detail { get; init; }
+    public ATrustCertificateDtophoneNumberBase Instance { get; init; }
+    public ATrustCertificateDto Errors { get; init; }
 }
 
 public class InitialsAnnotationConfigDto
@@ -2870,98 +2860,93 @@ public class InitialsDefinition
 public class IntegrationBulkEnvelopeDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public string ExpirationMode { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
+    public ATrustCertificateDto ExpirationConfiguration { get; init; }
+    public ExpirationMode ExpirationMode { get; init; }
+    public IntegrationBulkEnvelopeDtoreminderConfiguration ReminderConfiguration { get; init; }
     public bool QualifiedTimeStamp { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
     public string SignatureFormat { get; init; }
-    public List<Anonymous49> Stages { get; init; }
-    public List<Anonymous50> Files { get; init; }
+    public List<FileOrderItem> Stages { get; init; }
+    public List<Document> Files { get; init; }
+    public EnvelopeDtoagreementsBase Agreements { get; init; }
     public string Status { get; init; }
+    public ATrustCertificateDtophoneNumberBase StatusChangeReason { get; init; }
+    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
     public bool FileRestrictedVisibility { get; init; }
 }
 
-public class IntegrationEnvelopeDto
+public class IntegrationBulkEnvelopeDtoreminderConfiguration
 {
-    public string Id { get; init; }
-    public string CreatedAt { get; init; }
-    public string UpdatedAt { get; init; }
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public string ExpirationMode { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
-    public bool QualifiedTimeStamp { get; init; }
-    public string SignatureFormat { get; init; }
-    public List<Anonymous51> Stages { get; init; }
-    public List<Anonymous52> Files { get; init; }
-    public string Status { get; init; }
-    public bool FileRestrictedVisibility { get; init; }
-}
-
-public class IntegrationFileDto
-{
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class IntegrationStageDto
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
+    public bool Enabled { get; init; }
+    public long FirstReminderInDays { get; init; }
+    public long ReminderResendIntervalInDays { get; init; }
+    public long BeforeExpirationInDays { get; init; }
 }
 
 public class IntegrationTemplateDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public string ExpirationMode { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
+    public ATrustCertificateDto ExpirationConfiguration { get; init; }
+    public ExpirationMode ExpirationMode { get; init; }
+    public IntegrationTemplateDtoreminderConfiguration ReminderConfiguration { get; init; }
     public bool QualifiedTimeStamp { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
     public string SignatureFormat { get; init; }
-    public List<Anonymous53> Stages { get; init; }
-    public List<Anonymous54> Files { get; init; }
+    public List<FileOrderItem> Stages { get; init; }
+    public List<Document> Files { get; init; }
+    public EnvelopeDtoagreementsBase Agreements { get; init; }
+}
+
+public class IntegrationTemplateDtoreminderConfiguration
+{
+    public bool Enabled { get; init; }
+    public long FirstReminderInDays { get; init; }
+    public long ReminderResendIntervalInDays { get; init; }
+    public long BeforeExpirationInDays { get; init; }
 }
 
 public class InvisibleSignatureElementDto
 {
     public string ElementId { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
+    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
     public long GuidingOrder { get; init; }
 }
 
 public class InvisibleSignatureField
 {
+    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class InvisibleSignatureFieldDto
 {
+    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
-}
-
-public class LanguageListItemDto
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
-}
-
-public class LanguagesDto
-{
-    public List<Anonymous55> Options { get; init; }
 }
 
 public class LanguageSettingDto
@@ -2974,17 +2959,7 @@ public class LanguageSettingDto
 
 public class LanguagesLookupResponse
 {
-    public List<Anonymous56> Languages { get; init; }
-}
-
-public class LanguagesSettingsResponse
-{
-    public List<Anonymous57> Languages { get; init; }
-}
-
-public class LanguagesSettingsUpdateRequest
-{
-    public List<Anonymous58> Languages { get; init; }
+    public List<CountryDto> Languages { get; init; }
 }
 
 public class LanguageStateRequest
@@ -3003,14 +2978,6 @@ public class LastNameDefinition
     public string ValueFormat { get; init; }
 }
 
-public class License
-{
-    public string Type { get; init; }
-    public string ExpirationDate { get; init; }
-    public long UserLimit { get; init; }
-    public long DocumentLimit { get; init; }
-}
-
 public class LicenseDto
 {
     public string Type { get; init; }
@@ -3019,17 +2986,12 @@ public class LicenseDto
     public long DocumentLimit { get; init; }
 }
 
-public class LinkElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-}
-
 public class LinkElementDto
 {
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
+    public AreaReadElementDefinition ElementDefinition { get; init; }
+    public FormFieldSource Source { get; init; }
     public string ElementId { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -3038,24 +3000,24 @@ public class LinkField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public string Url { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class LinkFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public string Reference { get; init; }
     public string FieldType { get; init; }
 }
@@ -3064,26 +3026,29 @@ public class ListBoxField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
+    public ListBoxFieldfontBase Font { get; init; }
+    public DropDownFieldoptionsBase Options { get; init; }
     public bool Multiselect { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class ListBoxFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public FontStyle Font { get; init; }
+    public DropDownFieldDtooptionsBase Options { get; init; }
     public bool Multiselect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -3096,25 +3061,25 @@ public class ListBoxTaskUpdateRequest
     public string FieldType { get; init; }
 }
 
-public class ListElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
-    public bool ReadOnly { get; init; }
-}
-
 public class ListElementDto
 {
-    public ElementDefinition ElementDefinition { get; init; }
+    public DropDownElementDefinition ElementDefinition { get; init; }
     public string ElementId { get; init; }
-    public List<Anonymous59> Items { get; init; }
+    public List<ListElementDtoitems> Items { get; init; }
     public bool IsRequired { get; init; }
     public bool IsEditable { get; init; }
     public bool IsMultiselect { get; init; }
     public bool IsChecked { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public long GuidingOrder { get; init; }
+}
+
+public class ListElementDtoitems
+{
+    public string Key { get; init; }
+    public string Value { get; init; }
+    public bool IsSelected { get; init; }
 }
 
 public class ListItemEntry
@@ -3126,24 +3091,14 @@ public class ListItemEntry
 
 public class LocalCertificateSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class LocalCertificateSignatureTypeDto
-{
-}
-
-public class LocalCertificateStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayIp { get; init; }
 }
 
 public class MetadataValueDto
 {
     public string FieldDefinitionId { get; init; }
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
 }
 
 public class NamedSignatureAppearanceLayoutDto
@@ -3155,19 +3110,8 @@ public class NamedSignatureAppearanceLayoutDto
     public bool DisplayDateTime { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class NamedSignatureAppearanceLayoutRequest
-{
-    public string Id { get; init; }
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
+    public NamedSignatureAppearanceLayoutDtobackgroundImageBase BackgroundImage { get; init; }
+    public ImagePosition Position { get; init; }
 }
 
 public class NextRecipientDto
@@ -3180,25 +3124,18 @@ public class NextRecipientDto
 
 public class NextRecipientLinkDto
 {
-    public Recipient Recipient { get; init; }
+    public NextRecipientDto Recipient { get; init; }
     public string Link { get; init; }
 }
 
 public class NextRecipientLinksResponse
 {
-    public List<Anonymous60> NextRecipientLinks { get; init; }
+    public List<NextRecipientLinkDto> NextRecipientLinks { get; init; }
 }
 
 public class NotificationChannelMessagesDto
 {
-    public List<Anonymous61> Messages { get; init; }
-}
-
-public class NotificationChannels
-{
-    public bool Email { get; init; }
-    public bool Sms { get; init; }
-    public bool WhatsApp { get; init; }
+    public List<ATrustCertificateDto> Messages { get; init; }
 }
 
 public class NotificationChannelsDto
@@ -3208,37 +3145,14 @@ public class NotificationChannelsDto
     public bool WhatsApp { get; init; }
 }
 
-public class NotificationMessageDto
-{
-}
-
 public class NotificationPreferencesRequest
 {
     public bool NotifyRecipientOnActionNeeded { get; init; }
 }
 
-public class NotificationPreferencesResponse
-{
-    public bool NotifyRecipientOnActionNeeded { get; init; }
-}
-
-public class NotificationSettings
-{
-    public string EmailSenderDisplayType { get; init; }
-    public bool EnvelopeLimitReachedNotificationEnabled { get; init; }
-    public long EnvelopesInPercentFromLimitNotification { get; init; }
-    public long EnvelopesLimitReachedPercentStep { get; init; }
-    public bool OrganizationCallbackEnabled { get; init; }
-    public bool LicenseExpireNotificationEnabled { get; init; }
-    public long LicenseExpireNotificationBeforeDays { get; init; }
-    public long LicenseExpireNotificationRecurrentDays { get; init; }
-    public string OrganizationCallbackUrl { get; init; }
-    public long ReminderSendLimitInMinutes { get; init; }
-}
-
 public class NotificationSettingsDto
 {
-    public string EmailSenderDisplayType { get; init; }
+    public EmailSenderDisplayType EmailSenderDisplayType { get; init; }
     public bool EnvelopeLimitReachedNotificationEnabled { get; init; }
     public long EnvelopesInPercentFromLimitNotification { get; init; }
     public long EnvelopesLimitReachedPercentStep { get; init; }
@@ -3252,13 +3166,19 @@ public class NotificationSettingsDto
 
 public class NumberInputConfig
 {
+    public NumberInputConfigvalueBase Value { get; init; }
+    public NumberInputConfigsymbolBase Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
-    public string DecimalSeparator { get; init; }
+    public DecimalSeparatorType DecimalSeparator { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase DecimalPlaces { get; init; }
+    public NumberInputConfigvalueBase MinValue { get; init; }
+    public NumberInputConfigvalueBase MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
 public class NumberSymbol
 {
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
     public string Position { get; init; }
 }
 
@@ -3274,15 +3194,20 @@ public class OAuthFieldDefinitionDto
     public string Path { get; init; }
     public string Mode { get; init; }
     public string Target { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase OAuthResourceUriId { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase OAuthJwtConfigId { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase OAuthProviderId { get; init; }
+    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
+    public ATrustCertificateDtophoneNumberBase GenericSigningPluginId { get; init; }
+    public ATrustCertificateDtophoneNumberBase GenericSigningPluginFieldKey { get; init; }
 }
 
 public class OAuthFieldReferenceDto
 {
+    public ATrustCertificateDtophoneNumberBase Id { get; init; }
     public string FieldTarget { get; init; }
-}
-
-public class OAuthGenericSigningPluginReferenceDto
-{
+    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase GenericSigningPluginReference { get; init; }
 }
 
 public class OAuthJwtConfigDto
@@ -3294,6 +3219,7 @@ public class OAuthJwtConfigDto
     public bool ValidateAudience { get; init; }
     public bool ValidateIssuer { get; init; }
     public bool ValidateLifetime { get; init; }
+    public OAuthJwtConfigDtooAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
 }
 
 public class OAuthResourceUriDto
@@ -3301,15 +3227,8 @@ public class OAuthResourceUriDto
     public long Id { get; init; }
     public string Uri { get; init; }
     public string AccessTokenParamName { get; init; }
-}
-
-public class OAuthSignerProvider
-{
-    public string Name { get; init; }
-    public string ClientId { get; init; }
-    public string ClientSecret { get; init; }
-    public string AuthorizationUri { get; init; }
-    public string TokenUri { get; init; }
+    public ATrustCertificateDtophoneNumberBase EIdServiceCombination { get; init; }
+    public OAuthJwtConfigDtooAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
 }
 
 public class OAuthSignerProvider
@@ -3318,46 +3237,21 @@ public class OAuthSignerProvider
     public string ExternalId { get; init; }
     public string Name { get; init; }
     public string ClientId { get; init; }
+    public ATrustCertificateDtophoneNumberBase ClientSecret { get; init; }
+    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
+    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
     public long AuthenticationType { get; init; }
-}
-
-public class OAuthSignerProvider
-{
-    public long Id { get; init; }
-    public string ExternalId { get; init; }
-    public string Name { get; init; }
-    public string ClientId { get; init; }
-    public string AuthorizationUri { get; init; }
-    public string TokenUri { get; init; }
-    public long AuthenticationType { get; init; }
-}
-
-public class OAuthSignerProvider
-{
-    public string ExternalId { get; init; }
-    public string Name { get; init; }
-    public string ClientId { get; init; }
-    public string AuthorizationUri { get; init; }
-    public string TokenUri { get; init; }
-    public long AuthenticationType { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase IsActive { get; init; }
+    public ATrustCertificateDtophoneNumberBase RedirectUrl { get; init; }
 }
 
 public class OAuthSignerProviderDetailsResponse
 {
     public OAuthSignerProvider OAuthSignerProvider { get; init; }
-}
-
-public class OAuthSignerProviderDto
-{
-    public long Id { get; init; }
-    public string ExternalId { get; init; }
-    public string Name { get; init; }
-    public string ClientId { get; init; }
-    public string AuthorizationUri { get; init; }
-    public string TokenUri { get; init; }
-    public long AuthenticationType { get; init; }
+    public OAuthSignerProviderDetailsResponseoAuthJwtConfigBase OAuthJwtConfig { get; init; }
+    public OAuthSignerProviderDetailsResponseoAuthResourceUrisBase OAuthResourceUris { get; init; }
 }
 
 public class OAuthSignerProviderFieldModeResponse
@@ -3366,25 +3260,23 @@ public class OAuthSignerProviderFieldModeResponse
     public long Value { get; init; }
 }
 
-public class OAuthSignerProviderFieldTargetResponse
-{
-    public string Name { get; init; }
-    public long Value { get; init; }
-}
-
 public class OAuthSignerProvidersResponse
 {
-    public List<Anonymous62> OAuthSignerProviders { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<OAuthSignerProvider> OAuthSignerProviders { get; init; }
+    public OAuthSignerProvidersResponsepagination Pagination { get; init; }
+}
+
+public class OAuthSignerProvidersResponsepagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
 }
 
 public class OneTimePasswordSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class OneTimePasswordSignatureTypeDto
-{
 }
 
 public class OneTimePasswordStampImprintDto
@@ -3392,6 +3284,8 @@ public class OneTimePasswordStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
+    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
     public bool DisplayTransactionId { get; init; }
     public bool DisplayTransactionToken { get; init; }
     public bool DisplayPhoneNumber { get; init; }
@@ -3406,17 +3300,6 @@ public class Option
     public bool IsSelected { get; init; }
 }
 
-public class OptionDto
-{
-    public string Key { get; init; }
-    public string Value { get; init; }
-    public bool IsSelected { get; init; }
-}
-
-public class OrganizationCustomTimeStampServerSettings
-{
-}
-
 public class OrganizationDefaultSignatureTypeDto
 {
     public string SignatureType { get; init; }
@@ -3424,7 +3307,7 @@ public class OrganizationDefaultSignatureTypeDto
 
 public class OrganizationDelegationSettingsDto
 {
-    public string DelegationPolicy { get; init; }
+    public DelegationPolicy DelegationPolicy { get; init; }
 }
 
 public class OrganizationDetailDto
@@ -3433,7 +3316,7 @@ public class OrganizationDetailDto
     public string Name { get; init; }
     public string CreationDateUtc { get; init; }
     public bool Canceled { get; init; }
-    public string LicenseType { get; init; }
+    public LicenseType LicenseType { get; init; }
     public string LicenseExpirationDate { get; init; }
     public long UserLimit { get; init; }
 }
@@ -3447,7 +3330,7 @@ public class OrganizationFeatureFlagResponse
 
 public class OrganizationFeatureFlagsResponse
 {
-    public List<Anonymous63> FeatureFlags { get; init; }
+    public List<OrganizationFeatureFlagResponse> FeatureFlags { get; init; }
 }
 
 public class OrganizationGeneralPoliciesDto
@@ -3467,20 +3350,6 @@ public class OrganizationItemDto
     public string UserId { get; init; }
 }
 
-public class OrganizationLanguageLookupDto
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
-}
-
-public class OrganizationPAdESConfiguration
-{
-}
-
-public class OrganizationRecipientAuthenticationTypesDto
-{
-}
-
 public class OrganizationRecipientOAuthProviderDto
 {
     public string Identifier { get; init; }
@@ -3489,6 +3358,8 @@ public class OrganizationRecipientOAuthProviderDto
     public bool HasLateIdentSigTypes { get; init; }
     public bool ProvidesIdentification { get; init; }
     public long UpdateFieldComparisonValue { get; init; }
+    public OrganizationRecipientOAuthProviderDtoupdateFieldsBase UpdateFields { get; init; }
+    public OrganizationRecipientOAuthProviderDtoupdateFieldsBase ValidateFields { get; init; }
 }
 
 public class OrganizationRecipientSettingsDto
@@ -3496,18 +3367,6 @@ public class OrganizationRecipientSettingsDto
     public bool SendFinishedDocumentsToAllRecipients { get; init; }
     public bool ShowNotEnoughSignaturesWarning { get; init; }
     public bool DelegationAvailable { get; init; }
-}
-
-public class OrganizationSettings
-{
-    public bool Read { get; init; }
-    public bool Update { get; init; }
-}
-
-public class OrganizationSettings
-{
-    public bool Read { get; init; }
-    public bool Update { get; init; }
 }
 
 public class OrganizationSettingsPermissions
@@ -3520,7 +3379,7 @@ public class OrganizationSignatureTypesDto
 {
     public List<string> AllowedSignatureTypes { get; init; }
     public List<string> AllowedDefaultSignatureTypes { get; init; }
-    public List<Anonymous64> AllowedGenericSigningPlugins { get; init; }
+    public List<GenericSigningPluginDto> AllowedGenericSigningPlugins { get; init; }
 }
 
 public class OrganizationSummaryDto
@@ -3536,8 +3395,17 @@ public class OrganizationUserDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
+    public OrganizationUserDtoregionalSettings RegionalSettings { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
     public bool Enabled { get; init; }
+}
+
+public class OrganizationUserDtoregionalSettings
+{
+    public string TimeZone { get; init; }
+    public string Language { get; init; }
+    public string Country { get; init; }
+    public DateTimeFormatSwaggerEnumProvider DateTimeFormat { get; init; }
 }
 
 public class OrganizationUserRegionalSettingsDto
@@ -3545,27 +3413,13 @@ public class OrganizationUserRegionalSettingsDto
     public string TimeZone { get; init; }
     public string Language { get; init; }
     public string Country { get; init; }
-    public string DateTimeFormat { get; init; }
-}
-
-public class OrganizationUserSummaryDto
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
-    public RegionalSettings RegionalSettings { get; init; }
-    public bool Enabled { get; init; }
-}
-
-public class OtpSignatureDataDto
-{
+    public DateTimeFormatSwaggerEnumProvider DateTimeFormat { get; init; }
 }
 
 public class PAdESSignatureConfig
 {
     public bool Enabled { get; init; }
-    public string Level { get; init; }
+    public PAdESLevel Level { get; init; }
 }
 
 public class PageReadConfirmationDto
@@ -3573,20 +3427,23 @@ public class PageReadConfirmationDto
     public string ElementId { get; init; }
     public long PageNumber { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public long GuidingOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
 }
 
 public class PageReadConfirmationField
 {
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class PageReadConfirmationFieldDto
@@ -3594,6 +3451,7 @@ public class PageReadConfirmationFieldDto
     public string Id { get; init; }
     public long Page { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -3604,130 +3462,25 @@ public class PageReadConfirmationTaskUpdateRequest
 
 public class PaginatedRoles
 {
-    public List<Anonymous65> Roles { get; init; }
-    public Pagination Pagination { get; init; }
+    public List<PaginatedRolesroles> Roles { get; init; }
+    public PaginatedRolespagination Pagination { get; init; }
+}
+
+public class PaginatedRolespagination
+{
+    public long Page { get; init; }
+    public long PageSize { get; init; }
+    public long TotalCount { get; init; }
+}
+
+public class PaginatedRolesroles
+{
+    public string Id { get; init; }
+    public string Name { get; init; }
+    public bool IsSystemRole { get; init; }
 }
 
 public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class Pagination
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class PaginationDto
-{
-    public long Page { get; init; }
-    public long PageSize { get; init; }
-    public long TotalCount { get; init; }
-}
-
-public class PaginationResponse
 {
     public long Page { get; init; }
     public long PageSize { get; init; }
@@ -3736,53 +3489,38 @@ public class PaginationResponse
 
 public class ParseBulkRecipientsResponse
 {
-    public List<Anonymous66> BulkRecipients { get; init; }
+    public List<BulkRecipientDefinition> BulkRecipients { get; init; }
 }
 
 public class PdfDocumentSettingsDto
 {
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase PAdESConfiguration { get; init; }
     public bool AllowSigningOfLockedPdfDocuments { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CustomTimeStampSettings { get; init; }
 }
 
 public class PermissionDto
 {
-    public string Entity { get; init; }
-    public string Action { get; init; }
-}
-
-public class Permissions
-{
-    public Users Users { get; init; }
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public Contacts Contacts { get; init; }
-}
-
-public class Permissions
-{
-    public Users Users { get; init; }
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public Contacts Contacts { get; init; }
-}
-
-public class Permissions
-{
-    public Users Users { get; init; }
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public Contacts Contacts { get; init; }
+    public Entity Entity { get; init; }
+    public Action Action { get; init; }
 }
 
 public class PermissionsDto
 {
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public UserGroups UserGroups { get; init; }
-    public OrganizationSettings OrganizationSettings { get; init; }
-    public Users Users { get; init; }
-    public Roles Roles { get; init; }
-    public AutomaticESealing AutomaticESealing { get; init; }
+    public EnvelopePermissions Envelopes { get; init; }
+    public EnvelopePermissions Templates { get; init; }
+    public EnvelopePermissions UserGroups { get; init; }
+    public OrganizationSettingsPermissions OrganizationSettings { get; init; }
+    public EnvelopePermissions Users { get; init; }
+    public PermissionsDtoroles Roles { get; init; }
+    public AutomaticESealingPermissions AutomaticESealing { get; init; }
+}
+
+public class PermissionsDtoroles
+{
+    public bool Read { get; init; }
+    public bool CreateUpdateDelete { get; init; }
+    public bool Assign { get; init; }
 }
 
 public class PersonalAccessTokenListItemResponse
@@ -3795,7 +3533,7 @@ public class PersonalAccessTokenListItemResponse
 
 public class PersonalAccessTokenListResponse
 {
-    public List<Anonymous67> PersonalAccessTokens { get; init; }
+    public List<PersonalAccessTokenListItemResponse> PersonalAccessTokens { get; init; }
 }
 
 public class PhoneNumberInputConfig
@@ -3808,42 +3546,49 @@ public class PhoneNumberInputConfig
 public class PluginSignature
 {
     public string PluginId { get; init; }
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class PluginStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayIp { get; init; }
 }
 
 public class PoliciesResponse
 {
-    public List<Anonymous68> Policies { get; init; }
+    public List<PoliciesResponsepolicies> Policies { get; init; }
     public Pagination Pagination { get; init; }
+}
+
+public class PoliciesResponsepolicies
+{
+    public string Id { get; init; }
+    public string Name { get; init; }
+    public bool IsActive { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
 }
 
 public class PolicyActionDto
 {
+    public ATrustCertificateDtophoneNumberBase Id { get; init; }
     public long SortOrder { get; init; }
     public string Type { get; init; }
-    public Stage Stage { get; init; }
-    public RecipientSource RecipientSource { get; init; }
+    public PolicyActionDtostage Stage { get; init; }
+    public PolicyActionDtorecipientSource RecipientSource { get; init; }
+}
+
+public class PolicyActionDtorecipientSource
+{
+    public string Type { get; init; }
+    public PolicyRecipientSourceDtorecipientsBase Recipients { get; init; }
+    public ATrustCertificateDtophoneNumberBase UserGroupId { get; init; }
+    public ATrustCertificateDtophoneNumberBase BusinessRoleId { get; init; }
+}
+
+public class PolicyActionDtostage
+{
+    public string Name { get; init; }
+    public string Type { get; init; }
+    public long RequiredRecipientCompletions { get; init; }
 }
 
 public class PolicyConditionDto
-{
-    public string Id { get; init; }
-    public string MetadataId { get; init; }
-    public string Operator { get; init; }
-    public string Value { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class PolicyConditionRequest
 {
     public string Id { get; init; }
     public string MetadataId { get; init; }
@@ -3858,6 +3603,10 @@ public class PolicyDto
     public string Name { get; init; }
     public bool IsActive { get; init; }
     public long SortOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
+    public PolicyDtoconditionsBase Conditions { get; init; }
+    public PolicyDtoactionsBase Actions { get; init; }
 }
 
 public class PolicyListItemResponse
@@ -3865,267 +3614,33 @@ public class PolicyListItemResponse
     public string Id { get; init; }
     public string Name { get; init; }
     public bool IsActive { get; init; }
-}
-
-public class PolicyRecipientDto
-{
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
 }
 
 public class PolicyRecipientSourceDto
 {
     public string Type { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class Position
-{
-    public long PageNumber { get; init; }
-    public double X { get; init; }
-    public double Y { get; init; }
-}
-
-public class ProblemDetails
-{
-}
-
-public class PutFileDetailRequest
-{
+    public PolicyRecipientSourceDtorecipientsBase Recipients { get; init; }
+    public ATrustCertificateDtophoneNumberBase UserGroupId { get; init; }
+    public ATrustCertificateDtophoneNumberBase BusinessRoleId { get; init; }
 }
 
 public class RadioButtonElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public FileElementsPosition Position { get; init; }
+    public FileElementsSize Size { get; init; }
     public bool ReadOnly { get; init; }
 }
 
 public class RadioButtonElementDto
 {
     public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
+    public RadioButtonElementDefinition ElementDefinition { get; init; }
+    public FormFieldSource Source { get; init; }
     public string GroupName { get; init; }
     public bool IsChecked { get; init; }
     public bool IsSelectInUnison { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
@@ -4137,26 +3652,26 @@ public class RadioButtonField
     public string Id { get; init; }
     public bool IsSelectInUnison { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
     public bool Checked { get; init; }
     public string Value { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class RadioButtonFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public string GroupName { get; init; }
     public bool ReadOnly { get; init; }
     public bool Checked { get; init; }
@@ -4171,38 +3686,6 @@ public class RadioButtonTaskUpdateRequest
     public string FieldType { get; init; }
 }
 
-public class Range
-{
-}
-
-public class Range
-{
-}
-
-public class Range
-{
-}
-
-public class Recipient
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Type { get; init; }
-}
-
-public class Recipient
-{
-    public string Id { get; init; }
-    public string GivenName { get; init; }
-    public string Surname { get; init; }
-    public string Type { get; init; }
-}
-
-public class RecipientAuthenticationDto
-{
-}
-
 public class RecipientAuthenticationSettingItemResponse
 {
     public string Name { get; init; }
@@ -4211,92 +3694,40 @@ public class RecipientAuthenticationSettingItemResponse
 
 public class RecipientAuthenticationSettingsResponse
 {
-    public List<Anonymous69> Settings { get; init; }
-}
-
-public class RecipientAuthenticationTypes
-{
+    public List<RecipientAuthenticationSettingItemResponse> Settings { get; init; }
 }
 
 public class RecipientDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
+    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
     public bool IsP7mSigner { get; init; }
+    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
     public long Order { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AuthenticationConfiguration { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureDataConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public RecipientDtoguidingOrderModeBase GuidingOrderMode { get; init; }
     public bool IsDelegationEnabled { get; init; }
-}
-
-public class RecipientGeneralPoliciesOverridesDto
-{
-    public bool AllowSaveDocument { get; init; }
-    public bool AllowSaveAuditTrail { get; init; }
-    public bool AllowPrintDocument { get; init; }
-    public bool AllowAdhocPdfAttachments { get; init; }
-    public bool AllowRejectWorkstep { get; init; }
-    public bool AllowUndoLastAction { get; init; }
+    public RecipientDtogeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public RecipientDtoworkstepResultBase WorkstepResult { get; init; }
 }
 
 public class RecipientMetadataEntry
 {
     public string Name { get; init; }
     public string Value { get; init; }
-}
-
-public class RecipientSignatureDataDto
-{
-}
-
-public class RecipientSource
-{
-    public string Type { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string DateTimeFormat { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string WorldTimeZone { get; init; }
-    public long DateTimeFormatId { get; init; }
-    public string UiLanguage { get; init; }
-    public long CountryId { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-    public string DateTimeFormat { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-    public string DateTimeFormat { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-    public string DateTimeFormat { get; init; }
-}
-
-public class RegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-    public string DateTimeFormat { get; init; }
 }
 
 public class RegionalSettingsDto
@@ -4308,82 +3739,10 @@ public class RegionalSettingsDto
     public long CountryId { get; init; }
 }
 
-public class Rejected
-{
-    public long EnvelopeCount { get; init; }
-}
-
 public class RelativeIntegrationExpirationDto
 {
+    public ClickToSignStampImprintDtofontSizeInPtBase AfterSendInSeconds { get; init; }
     public string Mode { get; init; }
-}
-
-public class Reminder
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class Reminder
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class Reminder
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class ReminderConfiguration
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ReminderResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class ReminderConfiguration
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ReminderResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class ReminderConfiguration
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ReminderResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class ReminderConfiguration
-{
-    public bool Enabled { get; init; }
-    public long FirstReminderInDays { get; init; }
-    public long ReminderResendIntervalInDays { get; init; }
-    public long BeforeExpirationInDays { get; init; }
-}
-
-public class ReminderConfiguration
-{
-}
-
-public class ReminderConfiguration
-{
-}
-
-public class ReminderConfiguration
-{
 }
 
 public class ReminderConfigurationDto
@@ -4394,43 +3753,27 @@ public class ReminderConfigurationDto
     public long BeforeExpirationInDays { get; init; }
 }
 
-public class RemoteCertificateDto
-{
-}
-
 public class RemoteCertificateEnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
+    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
     public string SignatureType { get; init; }
     public string CertificateUserId { get; init; }
     public string DevicePassword { get; init; }
     public string Otp { get; init; }
+    public ATrustCertificateDtophoneNumberBase OtpDeviceType { get; init; }
+    public ATrustCertificateDtophoneNumberBase OtpDeviceTypeId { get; init; }
+    public ATrustCertificateDtophoneNumberBase TransactionId { get; init; }
+    public ATrustCertificateDtophoneNumberBase PayloadFileId { get; init; }
 }
 
 public class RemoteCertificateSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
-public class RemoteCertificateSignatureTypeDto
-{
-}
-
-public class RemoteCertificateStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayIp { get; init; }
-}
-
 public class ReplacedEnvelopeFileResponse
-{
-    public string Id { get; init; }
-    public long OrderIndex { get; init; }
-}
-
-public class ReplacedTemplateFileResponse
 {
     public string Id { get; init; }
     public long OrderIndex { get; init; }
@@ -4444,7 +3787,7 @@ public class RequestBulkSignDevicesDto
 
 public class ResumeBatchRequest
 {
-    public Data Data { get; init; }
+    public ATrustCertificateDto Data { get; init; }
     public List<string> EnvelopeIds { get; init; }
 }
 
@@ -4452,8 +3795,9 @@ public class RoleDetailsDto
 {
     public string Id { get; init; }
     public string Name { get; init; }
-    public List<Anonymous70> Permissions { get; init; }
+    public List<PermissionDto> Permissions { get; init; }
     public string CreatedAt { get; init; }
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
     public bool IsSystemRole { get; init; }
 }
 
@@ -4464,761 +3808,11 @@ public class RoleDto
     public bool IsSystemRole { get; init; }
 }
 
-public class Roles
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Assign { get; init; }
-}
-
-public class Roles
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-    public bool Assign { get; init; }
-}
-
 public class RolesSettings
 {
     public bool Read { get; init; }
     public bool CreateUpdateDelete { get; init; }
     public bool Assign { get; init; }
-}
-
-public class Root
-{
-    public ATrustCertificateDto ATrustCertificateDto { get; init; }
-    public ATrustCertificateSignatureTypeDto ATrustCertificateSignatureTypeDto { get; init; }
-    public AbsoluteIntegrationExpirationDto AbsoluteIntegrationExpirationDto { get; init; }
-    public AccessCode AccessCode { get; init; }
-    public string Action { get; init; }
-    public AddDefaultUserGroupDto AddDefaultUserGroupDto { get; init; }
-    public AddUserGroupUserDto AddUserGroupUserDto { get; init; }
-    public AddUsersToUserGroupDto AddUsersToUserGroupDto { get; init; }
-    public AddedEnvelopeFileResponse AddedEnvelopeFileResponse { get; init; }
-    public AddedTemplateFileResponse AddedTemplateFileResponse { get; init; }
-    public AdminMeDto AdminMeDto { get; init; }
-    public AdminMeUserDto AdminMeUserDto { get; init; }
-    public Agreement Agreement { get; init; }
-    public AgreementRequest AgreementRequest { get; init; }
-    public AgreementResponse AgreementResponse { get; init; }
-    public AgreementSettingsRequest AgreementSettingsRequest { get; init; }
-    public AgreementSettingsResponse AgreementSettingsResponse { get; init; }
-    public AllowedSignatureTypesDto AllowedSignatureTypesDto { get; init; }
-    public AnnotationElementDefinition AnnotationElementDefinition { get; init; }
-    public AnnotationElementDto AnnotationElementDto { get; init; }
-    public AnnotationField AnnotationField { get; init; }
-    public AnnotationFieldDto AnnotationFieldDto { get; init; }
-    public string AnnotationType { get; init; }
-    public string AnnotationValueFormat { get; init; }
-    public ApprovalField ApprovalField { get; init; }
-    public ApprovalFieldDto ApprovalFieldDto { get; init; }
-    public ApproveElementDto ApproveElementDto { get; init; }
-    public AreaReadConfirmationDto AreaReadConfirmationDto { get; init; }
-    public AreaReadConfirmationField AreaReadConfirmationField { get; init; }
-    public AreaReadConfirmationFieldDto AreaReadConfirmationFieldDto { get; init; }
-    public AreaReadConfirmationTaskUpdateRequest AreaReadConfirmationTaskUpdateRequest { get; init; }
-    public AreaReadElementDefinition AreaReadElementDefinition { get; init; }
-    public AssociateMyNamirialIdDto AssociateMyNamirialIdDto { get; init; }
-    public AttachmentElementDefinition AttachmentElementDefinition { get; init; }
-    public AttachmentElementDto AttachmentElementDto { get; init; }
-    public AttachmentField AttachmentField { get; init; }
-    public AttachmentFieldDto AttachmentFieldDto { get; init; }
-    public AttachmentTaskUpdateRequest AttachmentTaskUpdateRequest { get; init; }
-    public AuditTrailModeResponse AuditTrailModeResponse { get; init; }
-    public AutomaticESealingPermissions AutomaticESealingPermissions { get; init; }
-    public AutomaticSealingProfileDetailResponse AutomaticSealingProfileDetailResponse { get; init; }
-    public AutomaticSealingProfileRequest AutomaticSealingProfileRequest { get; init; }
-    public AutomaticSealingProfileResponse AutomaticSealingProfileResponse { get; init; }
-    public AutomaticSignature AutomaticSignature { get; init; }
-    public AutomaticSignatureDataDto AutomaticSignatureDataDto { get; init; }
-    public AutomaticSignatureTypeDto AutomaticSignatureTypeDto { get; init; }
-    public BackgroundImageDto BackgroundImageDto { get; init; }
-    public BankIdSettingsDto BankIdSettingsDto { get; init; }
-    public BaseField BaseField { get; init; }
-    public BaseFieldDto BaseFieldDto { get; init; }
-    public BatchAssignUserGroupUserRoleDto BatchAssignUserGroupUserRoleDto { get; init; }
-    public BatchDeleteUserGroupUserRoleDto BatchDeleteUserGroupUserRoleDto { get; init; }
-    public string BatchMode { get; init; }
-    public BiometricSignature BiometricSignature { get; init; }
-    public string BiometricSignaturePositioning { get; init; }
-    public BiometricSignatureTypeDto BiometricSignatureTypeDto { get; init; }
-    public BulkEnvelopeDetailDto BulkEnvelopeDetailDto { get; init; }
-    public BulkEnvelopeFieldTaskItem BulkEnvelopeFieldTaskItem { get; init; }
-    public BulkEnvelopeFieldTaskItemRequest BulkEnvelopeFieldTaskItemRequest { get; init; }
-    public BulkEnvelopeFileTasksResponse BulkEnvelopeFileTasksResponse { get; init; }
-    public BulkEnvelopeListDto BulkEnvelopeListDto { get; init; }
-    public BulkEnvelopePartialDto BulkEnvelopePartialDto { get; init; }
-    public BulkRecipientDefinition BulkRecipientDefinition { get; init; }
-    public BulkRecipientDto BulkRecipientDto { get; init; }
-    public BulkRecipientValidationErrorResponse BulkRecipientValidationErrorResponse { get; init; }
-    public BulkStageDto BulkStageDto { get; init; }
-    public BusinessRoleCreateDto BusinessRoleCreateDto { get; init; }
-    public BusinessRoleDto BusinessRoleDto { get; init; }
-    public BusinessRoleUpdateDto BusinessRoleUpdateDto { get; init; }
-    public BusinessRolesListDto BusinessRolesListDto { get; init; }
-    public string BusinessRolesSortingKey { get; init; }
-    public CallbackConfigurationDto CallbackConfigurationDto { get; init; }
-    public CertificateDetailsResponse CertificateDetailsResponse { get; init; }
-    public CheckBoxElementDefinition CheckBoxElementDefinition { get; init; }
-    public CheckBoxElementDto CheckBoxElementDto { get; init; }
-    public CheckboxField CheckboxField { get; init; }
-    public CheckboxFieldDto CheckboxFieldDto { get; init; }
-    public CheckboxTaskUpdateRequest CheckboxTaskUpdateRequest { get; init; }
-    public ClickToSignEnvelopeBulkSignDto ClickToSignEnvelopeBulkSignDto { get; init; }
-    public ClickToSignSignature ClickToSignSignature { get; init; }
-    public ClickToSignSignatureTypeDto ClickToSignSignatureTypeDto { get; init; }
-    public ClickToSignStampImprintDto ClickToSignStampImprintDto { get; init; }
-    public ClonedEnvelopeDto ClonedEnvelopeDto { get; init; }
-    public ContactDto ContactDto { get; init; }
-    public ContactImportResultDto ContactImportResultDto { get; init; }
-    public ContactImportValidationErrorResponse ContactImportValidationErrorResponse { get; init; }
-    public ContactListDto ContactListDto { get; init; }
-    public ContactRequest ContactRequest { get; init; }
-    public string ContactsSortingKey { get; init; }
-    public CountriesDto CountriesDto { get; init; }
-    public CountriesLookupResponse CountriesLookupResponse { get; init; }
-    public CountryDto CountryDto { get; init; }
-    public CountryListItemDto CountryListItemDto { get; init; }
-    public CreateATrustCertificateDto CreateATrustCertificateDto { get; init; }
-    public CreateAccessCodeDto CreateAccessCodeDto { get; init; }
-    public CreateAuthenticationConfigurationDto CreateAuthenticationConfigurationDto { get; init; }
-    public CreateAutomaticSignatureDataDto CreateAutomaticSignatureDataDto { get; init; }
-    public CreateBulkEnvelopeStageRequest CreateBulkEnvelopeStageRequest { get; init; }
-    public CreateDisposableCertificateDto CreateDisposableCertificateDto { get; init; }
-    public CreateDocumentClassRequest CreateDocumentClassRequest { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequest CreateEnvelopeStageAutomaticRecipientRequest { get; init; }
-    public CreateEnvelopeStageRecipientRequest CreateEnvelopeStageRecipientRequest { get; init; }
-    public CreateEnvelopeStageRequest CreateEnvelopeStageRequest { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequest CreateEnvelopeStageStandardRecipientRequest { get; init; }
-    public CreateGenericSigningPluginsSenderDataDto CreateGenericSigningPluginsSenderDataDto { get; init; }
-    public CreateOAuthAuthenticationDto CreateOAuthAuthenticationDto { get; init; }
-    public CreateOAuthFieldDefinitionRequest CreateOAuthFieldDefinitionRequest { get; init; }
-    public CreateOAuthJwtConfigRequest CreateOAuthJwtConfigRequest { get; init; }
-    public CreateOAuthResourceUriRequest CreateOAuthResourceUriRequest { get; init; }
-    public CreateOAuthSignerProviderDetailsRequest CreateOAuthSignerProviderDetailsRequest { get; init; }
-    public CreateOAuthSignerProviderRequest CreateOAuthSignerProviderRequest { get; init; }
-    public CreateOrganizationDto CreateOrganizationDto { get; init; }
-    public CreateOrganizationUserRequestDto CreateOrganizationUserRequestDto { get; init; }
-    public CreateOrganizationUserResponse CreateOrganizationUserResponse { get; init; }
-    public CreateOtpSignatureDataDto CreateOtpSignatureDataDto { get; init; }
-    public CreatePersonalAccessTokenRequest CreatePersonalAccessTokenRequest { get; init; }
-    public CreatePolicyRequest CreatePolicyRequest { get; init; }
-    public CreateRemoteCertificateDto CreateRemoteCertificateDto { get; init; }
-    public CreateRoleRequest CreateRoleRequest { get; init; }
-    public CreateSenderGenericSigningPluginDto CreateSenderGenericSigningPluginDto { get; init; }
-    public CreateSenderGenericSigningPluginSettingsDto CreateSenderGenericSigningPluginSettingsDto { get; init; }
-    public CreateServiceAccountRequest CreateServiceAccountRequest { get; init; }
-    public CreateServiceAccountResponse CreateServiceAccountResponse { get; init; }
-    public CreateSignatureDataConfigurationDto CreateSignatureDataConfigurationDto { get; init; }
-    public CreateSmsOneTimePasswordDto CreateSmsOneTimePasswordDto { get; init; }
-    public CreateStageResponse CreateStageResponse { get; init; }
-    public CreateSubstituteDelegationDto CreateSubstituteDelegationDto { get; init; }
-    public CreateSwedishBankIdDto CreateSwedishBankIdDto { get; init; }
-    public CreateSwissComOnDemandDto CreateSwissComOnDemandDto { get; init; }
-    public CreateTemplateStageAutomaticRecipientRequest CreateTemplateStageAutomaticRecipientRequest { get; init; }
-    public CreateTemplateStageRecipientRequest CreateTemplateStageRecipientRequest { get; init; }
-    public CreateTemplateStageRequest CreateTemplateStageRequest { get; init; }
-    public CreateTemplateStageStandardRecipientRequest CreateTemplateStageStandardRecipientRequest { get; init; }
-    public CreateUserDto CreateUserDto { get; init; }
-    public CreatedDocumentClassDto CreatedDocumentClassDto { get; init; }
-    public CreatedEnvelopeDto CreatedEnvelopeDto { get; init; }
-    public CreatedEnvelopeFromTemplateDto CreatedEnvelopeFromTemplateDto { get; init; }
-    public CreatedOrganizationDto CreatedOrganizationDto { get; init; }
-    public CreatedPersonalAccessTokenResponse CreatedPersonalAccessTokenResponse { get; init; }
-    public CreatedPolicyResponse CreatedPolicyResponse { get; init; }
-    public CreatedRecipientResponse CreatedRecipientResponse { get; init; }
-    public CreatedStageResponse CreatedStageResponse { get; init; }
-    public CreatedTemplateDto CreatedTemplateDto { get; init; }
-    public CreatedTemplateStageRecipientDto CreatedTemplateStageRecipientDto { get; init; }
-    public CreatedUserDto CreatedUserDto { get; init; }
-    public string DataFieldType { get; init; }
-    public DateAnnotationConfigDto DateAnnotationConfigDto { get; init; }
-    public string DateFormatSwaggerEnumProvider { get; init; }
-    public DateInputConfig DateInputConfig { get; init; }
-    public DateTimeDefinition DateTimeDefinition { get; init; }
-    public DateTimeFormatDto DateTimeFormatDto { get; init; }
-    public string DateTimeFormatSwaggerEnumProvider { get; init; }
-    public DateTimeFormatsDto DateTimeFormatsDto { get; init; }
-    public DateTimeFormatsLookupResponse DateTimeFormatsLookupResponse { get; init; }
-    public DateTimeOptionDto DateTimeOptionDto { get; init; }
-    public string DbEnvelopeStatus { get; init; }
-    public string DbRecipientType { get; init; }
-    public string DbWorkstepResult { get; init; }
-    public string DecimalSeparatorType { get; init; }
-    public DefaultUserGroupsDto DefaultUserGroupsDto { get; init; }
-    public DelegationInfo DelegationInfo { get; init; }
-    public string DelegationPolicy { get; init; }
-    public DisposableCertificateDto DisposableCertificateDto { get; init; }
-    public DisposableCertificateSettingsDto DisposableCertificateSettingsDto { get; init; }
-    public DisposableCertificateSignature DisposableCertificateSignature { get; init; }
-    public DisposableCertificateSignatureTypeDto DisposableCertificateSignatureTypeDto { get; init; }
-    public DisposableCertificateStampImprintDto DisposableCertificateStampImprintDto { get; init; }
-    public string DisposableType { get; init; }
-    public Document Document { get; init; }
-    public DocumentClassDto DocumentClassDto { get; init; }
-    public DocumentClassListItemDto DocumentClassListItemDto { get; init; }
-    public DocumentClassLookupResponse DocumentClassLookupResponse { get; init; }
-    public DocumentClassMetadataDto DocumentClassMetadataDto { get; init; }
-    public DocumentClassMetadataFieldDto DocumentClassMetadataFieldDto { get; init; }
-    public DocumentClassesResponse DocumentClassesResponse { get; init; }
-    public string DocumentClassesSortingKey { get; init; }
-    public DocumentReadConfirmationDto DocumentReadConfirmationDto { get; init; }
-    public DocumentsUploadRequest DocumentsUploadRequest { get; init; }
-    public DrawToSignSignature DrawToSignSignature { get; init; }
-    public DrawToSignSignatureTypeDto DrawToSignSignatureTypeDto { get; init; }
-    public DrawToSignStampImprintDto DrawToSignStampImprintDto { get; init; }
-    public DropDownElementDefinition DropDownElementDefinition { get; init; }
-    public DropDownElementDto DropDownElementDto { get; init; }
-    public DropDownField DropDownField { get; init; }
-    public DropDownFieldDto DropDownFieldDto { get; init; }
-    public DropDownItemEntry DropDownItemEntry { get; init; }
-    public DropDownTaskUpdateRequest DropDownTaskUpdateRequest { get; init; }
-    public ESealingRemoteSignatureProfileDto ESealingRemoteSignatureProfileDto { get; init; }
-    public string ElementSource { get; init; }
-    public EmailAnnotationConfigDto EmailAnnotationConfigDto { get; init; }
-    public EmailDefinition EmailDefinition { get; init; }
-    public string EmailSenderDisplayType { get; init; }
-    public EnableOrganizationDto EnableOrganizationDto { get; init; }
-    public EnabledOrganizationDto EnabledOrganizationDto { get; init; }
-    public string Entity { get; init; }
-    public string EnvelopeAction { get; init; }
-    public EnvelopeActionResponse EnvelopeActionResponse { get; init; }
-    public EnvelopeActorDto EnvelopeActorDto { get; init; }
-    public EnvelopeBacklogDto EnvelopeBacklogDto { get; init; }
-    public EnvelopeBulkSignDeviceDto EnvelopeBulkSignDeviceDto { get; init; }
-    public EnvelopeBulkSignDevicesResponseDto EnvelopeBulkSignDevicesResponseDto { get; init; }
-    public EnvelopeBulkSignDto EnvelopeBulkSignDto { get; init; }
-    public EnvelopeBulkSignResultDto EnvelopeBulkSignResultDto { get; init; }
-    public string EnvelopeBulkSignSignatureType { get; init; }
-    public EnvelopeBulkSignTransactionDto EnvelopeBulkSignTransactionDto { get; init; }
-    public EnvelopeCancelRequestDto EnvelopeCancelRequestDto { get; init; }
-    public EnvelopeDetailDto EnvelopeDetailDto { get; init; }
-    public EnvelopeDetailRecipientDto EnvelopeDetailRecipientDto { get; init; }
-    public EnvelopeDetailStageDto EnvelopeDetailStageDto { get; init; }
-    public string EnvelopeDetailStatus { get; init; }
-    public EnvelopeDownloadDto EnvelopeDownloadDto { get; init; }
-    public EnvelopeDownloadsResponse EnvelopeDownloadsResponse { get; init; }
-    public EnvelopeDto EnvelopeDto { get; init; }
-    public EnvelopeEventDto EnvelopeEventDto { get; init; }
-    public string EnvelopeEventType { get; init; }
-    public EnvelopeEventsDto EnvelopeEventsDto { get; init; }
-    public EnvelopeFieldTaskItem EnvelopeFieldTaskItem { get; init; }
-    public EnvelopeFileDetailDocumentClassDto EnvelopeFileDetailDocumentClassDto { get; init; }
-    public EnvelopeFileDetailDocumentClassRequest EnvelopeFileDetailDocumentClassRequest { get; init; }
-    public EnvelopeFileMetadataValueDto EnvelopeFileMetadataValueDto { get; init; }
-    public EnvelopeFileTasksResponse EnvelopeFileTasksResponse { get; init; }
-    public EnvelopeFilesResponse EnvelopeFilesResponse { get; init; }
-    public EnvelopeInsights EnvelopeInsights { get; init; }
-    public EnvelopeListDto EnvelopeListDto { get; init; }
-    public string EnvelopeLogGeneration { get; init; }
-    public EnvelopePartialDto EnvelopePartialDto { get; init; }
-    public EnvelopePermissions EnvelopePermissions { get; init; }
-    public EnvelopePoliciesVerifyDto EnvelopePoliciesVerifyDto { get; init; }
-    public EnvelopeRejectDto EnvelopeRejectDto { get; init; }
-    public EnvelopeResumeDto EnvelopeResumeDto { get; init; }
-    public EnvelopeSenderDto EnvelopeSenderDto { get; init; }
-    public EnvelopeSignatureTypeDto EnvelopeSignatureTypeDto { get; init; }
-    public EnvelopeSignatureTypesRequestDto EnvelopeSignatureTypesRequestDto { get; init; }
-    public string EnvelopeSortingKey { get; init; }
-    public EnvelopeStageAutomaticRecipientResponse EnvelopeStageAutomaticRecipientResponse { get; init; }
-    public EnvelopeStageAutomaticRecipientSummaryDto EnvelopeStageAutomaticRecipientSummaryDto { get; init; }
-    public EnvelopeStageItemDto EnvelopeStageItemDto { get; init; }
-    public EnvelopeStageListDto EnvelopeStageListDto { get; init; }
-    public EnvelopeStageRecipientResponse EnvelopeStageRecipientResponse { get; init; }
-    public EnvelopeStageRecipientSummaryDto EnvelopeStageRecipientSummaryDto { get; init; }
-    public EnvelopeStageStandardRecipientResponse EnvelopeStageStandardRecipientResponse { get; init; }
-    public EnvelopeStageStandardRecipientSummaryDto EnvelopeStageStandardRecipientSummaryDto { get; init; }
-    public string EnvelopeStageType { get; init; }
-    public string EnvelopeType { get; init; }
-    public EnvelopeViewerLinkDto EnvelopeViewerLinkDto { get; init; }
-    public string ErrorCode { get; init; }
-    public ErrorResult ErrorResult { get; init; }
-    public ExpirationConfigurationDto ExpirationConfigurationDto { get; init; }
-    public string ExpirationMode { get; init; }
-    public string ExternalSignatureImageMode { get; init; }
-    public FailedEnvelope FailedEnvelope { get; init; }
-    public FieldTask FieldTask { get; init; }
-    public FieldTaskItemRequest FieldTaskItemRequest { get; init; }
-    public string FieldTaskSignatureType { get; init; }
-    public string FieldType { get; init; }
-    public string FieldValidationType { get; init; }
-    public FileDetailResponse FileDetailResponse { get; init; }
-    public FileElementDateValidationConfiguration FileElementDateValidationConfiguration { get; init; }
-    public FileElementFieldValidationRange FileElementFieldValidationRange { get; init; }
-    public FileElementNumberValidationConfiguration FileElementNumberValidationConfiguration { get; init; }
-    public FileElementPhoneValidationConfiguration FileElementPhoneValidationConfiguration { get; init; }
-    public FileElementTextFormat FileElementTextFormat { get; init; }
-    public FileElementTimeValidationConfiguration FileElementTimeValidationConfiguration { get; init; }
-    public FileElementsDto FileElementsDto { get; init; }
-    public FileElementsFieldValidation FileElementsFieldValidation { get; init; }
-    public FileElementsPosition FileElementsPosition { get; init; }
-    public FileElementsSize FileElementsSize { get; init; }
-    public FileOrderItem FileOrderItem { get; init; }
-    public FileReadConfirmationField FileReadConfirmationField { get; init; }
-    public FileReadConfirmationFieldDto FileReadConfirmationFieldDto { get; init; }
-    public FileReadConfirmationTaskUpdateRequest FileReadConfirmationTaskUpdateRequest { get; init; }
-    public FileTaskItem FileTaskItem { get; init; }
-    public FirstNameAnnotationConfigDto FirstNameAnnotationConfigDto { get; init; }
-    public FirstNameDefinition FirstNameDefinition { get; init; }
-    public FontStyle FontStyle { get; init; }
-    public string ForceAuthenticationModeApi { get; init; }
-    public ForcedAuthenticationRulesRequest ForcedAuthenticationRulesRequest { get; init; }
-    public ForcedAuthenticationRulesResponse ForcedAuthenticationRulesResponse { get; init; }
-    public string FormFieldSource { get; init; }
-    public FullNameAnnotationConfigDto FullNameAnnotationConfigDto { get; init; }
-    public FullNameDefinition FullNameDefinition { get; init; }
-    public GeneralSettingsDto GeneralSettingsDto { get; init; }
-    public GenericSigningPluginDto GenericSigningPluginDto { get; init; }
-    public GenericSigningPluginSenderSettingsDto GenericSigningPluginSenderSettingsDto { get; init; }
-    public GenericSigningPluginSettingLabelDto GenericSigningPluginSettingLabelDto { get; init; }
-    public GenericSigningPluginsSenderDataDto GenericSigningPluginsSenderDataDto { get; init; }
-    public GetOrganizationsListResponse GetOrganizationsListResponse { get; init; }
-    public GetUsersListResponse GetUsersListResponse { get; init; }
-    public GetUsersResponse GetUsersResponse { get; init; }
-    public string GuidingOrderMode { get; init; }
-    public HttpValidationProblemDetails HttpValidationProblemDetails { get; init; }
-    public string ImagePosition { get; init; }
-    public InitialsAnnotationConfigDto InitialsAnnotationConfigDto { get; init; }
-    public InitialsDefinition InitialsDefinition { get; init; }
-    public IntegrationBulkEnvelopeDto IntegrationBulkEnvelopeDto { get; init; }
-    public IntegrationEnvelopeDto IntegrationEnvelopeDto { get; init; }
-    public object IntegrationExpirationConfigurationDto { get; init; }
-    public IntegrationFileDto IntegrationFileDto { get; init; }
-    public IntegrationStageDto IntegrationStageDto { get; init; }
-    public IntegrationTemplateDto IntegrationTemplateDto { get; init; }
-    public InvisibleSignatureElementDto InvisibleSignatureElementDto { get; init; }
-    public InvisibleSignatureField InvisibleSignatureField { get; init; }
-    public InvisibleSignatureFieldDto InvisibleSignatureFieldDto { get; init; }
-    public LanguageListItemDto LanguageListItemDto { get; init; }
-    public LanguageSettingDto LanguageSettingDto { get; init; }
-    public LanguageStateRequest LanguageStateRequest { get; init; }
-    public LanguagesDto LanguagesDto { get; init; }
-    public LanguagesLookupResponse LanguagesLookupResponse { get; init; }
-    public LanguagesSettingsResponse LanguagesSettingsResponse { get; init; }
-    public LanguagesSettingsUpdateRequest LanguagesSettingsUpdateRequest { get; init; }
-    public LastNameAnnotationConfigDto LastNameAnnotationConfigDto { get; init; }
-    public LastNameDefinition LastNameDefinition { get; init; }
-    public string LastRecipientAction { get; init; }
-    public LicenseDto LicenseDto { get; init; }
-    public string LicenseType { get; init; }
-    public LinkElementDefinition LinkElementDefinition { get; init; }
-    public LinkElementDto LinkElementDto { get; init; }
-    public LinkField LinkField { get; init; }
-    public LinkFieldDto LinkFieldDto { get; init; }
-    public ListBoxField ListBoxField { get; init; }
-    public ListBoxFieldDto ListBoxFieldDto { get; init; }
-    public ListBoxTaskUpdateRequest ListBoxTaskUpdateRequest { get; init; }
-    public ListElementDefinition ListElementDefinition { get; init; }
-    public ListElementDto ListElementDto { get; init; }
-    public ListItemEntry ListItemEntry { get; init; }
-    public string LocalCertificateHashAlgorithm { get; init; }
-    public LocalCertificateSignature LocalCertificateSignature { get; init; }
-    public LocalCertificateSignatureTypeDto LocalCertificateSignatureTypeDto { get; init; }
-    public LocalCertificateStampImprintDto LocalCertificateStampImprintDto { get; init; }
-    public string MetadataDataType { get; init; }
-    public MetadataValueDto MetadataValueDto { get; init; }
-    public NamedSignatureAppearanceLayoutDto NamedSignatureAppearanceLayoutDto { get; init; }
-    public NamedSignatureAppearanceLayoutRequest NamedSignatureAppearanceLayoutRequest { get; init; }
-    public NextRecipientDto NextRecipientDto { get; init; }
-    public NextRecipientLinkDto NextRecipientLinkDto { get; init; }
-    public NextRecipientLinksResponse NextRecipientLinksResponse { get; init; }
-    public string NextRecipientType { get; init; }
-    public string NotificationChannel { get; init; }
-    public NotificationChannelMessagesDto NotificationChannelMessagesDto { get; init; }
-    public NotificationChannelsDto NotificationChannelsDto { get; init; }
-    public NotificationMessageDto NotificationMessageDto { get; init; }
-    public NotificationPreferencesRequest NotificationPreferencesRequest { get; init; }
-    public NotificationPreferencesResponse NotificationPreferencesResponse { get; init; }
-    public NotificationSettingsDto NotificationSettingsDto { get; init; }
-    public NumberInputConfig NumberInputConfig { get; init; }
-    public NumberSymbol NumberSymbol { get; init; }
-    public OAuthAuthentication OAuthAuthentication { get; init; }
-    public OAuthFieldDefinitionDto OAuthFieldDefinitionDto { get; init; }
-    public OAuthFieldReferenceDto OAuthFieldReferenceDto { get; init; }
-    public string OAuthFieldTarget { get; init; }
-    public OAuthGenericSigningPluginReferenceDto OAuthGenericSigningPluginReferenceDto { get; init; }
-    public OAuthJwtConfigDto OAuthJwtConfigDto { get; init; }
-    public OAuthResourceUriDto OAuthResourceUriDto { get; init; }
-    public OAuthSignerProvider OAuthSignerProvider { get; init; }
-    public OAuthSignerProviderDetailsResponse OAuthSignerProviderDetailsResponse { get; init; }
-    public OAuthSignerProviderDto OAuthSignerProviderDto { get; init; }
-    public string OAuthSignerProviderFieldMode { get; init; }
-    public OAuthSignerProviderFieldModeResponse OAuthSignerProviderFieldModeResponse { get; init; }
-    public string OAuthSignerProviderFieldTarget { get; init; }
-    public OAuthSignerProviderFieldTargetResponse OAuthSignerProviderFieldTargetResponse { get; init; }
-    public OAuthSignerProvidersResponse OAuthSignerProvidersResponse { get; init; }
-    public string OAuthSignerProvidersSortingKey { get; init; }
-    public OneTimePasswordSignature OneTimePasswordSignature { get; init; }
-    public OneTimePasswordSignatureTypeDto OneTimePasswordSignatureTypeDto { get; init; }
-    public OneTimePasswordStampImprintDto OneTimePasswordStampImprintDto { get; init; }
-    public Option Option { get; init; }
-    public OptionDto OptionDto { get; init; }
-    public OrganizationCustomTimeStampServerSettings OrganizationCustomTimeStampServerSettings { get; init; }
-    public OrganizationDefaultSignatureTypeDto OrganizationDefaultSignatureTypeDto { get; init; }
-    public OrganizationDelegationSettingsDto OrganizationDelegationSettingsDto { get; init; }
-    public OrganizationDetailDto OrganizationDetailDto { get; init; }
-    public OrganizationFeatureFlagResponse OrganizationFeatureFlagResponse { get; init; }
-    public OrganizationFeatureFlagsResponse OrganizationFeatureFlagsResponse { get; init; }
-    public OrganizationGeneralPoliciesDto OrganizationGeneralPoliciesDto { get; init; }
-    public OrganizationItemDto OrganizationItemDto { get; init; }
-    public OrganizationLanguageLookupDto OrganizationLanguageLookupDto { get; init; }
-    public OrganizationPAdESConfiguration OrganizationPAdESConfiguration { get; init; }
-    public OrganizationRecipientAuthenticationTypesDto OrganizationRecipientAuthenticationTypesDto { get; init; }
-    public OrganizationRecipientOAuthProviderDto OrganizationRecipientOAuthProviderDto { get; init; }
-    public OrganizationRecipientSettingsDto OrganizationRecipientSettingsDto { get; init; }
-    public OrganizationSettingsPermissions OrganizationSettingsPermissions { get; init; }
-    public OrganizationSignatureTypesDto OrganizationSignatureTypesDto { get; init; }
-    public OrganizationSummaryDto OrganizationSummaryDto { get; init; }
-    public OrganizationUserDto OrganizationUserDto { get; init; }
-    public OrganizationUserRegionalSettingsDto OrganizationUserRegionalSettingsDto { get; init; }
-    public OrganizationUserSummaryDto OrganizationUserSummaryDto { get; init; }
-    public string OtpDeliveryChannel { get; init; }
-    public OtpSignatureDataDto OtpSignatureDataDto { get; init; }
-    public string PAdESLevel { get; init; }
-    public PAdESSignatureConfig PAdESSignatureConfig { get; init; }
-    public PageReadConfirmationDto PageReadConfirmationDto { get; init; }
-    public PageReadConfirmationField PageReadConfirmationField { get; init; }
-    public PageReadConfirmationFieldDto PageReadConfirmationFieldDto { get; init; }
-    public PageReadConfirmationTaskUpdateRequest PageReadConfirmationTaskUpdateRequest { get; init; }
-    public PaginatedRoles PaginatedRoles { get; init; }
-    public Pagination Pagination { get; init; }
-    public PaginationDto PaginationDto { get; init; }
-    public PaginationResponse PaginationResponse { get; init; }
-    public ParseBulkRecipientsResponse ParseBulkRecipientsResponse { get; init; }
-    public PdfDocumentSettingsDto PdfDocumentSettingsDto { get; init; }
-    public PermissionDto PermissionDto { get; init; }
-    public PermissionsDto PermissionsDto { get; init; }
-    public PersonalAccessTokenListItemResponse PersonalAccessTokenListItemResponse { get; init; }
-    public PersonalAccessTokenListResponse PersonalAccessTokenListResponse { get; init; }
-    public PhoneNumberInputConfig PhoneNumberInputConfig { get; init; }
-    public string PhoneType { get; init; }
-    public PluginSignature PluginSignature { get; init; }
-    public PluginStampImprintDto PluginStampImprintDto { get; init; }
-    public PoliciesResponse PoliciesResponse { get; init; }
-    public string PoliciesSortingKey { get; init; }
-    public PolicyActionDto PolicyActionDto { get; init; }
-    public string PolicyActionType { get; init; }
-    public PolicyConditionDto PolicyConditionDto { get; init; }
-    public string PolicyConditionOperator { get; init; }
-    public PolicyConditionRequest PolicyConditionRequest { get; init; }
-    public PolicyDto PolicyDto { get; init; }
-    public PolicyListItemResponse PolicyListItemResponse { get; init; }
-    public PolicyRecipientDto PolicyRecipientDto { get; init; }
-    public PolicyRecipientSourceDto PolicyRecipientSourceDto { get; init; }
-    public string PolicyRecipientSourceType { get; init; }
-    public string PredefinedSenderDataField { get; init; }
-    public ProblemDetails ProblemDetails { get; init; }
-    public PutFileDetailRequest PutFileDetailRequest { get; init; }
-    public RadioButtonElementDefinition RadioButtonElementDefinition { get; init; }
-    public RadioButtonElementDto RadioButtonElementDto { get; init; }
-    public RadioButtonField RadioButtonField { get; init; }
-    public RadioButtonFieldDto RadioButtonFieldDto { get; init; }
-    public RadioButtonTaskUpdateRequest RadioButtonTaskUpdateRequest { get; init; }
-    public RecipientAuthenticationDto RecipientAuthenticationDto { get; init; }
-    public RecipientAuthenticationSettingItemResponse RecipientAuthenticationSettingItemResponse { get; init; }
-    public RecipientAuthenticationSettingsResponse RecipientAuthenticationSettingsResponse { get; init; }
-    public string RecipientAuthenticationTypes { get; init; }
-    public string RecipientDiscriminator { get; init; }
-    public RecipientDto RecipientDto { get; init; }
-    public RecipientGeneralPoliciesOverridesDto RecipientGeneralPoliciesOverridesDto { get; init; }
-    public RecipientMetadataEntry RecipientMetadataEntry { get; init; }
-    public RecipientSignatureDataDto RecipientSignatureDataDto { get; init; }
-    public string RecipientStatus { get; init; }
-    public string RecipientType { get; init; }
-    public RegionalSettingsDto RegionalSettingsDto { get; init; }
-    public RelativeIntegrationExpirationDto RelativeIntegrationExpirationDto { get; init; }
-    public ReminderConfigurationDto ReminderConfigurationDto { get; init; }
-    public RemoteCertificateDto RemoteCertificateDto { get; init; }
-    public RemoteCertificateEnvelopeBulkSignDto RemoteCertificateEnvelopeBulkSignDto { get; init; }
-    public RemoteCertificateSignature RemoteCertificateSignature { get; init; }
-    public RemoteCertificateSignatureTypeDto RemoteCertificateSignatureTypeDto { get; init; }
-    public RemoteCertificateStampImprintDto RemoteCertificateStampImprintDto { get; init; }
-    public ReplacedEnvelopeFileResponse ReplacedEnvelopeFileResponse { get; init; }
-    public ReplacedTemplateFileResponse ReplacedTemplateFileResponse { get; init; }
-    public RequestBulkSignDevicesDto RequestBulkSignDevicesDto { get; init; }
-    public ResumeBatchRequest ResumeBatchRequest { get; init; }
-    public RoleDetailsDto RoleDetailsDto { get; init; }
-    public RoleDto RoleDto { get; init; }
-    public RolesSettings RolesSettings { get; init; }
-    public string RolesSortingKey { get; init; }
-    public RotateServiceAccountSecretResponse RotateServiceAccountSecretResponse { get; init; }
-    public RowError RowError { get; init; }
-    public SealingCertificateResponse SealingCertificateResponse { get; init; }
-    public SenderAutomaticProfileDto SenderAutomaticProfileDto { get; init; }
-    public SenderDataFieldSettingDto SenderDataFieldSettingDto { get; init; }
-    public SenderGenericSigningPluginDto SenderGenericSigningPluginDto { get; init; }
-    public SenderGenericSigningPluginSettingsDto SenderGenericSigningPluginSettingsDto { get; init; }
-    public SentBulkEnvelopeResponse SentBulkEnvelopeResponse { get; init; }
-    public SentEnvelopeDto SentEnvelopeDto { get; init; }
-    public ServiceAccountListItemResponse ServiceAccountListItemResponse { get; init; }
-    public ServiceAccountListResponse ServiceAccountListResponse { get; init; }
-    public SettingsDto SettingsDto { get; init; }
-    public SharingOptionsResponse SharingOptionsResponse { get; init; }
-    public SignDeskOpenResultDto SignDeskOpenResultDto { get; init; }
-    public SignatureAppearanceLayoutDto SignatureAppearanceLayoutDto { get; init; }
-    public SignatureAppearanceLayoutRequest SignatureAppearanceLayoutRequest { get; init; }
-    public string SignatureCategory { get; init; }
-    public SignatureElementDefinition SignatureElementDefinition { get; init; }
-    public SignatureElementDto SignatureElementDto { get; init; }
-    public SignatureField SignatureField { get; init; }
-    public SignatureFieldDto SignatureFieldDto { get; init; }
-    public string SignatureFormat { get; init; }
-    public SignatureImage SignatureImage { get; init; }
-    public string SignatureOptions { get; init; }
-    public SignaturePluginSignatureTypeDto SignaturePluginSignatureTypeDto { get; init; }
-    public SignatureTaskConfiguration SignatureTaskConfiguration { get; init; }
-    public SignatureTaskUpdateRequest SignatureTaskUpdateRequest { get; init; }
-    public string SignatureType { get; init; }
-    public SignerAgreements SignerAgreements { get; init; }
-    public SingleInsight SingleInsight { get; init; }
-    public SmsOneTimePassword SmsOneTimePassword { get; init; }
-    public StageConfigurationDto StageConfigurationDto { get; init; }
-    public StageDto StageDto { get; init; }
-    public string StageMode { get; init; }
-    public StageSortOrderItem StageSortOrderItem { get; init; }
-    public string StageType { get; init; }
-    public StampImprintConfigurationDto StampImprintConfigurationDto { get; init; }
-    public StartBulkSignTransactionDto StartBulkSignTransactionDto { get; init; }
-    public string StatusKey { get; init; }
-    public StringInputConfig StringInputConfig { get; init; }
-    public SubstituteDelegationDto SubstituteDelegationDto { get; init; }
-    public SupportedElectronicIdentitiesResponse SupportedElectronicIdentitiesResponse { get; init; }
-    public SupportedElectronicIdentityResponse SupportedElectronicIdentityResponse { get; init; }
-    public SupportedFileFormatResponse SupportedFileFormatResponse { get; init; }
-    public SwedishBankIdDto SwedishBankIdDto { get; init; }
-    public SwedishBankIdSignatureTypeDto SwedishBankIdSignatureTypeDto { get; init; }
-    public SwedishBankIdStampImprintDto SwedishBankIdStampImprintDto { get; init; }
-    public SwissComOnDemandDto SwissComOnDemandDto { get; init; }
-    public SwissComOnDemandSignatureTypeDto SwissComOnDemandSignatureTypeDto { get; init; }
-    public SwissComOnDemandStampImprintDto SwissComOnDemandStampImprintDto { get; init; }
-    public string SymbolLocationType { get; init; }
-    public string TemplateAction { get; init; }
-    public TemplateDto TemplateDto { get; init; }
-    public TemplateFieldTask TemplateFieldTask { get; init; }
-    public TemplateFieldTaskItem TemplateFieldTaskItem { get; init; }
-    public TemplateFileTasksResponse TemplateFileTasksResponse { get; init; }
-    public TemplateFilesResponse TemplateFilesResponse { get; init; }
-    public TemplateListDto TemplateListDto { get; init; }
-    public TemplatePermissions TemplatePermissions { get; init; }
-    public TemplateStageAutomaticRecipientResponse TemplateStageAutomaticRecipientResponse { get; init; }
-    public TemplateStageAutomaticRecipientSummaryDto TemplateStageAutomaticRecipientSummaryDto { get; init; }
-    public TemplateStageItemDto TemplateStageItemDto { get; init; }
-    public TemplateStageListDto TemplateStageListDto { get; init; }
-    public TemplateStageRecipientResponse TemplateStageRecipientResponse { get; init; }
-    public TemplateStageRecipientSummaryDto TemplateStageRecipientSummaryDto { get; init; }
-    public TemplateStageStandardRecipientResponse TemplateStageStandardRecipientResponse { get; init; }
-    public TemplateStageStandardRecipientSummaryDto TemplateStageStandardRecipientSummaryDto { get; init; }
-    public TemplateThumbnailDto TemplateThumbnailDto { get; init; }
-    public string TextAlignment { get; init; }
-    public TextAnnotationConfigDto TextAnnotationConfigDto { get; init; }
-    public TextBoxElementDefinition TextBoxElementDefinition { get; init; }
-    public TextBoxElementDto TextBoxElementDto { get; init; }
-    public TextDefinition TextDefinition { get; init; }
-    public TextFieldDto TextFieldDto { get; init; }
-    public object TextInputConfig { get; init; }
-    public TextInputField TextInputField { get; init; }
-    public string TextInputType { get; init; }
-    public TextTaskUpdateRequest TextTaskUpdateRequest { get; init; }
-    public string ThousandsSeparatorType { get; init; }
-    public string TimeFormatSwaggerEnumProvider { get; init; }
-    public TimeInputConfig TimeInputConfig { get; init; }
-    public TimeZoneDto TimeZoneDto { get; init; }
-    public TimeZoneListItemDto TimeZoneListItemDto { get; init; }
-    public TimeZonesDto TimeZonesDto { get; init; }
-    public TimeZonesLookupResponse TimeZonesLookupResponse { get; init; }
-    public string TimestampHashAlgorithm { get; init; }
-    public TimestampSettingsDto TimestampSettingsDto { get; init; }
-    public TypeToSignSignature TypeToSignSignature { get; init; }
-    public TypeToSignSignatureTypeDto TypeToSignSignatureTypeDto { get; init; }
-    public TypeToSignStampImprintDto TypeToSignStampImprintDto { get; init; }
-    public UiLanguageDto UiLanguageDto { get; init; }
-    public UpdateATrustCertificateDto UpdateATrustCertificateDto { get; init; }
-    public UpdateAccessCodeDto UpdateAccessCodeDto { get; init; }
-    public UpdateAuditTrailModeRequest UpdateAuditTrailModeRequest { get; init; }
-    public UpdateAuthenticationConfigurationDto UpdateAuthenticationConfigurationDto { get; init; }
-    public UpdateAutomaticSignatureDataDto UpdateAutomaticSignatureDataDto { get; init; }
-    public UpdateBankIdSettingsDto UpdateBankIdSettingsDto { get; init; }
-    public UpdateBasicSettingsDto UpdateBasicSettingsDto { get; init; }
-    public UpdateBulkEnvelopeDto UpdateBulkEnvelopeDto { get; init; }
-    public UpdateBulkEnvelopeFileTasksRequest UpdateBulkEnvelopeFileTasksRequest { get; init; }
-    public UpdateBulkEnvelopeForIntegrationDto UpdateBulkEnvelopeForIntegrationDto { get; init; }
-    public UpdateBulkFileTasksRequest UpdateBulkFileTasksRequest { get; init; }
-    public UpdateDisposableCertificateDto UpdateDisposableCertificateDto { get; init; }
-    public UpdateDisposableCertificateSettingsDto UpdateDisposableCertificateSettingsDto { get; init; }
-    public UpdateDocumentClassRequest UpdateDocumentClassRequest { get; init; }
-    public UpdateEnvelopeDto UpdateEnvelopeDto { get; init; }
-    public UpdateEnvelopeFileTasksRequest UpdateEnvelopeFileTasksRequest { get; init; }
-    public UpdateEnvelopeForIntegrationDto UpdateEnvelopeForIntegrationDto { get; init; }
-    public UpdateEnvelopeRecipientDto UpdateEnvelopeRecipientDto { get; init; }
-    public UpdateEnvelopeStageAutomaticRecipientRequest UpdateEnvelopeStageAutomaticRecipientRequest { get; init; }
-    public UpdateEnvelopeStageRecipientRequest UpdateEnvelopeStageRecipientRequest { get; init; }
-    public UpdateEnvelopeStageRequest UpdateEnvelopeStageRequest { get; init; }
-    public UpdateEnvelopeStageStandardRecipientRequest UpdateEnvelopeStageStandardRecipientRequest { get; init; }
-    public UpdateExpirationConfigurationDto UpdateExpirationConfigurationDto { get; init; }
-    public UpdateFileOrderRequest UpdateFileOrderRequest { get; init; }
-    public UpdateFileTasksRequest UpdateFileTasksRequest { get; init; }
-    public UpdateForIntegrationReminderDto UpdateForIntegrationReminderDto { get; init; }
-    public UpdateGeneralPoliciesOverridesDto UpdateGeneralPoliciesOverridesDto { get; init; }
-    public UpdateGenericSigningPluginsSenderDataDto UpdateGenericSigningPluginsSenderDataDto { get; init; }
-    public UpdateOAuthAuthenticationDto UpdateOAuthAuthenticationDto { get; init; }
-    public UpdateOAuthFieldDefinitionRequest UpdateOAuthFieldDefinitionRequest { get; init; }
-    public UpdateOAuthJwtConfigRequest UpdateOAuthJwtConfigRequest { get; init; }
-    public UpdateOAuthResourceUriRequest UpdateOAuthResourceUriRequest { get; init; }
-    public UpdateOAuthSignerProviderDetailsRequest UpdateOAuthSignerProviderDetailsRequest { get; init; }
-    public UpdateOAuthSignerProviderRequest UpdateOAuthSignerProviderRequest { get; init; }
-    public UpdateOrganizationDefaultSignatureTypeRequest UpdateOrganizationDefaultSignatureTypeRequest { get; init; }
-    public UpdateOrganizationDelegationSettingsRequest UpdateOrganizationDelegationSettingsRequest { get; init; }
-    public UpdateOrganizationFeatureFlag UpdateOrganizationFeatureFlag { get; init; }
-    public UpdateOrganizationFeatureFlagsRequest UpdateOrganizationFeatureFlagsRequest { get; init; }
-    public UpdateOrganizationRecipientSettingsRequest UpdateOrganizationRecipientSettingsRequest { get; init; }
-    public UpdateOrganizationUserDto UpdateOrganizationUserDto { get; init; }
-    public UpdateOrganizationUserRolesDto UpdateOrganizationUserRolesDto { get; init; }
-    public UpdateOtpSignatureDataDto UpdateOtpSignatureDataDto { get; init; }
-    public UpdatePdfDocumentSettingsDto UpdatePdfDocumentSettingsDto { get; init; }
-    public UpdatePolicyRequest UpdatePolicyRequest { get; init; }
-    public UpdateRecipientAuthenticationSettingItemRequest UpdateRecipientAuthenticationSettingItemRequest { get; init; }
-    public UpdateRecipientAuthenticationSettingsRequest UpdateRecipientAuthenticationSettingsRequest { get; init; }
-    public UpdateRegionalSettingsDto UpdateRegionalSettingsDto { get; init; }
-    public UpdateReminderConfigurationDto UpdateReminderConfigurationDto { get; init; }
-    public UpdateRemoteCertificateDto UpdateRemoteCertificateDto { get; init; }
-    public UpdateRoleRequest UpdateRoleRequest { get; init; }
-    public UpdateSenderGenericSigningPluginDto UpdateSenderGenericSigningPluginDto { get; init; }
-    public UpdateSenderGenericSigningPluginSettingsDto UpdateSenderGenericSigningPluginSettingsDto { get; init; }
-    public UpdateSharingOptionsRequest UpdateSharingOptionsRequest { get; init; }
-    public UpdateSignatureDataConfigurationDto UpdateSignatureDataConfigurationDto { get; init; }
-    public UpdateSmsOneTimePasswordDto UpdateSmsOneTimePasswordDto { get; init; }
-    public UpdateStageDto UpdateStageDto { get; init; }
-    public UpdateStageSortOrderRequest UpdateStageSortOrderRequest { get; init; }
-    public UpdateStampImprintConfigurationRequest UpdateStampImprintConfigurationRequest { get; init; }
-    public UpdateSubstituteDelegationDto UpdateSubstituteDelegationDto { get; init; }
-    public UpdateSwedishBankIdDto UpdateSwedishBankIdDto { get; init; }
-    public UpdateSwissComOnDemandDto UpdateSwissComOnDemandDto { get; init; }
-    public UpdateTemplateDto UpdateTemplateDto { get; init; }
-    public UpdateTemplateFieldTasksRequest UpdateTemplateFieldTasksRequest { get; init; }
-    public UpdateTemplateFileTasksRequest UpdateTemplateFileTasksRequest { get; init; }
-    public UpdateTemplateForIntegrationDto UpdateTemplateForIntegrationDto { get; init; }
-    public UpdateTemplateRecipientDto UpdateTemplateRecipientDto { get; init; }
-    public UpdateTemplateStageAutomaticRecipientRequest UpdateTemplateStageAutomaticRecipientRequest { get; init; }
-    public UpdateTemplateStageRecipientRequest UpdateTemplateStageRecipientRequest { get; init; }
-    public UpdateTemplateStageRequest UpdateTemplateStageRequest { get; init; }
-    public UpdateTemplateStageStandardRecipientRequest UpdateTemplateStageStandardRecipientRequest { get; init; }
-    public UpdatedBasicSettingsDto UpdatedBasicSettingsDto { get; init; }
-    public UserAndOrganizationDto UserAndOrganizationDto { get; init; }
-    public UserApplicationContextDto UserApplicationContextDto { get; init; }
-    public UserDefaultUserGroup UserDefaultUserGroup { get; init; }
-    public string UserDefaultUserGroupDefaultType { get; init; }
-    public UserGroupContactCreateDto UserGroupContactCreateDto { get; init; }
-    public UserGroupContactDto UserGroupContactDto { get; init; }
-    public UserGroupContactFieldDto UserGroupContactFieldDto { get; init; }
-    public UserGroupContactFieldListDto UserGroupContactFieldListDto { get; init; }
-    public UserGroupContactImportResultDto UserGroupContactImportResultDto { get; init; }
-    public UserGroupContactImportValidationErrorResponse UserGroupContactImportValidationErrorResponse { get; init; }
-    public UserGroupContactUpdateDto UserGroupContactUpdateDto { get; init; }
-    public UserGroupContactsListDto UserGroupContactsListDto { get; init; }
-    public UserGroupContactsPermissionDto UserGroupContactsPermissionDto { get; init; }
-    public string UserGroupContactsSortingKey { get; init; }
-    public UserGroupCreateDto UserGroupCreateDto { get; init; }
-    public UserGroupCustomFieldUpdateData UserGroupCustomFieldUpdateData { get; init; }
-    public UserGroupCustomFieldUpdateRequest UserGroupCustomFieldUpdateRequest { get; init; }
-    public UserGroupDto UserGroupDto { get; init; }
-    public UserGroupEnvelopesPermissionDto UserGroupEnvelopesPermissionDto { get; init; }
-    public UserGroupPermissionDataDto UserGroupPermissionDataDto { get; init; }
-    public UserGroupPermissionDto UserGroupPermissionDto { get; init; }
-    public UserGroupPermissionsSetDto UserGroupPermissionsSetDto { get; init; }
-    public UserGroupTemplatesPermissionDto UserGroupTemplatesPermissionDto { get; init; }
-    public UserGroupUpdateDto UserGroupUpdateDto { get; init; }
-    public UserGroupUserBusinessRoleRequest UserGroupUserBusinessRoleRequest { get; init; }
-    public UserGroupUserDto UserGroupUserDto { get; init; }
-    public UserGroupUserListDto UserGroupUserListDto { get; init; }
-    public UserGroupUsersPermissionDto UserGroupUsersPermissionDto { get; init; }
-    public string UserGroupUsersSortingKey { get; init; }
-    public UserGroupsListDto UserGroupsListDto { get; init; }
-    public UserGroupsPermissions UserGroupsPermissions { get; init; }
-    public string UserGroupsSortingKey { get; init; }
-    public UserImportResultDto UserImportResultDto { get; init; }
-    public UserImportValidationErrorResponse UserImportValidationErrorResponse { get; init; }
-    public UserOrganizationsDto UserOrganizationsDto { get; init; }
-    public UserRegionalSettingsDto UserRegionalSettingsDto { get; init; }
-    public UserRegionalSettingsRequestDto UserRegionalSettingsRequestDto { get; init; }
-    public UserRoleRequest UserRoleRequest { get; init; }
-    public UserRolesDto UserRolesDto { get; init; }
-    public UsersSettings UsersSettings { get; init; }
-    public string UsersSortingKey { get; init; }
-    public ValidateOrganizationDto ValidateOrganizationDto { get; init; }
-    public VersionInfo VersionInfo { get; init; }
-    public WebhookAuthenticationRequest WebhookAuthenticationRequest { get; init; }
-    public WebhookSubscriptionDto WebhookSubscriptionDto { get; init; }
-    public WebhookSubscriptionRequest WebhookSubscriptionRequest { get; init; }
-    public WorkUnitApprovalFieldResponse WorkUnitApprovalFieldResponse { get; init; }
-    public WorkUnitAreaReadConfirmationFieldResponse WorkUnitAreaReadConfirmationFieldResponse { get; init; }
-    public WorkUnitAttachmentFieldResponse WorkUnitAttachmentFieldResponse { get; init; }
-    public WorkUnitAuthenticateRequest WorkUnitAuthenticateRequest { get; init; }
-    public string WorkUnitAuthenticationProviderType { get; init; }
-    public WorkUnitAuthenticationRequiredResponse WorkUnitAuthenticationRequiredResponse { get; init; }
-    public WorkUnitAutomaticSignature WorkUnitAutomaticSignature { get; init; }
-    public WorkUnitAutomaticSignatureResponse WorkUnitAutomaticSignatureResponse { get; init; }
-    public WorkUnitBiometricSignature WorkUnitBiometricSignature { get; init; }
-    public WorkUnitBiometricSignatureResponse WorkUnitBiometricSignatureResponse { get; init; }
-    public WorkUnitCheckboxFieldResponse WorkUnitCheckboxFieldResponse { get; init; }
-    public WorkUnitClickToSignSignature WorkUnitClickToSignSignature { get; init; }
-    public WorkUnitClickToSignSignatureRequest WorkUnitClickToSignSignatureRequest { get; init; }
-    public WorkUnitClickToSignSignatureResponse WorkUnitClickToSignSignatureResponse { get; init; }
-    public WorkUnitDateInputConfigResponseResponse WorkUnitDateInputConfigResponseResponse { get; init; }
-    public WorkUnitDateInputValue WorkUnitDateInputValue { get; init; }
-    public string WorkUnitDecimalSeparatorTypeResponse { get; init; }
-    public WorkUnitDisposableCertificateSignature WorkUnitDisposableCertificateSignature { get; init; }
-    public WorkUnitDisposableCertificateSignatureResponseResponse WorkUnitDisposableCertificateSignatureResponseResponse { get; init; }
-    public WorkUnitDrawToSignSignature WorkUnitDrawToSignSignature { get; init; }
-    public WorkUnitDrawToSignSignatureRequest WorkUnitDrawToSignSignatureRequest { get; init; }
-    public WorkUnitDrawToSignSignatureResponse WorkUnitDrawToSignSignatureResponse { get; init; }
-    public WorkUnitDropDownFieldResponse WorkUnitDropDownFieldResponse { get; init; }
-    public string WorkUnitElementSourceResponse { get; init; }
-    public WorkUnitFieldResponse WorkUnitFieldResponse { get; init; }
-    public WorkUnitFieldTaskResponse WorkUnitFieldTaskResponse { get; init; }
-    public string WorkUnitFieldTaskSignatureType { get; init; }
-    public string WorkUnitFieldTaskSignatureTypeRequest { get; init; }
-    public string WorkUnitFieldTaskSignatureTypeResponse { get; init; }
-    public string WorkUnitFieldType { get; init; }
-    public string WorkUnitFieldTypeResponse { get; init; }
-    public WorkUnitFileReadConfirmationFieldResponse WorkUnitFileReadConfirmationFieldResponse { get; init; }
-    public WorkUnitFileResponse WorkUnitFileResponse { get; init; }
-    public WorkUnitFontStyleResponse WorkUnitFontStyleResponse { get; init; }
-    public WorkUnitInvisibleSignatureFieldResponse WorkUnitInvisibleSignatureFieldResponse { get; init; }
-    public WorkUnitLinkFieldResponse WorkUnitLinkFieldResponse { get; init; }
-    public WorkUnitListBoxFieldResponse WorkUnitListBoxFieldResponse { get; init; }
-    public WorkUnitLocalCertificateSignature WorkUnitLocalCertificateSignature { get; init; }
-    public WorkUnitLocalCertificateSignatureResponseResponse WorkUnitLocalCertificateSignatureResponseResponse { get; init; }
-    public WorkUnitNumberInputConfigResponseResponse WorkUnitNumberInputConfigResponseResponse { get; init; }
-    public WorkUnitNumberInputValue WorkUnitNumberInputValue { get; init; }
-    public WorkUnitNumberSymbol WorkUnitNumberSymbol { get; init; }
-    public WorkUnitOneTimePasswordSignature WorkUnitOneTimePasswordSignature { get; init; }
-    public WorkUnitOneTimePasswordSignatureResponse WorkUnitOneTimePasswordSignatureResponse { get; init; }
-    public WorkUnitOptionResponse WorkUnitOptionResponse { get; init; }
-    public WorkUnitPageReadConfirmationFieldResponse WorkUnitPageReadConfirmationFieldResponse { get; init; }
-    public WorkUnitPhoneNumberInputConfigResponseResponse WorkUnitPhoneNumberInputConfigResponseResponse { get; init; }
-    public WorkUnitPluginSignature WorkUnitPluginSignature { get; init; }
-    public WorkUnitPluginSignatureResponseResponse WorkUnitPluginSignatureResponseResponse { get; init; }
-    public WorkUnitRadioButtonFieldResponse WorkUnitRadioButtonFieldResponse { get; init; }
-    public WorkUnitRemoteCertificateSignature WorkUnitRemoteCertificateSignature { get; init; }
-    public WorkUnitRemoteCertificateSignatureResponseResponse WorkUnitRemoteCertificateSignatureResponseResponse { get; init; }
-    public WorkUnitResponse WorkUnitResponse { get; init; }
-    public WorkUnitSignatureFieldResponse WorkUnitSignatureFieldResponse { get; init; }
-    public WorkUnitSignaturePosition WorkUnitSignaturePosition { get; init; }
-    public WorkUnitSignaturePositionRequest WorkUnitSignaturePositionRequest { get; init; }
-    public WorkUnitStringInputConfigResponseResponse WorkUnitStringInputConfigResponseResponse { get; init; }
-    public WorkUnitStringInputValue WorkUnitStringInputValue { get; init; }
-    public string WorkUnitSymbolLocationTypeResponse { get; init; }
-    public string WorkUnitTextAlignResponse { get; init; }
-    public WorkUnitTextFieldResponse WorkUnitTextFieldResponse { get; init; }
-    public object WorkUnitTextInputConfigResponse { get; init; }
-    public string WorkUnitTextInputType { get; init; }
-    public string WorkUnitTextInputTypeResponse { get; init; }
-    public string WorkUnitThousandsSeparatorTypeResponse { get; init; }
-    public WorkUnitTimeInputConfigResponse WorkUnitTimeInputConfigResponse { get; init; }
-    public WorkUnitTypeToSignSignature WorkUnitTypeToSignSignature { get; init; }
-    public WorkUnitTypeToSignSignatureRequest WorkUnitTypeToSignSignatureRequest { get; init; }
-    public WorkUnitTypeToSignSignatureResponse WorkUnitTypeToSignSignatureResponse { get; init; }
 }
 
 public class RotateServiceAccountSecretResponse
@@ -5233,59 +3827,29 @@ public class RowError
     public string Message { get; init; }
 }
 
-public class SealingCertificate
-{
-    public string SubjectName { get; init; }
-    public string Thumbprint { get; init; }
-    public string ExpirationDate { get; init; }
-    public string Issuer { get; init; }
-}
-
 public class SealingCertificateResponse
 {
     public long Id { get; init; }
     public string ExternalId { get; init; }
     public bool IsActive { get; init; }
-    public SealingCertificate SealingCertificate { get; init; }
-    public List<Anonymous71> CertificateChain { get; init; }
+    public CertificateDetailsResponse SealingCertificate { get; init; }
+    public List<CertificateDetailsResponse> CertificateChain { get; init; }
 }
 
 public class SenderAutomaticProfileDto
 {
     public string ProfileId { get; init; }
+    public ATrustCertificateDtophoneNumberBase ProfileFriendlyName { get; init; }
 }
 
 public class SenderDataFieldSettingDto
 {
     public bool Required { get; init; }
-    public List<Anonymous72> TranslatedLabels { get; init; }
-    public string Type { get; init; }
-}
-
-public class SenderGenericSigningPluginDto
-{
-}
-
-public class SenderGenericSigningPluginSettingsDto
-{
-}
-
-public class SenderUser
-{
-}
-
-public class SenderUser
-{
-}
-
-public class SentBulkEnvelopeResponse
-{
-    public string Id { get; init; }
-}
-
-public class SentEnvelopeDto
-{
-    public string Id { get; init; }
+    public List<GenericSigningPluginSettingLabelDto> TranslatedLabels { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultValue { get; init; }
+    public ATrustCertificateDtophoneNumberBase Key { get; init; }
+    public DataFieldType Type { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Items { get; init; }
 }
 
 public class ServiceAccountListItemResponse
@@ -5297,7 +3861,7 @@ public class ServiceAccountListItemResponse
 
 public class ServiceAccountListResponse
 {
-    public List<Anonymous73> Items { get; init; }
+    public List<ServiceAccountListItemResponse> Items { get; init; }
 }
 
 public class SettingsDto
@@ -5305,7 +3869,7 @@ public class SettingsDto
     public long MaxEnvelopeValidityInDays { get; init; }
     public long MinEnvelopeValidityInSeconds { get; init; }
     public long FilterExpiringSoonDays { get; init; }
-    public NotificationSettings NotificationSettings { get; init; }
+    public NotificationSettingsDto NotificationSettings { get; init; }
 }
 
 public class SharingOptionsResponse
@@ -5321,59 +3885,54 @@ public class SignatureAppearanceLayoutDto
     public bool DisplayDateTime { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class SignatureAppearanceLayoutRequest
-{
-    public bool DisplayFirstname { get; init; }
-    public bool DisplayLastname { get; init; }
-    public bool DisplayDateTime { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayCustomText { get; init; }
-    public bool DisplayReason { get; init; }
-    public string Position { get; init; }
-}
-
-public class SignatureElementDefinition
-{
-    public Position Position { get; init; }
-    public Size Size { get; init; }
+    public NamedSignatureAppearanceLayoutDtobackgroundImageBase BackgroundImage { get; init; }
+    public ImagePosition Position { get; init; }
 }
 
 public class SignatureElementDto
 {
     public string ElementId { get; init; }
-    public AllowedSignatureTypes AllowedSignatureTypes { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
+    public ATrustCertificateDto AllowedSignatureTypes { get; init; }
+    public AreaReadElementDefinition ElementDefinition { get; init; }
+    public FormFieldSource Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
     public long GuidingOrder { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
     public bool IsApprove { get; init; }
 }
 
 public class SignatureField
 {
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AllowedSignatureTypes { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class SignatureFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public List<object> AllowedSignatureTypes { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public List<SignatureFieldDtoallowedSignatureTypesBase> AllowedSignatureTypes { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
     public bool Required { get; init; }
     public string FieldType { get; init; }
 }
@@ -5389,32 +3948,15 @@ public class SignatureImage
 public class SignaturePluginSignatureTypeDto
 {
     public string PluginId { get; init; }
-}
-
-public class SignatureTaskConfiguration
-{
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Preferred { get; init; }
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public SignaturePluginSignatureTypeDtostampImprintConfigurationBase StampImprintConfiguration { get; init; }
 }
 
 public class SignatureTaskUpdateRequest
 {
-    public object Signature { get; init; }
+    public SignatureTaskUpdateRequestsignatureBase Signature { get; init; }
     public string FieldType { get; init; }
-}
-
-public class SignatureTypes
-{
-    public List<string> AllowedSignatureTypes { get; init; }
-    public List<string> AllowedDefaultSignatureTypes { get; init; }
-    public List<Anonymous93> AllowedGenericSigningPlugins { get; init; }
-}
-
-public class SignDeskOpenResultDto
-{
-}
-
-public class SignerAgreements
-{
-    public bool IsEnvelopeOverrideEnabled { get; init; }
 }
 
 public class SignerAgreements
@@ -5425,209 +3967,6 @@ public class SignerAgreements
 public class SingleInsight
 {
     public long EnvelopeCount { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class Size
-{
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class SmsOneTimePassword
-{
-}
-
-public class Stage
-{
-    public string Name { get; init; }
-    public string Type { get; init; }
-    public long RequiredRecipientCompletions { get; init; }
 }
 
 public class StageConfigurationDto
@@ -5641,18 +3980,13 @@ public class StageDto
 {
     public string Id { get; init; }
     public long MandatoryRecipientsNumber { get; init; }
-}
-
-public class StageSortOrderItem
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
 }
 
 public class StampImprintConfigurationDto
 {
-    public DefaultLayout DefaultLayout { get; init; }
-    public List<Anonymous74> CustomSignatures { get; init; }
+    public SignatureAppearanceLayoutDto DefaultLayout { get; init; }
+    public List<NamedSignatureAppearanceLayoutDto> CustomSignatures { get; init; }
 }
 
 public class StartBulkSignTransactionDto
@@ -5679,11 +4013,21 @@ public class SubstituteDelegationDto
     public string DelegateeFirstName { get; init; }
     public string DelegateeLastName { get; init; }
     public string DelegateeEmail { get; init; }
+    public ATrustCertificateDtophoneNumberBase Reason { get; init; }
+    public ATrustCertificateDtophoneNumberBase StartDate { get; init; }
+    public ATrustCertificateDtophoneNumberBase EndDate { get; init; }
+    public ATrustCertificateDtophoneNumberBase DelegateeUserId { get; init; }
 }
 
 public class SupportedElectronicIdentitiesResponse
 {
-    public List<Anonymous75> ElectronicIdentities { get; init; }
+    public List<SupportedElectronicIdentitiesResponseelectronicIdentities> ElectronicIdentities { get; init; }
+}
+
+public class SupportedElectronicIdentitiesResponseelectronicIdentities
+{
+    public string Type { get; init; }
+    public string Country { get; init; }
 }
 
 public class SupportedElectronicIdentityResponse
@@ -5698,36 +4042,14 @@ public class SupportedFileFormatResponse
     public string MimeType { get; init; }
 }
 
-public class SwedishBankIdDto
-{
-}
-
-public class SwedishBankIdSignatureTypeDto
-{
-}
-
 public class SwedishBankIdStampImprintDto
 {
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
+    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
     public bool DisplayTransactionId { get; init; }
-}
-
-public class SwissComOnDemandDto
-{
-}
-
-public class SwissComOnDemandSignatureTypeDto
-{
-}
-
-public class SwissComOnDemandStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayIp { get; init; }
 }
 
 public class TemplateDto
@@ -5735,122 +4057,34 @@ public class TemplateDto
     public string Id { get; init; }
     public string CreatorUserId { get; init; }
     public string Name { get; init; }
-    public List<string> Actions { get; init; }
+    public List<TemplateAction> Actions { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
-}
-
-public class TemplateFieldTask
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-}
-
-public class TemplateFieldTaskItem
-{
-    public object Field { get; init; }
-    public long SortOrder { get; init; }
-    public string Source { get; init; }
-}
-
-public class TemplateFilesResponse
-{
-    public List<Anonymous77> Files { get; init; }
-}
-
-public class TemplateFileTasksResponse
-{
-    public List<Anonymous76> Tasks { get; init; }
+    public TemplateDtodefaultActionBase DefaultAction { get; init; }
 }
 
 public class TemplateListDto
 {
-    public List<Anonymous78> Templates { get; init; }
+    public List<TemplateDto> Templates { get; init; }
     public Pagination Pagination { get; init; }
-}
-
-public class TemplatePermissions
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Templates
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Templates
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Templates
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Templates
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Templates
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class Templates
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class TemplateStageAutomaticRecipientResponse
-{
-    public string Id { get; init; }
-    public string Type { get; init; }
-}
-
-public class TemplateStageAutomaticRecipientSummaryDto
-{
-    public string Id { get; init; }
-    public string Type { get; init; }
-}
-
-public class TemplateStageItemDto
-{
-    public string Id { get; init; }
-    public long SortOrder { get; init; }
-    public long RequiredRecipientCompletions { get; init; }
-    public string Type { get; init; }
-    public List<object> Recipients { get; init; }
-}
-
-public class TemplateStageListDto
-{
-    public List<Anonymous79> Stages { get; init; }
-}
-
-public class TemplateStageRecipientResponse
-{
-    public string Id { get; init; }
-}
-
-public class TemplateStageRecipientSummaryDto
-{
-    public string Id { get; init; }
 }
 
 public class TemplateStageStandardRecipientResponse
 {
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
     public bool IsDelegationEnabled { get; init; }
+    public TemplateStageStandardRecipientResponsemetadataBase Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -5860,6 +4094,8 @@ public class TemplateStageStandardRecipientSummaryDto
     public string Id { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
     public bool IsDelegationEnabled { get; init; }
     public string Type { get; init; }
 }
@@ -5873,14 +4109,15 @@ public class TemplateThumbnailDto
 
 public class TextAnnotationConfigDto
 {
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
     public string AnnotationType { get; init; }
 }
 
 public class TextBoxElementDefinition
 {
-    public Position Position { get; init; }
-    public Size Size { get; init; }
-    public TextFormat TextFormat { get; init; }
+    public FileElementsPosition Position { get; init; }
+    public FileElementsSize Size { get; init; }
+    public FileElementTextFormat TextFormat { get; init; }
     public bool ReadOnly { get; init; }
     public bool IsMultiline { get; init; }
     public bool IsPassword { get; init; }
@@ -5890,11 +4127,13 @@ public class TextBoxElementDefinition
 public class TextBoxElementDto
 {
     public string ElementId { get; init; }
-    public ElementDefinition ElementDefinition { get; init; }
-    public string Source { get; init; }
+    public TextBoxElementDefinition ElementDefinition { get; init; }
+    public FormFieldSource Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
+    public TextBoxElementDtovalidationBase Validation { get; init; }
 }
 
 public class TextDefinition
@@ -5907,163 +4146,49 @@ public class TextFieldDto
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
-    public object TextInputConfig { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public FontStyle Font { get; init; }
+    public TextFieldDtotextInputConfigBase TextInputConfig { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
-}
-
-public class TextFormat
-{
-    public string TextColor { get; init; }
-    public double FontSizeInPt { get; init; }
-    public string FontName { get; init; }
-    public bool Bold { get; init; }
-    public bool Italic { get; init; }
-    public string TextAlign { get; init; }
 }
 
 public class TextInputField
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
+    public ListBoxFieldfontBase Font { get; init; }
     public string Text { get; init; }
     public bool Password { get; init; }
     public bool Multiline { get; init; }
     public long MaxLength { get; init; }
+    public TextBoxElementDtovalidationBase Validation { get; init; }
     public string FieldType { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
-    public string Source { get; init; }
+    public FormFieldSource Source { get; init; }
 }
 
 public class TextTaskUpdateRequest
 {
-    public object TextInputValue { get; init; }
+    public TextTaskUpdateRequesttextInputValueBase TextInputValue { get; init; }
     public string FieldType { get; init; }
 }
 
 public class TimeInputConfig
 {
+    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public TimeInputConfigformatBase Format { get; init; }
+    public ATrustCertificateDtophoneNumberBase MinValue { get; init; }
+    public ATrustCertificateDtophoneNumberBase MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -6072,13 +4197,7 @@ public class TimestampSettingsDto
     public string Url { get; init; }
     public string Username { get; init; }
     public string Password { get; init; }
-    public string HashAlgorithm { get; init; }
-}
-
-public class TimeZoneDto
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
+    public TimestampHashAlgorithm HashAlgorithm { get; init; }
 }
 
 public class TimeZoneListItemDto
@@ -6088,60 +4207,20 @@ public class TimeZoneListItemDto
     public string UtcOffset { get; init; }
 }
 
-public class TimeZonesDto
-{
-    public List<Anonymous80> Options { get; init; }
-}
-
 public class TimeZonesLookupResponse
 {
-    public List<Anonymous81> TimeZones { get; init; }
+    public List<CountryDto> TimeZones { get; init; }
 }
 
 public class TypeToSignSignature
 {
+    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
     public string SignatureType { get; init; }
-}
-
-public class TypeToSignSignatureTypeDto
-{
-}
-
-public class TypeToSignStampImprintDto
-{
-    public bool DisplayName { get; init; }
-    public bool DisplaySignatureDate { get; init; }
-    public bool DisplayExtraInformation { get; init; }
-    public bool DisplayEmail { get; init; }
-    public bool DisplayIp { get; init; }
-}
-
-public class UiLanguageDto
-{
-    public string Code { get; init; }
-    public string Name { get; init; }
 }
 
 public class UpdateAccessCodeDto
 {
     public string Code { get; init; }
-}
-
-public class UpdateATrustCertificateDto
-{
-}
-
-public class UpdateAuditTrailModeRequest
-{
-    public string AuditTrailMode { get; init; }
-}
-
-public class UpdateAuthenticationConfigurationDto
-{
-}
-
-public class UpdateAutomaticSignatureDataDto
-{
 }
 
 public class UpdateBankIdSettingsDto
@@ -6158,26 +4237,53 @@ public class UpdateBasicSettingsDto
 
 public class UpdateBulkEnvelopeDto
 {
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
-    public string EnvelopeType { get; init; }
-}
-
-public class UpdateBulkEnvelopeFileTasksRequest
-{
-    public List<Anonymous82> Tasks { get; init; }
+    public ATrustCertificateDto ExpirationConfiguration { get; init; }
+    public ATrustCertificateDto ReminderConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public UpdateBulkEnvelopeDtorecipientsBase Recipients { get; init; }
+    public UpdateBulkEnvelopeDtostagesBase Stages { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SendCopyToAllRecipients { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase LateIdent { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseInvisibleSignatureWithTimestampForAllDocumentsAndRecipients { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
+    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
+    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase DocumentsIds { get; init; }
+    public EnvelopeDtoagreementsBase Agreements { get; init; }
+    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase UserGroupSharingIds { get; init; }
+    public EnvelopeType EnvelopeType { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CallbackConfiguration { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase PreventFieldsEditingWhenFinished { get; init; }
+    public ATrustCertificateDtophoneNumberBase AfterSendRedirectUrl { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase AllowChangeSignatureReason { get; init; }
+    public UpdateBulkEnvelopeDtosignatureFormatBase SignatureFormat { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase FileRestrictedVisibility { get; init; }
 }
 
 public class UpdateBulkEnvelopeForIntegrationDto
 {
     public string Name { get; init; }
-    public Reminder Reminder { get; init; }
-    public object Expiration { get; init; }
+    public UpdateBulkEnvelopeForIntegrationDtoreminder Reminder { get; init; }
+    public UpdateBulkEnvelopeForIntegrationDtoexpirationBase Expiration { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public UpdateBulkEnvelopeDtosignatureFormatBase SignatureFormat { get; init; }
+    public UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase NotificationMessages { get; init; }
+    public EnvelopeDtoagreementsBase Agreements { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase FileRestrictedVisibility { get; init; }
+}
+
+public class UpdateBulkEnvelopeForIntegrationDtoreminder
+{
+    public bool Enabled { get; init; }
+    public long FirstReminderInDays { get; init; }
+    public long ResendIntervalInDays { get; init; }
+    public long BeforeExpirationInDays { get; init; }
 }
 
 public class UpdateBulkFileTasksRequest
 {
-    public List<Anonymous83> FieldTasks { get; init; }
+    public List<BulkEnvelopeFieldTaskItemRequest> FieldTasks { get; init; }
 }
 
 public class UpdatedBasicSettingsDto
@@ -6185,81 +4291,42 @@ public class UpdatedBasicSettingsDto
     public string Id { get; init; }
     public string GivenName { get; init; }
     public string Surname { get; init; }
-}
-
-public class UpdateDisposableCertificateDto
-{
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class UpdateDisposableCertificateSettingsDto
 {
     public string LraId { get; init; }
     public string User { get; init; }
-    public string DisposableType { get; init; }
+    public ATrustCertificateDtophoneNumberBase Password { get; init; }
+    public DisposableType DisposableType { get; init; }
     public bool ShowDisclaimerBeforeCertificateRequest { get; init; }
     public bool SendDisposableDisclaimerDocumentNotifications { get; init; }
-}
-
-public class UpdateDocumentClassRequest
-{
-    public string Name { get; init; }
-}
-
-public class UpdateEnvelopeDto
-{
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
-    public string EnvelopeType { get; init; }
-}
-
-public class UpdateEnvelopeFileTasksRequest
-{
-    public List<Anonymous84> Tasks { get; init; }
-}
-
-public class UpdateEnvelopeForIntegrationDto
-{
-    public string Name { get; init; }
-    public Reminder Reminder { get; init; }
-    public object Expiration { get; init; }
 }
 
 public class UpdateEnvelopeRecipientDto
 {
     public string Id { get; init; }
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
+    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
+    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase Order { get; init; }
+    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AuthenticationConfiguration { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureDataConfiguration { get; init; }
+    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
+    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
+    public RecipientDtoguidingOrderModeBase GuidingOrderMode { get; init; }
     public bool IsDelegationEnabled { get; init; }
-}
-
-public class UpdateEnvelopeStageAutomaticRecipientRequest
-{
-    public string Type { get; init; }
-}
-
-public class UpdateEnvelopeStageRecipientRequest
-{
-}
-
-public class UpdateEnvelopeStageRequest
-{
-}
-
-public class UpdateEnvelopeStageStandardRecipientRequest
-{
-    public string Type { get; init; }
-}
-
-public class UpdateExpirationConfigurationDto
-{
-}
-
-public class UpdateFileOrderRequest
-{
-    public List<Anonymous85> Files { get; init; }
-}
-
-public class UpdateFileTasksRequest
-{
-    public List<Anonymous86> FieldTasks { get; init; }
+    public RecipientDtogeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
+    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public TemplateStageStandardRecipientResponsemetadataBase Metadata { get; init; }
+    public ATrustCertificateDtophoneNumberBase SyncId { get; init; }
 }
 
 public class UpdateForIntegrationReminderDto
@@ -6270,52 +4337,24 @@ public class UpdateForIntegrationReminderDto
     public long BeforeExpirationInDays { get; init; }
 }
 
-public class UpdateGeneralPoliciesOverridesDto
-{
-    public bool AllowSaveDocument { get; init; }
-    public bool AllowSaveAuditTrail { get; init; }
-    public bool AllowPrintDocument { get; init; }
-    public bool AllowAdhocPdfAttachments { get; init; }
-    public bool AllowRejectWorkstep { get; init; }
-    public bool AllowUndoLastAction { get; init; }
-}
-
-public class UpdateGenericSigningPluginsSenderDataDto
-{
-}
-
-public class UpdateOAuthAuthenticationDto
-{
-    public string ExternalId { get; init; }
-}
-
-public class UpdateOAuthFieldDefinitionRequest
-{
-    public string Path { get; init; }
-    public string Mode { get; init; }
-    public string Target { get; init; }
-}
-
-public class UpdateOAuthJwtConfigRequest
-{
-    public long OAuthProviderId { get; init; }
-    public string JwksUri { get; init; }
-    public string Issuer { get; init; }
-    public bool EnforceNonce { get; init; }
-    public bool ValidateAudience { get; init; }
-    public bool ValidateIssuer { get; init; }
-    public bool ValidateLifetime { get; init; }
-}
-
-public class UpdateOAuthResourceUriRequest
-{
-    public string Uri { get; init; }
-    public string AccessTokenParamName { get; init; }
-}
-
 public class UpdateOAuthSignerProviderDetailsRequest
 {
-    public OAuthSignerProvider OAuthSignerProvider { get; init; }
+    public UpdateOAuthSignerProviderDetailsRequestoAuthSignerProvider OAuthSignerProvider { get; init; }
+    public OAuthSignerProviderDetailsResponseoAuthJwtConfigBase OAuthJwtConfig { get; init; }
+    public CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase OAuthResourceUris { get; init; }
+}
+
+public class UpdateOAuthSignerProviderDetailsRequestoAuthSignerProvider
+{
+    public string ExternalId { get; init; }
+    public string Name { get; init; }
+    public string ClientId { get; init; }
+    public string AuthorizationUri { get; init; }
+    public string TokenUri { get; init; }
+    public long AuthenticationType { get; init; }
+    public ATrustCertificateDtophoneNumberBase ClientSecret { get; init; }
+    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
+    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
 }
 
 public class UpdateOAuthSignerProviderRequest
@@ -6326,27 +4365,15 @@ public class UpdateOAuthSignerProviderRequest
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
     public long AuthenticationType { get; init; }
-}
-
-public class UpdateOrganizationDefaultSignatureTypeRequest
-{
-    public string SignatureType { get; init; }
-}
-
-public class UpdateOrganizationDelegationSettingsRequest
-{
-    public string DelegationPolicy { get; init; }
+    public ATrustCertificateDtophoneNumberBase ClientSecret { get; init; }
+    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
+    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
 }
 
 public class UpdateOrganizationFeatureFlag
 {
     public long Id { get; init; }
     public bool Enabled { get; init; }
-}
-
-public class UpdateOrganizationFeatureFlagsRequest
-{
-    public List<Anonymous87> FeatureFlags { get; init; }
 }
 
 public class UpdateOrganizationRecipientSettingsRequest
@@ -6359,7 +4386,8 @@ public class UpdateOrganizationUserDto
 {
     public string GivenName { get; init; }
     public string Surname { get; init; }
-    public UserRegionalSettings UserRegionalSettings { get; init; }
+    public OrganizationUserRegionalSettingsDto UserRegionalSettings { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class UpdateOrganizationUserRolesDto
@@ -6367,30 +4395,15 @@ public class UpdateOrganizationUserRolesDto
     public List<string> Roles { get; init; }
 }
 
-public class UpdateOtpSignatureDataDto
-{
-}
-
-public class UpdatePdfDocumentSettingsDto
-{
-    public bool AllowSigningOfLockedPdfDocuments { get; init; }
-}
-
 public class UpdatePolicyRequest
 {
     public string Name { get; init; }
     public bool IsActive { get; init; }
     public long SortOrder { get; init; }
-}
-
-public class UpdateRecipientAuthenticationSettingItemRequest
-{
-    public string Name { get; init; }
-    public bool IsEnabled { get; init; }
-}
-
-public class UpdateRecipientAuthenticationSettingsRequest
-{
+    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
+    public PolicyDtoconditionsBase Conditions { get; init; }
+    public PolicyDtoactionsBase Actions { get; init; }
 }
 
 public class UpdateRegionalSettingsDto
@@ -6401,120 +4414,6 @@ public class UpdateRegionalSettingsDto
     public long CountryId { get; init; }
 }
 
-public class UpdateReminderConfigurationDto
-{
-}
-
-public class UpdateRemoteCertificateDto
-{
-}
-
-public class UpdateRoleRequest
-{
-    public string Name { get; init; }
-    public List<Anonymous88> Permissions { get; init; }
-}
-
-public class UpdateSenderGenericSigningPluginDto
-{
-}
-
-public class UpdateSenderGenericSigningPluginSettingsDto
-{
-}
-
-public class UpdateSharingOptionsRequest
-{
-    public List<string> UserGroupIds { get; init; }
-}
-
-public class UpdateSignatureDataConfigurationDto
-{
-}
-
-public class UpdateSmsOneTimePasswordDto
-{
-}
-
-public class UpdateStageDto
-{
-    public string Id { get; init; }
-    public long MandatoryRecipientsNumber { get; init; }
-}
-
-public class UpdateStageSortOrderRequest
-{
-    public List<Anonymous89> Stages { get; init; }
-}
-
-public class UpdateStampImprintConfigurationRequest
-{
-    public DefaultLayout DefaultLayout { get; init; }
-    public List<Anonymous90> CustomSignatures { get; init; }
-}
-
-public class UpdateSubstituteDelegationDto
-{
-    public string DelegateeUserEmail { get; init; }
-    public bool UtilizeAlsoOnCCRecipients { get; init; }
-}
-
-public class UpdateSwedishBankIdDto
-{
-}
-
-public class UpdateSwissComOnDemandDto
-{
-}
-
-public class UpdateTemplateDto
-{
-    public ExpirationConfiguration ExpirationConfiguration { get; init; }
-    public ReminderConfiguration ReminderConfiguration { get; init; }
-    public string EnvelopeType { get; init; }
-}
-
-public class UpdateTemplateFieldTasksRequest
-{
-    public List<Anonymous91> FieldTasks { get; init; }
-}
-
-public class UpdateTemplateFileTasksRequest
-{
-    public List<Anonymous92> Tasks { get; init; }
-}
-
-public class UpdateTemplateForIntegrationDto
-{
-    public string Name { get; init; }
-    public Reminder Reminder { get; init; }
-    public object Expiration { get; init; }
-}
-
-public class UpdateTemplateRecipientDto
-{
-    public string Id { get; init; }
-    public bool IsDelegationEnabled { get; init; }
-}
-
-public class UpdateTemplateStageAutomaticRecipientRequest
-{
-    public string Type { get; init; }
-}
-
-public class UpdateTemplateStageRecipientRequest
-{
-}
-
-public class UpdateTemplateStageRequest
-{
-}
-
-public class UpdateTemplateStageStandardRecipientRequest
-{
-    public string Type { get; init; }
-}
-
 public class UserAndOrganizationDto
 {
     public string Id { get; init; }
@@ -6523,20 +4422,21 @@ public class UserAndOrganizationDto
     public string Email { get; init; }
     public string OrganizationId { get; init; }
     public string OrganizationName { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
 }
 
 public class UserApplicationContextDto
 {
-    public SignatureTypes SignatureTypes { get; init; }
-    public DefaultSignatureType DefaultSignatureType { get; init; }
-    public List<string> SignatureOptions { get; init; }
-    public List<string> RecipientTypes { get; init; }
-    public RecipientAuthenticationTypes RecipientAuthenticationTypes { get; init; }
+    public OrganizationSignatureTypesDto SignatureTypes { get; init; }
+    public OrganizationDefaultSignatureTypeDto DefaultSignatureType { get; init; }
+    public List<SignatureOptions> SignatureOptions { get; init; }
+    public List<DbRecipientType> RecipientTypes { get; init; }
+    public ATrustCertificateDto RecipientAuthenticationTypes { get; init; }
     public SignerAgreements SignerAgreements { get; init; }
-    public GeneralPolicies GeneralPolicies { get; init; }
-    public NotificationChannels NotificationChannels { get; init; }
-    public UserPermissions UserPermissions { get; init; }
-    public UserGroupPermissions UserGroupPermissions { get; init; }
+    public OrganizationGeneralPoliciesDto GeneralPolicies { get; init; }
+    public NotificationChannelsDto NotificationChannels { get; init; }
+    public PermissionsDto UserPermissions { get; init; }
+    public UserApplicationContextDtouserGroupPermissions UserGroupPermissions { get; init; }
     public DelegationInfo DelegationInfo { get; init; }
     public bool OAuthAvailable { get; init; }
     public bool AutomaticRemoteSignatureAvailable { get; init; }
@@ -6546,20 +4446,21 @@ public class UserApplicationContextDto
     public bool BulkEnvelopeEnabled { get; init; }
 }
 
-public class UserDefaultUserGroup
+public class UserApplicationContextDtouserGroupPermissions
 {
-    public string Id { get; init; }
-    public string Name { get; init; }
-}
-
-public class UserGroupContactCreateDto
-{
+    public ATrustCertificateDto UserGroups { get; init; }
 }
 
 public class UserGroupContactDto
 {
     public string Id { get; init; }
     public string UserGroupId { get; init; }
+    public ATrustCertificateDtophoneNumberBase Details { get; init; }
+    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
+    public ATrustCertificateDtophoneNumberBase Email { get; init; }
+    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public ATrustCertificateDtophoneNumberBase CultureIsoCode { get; init; }
 }
 
 public class UserGroupContactFieldDto
@@ -6571,22 +4472,12 @@ public class UserGroupContactFieldDto
 
 public class UserGroupContactFieldListDto
 {
-    public List<Anonymous94> UserGroupContactFields { get; init; }
-}
-
-public class UserGroupContactImportResultDto
-{
-    public long Imported { get; init; }
-}
-
-public class UserGroupContactImportValidationErrorResponse
-{
-    public List<Anonymous95> Errors { get; init; }
+    public List<UserGroupContactFieldDto> UserGroupContactFields { get; init; }
 }
 
 public class UserGroupContactsListDto
 {
-    public List<Anonymous96> UserGroupContacts { get; init; }
+    public List<UserGroupContactDto> UserGroupContacts { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -6597,24 +4488,16 @@ public class UserGroupContactsPermissionDto
     public bool Customize { get; init; }
 }
 
-public class UserGroupContactUpdateDto
-{
-}
-
-public class UserGroupCreateDto
-{
-    public string Name { get; init; }
-}
-
 public class UserGroupCustomFieldUpdateData
 {
     public string UserGroupId { get; init; }
     public string Name { get; init; }
+    public ATrustCertificateDtophoneNumberBase Id { get; init; }
 }
 
 public class UserGroupCustomFieldUpdateRequest
 {
-    public List<Anonymous97> UpdatedCustomFields { get; init; }
+    public List<UserGroupCustomFieldUpdateData> UpdatedCustomFields { get; init; }
 }
 
 public class UserGroupDto
@@ -6633,68 +4516,34 @@ public class UserGroupEnvelopesPermissionDto
 public class UserGroupPermissionDataDto
 {
     public string Name { get; init; }
-    public Permissions Permissions { get; init; }
+    public UserGroupPermissionDataDtopermissions Permissions { get; init; }
+}
+
+public class UserGroupPermissionDataDtopermissions
+{
+    public EnvelopePermissions Users { get; init; }
+    public UserGroupEnvelopesPermissionDto Envelopes { get; init; }
+    public UserGroupEnvelopesPermissionDto Templates { get; init; }
+    public UserGroupContactsPermissionDto Contacts { get; init; }
 }
 
 public class UserGroupPermissionDto
 {
-    public Users Users { get; init; }
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public Contacts Contacts { get; init; }
-}
-
-public class UserGroupPermissions
-{
-    public UserGroups UserGroups { get; init; }
+    public EnvelopePermissions Users { get; init; }
+    public UserGroupEnvelopesPermissionDto Envelopes { get; init; }
+    public UserGroupEnvelopesPermissionDto Templates { get; init; }
+    public UserGroupContactsPermissionDto Contacts { get; init; }
 }
 
 public class UserGroupPermissionsSetDto
 {
-    public UserGroups UserGroups { get; init; }
-}
-
-public class UserGroups
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class UserGroups
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class UserGroups
-{
-}
-
-public class UserGroups
-{
+    public ATrustCertificateDto UserGroups { get; init; }
 }
 
 public class UserGroupsListDto
 {
-    public List<Anonymous99> UserGroups { get; init; }
+    public List<UserGroupDto> UserGroups { get; init; }
     public Pagination Pagination { get; init; }
-}
-
-public class UserGroupsPermissions
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class UserGroupTemplatesPermissionDto
-{
-    public bool Share { get; init; }
-    public bool Manage { get; init; }
-}
-
-public class UserGroupUpdateDto
-{
-    public string Name { get; init; }
 }
 
 public class UserGroupUserBusinessRoleRequest
@@ -6708,129 +4557,29 @@ public class UserGroupUserDto
     public string Email { get; init; }
     public string GivenName { get; init; }
     public string Surname { get; init; }
-    public Permissions Permissions { get; init; }
+    public UserGroupPermissionDto Permissions { get; init; }
+    public ATrustCertificateDtophoneNumberBase BusinessRole { get; init; }
+    public ATrustCertificateDtophoneNumberBase BusinessRoleId { get; init; }
 }
 
 public class UserGroupUserListDto
 {
     public string UserGroupId { get; init; }
-    public List<Anonymous98> UserGroupUsers { get; init; }
+    public List<UserGroupUserDto> UserGroupUsers { get; init; }
     public Pagination Pagination { get; init; }
-}
-
-public class UserGroupUsersPermissionDto
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class UserImportResultDto
-{
-    public long Imported { get; init; }
-}
-
-public class UserImportValidationErrorResponse
-{
-    public List<Anonymous100> Errors { get; init; }
 }
 
 public class UserOrganizationsDto
 {
-    public List<Anonymous101> Organizations { get; init; }
+    public List<OrganizationItemDto> Organizations { get; init; }
     public string DefaultOrganizationId { get; init; }
-}
-
-public class UserPermissions
-{
-    public Envelopes Envelopes { get; init; }
-    public Templates Templates { get; init; }
-    public UserGroups UserGroups { get; init; }
-    public OrganizationSettings OrganizationSettings { get; init; }
-    public Users Users { get; init; }
-    public Roles Roles { get; init; }
-    public AutomaticESealing AutomaticESealing { get; init; }
-}
-
-public class UserRegionalSettings
-{
-    public string TimeZone { get; init; }
-    public string DateTimeFormat { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-}
-
-public class UserRegionalSettingsDto
-{
-    public string WorldTimeZone { get; init; }
-    public long DateTimeFormatId { get; init; }
-    public string UiLanguage { get; init; }
-    public long CountryId { get; init; }
-}
-
-public class UserRegionalSettingsRequestDto
-{
-    public string TimeZone { get; init; }
-    public string DateTimeFormat { get; init; }
-    public string Language { get; init; }
-    public string Country { get; init; }
-}
-
-public class UserRoleRequest
-{
-    public string Name { get; init; }
-}
-
-public class UserRolesDto
-{
-    public List<string> Roles { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class Users
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
-}
-
-public class UsersSettings
-{
-    public bool Read { get; init; }
-    public bool CreateUpdateDelete { get; init; }
 }
 
 public class ValidateOrganizationDto
 {
     public string Name { get; init; }
     public string IsoCulture { get; init; }
+    public ATrustCertificateDtophoneNumberBase OnePlatformBusinessRelationIdentifier { get; init; }
     public List<string> Features { get; init; }
 }
 
@@ -6838,20 +4587,6 @@ public class VersionInfo
 {
     public string ImageTag { get; init; }
     public string Version { get; init; }
-}
-
-public class WaitingForOthers
-{
-    public long EnvelopeCount { get; init; }
-}
-
-public class WaitingForYou
-{
-    public long EnvelopeCount { get; init; }
-}
-
-public class WebhookAuthenticationRequest
-{
 }
 
 public class WebhookSubscriptionDto
@@ -6866,107 +4601,20 @@ public class WebhookSubscriptionDto
 public class WebhookSubscriptionRequest
 {
     public string Url { get; init; }
-}
-
-public class WorkUnitApprovalFieldResponse
-{
-    public string Id { get; init; }
-    public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public bool Required { get; init; }
-    public string FieldType { get; init; }
+    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
 }
 
 public class WorkUnitAreaReadConfirmationFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
-}
-
-public class WorkUnitAttachmentFieldResponse
-{
-    public string Id { get; init; }
-    public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public bool Required { get; init; }
-    public string FieldType { get; init; }
-}
-
-public class WorkUnitAuthenticateRequest
-{
-    public string Code { get; init; }
-}
-
-public class WorkUnitAuthenticationRequiredResponse
-{
-}
-
-public class WorkUnitAutomaticSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitAutomaticSignatureResponse
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitBiometricSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitBiometricSignatureResponse
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitCheckboxFieldResponse
-{
-    public string Id { get; init; }
-    public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public bool Checked { get; init; }
-    public string Value { get; init; }
-    public bool Required { get; init; }
-    public bool ReadOnly { get; init; }
-    public string FieldType { get; init; }
-}
-
-public class WorkUnitClickToSignSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitClickToSignSignatureRequest
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitClickToSignSignatureResponse
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitDateInputConfigResponseResponse
-{
-    public string TextInputType { get; init; }
 }
 
 public class WorkUnitDateInputValue
@@ -6975,56 +4623,39 @@ public class WorkUnitDateInputValue
     public string TextInputType { get; init; }
 }
 
-public class WorkUnitDisposableCertificateSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitDisposableCertificateSignatureResponseResponse
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitDrawToSignSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitDrawToSignSignatureRequest
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitDrawToSignSignatureResponse
-{
-    public string SignatureType { get; init; }
-}
-
 public class WorkUnitDropDownFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public WorkUnitDropDownFieldResponsefont Font { get; init; }
+    public WorkUnitDropDownFieldResponseoptionsBase Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public bool IsEditable { get; init; }
     public string FieldType { get; init; }
 }
 
-public class WorkUnitFieldResponse
+public class WorkUnitDropDownFieldResponsefont
 {
-    public string Id { get; init; }
+    public string Color { get; init; }
+    public decimal Size { get; init; }
+    public string Name { get; init; }
+    public bool Bold { get; init; }
+    public bool Italic { get; init; }
+    public TextAlignment Align { get; init; }
 }
 
 public class WorkUnitFieldTaskResponse
 {
-    public object Field { get; init; }
+    public WorkUnitFieldTaskResponsefieldBase Field { get; init; }
     public long SortOrder { get; init; }
-    public string Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public ElementSource Source { get; init; }
+    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
     public bool Completed { get; init; }
 }
 
@@ -7041,33 +4672,28 @@ public class WorkUnitFileResponse
 {
     public long DocumentNumber { get; init; }
     public string Name { get; init; }
-    public List<Anonymous102> Tasks { get; init; }
+    public List<WorkUnitFieldTaskResponse> Tasks { get; init; }
 }
 
 public class WorkUnitFontStyleResponse
 {
     public string Color { get; init; }
-    public double Size { get; init; }
+    public decimal Size { get; init; }
     public string Name { get; init; }
     public bool Bold { get; init; }
     public bool Italic { get; init; }
-    public string Align { get; init; }
-}
-
-public class WorkUnitInvisibleSignatureFieldResponse
-{
-    public string Id { get; init; }
-    public string FieldType { get; init; }
+    public TextAlignment Align { get; init; }
 }
 
 public class WorkUnitLinkFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public ATrustCertificateDtophoneNumberBase Reference { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -7075,51 +4701,34 @@ public class WorkUnitListBoxFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public WorkUnitFontStyleResponse Font { get; init; }
+    public WorkUnitDropDownFieldResponseoptionsBase Options { get; init; }
     public bool MultiSelect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
 }
 
-public class WorkUnitLocalCertificateSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitLocalCertificateSignatureResponseResponse
-{
-    public string SignatureType { get; init; }
-}
-
 public class WorkUnitNumberInputConfigResponseResponse
 {
+    public NumberInputConfigvalueBase Value { get; init; }
+    public WorkUnitNumberInputConfigResponseResponsesymbolBase Symbol { get; init; }
+    public ATrustCertificateDtophoneNumberBase ThousandsSeparator { get; init; }
+    public WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase DecimalSeparator { get; init; }
+    public ClickToSignStampImprintDtofontSizeInPtBase DecimalPlaces { get; init; }
+    public NumberInputConfigvalueBase MinValue { get; init; }
+    public NumberInputConfigvalueBase MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
 public class WorkUnitNumberInputValue
 {
-    public double Value { get; init; }
+    public decimal Value { get; init; }
     public string TextInputType { get; init; }
-}
-
-public class WorkUnitNumberSymbol
-{
-    public string Position { get; init; }
-}
-
-public class WorkUnitOneTimePasswordSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitOneTimePasswordSignatureResponse
-{
-    public string SignatureType { get; init; }
 }
 
 public class WorkUnitOptionResponse
@@ -7133,10 +4742,10 @@ public class WorkUnitPageReadConfirmationFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
@@ -7145,51 +4754,14 @@ public class WorkUnitPageReadConfirmationFieldResponse
 public class WorkUnitPhoneNumberInputConfigResponseResponse
 {
     public string Value { get; init; }
+    public ATrustCertificateDtophoneNumberBase Format { get; init; }
     public string TextInputType { get; init; }
-}
-
-public class WorkUnitPluginSignature
-{
-    public string PluginId { get; init; }
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitPluginSignatureResponseResponse
-{
-    public string PluginId { get; init; }
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitRadioButtonFieldResponse
-{
-    public string Id { get; init; }
-    public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public string GroupName { get; init; }
-    public bool ReadOnly { get; init; }
-    public bool Checked { get; init; }
-    public string Value { get; init; }
-    public bool Required { get; init; }
-    public string FieldType { get; init; }
-}
-
-public class WorkUnitRemoteCertificateSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitRemoteCertificateSignatureResponseResponse
-{
-    public string SignatureType { get; init; }
 }
 
 public class WorkUnitResponse
 {
     public string Id { get; init; }
-    public List<Anonymous103> Files { get; init; }
+    public List<WorkUnitFileResponse> Files { get; init; }
     public bool IsSequenceEnforced { get; init; }
     public bool IsFinished { get; init; }
 }
@@ -7198,11 +4770,12 @@ public class WorkUnitSignatureFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public List<object> AllowedSignatureTypes { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public List<WorkUnitSignatureFieldResponseallowedSignatureTypesBase> AllowedSignatureTypes { get; init; }
+    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
@@ -7210,27 +4783,10 @@ public class WorkUnitSignatureFieldResponse
 
 public class WorkUnitSignaturePosition
 {
-    public double X { get; init; }
-    public double Y { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class WorkUnitSignaturePositionRequest
-{
-    public double X { get; init; }
-    public double Y { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-}
-
-public class WorkUnitStringInputConfigResponseResponse
-{
-    public string Value { get; init; }
-    public bool Password { get; init; }
-    public bool Multiline { get; init; }
-    public long MaxLength { get; init; }
-    public string TextInputType { get; init; }
+    public decimal X { get; init; }
+    public decimal Y { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
 }
 
 public class WorkUnitStringInputValue
@@ -7243,33 +4799,13 @@ public class WorkUnitTextFieldResponse
 {
     public string Id { get; init; }
     public long Page { get; init; }
-    public double PositionX { get; init; }
-    public double PositionY { get; init; }
-    public double Width { get; init; }
-    public double Height { get; init; }
-    public Font Font { get; init; }
-    public object TextInputConfig { get; init; }
+    public decimal PositionX { get; init; }
+    public decimal PositionY { get; init; }
+    public decimal Width { get; init; }
+    public decimal Height { get; init; }
+    public WorkUnitFontStyleResponse Font { get; init; }
+    public WorkUnitTextFieldResponsetextInputConfigBase TextInputConfig { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
-}
-
-public class WorkUnitTimeInputConfigResponse
-{
-    public string TextInputType { get; init; }
-}
-
-public class WorkUnitTypeToSignSignature
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitTypeToSignSignatureRequest
-{
-    public string SignatureType { get; init; }
-}
-
-public class WorkUnitTypeToSignSignatureResponse
-{
-    public string SignatureType { get; init; }
 }

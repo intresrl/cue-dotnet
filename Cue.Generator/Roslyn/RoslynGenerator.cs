@@ -13,7 +13,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
 {
     public string GenerateCode(IEnumerable<CueValueNode> root)
     {
-        foreach (var node in root) typeStore.Collect(node);
+        typeStore.Collect(root);
 
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .AddUsings(
