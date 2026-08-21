@@ -1,7 +1,11 @@
-﻿namespace Cue.Generator.Roslyn;
+﻿using System.Runtime.CompilerServices;
+
+namespace Cue.Generator.Roslyn;
 
 public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
 {
+    private readonly ConditionalWeakTable<CueValueNode, CachedHashCode> _hashCodes = new();
+
     public bool Equals(CueValueNode? x, CueValueNode? y)
     {
         if (x is CueDisjunctionReference || y is CueDisjunctionReference)
@@ -42,8 +46,15 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
         {
             throw new InvalidOperationException(
                 "this comparator should be used at a stage when CueDisjunctionReference instances don't exist yet");
-        }    
+        }
 
+        return _hashCodes.GetValue(
+            obj,
+            node => new CachedHashCode(ComputeHashCode(node))).Value;
+    }
+
+    private int ComputeHashCode(CueValueNode obj)
+    {
         var hash = new HashCode();
         hash.Add(obj.GetType());
 
@@ -142,4 +153,6 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
 
         return x.AsSpan().SequenceEqual(y);
     }
+
+    private sealed record CachedHashCode(int Value);
 }
