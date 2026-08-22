@@ -1,6 +1,31 @@
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Cuelang.Cue;
+
+public sealed class WeakSet<T> where T : class 
+{
+    private static readonly object Marker = new();
+    private readonly ConditionalWeakTable<T, object> _set = new();
+
+    public void Add(T value)
+    {
+        _set.TryAdd(value, Marker);
+    }
+    
+    public void Union(WeakSet<T> value)
+    {
+        foreach (var (k, _) in value._set)
+        {
+            _set.Add(k, Marker);
+        }
+    }
+
+    public bool Contains(T value)
+    {
+        return _set.TryGetValue(value, out _);
+    }
+}
 
 public sealed unsafe class Value : IDisposable
 {
@@ -46,7 +71,49 @@ public sealed unsafe class Value : IDisposable
         [NativeMethods.CUE_OP_INTERPOLATION] = ExprOp.Interpolation,
         [NativeMethods.CUE_OP_SPREAD] = ExprOp.Spread,
     };
+    
+    private sealed class SchemaEqualityComparer : IEqualityComparer<Value>
+    {
+        private static readonly ConditionalWeakTable<Value, WeakSet<Value>> EqualTo = new();
+        private readonly Lock _lock = new();
+        
+        public bool Equals(Value? x, Value? y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (x == null || y == null) return false;
+            if (Equals(x._resource, y._resource)) return true;
 
+            lock (_lock)
+            {
+                if (EqualTo.TryGetValue(x, out var v) && v.Contains(y))
+                {
+                    Console.WriteLine($"cache hit {EqualTo.Count()} count {EqualTo.Select(e => e.Value).Distinct().Count()} cliques");
+                    return true;
+                }
+
+                if (x.CheckSchema(y, new EvalOption.Schema()) is not null ||
+                    y.CheckSchema(x, new EvalOption.Schema()) is not null) return false;
+
+                var xEq = EqualTo.GetOrAdd(x, _ => new WeakSet<Value>());
+                var yEq = EqualTo.GetOrAdd(y, _ => new WeakSet<Value>());
+
+                xEq.Union(yEq);
+                xEq.Add(x);
+                xEq.Add(y);
+                EqualTo.AddOrUpdate(y, xEq);
+
+                return true;
+            }
+        }
+
+        public int GetHashCode(Value obj)
+        {
+            return 0; // todo: finish
+        }
+    }
+
+    public static readonly IEqualityComparer<Value> SchemaComparer = new SchemaEqualityComparer();
+    
     private readonly CueResource _resource;
 
     public Value(CueContext context, long value)
@@ -104,7 +171,7 @@ public sealed unsafe class Value : IDisposable
         if (error == 0) return new Result<Value, string>.Ok(this);
         
         var msg = NativeDynamicAllocation.ToString(NativeMethods.cue_error_string(error));
-        return new Result<Value, string>.Err(msg);
+        return new Result<Value, string>.Err(msg!);
     }
 
     public Value Unify(Value value)
@@ -139,11 +206,11 @@ public sealed unsafe class Value : IDisposable
         Context.ThrowIfError(err);
     }
 
-    public void CheckSchema(Value value, params EvalOption[] options)
+    public CueError? CheckSchema(Value value, params EvalOption[] options)
     {
         using var evalOpts = EncodedEvalOptions.From(options);
         var err = NativeMethods.cue_instance_of(Handle, value.Handle, evalOpts.Options);
-        Context.ThrowIfError(err);
+        return err != 0 ? new CueError(Context, err) : null;
     }
 
     public Value Lookup(string path)

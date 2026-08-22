@@ -45,7 +45,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
     {
         foreach (var rootValue in rootDefinitions)
         {
-            if (value.Equals(rootValue) && _definedPaths.Contains(rootValue.Path()))
+            if (Value.SchemaComparer.Equals(value, rootValue) && _definedPaths.Contains(rootValue.Path()))
             {
                 return new CueDefinitionReference(rootValue.Path());
             }

@@ -76,7 +76,7 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
             {
                 var source = node.Source();
                 using var value = ctx.Compile(source, new BuildOption.InferBuiltins(true));
-                Assert.Equal(node, CueValueVisitor.ForTests(value), new Roslyn.CueValueNodeComparer(x => x.Source()));
+                Assert.Equal(node, CueValueVisitor.ForTests(value), new Roslyn.CueValueNodeComparer());
             });
         
         var config = Config.Quick
