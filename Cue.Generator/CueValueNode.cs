@@ -15,6 +15,11 @@ public sealed record CueNullValue(string Path) : CueValueNode(Path)
     public override string ToString() => $"Null at {Path}";
 }
 
+public sealed record CueNullable(CueValueNode Value) : CueValueNode(Value.Path)
+{
+    public override string ToString() => $"Nullable {Value}";
+}
+
 public sealed record CueBoolValue(string Path, bool? ConcreteValue = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Bool at {Path}";

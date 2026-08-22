@@ -16,16 +16,6 @@ public interface AnnotationElementDefinitionvalueFormatBase
     };
 }
 
-public interface AnnotationFieldfontBase
-{
-    public record AsAnnotationFieldfont(AnnotationFieldfont value) : AnnotationFieldfontBase;
-    public record AsFontStyle(FontStyle value) : AnnotationFieldfontBase;
-    public record Value(AnnotationFieldfontBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface AnnotationFieldDtoannotationConfigBase
 {
     public record AsFullNameAnnotationConfigDto(FullNameAnnotationConfigDto value) : AnnotationFieldDtoannotationConfigBase;
@@ -36,36 +26,6 @@ public interface AnnotationFieldDtoannotationConfigBase
     public record AsDateAnnotationConfigDto(DateAnnotationConfigDto value) : AnnotationFieldDtoannotationConfigBase;
     public record AsTextAnnotationConfigDto(TextAnnotationConfigDto value) : AnnotationFieldDtoannotationConfigBase;
     public record Value(AnnotationFieldDtoannotationConfigBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface ATrustCertificateDtophoneNumberBase
-{
-    public record AsATrustCertificateDtophoneNumber(ATrustCertificateDtophoneNumber value) : ATrustCertificateDtophoneNumberBase;
-    public record AsATrustCertificateDtophoneNumber(ATrustCertificateDtophoneNumber value) : ATrustCertificateDtophoneNumberBase;
-    public record Value(ATrustCertificateDtophoneNumberBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface BulkEnvelopeDetailDtodocumentsBase
-{
-    public record AsBulkEnvelopeDetailDtodocuments(BulkEnvelopeDetailDtodocuments value) : BulkEnvelopeDetailDtodocumentsBase;
-    public record AsBulkEnvelopeDetailDtodocuments(BulkEnvelopeDetailDtodocuments value) : BulkEnvelopeDetailDtodocumentsBase;
-    public record Value(BulkEnvelopeDetailDtodocumentsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface BulkEnvelopeDetailDtostagesrecipientsBase
-{
-    public record AsBulkEnvelopeDetailDtostagesrecipients(BulkEnvelopeDetailDtostagesrecipients value) : BulkEnvelopeDetailDtostagesrecipientsBase;
-    public record AsBulkEnvelopeDetailDtostagesrecipients(BulkEnvelopeDetailDtostagesrecipients value) : BulkEnvelopeDetailDtostagesrecipientsBase;
-    public record Value(BulkEnvelopeDetailDtostagesrecipientsBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -124,501 +84,11 @@ public interface BulkEnvelopeFieldTaskItemfieldtextInputConfigBase
     };
 }
 
-public interface BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase
-{
-    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
-    public record AsBulkEnvelopeFieldTaskItemfieldallowedSignatureTypes(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypes value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
-    public record Value(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface BulkStageDtorecipientsBase
-{
-    public record AsBulkStageDtorecipients(BulkStageDtorecipients value) : BulkStageDtorecipientsBase;
-    public record AsBulkStageDtorecipients(BulkStageDtorecipients value) : BulkStageDtorecipientsBase;
-    public record Value(BulkStageDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface ClickToSignStampImprintDtofontSizeInPtBase
-{
-    public record AsClickToSignStampImprintDtofontSizeInPt(ClickToSignStampImprintDtofontSizeInPt value) : ClickToSignStampImprintDtofontSizeInPtBase;
-    public record AsClickToSignStampImprintDtofontSizeInPt(ClickToSignStampImprintDtofontSizeInPt value) : ClickToSignStampImprintDtofontSizeInPtBase;
-    public record Value(ClickToSignStampImprintDtofontSizeInPtBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateEnvelopeStageAutomaticRecipientRequestmetadataBase
-{
-    public record AsCreateEnvelopeStageAutomaticRecipientRequestmetadata(CreateEnvelopeStageAutomaticRecipientRequestmetadata value) : CreateEnvelopeStageAutomaticRecipientRequestmetadataBase;
-    public record AsCreateEnvelopeStageAutomaticRecipientRequestmetadata(CreateEnvelopeStageAutomaticRecipientRequestmetadata value) : CreateEnvelopeStageAutomaticRecipientRequestmetadataBase;
-    public record Value(CreateEnvelopeStageAutomaticRecipientRequestmetadataBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase
-{
-    public record AsCreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange value) : CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase;
-    public record AsCreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChange value) : CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase;
-    public record Value(CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateEnvelopeStageStandardRecipientRequestauthenticationBase
-{
-    public record AsCreateEnvelopeStageStandardRecipientRequestauthentication(CreateEnvelopeStageStandardRecipientRequestauthentication value) : CreateEnvelopeStageStandardRecipientRequestauthenticationBase;
-    public record AsATrustCertificateDto(ATrustCertificateDto value) : CreateEnvelopeStageStandardRecipientRequestauthenticationBase;
-    public record Value(CreateEnvelopeStageStandardRecipientRequestauthenticationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase
-{
-    public record AsCreateOAuthJwtConfigRequestoAuthFieldDefinitions(CreateOAuthJwtConfigRequestoAuthFieldDefinitions value) : CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase;
-    public record AsCreateOAuthJwtConfigRequestoAuthFieldDefinitions(CreateOAuthJwtConfigRequestoAuthFieldDefinitions value) : CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase;
-    public record Value(CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase
-{
-    public record AsCreateOAuthSignerProviderDetailsRequestoAuthJwtConfig(CreateOAuthSignerProviderDetailsRequestoAuthJwtConfig value) : CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase;
-    public record AsCreateOAuthJwtConfigRequest(CreateOAuthJwtConfigRequest value) : CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase;
-    public record Value(CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase
-{
-    public record AsCreateOAuthSignerProviderDetailsRequestoAuthResourceUris(CreateOAuthSignerProviderDetailsRequestoAuthResourceUris value) : CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase;
-    public record AsCreateOAuthSignerProviderDetailsRequestoAuthResourceUris(CreateOAuthSignerProviderDetailsRequestoAuthResourceUris value) : CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase;
-    public record Value(CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface CreatePolicyRequestconditionsBase
-{
-    public record AsCreatePolicyRequestconditions(CreatePolicyRequestconditions value) : CreatePolicyRequestconditionsBase;
-    public record AsCreatePolicyRequestconditions(CreatePolicyRequestconditions value) : CreatePolicyRequestconditionsBase;
-    public record Value(CreatePolicyRequestconditionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface DateInputConfigformatBase
-{
-    public record AsDateInputConfigformat(DateInputConfigformat value) : DateInputConfigformatBase;
-    public record AsDateFormatSwaggerEnumProvider(DateFormatSwaggerEnumProvider value) : DateInputConfigformatBase;
-    public record Value(DateInputConfigformatBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface DateInputConfigvalueBase
-{
-    public record AsDateInputConfigvalue(DateInputConfigvalue value) : DateInputConfigvalueBase;
-    public record AsDateInputConfigvalue(DateInputConfigvalue value) : DateInputConfigvalueBase;
-    public record Value(DateInputConfigvalueBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface DropDownElementDtoitemsBase
-{
-    public record AsDropDownElementDtoitems(DropDownElementDtoitems value) : DropDownElementDtoitemsBase;
-    public record AsDropDownElementDtoitems(DropDownElementDtoitems value) : DropDownElementDtoitemsBase;
-    public record Value(DropDownElementDtoitemsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface DropDownFieldoptionsBase
-{
-    public record AsDropDownFieldoptions(DropDownFieldoptions value) : DropDownFieldoptionsBase;
-    public record AsDropDownFieldoptions(DropDownFieldoptions value) : DropDownFieldoptionsBase;
-    public record Value(DropDownFieldoptionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface DropDownFieldDtooptionsBase
-{
-    public record AsDropDownFieldDtooptions(DropDownFieldDtooptions value) : DropDownFieldDtooptionsBase;
-    public record AsDropDownFieldDtooptions(DropDownFieldDtooptions value) : DropDownFieldDtooptionsBase;
-    public record Value(DropDownFieldDtooptionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDetailDtodefaultActionBase
-{
-    public record AsEnvelopeDetailDtodefaultAction(EnvelopeDetailDtodefaultAction value) : EnvelopeDetailDtodefaultActionBase;
-    public record AsEnvelopeAction(EnvelopeAction value) : EnvelopeDetailDtodefaultActionBase;
-    public record Value(EnvelopeDetailDtodefaultActionBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDetailDtodocumentsBase
-{
-    public record AsEnvelopeDetailDtodocuments(EnvelopeDetailDtodocuments value) : EnvelopeDetailDtodocumentsBase;
-    public record AsEnvelopeDetailDtodocuments(EnvelopeDetailDtodocuments value) : EnvelopeDetailDtodocumentsBase;
-    public record Value(EnvelopeDetailDtodocumentsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDetailDtostagesBase
-{
-    public record AsEnvelopeDetailDtostages(EnvelopeDetailDtostages value) : EnvelopeDetailDtostagesBase;
-    public record AsEnvelopeDetailDtostages(EnvelopeDetailDtostages value) : EnvelopeDetailDtostagesBase;
-    public record Value(EnvelopeDetailDtostagesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDetailRecipientDtotypeBase
-{
-    public record AsEnvelopeDetailRecipientDtotype(EnvelopeDetailRecipientDtotype value) : EnvelopeDetailRecipientDtotypeBase;
-    public record AsDbRecipientType(DbRecipientType value) : EnvelopeDetailRecipientDtotypeBase;
-    public record Value(EnvelopeDetailRecipientDtotypeBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDtoagreementsBase
-{
-    public record AsEnvelopeDtoagreements(EnvelopeDtoagreements value) : EnvelopeDtoagreementsBase;
-    public record AsEnvelopeDtoagreements(EnvelopeDtoagreements value) : EnvelopeDtoagreementsBase;
-    public record Value(EnvelopeDtoagreementsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDtorecipientsBase
-{
-    public record AsEnvelopeDtorecipients(EnvelopeDtorecipients value) : EnvelopeDtorecipientsBase;
-    public record AsEnvelopeDtorecipients(EnvelopeDtorecipients value) : EnvelopeDtorecipientsBase;
-    public record Value(EnvelopeDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeDtostagesBase
-{
-    public record AsEnvelopeDtostages(EnvelopeDtostages value) : EnvelopeDtostagesBase;
-    public record AsEnvelopeDtostages(EnvelopeDtostages value) : EnvelopeDtostagesBase;
-    public record Value(EnvelopeDtostagesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeFileDetailDocumentClassDtometadataValuesBase
-{
-    public record AsEnvelopeFileDetailDocumentClassDtometadataValues(EnvelopeFileDetailDocumentClassDtometadataValues value) : EnvelopeFileDetailDocumentClassDtometadataValuesBase;
-    public record AsEnvelopeFileDetailDocumentClassDtometadataValues(EnvelopeFileDetailDocumentClassDtometadataValues value) : EnvelopeFileDetailDocumentClassDtometadataValuesBase;
-    public record Value(EnvelopeFileDetailDocumentClassDtometadataValuesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopePartialDtorecipientsBase
-{
-    public record AsEnvelopePartialDtorecipients(EnvelopePartialDtorecipients value) : EnvelopePartialDtorecipientsBase;
-    public record AsEnvelopePartialDtorecipients(EnvelopePartialDtorecipients value) : EnvelopePartialDtorecipientsBase;
-    public record Value(EnvelopePartialDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface EnvelopeStageItemDtorecipientsBase
 {
     public record AsEnvelopeStageStandardRecipientSummaryDto(EnvelopeStageStandardRecipientSummaryDto value) : EnvelopeStageItemDtorecipientsBase;
     public record AsEnvelopeStageAutomaticRecipientResponse(EnvelopeStageAutomaticRecipientResponse value) : EnvelopeStageItemDtorecipientsBase;
     public record Value(EnvelopeStageItemDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase
-{
-    public record AsEnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides(EnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides value) : EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase;
-    public record AsOrganizationGeneralPoliciesDto(OrganizationGeneralPoliciesDto value) : EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase;
-    public record Value(EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface FileElementsDtotextBoxElementsvalidationBase
-{
-    public record AsFileElementsDtotextBoxElementsvalidation(FileElementsDtotextBoxElementsvalidation value) : FileElementsDtotextBoxElementsvalidationBase;
-    public record AsFileElementsFieldValidation(FileElementsFieldValidation value) : FileElementsDtotextBoxElementsvalidationBase;
-    public record Value(FileElementsDtotextBoxElementsvalidationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface FileElementsFieldValidationdateValidationConfigurationBase
-{
-    public record AsFileElementsFieldValidationdateValidationConfiguration(FileElementsFieldValidationdateValidationConfiguration value) : FileElementsFieldValidationdateValidationConfigurationBase;
-    public record AsFileElementDateValidationConfiguration(FileElementDateValidationConfiguration value) : FileElementsFieldValidationdateValidationConfigurationBase;
-    public record Value(FileElementsFieldValidationdateValidationConfigurationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface FileElementsFieldValidationnumberValidationConfigurationBase
-{
-    public record AsFileElementsFieldValidationnumberValidationConfiguration(FileElementsFieldValidationnumberValidationConfiguration value) : FileElementsFieldValidationnumberValidationConfigurationBase;
-    public record AsFileElementNumberValidationConfiguration(FileElementNumberValidationConfiguration value) : FileElementsFieldValidationnumberValidationConfigurationBase;
-    public record Value(FileElementsFieldValidationnumberValidationConfigurationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface FileElementsFieldValidationphoneValidationConfigurationBase
-{
-    public record AsFileElementsFieldValidationphoneValidationConfiguration(FileElementsFieldValidationphoneValidationConfiguration value) : FileElementsFieldValidationphoneValidationConfigurationBase;
-    public record AsFileElementPhoneValidationConfiguration(FileElementPhoneValidationConfiguration value) : FileElementsFieldValidationphoneValidationConfigurationBase;
-    public record Value(FileElementsFieldValidationphoneValidationConfigurationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface GenericSigningPluginDtosignatureFriendlyNamesBase
-{
-    public record AsGenericSigningPluginDtosignatureFriendlyNames(GenericSigningPluginDtosignatureFriendlyNames value) : GenericSigningPluginDtosignatureFriendlyNamesBase;
-    public record AsGenericSigningPluginDtosignatureFriendlyNames(GenericSigningPluginDtosignatureFriendlyNames value) : GenericSigningPluginDtosignatureFriendlyNamesBase;
-    public record Value(GenericSigningPluginDtosignatureFriendlyNamesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase
-{
-    public record AsGenericSigningPluginSenderSettingsDtopredefinedSenderDataFields(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFields value) : GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase;
-    public record AsGenericSigningPluginSenderSettingsDtopredefinedSenderDataFields(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFields value) : GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase;
-    public record Value(GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface GenericSigningPluginSenderSettingsDtoprofilesBase
-{
-    public record AsGenericSigningPluginSenderSettingsDtoprofiles(GenericSigningPluginSenderSettingsDtoprofiles value) : GenericSigningPluginSenderSettingsDtoprofilesBase;
-    public record AsGenericSigningPluginSenderSettingsDtoprofiles(GenericSigningPluginSenderSettingsDtoprofiles value) : GenericSigningPluginSenderSettingsDtoprofilesBase;
-    public record Value(GenericSigningPluginSenderSettingsDtoprofilesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface GenericSigningPluginSenderSettingsDtosenderDataFieldsBase
-{
-    public record AsGenericSigningPluginSenderSettingsDtosenderDataFields(GenericSigningPluginSenderSettingsDtosenderDataFields value) : GenericSigningPluginSenderSettingsDtosenderDataFieldsBase;
-    public record AsGenericSigningPluginSenderSettingsDtosenderDataFields(GenericSigningPluginSenderSettingsDtosenderDataFields value) : GenericSigningPluginSenderSettingsDtosenderDataFieldsBase;
-    public record Value(GenericSigningPluginSenderSettingsDtosenderDataFieldsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface InvisibleSignatureElementDtoallowedSignatureTypesBase
-{
-    public record AsInvisibleSignatureElementDtoallowedSignatureTypes(InvisibleSignatureElementDtoallowedSignatureTypes value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
-    public record AsInvisibleSignatureElementDtoallowedSignatureTypes(InvisibleSignatureElementDtoallowedSignatureTypes value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
-    public record Value(InvisibleSignatureElementDtoallowedSignatureTypesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface ListBoxFieldfontBase
-{
-    public record AsListBoxFieldfont(ListBoxFieldfont value) : ListBoxFieldfontBase;
-    public record AsFontStyle(FontStyle value) : ListBoxFieldfontBase;
-    public record Value(ListBoxFieldfontBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface NamedSignatureAppearanceLayoutDtobackgroundImageBase
-{
-    public record AsNamedSignatureAppearanceLayoutDtobackgroundImage(NamedSignatureAppearanceLayoutDtobackgroundImage value) : NamedSignatureAppearanceLayoutDtobackgroundImageBase;
-    public record AsBackgroundImageDto(BackgroundImageDto value) : NamedSignatureAppearanceLayoutDtobackgroundImageBase;
-    public record Value(NamedSignatureAppearanceLayoutDtobackgroundImageBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface NumberInputConfigsymbolBase
-{
-    public record AsNumberInputConfigsymbol(NumberInputConfigsymbol value) : NumberInputConfigsymbolBase;
-    public record AsNumberSymbol(NumberSymbol value) : NumberInputConfigsymbolBase;
-    public record Value(NumberInputConfigsymbolBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface NumberInputConfigvalueBase
-{
-    public record AsNumberInputConfigvalue(NumberInputConfigvalue value) : NumberInputConfigvalueBase;
-    public record AsNumberInputConfigvalue(NumberInputConfigvalue value) : NumberInputConfigvalueBase;
-    public record Value(NumberInputConfigvalueBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface OAuthJwtConfigDtooAuthFieldDefinitionsBase
-{
-    public record AsOAuthJwtConfigDtooAuthFieldDefinitions(OAuthJwtConfigDtooAuthFieldDefinitions value) : OAuthJwtConfigDtooAuthFieldDefinitionsBase;
-    public record AsOAuthJwtConfigDtooAuthFieldDefinitions(OAuthJwtConfigDtooAuthFieldDefinitions value) : OAuthJwtConfigDtooAuthFieldDefinitionsBase;
-    public record Value(OAuthJwtConfigDtooAuthFieldDefinitionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface OAuthSignerProviderDetailsResponseoAuthJwtConfigBase
-{
-    public record AsOAuthSignerProviderDetailsResponseoAuthJwtConfig(OAuthSignerProviderDetailsResponseoAuthJwtConfig value) : OAuthSignerProviderDetailsResponseoAuthJwtConfigBase;
-    public record AsOAuthJwtConfigDto(OAuthJwtConfigDto value) : OAuthSignerProviderDetailsResponseoAuthJwtConfigBase;
-    public record Value(OAuthSignerProviderDetailsResponseoAuthJwtConfigBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface OAuthSignerProviderDetailsResponseoAuthResourceUrisBase
-{
-    public record AsOAuthSignerProviderDetailsResponseoAuthResourceUris(OAuthSignerProviderDetailsResponseoAuthResourceUris value) : OAuthSignerProviderDetailsResponseoAuthResourceUrisBase;
-    public record AsOAuthSignerProviderDetailsResponseoAuthResourceUris(OAuthSignerProviderDetailsResponseoAuthResourceUris value) : OAuthSignerProviderDetailsResponseoAuthResourceUrisBase;
-    public record Value(OAuthSignerProviderDetailsResponseoAuthResourceUrisBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface OrganizationRecipientOAuthProviderDtoupdateFieldsBase
-{
-    public record AsOrganizationRecipientOAuthProviderDtoupdateFields(OrganizationRecipientOAuthProviderDtoupdateFields value) : OrganizationRecipientOAuthProviderDtoupdateFieldsBase;
-    public record AsOrganizationRecipientOAuthProviderDtoupdateFields(OrganizationRecipientOAuthProviderDtoupdateFields value) : OrganizationRecipientOAuthProviderDtoupdateFieldsBase;
-    public record Value(OrganizationRecipientOAuthProviderDtoupdateFieldsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface PolicyDtoactionsBase
-{
-    public record AsPolicyDtoactions(PolicyDtoactions value) : PolicyDtoactionsBase;
-    public record AsPolicyDtoactions(PolicyDtoactions value) : PolicyDtoactionsBase;
-    public record Value(PolicyDtoactionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface PolicyDtoconditionsBase
-{
-    public record AsPolicyDtoconditions(PolicyDtoconditions value) : PolicyDtoconditionsBase;
-    public record AsPolicyDtoconditions(PolicyDtoconditions value) : PolicyDtoconditionsBase;
-    public record Value(PolicyDtoconditionsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface PolicyRecipientSourceDtorecipientsBase
-{
-    public record AsPolicyRecipientSourceDtorecipients(PolicyRecipientSourceDtorecipients value) : PolicyRecipientSourceDtorecipientsBase;
-    public record AsPolicyRecipientSourceDtorecipients(PolicyRecipientSourceDtorecipients value) : PolicyRecipientSourceDtorecipientsBase;
-    public record Value(PolicyRecipientSourceDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface RecipientDtogeneralPoliciesOverridesBase
-{
-    public record AsRecipientDtogeneralPoliciesOverrides(RecipientDtogeneralPoliciesOverrides value) : RecipientDtogeneralPoliciesOverridesBase;
-    public record AsOrganizationGeneralPoliciesDto(OrganizationGeneralPoliciesDto value) : RecipientDtogeneralPoliciesOverridesBase;
-    public record Value(RecipientDtogeneralPoliciesOverridesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface RecipientDtoguidingOrderModeBase
-{
-    public record AsRecipientDtoguidingOrderMode(RecipientDtoguidingOrderMode value) : RecipientDtoguidingOrderModeBase;
-    public record AsGuidingOrderMode(GuidingOrderMode value) : RecipientDtoguidingOrderModeBase;
-    public record Value(RecipientDtoguidingOrderModeBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface RecipientDtonotificationChannelBase
-{
-    public record AsRecipientDtonotificationChannel(RecipientDtonotificationChannel value) : RecipientDtonotificationChannelBase;
-    public record AsNotificationChannel(NotificationChannel value) : RecipientDtonotificationChannelBase;
-    public record Value(RecipientDtonotificationChannelBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface RecipientDtoworkstepResultBase
-{
-    public record AsRecipientDtoworkstepResult(RecipientDtoworkstepResult value) : RecipientDtoworkstepResultBase;
-    public record AsDbWorkstepResult(DbWorkstepResult value) : RecipientDtoworkstepResultBase;
-    public record Value(RecipientDtoworkstepResultBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -642,16 +112,6 @@ public interface SignatureFieldDtoallowedSignatureTypesBase
     };
 }
 
-public interface SignaturePluginSignatureTypeDtostampImprintConfigurationBase
-{
-    public record AsSignaturePluginSignatureTypeDtostampImprintConfiguration(SignaturePluginSignatureTypeDtostampImprintConfiguration value) : SignaturePluginSignatureTypeDtostampImprintConfigurationBase;
-    public record AsClickToSignStampImprintDto(ClickToSignStampImprintDto value) : SignaturePluginSignatureTypeDtostampImprintConfigurationBase;
-    public record Value(SignaturePluginSignatureTypeDtostampImprintConfigurationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface SignatureTaskUpdateRequestsignatureBase
 {
     public record AsClickToSignSignature(ClickToSignSignature value) : SignatureTaskUpdateRequestsignatureBase;
@@ -670,46 +130,6 @@ public interface SignatureTaskUpdateRequestsignatureBase
     };
 }
 
-public interface SignatureTaskUpdateRequestsignaturepositionBase
-{
-    public record AsSignatureTaskUpdateRequestsignatureposition(SignatureTaskUpdateRequestsignatureposition value) : SignatureTaskUpdateRequestsignaturepositionBase;
-    public record AsWorkUnitSignaturePosition(WorkUnitSignaturePosition value) : SignatureTaskUpdateRequestsignaturepositionBase;
-    public record Value(SignatureTaskUpdateRequestsignaturepositionBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface TemplateDtodefaultActionBase
-{
-    public record AsTemplateDtodefaultAction(TemplateDtodefaultAction value) : TemplateDtodefaultActionBase;
-    public record AsTemplateAction(TemplateAction value) : TemplateDtodefaultActionBase;
-    public record Value(TemplateDtodefaultActionBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface TemplateStageStandardRecipientResponsemetadataBase
-{
-    public record AsTemplateStageStandardRecipientResponsemetadata(TemplateStageStandardRecipientResponsemetadata value) : TemplateStageStandardRecipientResponsemetadataBase;
-    public record AsTemplateStageStandardRecipientResponsemetadata(TemplateStageStandardRecipientResponsemetadata value) : TemplateStageStandardRecipientResponsemetadataBase;
-    public record Value(TemplateStageStandardRecipientResponsemetadataBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface TextBoxElementDtovalidationBase
-{
-    public record AsTextBoxElementDtovalidation(TextBoxElementDtovalidation value) : TextBoxElementDtovalidationBase;
-    public record AsFileElementsFieldValidation(FileElementsFieldValidation value) : TextBoxElementDtovalidationBase;
-    public record Value(TextBoxElementDtovalidationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface TextFieldDtotextInputConfigBase
 {
     public record AsStringInputConfig(StringInputConfig value) : TextFieldDtotextInputConfigBase;
@@ -718,16 +138,6 @@ public interface TextFieldDtotextInputConfigBase
     public record AsPhoneNumberInputConfig(PhoneNumberInputConfig value) : TextFieldDtotextInputConfigBase;
     public record AsTextFieldDtotextInputConfig(TextFieldDtotextInputConfig value) : TextFieldDtotextInputConfigBase;
     public record Value(TextFieldDtotextInputConfigBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface TextFieldDtotextInputConfigformatBase
-{
-    public record AsTextFieldDtotextInputConfigformat(TextFieldDtotextInputConfigformat value) : TextFieldDtotextInputConfigformatBase;
-    public record AsTextFieldDtotextInputConfigformat(TextFieldDtotextInputConfigformat value) : TextFieldDtotextInputConfigformatBase;
-    public record Value(TextFieldDtotextInputConfigformatBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -744,71 +154,11 @@ public interface TextTaskUpdateRequesttextInputValueBase
     };
 }
 
-public interface TimeInputConfigformatBase
-{
-    public record AsTimeInputConfigformat(TimeInputConfigformat value) : TimeInputConfigformatBase;
-    public record AsTimeFormatSwaggerEnumProvider(TimeFormatSwaggerEnumProvider value) : TimeInputConfigformatBase;
-    public record Value(TimeInputConfigformatBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface UpdateBulkEnvelopeDtorecipientsBase
-{
-    public record AsUpdateBulkEnvelopeDtorecipients(UpdateBulkEnvelopeDtorecipients value) : UpdateBulkEnvelopeDtorecipientsBase;
-    public record AsUpdateBulkEnvelopeDtorecipients(UpdateBulkEnvelopeDtorecipients value) : UpdateBulkEnvelopeDtorecipientsBase;
-    public record Value(UpdateBulkEnvelopeDtorecipientsBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface UpdateBulkEnvelopeDtosignatureFormatBase
-{
-    public record AsUpdateBulkEnvelopeDtosignatureFormat(UpdateBulkEnvelopeDtosignatureFormat value) : UpdateBulkEnvelopeDtosignatureFormatBase;
-    public record AsSignatureFormat(SignatureFormat value) : UpdateBulkEnvelopeDtosignatureFormatBase;
-    public record Value(UpdateBulkEnvelopeDtosignatureFormatBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface UpdateBulkEnvelopeDtostagesBase
-{
-    public record AsUpdateBulkEnvelopeDtostages(UpdateBulkEnvelopeDtostages value) : UpdateBulkEnvelopeDtostagesBase;
-    public record AsUpdateBulkEnvelopeDtostages(UpdateBulkEnvelopeDtostages value) : UpdateBulkEnvelopeDtostagesBase;
-    public record Value(UpdateBulkEnvelopeDtostagesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface UpdateBulkEnvelopeForIntegrationDtoexpirationBase
 {
     public record AsAbsoluteIntegrationExpirationDto(AbsoluteIntegrationExpirationDto value) : UpdateBulkEnvelopeForIntegrationDtoexpirationBase;
     public record AsRelativeIntegrationExpirationDto(RelativeIntegrationExpirationDto value) : UpdateBulkEnvelopeForIntegrationDtoexpirationBase;
     public record Value(UpdateBulkEnvelopeForIntegrationDtoexpirationBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase
-{
-    public record AsUpdateBulkEnvelopeForIntegrationDtonotificationMessages(UpdateBulkEnvelopeForIntegrationDtonotificationMessages value) : UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase;
-    public record AsUpdateBulkEnvelopeForIntegrationDtonotificationMessages(UpdateBulkEnvelopeForIntegrationDtonotificationMessages value) : UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase;
-    public record Value(UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface WorkUnitDropDownFieldResponseoptionsBase
-{
-    public record AsWorkUnitDropDownFieldResponseoptions(WorkUnitDropDownFieldResponseoptions value) : WorkUnitDropDownFieldResponseoptionsBase;
-    public record AsWorkUnitDropDownFieldResponseoptions(WorkUnitDropDownFieldResponseoptions value) : WorkUnitDropDownFieldResponseoptionsBase;
-    public record Value(WorkUnitDropDownFieldResponseoptionsBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -848,26 +198,6 @@ public interface WorkUnitFieldTaskResponsefieldtextInputConfigBase
     };
 }
 
-public interface WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase
-{
-    public record AsWorkUnitNumberInputConfigResponseResponsedecimalSeparator(WorkUnitNumberInputConfigResponseResponsedecimalSeparator value) : WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase;
-    public record AsWorkUnitDecimalSeparatorTypeResponse(WorkUnitDecimalSeparatorTypeResponse value) : WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase;
-    public record Value(WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface WorkUnitNumberInputConfigResponseResponsesymbolBase
-{
-    public record AsWorkUnitNumberInputConfigResponseResponsesymbol(WorkUnitNumberInputConfigResponseResponsesymbol value) : WorkUnitNumberInputConfigResponseResponsesymbolBase;
-    public record AsNumberSymbol(NumberSymbol value) : WorkUnitNumberInputConfigResponseResponsesymbolBase;
-    public record Value(WorkUnitNumberInputConfigResponseResponsesymbolBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface WorkUnitSignatureFieldResponseallowedSignatureTypesBase
 {
     public record AsClickToSignSignature(ClickToSignSignature value) : WorkUnitSignatureFieldResponseallowedSignatureTypesBase;
@@ -901,7 +231,7 @@ public interface WorkUnitTextFieldResponsetextInputConfigBase
 
 public class AbsoluteIntegrationExpirationDto
 {
-    public ATrustCertificateDtophoneNumberBase ExpiresAt { get; init; }
+    public string? ExpiresAt { get; init; }
     public string Mode { get; init; }
 }
 
@@ -944,7 +274,7 @@ public class Agreement
 {
     public string Language { get; init; }
     public string Body { get; init; }
-    public ATrustCertificateDtophoneNumberBase Title { get; init; }
+    public string? Title { get; init; }
 }
 
 public class AgreementSettingsRequest
@@ -967,8 +297,8 @@ public class AnnotationElementDto
     public string ElementId { get; init; }
     public AnnotationElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
+    public string? RecipientId { get; init; }
+    public string? ElementName { get; init; }
 }
 
 public class AnnotationField
@@ -978,8 +308,8 @@ public class AnnotationField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public AnnotationElementDefinitionvalueFormatBase ValueFormat { get; init; }
-    public AnnotationFieldfontBase Font { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
+    public AnnotationFieldfont? Font { get; init; }
+    public string? ElementName { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
@@ -996,8 +326,8 @@ public class AnnotationFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public AnnotationFieldDtoannotationConfigBase AnnotationConfig { get; init; }
-    public AnnotationFieldfontBase Font { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementName { get; init; }
+    public AnnotationFieldDtofont? Font { get; init; }
+    public string? ElementName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -1031,15 +361,15 @@ public class ApproveElementDto
     public string ElementId { get; init; }
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public long GuidingOrder { get; init; }
 }
 
 public class AreaReadConfirmationField
 {
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
@@ -1060,7 +390,7 @@ public class AreaReadConfirmationFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -1082,7 +412,7 @@ public class AssociateMyNamirialIdDto
 
 public class ATrustCertificateDto
 {
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class AttachmentElementDto
@@ -1091,7 +421,7 @@ public class AttachmentElementDto
     public bool Required { get; init; }
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public string Label { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -1162,7 +492,7 @@ public class AutomaticSealingProfileResponse
 
 public class AutomaticSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -1205,25 +535,25 @@ public class BulkEnvelopeDetailDto
     public string Id { get; init; }
     public string Name { get; init; }
     public List<BulkEnvelopeDetailDtostages> Stages { get; init; }
-    public BulkEnvelopeDetailDtodocumentsBase Documents { get; init; }
+    public List<BulkEnvelopeDetailDtodocuments>? Documents { get; init; }
 }
 
 public class BulkEnvelopeDetailDtostages
 {
     public string Id { get; init; }
     public long MandatoryRecipientsNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
     public string StageMode { get; init; }
-    public BulkEnvelopeDetailDtostagesrecipientsBase Recipients { get; init; }
+    public List<BulkEnvelopeDetailDtostagesrecipients>? Recipients { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItem
 {
     public BulkEnvelopeFieldTaskItemfieldBase Field { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
+    public string? StageId { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItemfield
@@ -1235,7 +565,7 @@ public class BulkEnvelopeFieldTaskItemfield
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public List<BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase> AllowedSignatureTypes { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public bool Required { get; init; }
     public string FieldType { get; init; }
 }
@@ -1257,30 +587,30 @@ public class BulkEnvelopeFieldTaskItemfield
 
 public class BulkEnvelopeFieldTaskItemfieldtextInputConfig
 {
-    public DateInputConfigvalueBase Value { get; init; }
-    public ATrustCertificateDtophoneNumberBase Format { get; init; }
-    public DateInputConfigvalueBase MinValue { get; init; }
-    public DateInputConfigvalueBase MaxValue { get; init; }
+    public string? Value { get; init; }
+    public string? Format { get; init; }
+    public string? MinValue { get; init; }
+    public string? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItemfieldtextInputConfig
 {
-    public NumberInputConfigvalueBase Value { get; init; }
-    public NumberInputConfigsymbolBase Symbol { get; init; }
+    public decimal? Value { get; init; }
+    public BulkEnvelopeFieldTaskItemfieldtextInputConfigsymbol? Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
     public string DecimalSeparator { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase DecimalPlaces { get; init; }
-    public NumberInputConfigvalueBase MinValue { get; init; }
-    public NumberInputConfigvalueBase MaxValue { get; init; }
+    public long? DecimalPlaces { get; init; }
+    public decimal? MinValue { get; init; }
+    public decimal? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItemfield
 {
-    public BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
+    public List<BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -1293,7 +623,7 @@ public class BulkEnvelopeFieldTaskItemfield
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public DropDownFieldDtooptionsBase Options { get; init; }
+    public List<BulkEnvelopeFieldTaskItemfieldoptions>? Options { get; init; }
     public bool Multiselect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -1304,8 +634,8 @@ public class BulkEnvelopeFieldTaskItemRequest
 {
     public BulkEnvelopeFieldTaskItemfieldBase Field { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
-    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
+    public string? RecipientId { get; init; }
+    public string? StageId { get; init; }
 }
 
 public class BulkEnvelopeFileTasksResponse
@@ -1333,16 +663,16 @@ public class BulkRecipientDefinition
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class BulkRecipientDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? GivenName { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
     public string RecipientType { get; init; }
     public string NotificationChannel { get; init; }
     public long Order { get; init; }
@@ -1357,15 +687,15 @@ public class BulkStageDto
 {
     public string Id { get; init; }
     public long MandatoryRecipientsNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
     public string StageMode { get; init; }
-    public BulkStageDtorecipientsBase Recipients { get; init; }
+    public List<BulkRecipientDto>? Recipients { get; init; }
 }
 
 public class BusinessRoleCreateDto
 {
     public string Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public string? Description { get; init; }
 }
 
 public class BusinessRoleDto
@@ -1373,7 +703,7 @@ public class BusinessRoleDto
     public string Id { get; init; }
     public string OrganizationId { get; init; }
     public string Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public string? Description { get; init; }
     public long AssignmentCount { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
@@ -1408,7 +738,7 @@ public class CheckBoxElementDto
     public string Source { get; init; }
     public bool Required { get; init; }
     public bool IsChecked { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public long GuidingOrder { get; init; }
 }
 
@@ -1452,13 +782,13 @@ public class CheckboxTaskUpdateRequest
 public class ClickToSignEnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
-    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
+    public string? IpAddress { get; init; }
     public string SignatureType { get; init; }
 }
 
 public class ClickToSignSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -1467,8 +797,8 @@ public class ClickToSignStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
-    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
+    public string? FontName { get; init; }
+    public long? FontSizeInPt { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayIp { get; init; }
 }
@@ -1480,7 +810,7 @@ public class ContactDto
     public string Surname { get; init; }
     public string Email { get; init; }
     public string CultureIsoCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class ContactImportResultDto
@@ -1500,14 +830,14 @@ public class ContactRequest
     public string Surname { get; init; }
     public string Email { get; init; }
     public string CultureIsoCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class CountriesDto
 {
     public List<CountriesDtooptions> Options { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase SelectedId { get; init; }
-    public ATrustCertificateDtophoneNumberBase SelectedIsoCode { get; init; }
+    public long? SelectedId { get; init; }
+    public string? SelectedIsoCode { get; init; }
 }
 
 public class CountriesLookupResponse
@@ -1531,8 +861,8 @@ public class CountryListItemDto
 public class CreateBulkEnvelopeStageRequest
 {
     public string Type { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase RequiredRecipientCompletions { get; init; }
+    public string? Name { get; init; }
+    public long? RequiredRecipientCompletions { get; init; }
     public string Mode { get; init; }
 }
 
@@ -1559,41 +889,41 @@ public class CreatedPersonalAccessTokenResponse
 
 public class CreateEnvelopeStageAutomaticRecipientRequest
 {
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? SignatureProfile { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public List<CreateEnvelopeStageAutomaticRecipientRequestmetadata>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
 public class CreateEnvelopeStageRequest
 {
     public string Type { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase RequiredRecipientCompletions { get; init; }
+    public string? Name { get; init; }
+    public long? RequiredRecipientCompletions { get; init; }
 }
 
 public class CreateEnvelopeStageStandardRecipientRequest
 {
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public string? GivenName { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? SignatureReason { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? NotificationChannel { get; init; }
+    public ATrustCertificateDto? Authentication { get; init; }
+    public ATrustCertificateDto? SignatureConfiguration { get; init; }
+    public string? PersonalMessage { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public List<CreateEnvelopeStageStandardRecipientRequestmetadata>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
 public class CreateOAuthAuthenticationDto
 {
-    public ATrustCertificateDtophoneNumberBase ProviderName { get; init; }
+    public string? ProviderName { get; init; }
     public string ExternalId { get; init; }
 }
 
@@ -1602,9 +932,9 @@ public class CreateOAuthFieldDefinitionRequest
     public string Path { get; init; }
     public string Mode { get; init; }
     public string Target { get; init; }
-    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
-    public ATrustCertificateDtophoneNumberBase GenericSigningPluginId { get; init; }
-    public ATrustCertificateDtophoneNumberBase GenericSigningPluginFieldKey { get; init; }
+    public string? CustomFieldName { get; init; }
+    public string? GenericSigningPluginId { get; init; }
+    public string? GenericSigningPluginFieldKey { get; init; }
 }
 
 public class CreateOAuthJwtConfigRequest
@@ -1615,22 +945,22 @@ public class CreateOAuthJwtConfigRequest
     public bool ValidateAudience { get; init; }
     public bool ValidateIssuer { get; init; }
     public bool ValidateLifetime { get; init; }
-    public CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
+    public List<CreateOAuthFieldDefinitionRequest>? OAuthFieldDefinitions { get; init; }
 }
 
 public class CreateOAuthResourceUriRequest
 {
     public string Uri { get; init; }
     public string AccessTokenParamName { get; init; }
-    public ATrustCertificateDtophoneNumberBase EIdServiceCombination { get; init; }
-    public CreateOAuthJwtConfigRequestoAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
+    public string? EIdServiceCombination { get; init; }
+    public List<CreateOAuthFieldDefinitionRequest>? OAuthFieldDefinitions { get; init; }
 }
 
 public class CreateOAuthSignerProviderDetailsRequest
 {
     public CreateOAuthSignerProviderRequest OAuthSignerProvider { get; init; }
-    public CreateOAuthSignerProviderDetailsRequestoAuthJwtConfigBase OAuthJwtConfig { get; init; }
-    public CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase OAuthResourceUris { get; init; }
+    public CreateOAuthJwtConfigRequest? OAuthJwtConfig { get; init; }
+    public List<CreateOAuthResourceUriRequest>? OAuthResourceUris { get; init; }
 }
 
 public class CreateOAuthSignerProviderRequest
@@ -1640,8 +970,8 @@ public class CreateOAuthSignerProviderRequest
     public string ClientSecret { get; init; }
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
-    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
-    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
+    public string? Scope { get; init; }
+    public string? LogoutUri { get; init; }
 }
 
 public class CreateOrganizationDto
@@ -1659,7 +989,7 @@ public class CreateOrganizationUserRequestDto
     public string Surname { get; init; }
     public string Email { get; init; }
     public CreateOrganizationUserRequestDtoregionalSettings RegionalSettings { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class CreateOrganizationUserRequestDtoregionalSettings
@@ -1680,16 +1010,16 @@ public class CreatePolicyRequest
 {
     public string Name { get; init; }
     public bool IsActive { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
-    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
-    public CreatePolicyRequestconditionsBase Conditions { get; init; }
+    public string? Description { get; init; }
+    public string? DocumentClassId { get; init; }
+    public List<CreatePolicyRequestconditions>? Conditions { get; init; }
 }
 
 public class CreateRoleRequest
 {
     public string Name { get; init; }
     public List<CreateRoleRequestpermissions> Permissions { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public string? Description { get; init; }
 }
 
 public class CreateRoleRequestpermissions
@@ -1716,26 +1046,26 @@ public class CreateSubstituteDelegationDto
 {
     public string DelegateeUserEmail { get; init; }
     public bool UtilizeAlsoOnCCRecipients { get; init; }
-    public ATrustCertificateDtophoneNumberBase Reason { get; init; }
-    public ATrustCertificateDtophoneNumberBase StartDate { get; init; }
-    public ATrustCertificateDtophoneNumberBase EndDate { get; init; }
+    public string? Reason { get; init; }
+    public string? StartDate { get; init; }
+    public string? EndDate { get; init; }
 }
 
 public class CreateTemplateStageStandardRecipientRequest
 {
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public string? GivenName { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? SignatureReason { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? NotificationChannel { get; init; }
+    public ATrustCertificateDto? Authentication { get; init; }
+    public ATrustCertificateDto? SignatureConfiguration { get; init; }
+    public string? PersonalMessage { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
     public bool IsDelegationEnabled { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public List<CreateTemplateStageStandardRecipientRequestmetadata>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -1757,10 +1087,10 @@ public class DateAnnotationConfigDto
 
 public class DateInputConfig
 {
-    public DateInputConfigvalueBase Value { get; init; }
-    public DateInputConfigformatBase Format { get; init; }
-    public DateInputConfigvalueBase MinValue { get; init; }
-    public DateInputConfigvalueBase MaxValue { get; init; }
+    public string? Value { get; init; }
+    public DateFormatSwaggerEnumProvider? Format { get; init; }
+    public string? MinValue { get; init; }
+    public string? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -1797,22 +1127,22 @@ public class DefaultUserGroupsDto
 public class DelegationInfo
 {
     public bool Enabled { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultDelegationPolicy { get; init; }
+    public string? DefaultDelegationPolicy { get; init; }
 }
 
 public class DisposableCertificateSettingsDto
 {
-    public ATrustCertificateDtophoneNumberBase LraId { get; init; }
-    public ATrustCertificateDtophoneNumberBase User { get; init; }
+    public string? LraId { get; init; }
+    public string? User { get; init; }
     public bool HasPassword { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisposableType { get; init; }
+    public string? DisposableType { get; init; }
     public bool ShowDisclaimerBeforeCertificateRequest { get; init; }
     public bool SendDisposableDisclaimerDocumentNotifications { get; init; }
 }
 
 public class DisposableCertificateSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -1821,8 +1151,8 @@ public class DisposableCertificateStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
-    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
+    public string? FontName { get; init; }
+    public long? FontSizeInPt { get; init; }
     public bool DisplayIp { get; init; }
 }
 
@@ -1831,7 +1161,7 @@ public class Document
     public string Id { get; init; }
     public string Name { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
+    public string? DocumentClassId { get; init; }
 }
 
 public class DocumentClassesResponse
@@ -1861,9 +1191,9 @@ public class DocumentReadConfirmationDto
 {
     public string ElementId { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public long GuidingOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
 }
 
 public class DocumentsUploadRequest
@@ -1873,7 +1203,7 @@ public class DocumentsUploadRequest
 
 public class DrawToSignSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -1890,12 +1220,12 @@ public class DropDownElementDto
     public DropDownElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
     public string ElementId { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Editable { get; init; }
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public bool? Editable { get; init; }
+    public string? Value { get; init; }
     public long GuidingOrder { get; init; }
-    public DropDownElementDtoitemsBase Items { get; init; }
+    public List<DropDownElementDtoitems>? Items { get; init; }
 }
 
 public class DropDownField
@@ -1905,10 +1235,10 @@ public class DropDownField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
-    public AnnotationFieldfontBase Font { get; init; }
-    public DropDownFieldoptionsBase Options { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Editable { get; init; }
-    public ATrustCertificateDtophoneNumberBase SelectedValue { get; init; }
+    public DropDownFieldfont? Font { get; init; }
+    public List<DropDownFieldoptions>? Options { get; init; }
+    public bool? Editable { get; init; }
+    public string? SelectedValue { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
@@ -1925,7 +1255,7 @@ public class DropDownFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public DropDownFieldDtooptionsBase Options { get; init; }
+    public List<DropDownFieldDtooptions>? Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
@@ -1935,7 +1265,7 @@ public class DropDownItemEntry
 {
     public string Value { get; init; }
     public string Label { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase IsSelected { get; init; }
+    public bool? IsSelected { get; init; }
 }
 
 public class DropDownTaskUpdateRequest
@@ -1963,7 +1293,7 @@ public class EnvelopeActionResponse
 {
     public string EnvelopeId { get; init; }
     public long StatusCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase Message { get; init; }
+    public string? Message { get; init; }
 }
 
 public class EnvelopeActorDto
@@ -1995,7 +1325,7 @@ public class EnvelopeBulkSignDevicesResponseDto
 public class EnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
-    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
+    public string? IpAddress { get; init; }
 }
 
 public class EnvelopeBulkSignResultDto
@@ -2014,7 +1344,7 @@ public class EnvelopeBulkSignTransactionDto
 {
     public string TransactionId { get; init; }
     public string PayloadFileId { get; init; }
-    public ATrustCertificateDtophoneNumberBase ExpiresAt { get; init; }
+    public string? ExpiresAt { get; init; }
 }
 
 public class EnvelopeDetailDto
@@ -2026,11 +1356,11 @@ public class EnvelopeDetailDto
     public bool SendCopyToAllRecipients { get; init; }
     public List<EnvelopeAction> Actions { get; init; }
     public string UpdatedAt { get; init; }
-    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
-    public ATrustCertificateDtophoneNumberBase ExpirationDate { get; init; }
-    public EnvelopeDetailDtodefaultActionBase DefaultAction { get; init; }
-    public EnvelopeDetailDtodocumentsBase Documents { get; init; }
-    public EnvelopeDetailDtostagesBase Stages { get; init; }
+    public string? SentAt { get; init; }
+    public string? ExpirationDate { get; init; }
+    public EnvelopeAction? DefaultAction { get; init; }
+    public List<Document>? Documents { get; init; }
+    public List<EnvelopeDetailDtostages>? Stages { get; init; }
     public bool PreventFieldsEditingWhenFinished { get; init; }
 }
 
@@ -2040,16 +1370,16 @@ public class EnvelopeDetailRecipientDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase Order { get; init; }
-    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
-    public ATrustCertificateDtophoneNumberBase Status { get; init; }
-    public ATrustCertificateDtophoneNumberBase StatusReason { get; init; }
-    public ATrustCertificateDtophoneNumberBase LastAction { get; init; }
-    public ATrustCertificateDtophoneNumberBase LastActionDate { get; init; }
-    public ATrustCertificateDtophoneNumberBase ViewerLink { get; init; }
-    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
+    public string? Placeholder { get; init; }
+    public long? Order { get; init; }
+    public DbRecipientType? Type { get; init; }
+    public string? Status { get; init; }
+    public string? StatusReason { get; init; }
+    public string? LastAction { get; init; }
+    public string? LastActionDate { get; init; }
+    public string? ViewerLink { get; init; }
+    public string? StageId { get; init; }
+    public string? SignatureProfile { get; init; }
     public bool RequiresDelegationCompletion { get; init; }
 }
 
@@ -2059,7 +1389,7 @@ public class EnvelopeDetailStageDto
     public long SortOrder { get; init; }
     public long RequiredRecipientCompletions { get; init; }
     public List<EnvelopeDetailRecipientDto> Recipients { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
 }
 
 public class EnvelopeDownloadDto
@@ -2077,27 +1407,27 @@ public class EnvelopeDownloadsResponse
 public class EnvelopeDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
+    public string? Name { get; init; }
+    public string? DefaultSubject { get; init; }
+    public string? DefaultBody { get; init; }
     public bool SendCopyToAllRecipients { get; init; }
     public bool LateIdent { get; init; }
     public bool UseInvisibleSignatureWithTimestampForAllDocumentsAndRecipients { get; init; }
     public bool ShowOrganizationAgreements { get; init; }
     public ReminderConfigurationDto ReminderConfiguration { get; init; }
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
-    public EnvelopeDtorecipientsBase Recipients { get; init; }
-    public EnvelopeDtostagesBase Stages { get; init; }
-    public EnvelopeDetailDtodocumentsBase Documents { get; init; }
-    public EnvelopeDtoagreementsBase Agreements { get; init; }
+    public List<EnvelopeDtorecipients>? Recipients { get; init; }
+    public List<EnvelopeDtostages>? Stages { get; init; }
+    public List<Document>? Documents { get; init; }
+    public List<Agreement>? Agreements { get; init; }
     public List<string> UserGroupSharingIds { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CallbackConfiguration { get; init; }
+    public ATrustCertificateDto? CallbackConfiguration { get; init; }
     public DbEnvelopeStatus Status { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
     public bool PreventFieldsEditingWhenFinished { get; init; }
-    public ATrustCertificateDtophoneNumberBase AfterSendRedirectUrl { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public string? AfterSendRedirectUrl { get; init; }
+    public string? SignatureReason { get; init; }
     public bool SignatureReasonAllowChange { get; init; }
     public string SignatureFormat { get; init; }
     public bool FileRestrictedVisibility { get; init; }
@@ -2120,8 +1450,8 @@ public class EnvelopeEventsDto
 public class EnvelopeFileDetailDocumentClassDto
 {
     public string DocumentClassId { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public EnvelopeFileDetailDocumentClassDtometadataValuesBase MetadataValues { get; init; }
+    public string? Name { get; init; }
+    public List<EnvelopeFileDetailDocumentClassDtometadataValues>? MetadataValues { get; init; }
 }
 
 public class EnvelopeFileDetailDocumentClassRequest
@@ -2133,8 +1463,8 @@ public class EnvelopeFileDetailDocumentClassRequest
 public class EnvelopeFileMetadataValueDto
 {
     public string FieldDefinitionId { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public string? Name { get; init; }
+    public string? Value { get; init; }
     public string Type { get; init; }
 }
 
@@ -2164,9 +1494,9 @@ public class EnvelopePartialDto
     public EnvelopeDetailStatus Status { get; init; }
     public List<EnvelopeAction> Actions { get; init; }
     public string CreatedAt { get; init; }
-    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
-    public EnvelopePartialDtorecipientsBase Recipients { get; init; }
-    public EnvelopeDetailDtodefaultActionBase DefaultAction { get; init; }
+    public string? SentAt { get; init; }
+    public List<EnvelopeDetailRecipientDto>? Recipients { get; init; }
+    public EnvelopeAction? DefaultAction { get; init; }
 }
 
 public class EnvelopePermissions
@@ -2195,18 +1525,18 @@ public class EnvelopeSignatureTypesRequestDto
 public class EnvelopeStageAutomaticRecipientResponse
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? SignatureProfile { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public List<EnvelopeStageAutomaticRecipientResponsemetadata>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
 public class EnvelopeStageItemDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
     public long SortOrder { get; init; }
     public long RequiredRecipientCompletions { get; init; }
     public string Type { get; init; }
@@ -2220,20 +1550,20 @@ public class EnvelopeStageListDto
 
 public class EnvelopeStageStandardRecipientResponse
 {
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public string? GivenName { get; init; }
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
-    public EnvelopeStageStandardRecipientResponsegeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? NotificationChannel { get; init; }
+    public ATrustCertificateDto? Authentication { get; init; }
+    public ATrustCertificateDto? SignatureConfiguration { get; init; }
+    public string? PersonalMessage { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public List<EnvelopeStageStandardRecipientResponsemetadata>? Metadata { get; init; }
+    public EnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides? GeneralPoliciesOverrides { get; init; }
     public string Type { get; init; }
 }
 
@@ -2243,8 +1573,8 @@ public class EnvelopeStageStandardRecipientSummaryDto
     public string Id { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? NotificationChannel { get; init; }
     public string Type { get; init; }
 }
 
@@ -2257,8 +1587,8 @@ public class ErrorResult
 {
     public ErrorCode ErrorId { get; init; }
     public string Description { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Errors { get; init; }
-    public ATrustCertificateDtophoneNumberBase Field { get; init; }
+    public ATrustCertificateDto? Errors { get; init; }
+    public string? Field { get; init; }
 }
 
 public class FailedEnvelope
@@ -2270,17 +1600,17 @@ public class FailedEnvelope
 public class FileElementDateValidationConfiguration
 {
     public ATrustCertificateDto Range { get; init; }
-    public ATrustCertificateDtophoneNumberBase DateFormat { get; init; }
+    public string? DateFormat { get; init; }
 }
 
 public class FileElementNumberValidationConfiguration
 {
     public string SymbolPosition { get; init; }
     public ATrustCertificateDto Range { get; init; }
-    public ATrustCertificateDtophoneNumberBase Symbol { get; init; }
+    public string? Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
     public DecimalSeparatorType DecimalSeparator { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase Decimals { get; init; }
+    public long? Decimals { get; init; }
 }
 
 public class FileElementPhoneValidationConfiguration
@@ -2310,10 +1640,10 @@ public class FileElementsDtoinvisibleSignatureElements
 {
     public string ElementId { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public List<FileElementsDtoinvisibleSignatureElementsallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public long GuidingOrder { get; init; }
 }
 
@@ -2322,7 +1652,7 @@ public class FileElementsDtolinkElements
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
     public string ElementId { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -2337,7 +1667,7 @@ public class FileElementsDtolistElements
     public bool IsMultiselect { get; init; }
     public bool IsChecked { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public long GuidingOrder { get; init; }
 }
 
@@ -2349,7 +1679,7 @@ public class FileElementsDtoradioButtonElements
     public string GroupName { get; init; }
     public bool IsChecked { get; init; }
     public bool IsSelectInUnison { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
@@ -2368,13 +1698,13 @@ public class FileElementsDtosignatureElements
     public ATrustCertificateDto AllowedSignatureTypes { get; init; }
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
+    public string? DisplayName { get; init; }
+    public string? ElementDescription { get; init; }
+    public bool? UseExternalTimestampServer { get; init; }
     public long GuidingOrder { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
+    public ATrustCertificateDto? TaskConfiguration { get; init; }
     public bool IsApprove { get; init; }
 }
 
@@ -2383,11 +1713,11 @@ public class FileElementsDtotextBoxElements
     public string ElementId { get; init; }
     public FileElementsDtotextBoxElementselementDefinition ElementDefinition { get; init; }
     public string Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
-    public FileElementsDtotextBoxElementsvalidationBase Validation { get; init; }
+    public FileElementsDtotextBoxElementsvalidation? Validation { get; init; }
 }
 
 public class FileElementsDtotextBoxElementselementDefinition
@@ -2404,10 +1734,10 @@ public class FileElementsDtotextBoxElementselementDefinition
 public class FileElementsFieldValidation
 {
     public FieldValidationType Type { get; init; }
-    public FileElementsFieldValidationdateValidationConfigurationBase DateValidationConfiguration { get; init; }
-    public FileElementsFieldValidationnumberValidationConfigurationBase NumberValidationConfiguration { get; init; }
-    public FileElementsFieldValidationphoneValidationConfigurationBase PhoneValidationConfiguration { get; init; }
-    public FileElementsFieldValidationdateValidationConfigurationBase TimeValidationConfiguration { get; init; }
+    public FileElementDateValidationConfiguration? DateValidationConfiguration { get; init; }
+    public FileElementNumberValidationConfiguration? NumberValidationConfiguration { get; init; }
+    public FileElementPhoneValidationConfiguration? PhoneValidationConfiguration { get; init; }
+    public FileElementDateValidationConfiguration? TimeValidationConfiguration { get; init; }
 }
 
 public class FileElementsPosition
@@ -2441,7 +1771,7 @@ public class FileOrderItem
 
 public class FileReadConfirmationField
 {
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
@@ -2457,7 +1787,7 @@ public class FileReadConfirmationFieldDto
 {
     public string Id { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -2492,7 +1822,7 @@ public class ForcedAuthenticationRulesRequest
     public bool ForceInputSmsAuthentication { get; init; }
     public bool AllowBiometricWithoutAuthentication { get; init; }
     public bool AllowComplexSignaturesWithoutAuthentication { get; init; }
-    public ATrustCertificateDtophoneNumberBase AuthenticationProviderId { get; init; }
+    public string? AuthenticationProviderId { get; init; }
 }
 
 public class FullNameAnnotationConfigDto
@@ -2508,8 +1838,8 @@ public class FullNameDefinition
 public class GeneralSettingsDto
 {
     public string Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase ContactUrl { get; init; }
-    public ATrustCertificateDtophoneNumberBase SupportUrl { get; init; }
+    public string? ContactUrl { get; init; }
+    public string? SupportUrl { get; init; }
     public bool AllowSendCC { get; init; }
     public bool PreventEmailFromBeingSent { get; init; }
     public bool CustomStampImprintEnabled { get; init; }
@@ -2522,7 +1852,7 @@ public class GenericSigningPluginDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
-    public GenericSigningPluginDtosignatureFriendlyNamesBase SignatureFriendlyNames { get; init; }
+    public List<GenericSigningPluginDtosignatureFriendlyNames>? SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
 }
 
@@ -2533,13 +1863,13 @@ public class GenericSigningPluginSenderSettingsDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
-    public GenericSigningPluginDtosignatureFriendlyNamesBase SignatureFriendlyNames { get; init; }
+    public List<GenericSigningPluginSenderSettingsDtosignatureFriendlyNames>? SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
     public string PluginFriendlyName { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureFriendlyName { get; init; }
-    public GenericSigningPluginSenderSettingsDtosenderDataFieldsBase SenderDataFields { get; init; }
-    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase PredefinedSenderDataFields { get; init; }
-    public GenericSigningPluginSenderSettingsDtoprofilesBase Profiles { get; init; }
+    public string? SignatureFriendlyName { get; init; }
+    public List<GenericSigningPluginSenderSettingsDtosenderDataFields>? SenderDataFields { get; init; }
+    public List<string>? PredefinedSenderDataFields { get; init; }
+    public List<GenericSigningPluginSenderSettingsDtoprofiles>? Profiles { get; init; }
 }
 
 public class GenericSigningPluginSettingLabelDto
@@ -2562,11 +1892,11 @@ public class GetUsersListResponse
 
 public class HttpValidationProblemDetails
 {
-    public ATrustCertificateDtophoneNumberBase Type { get; init; }
-    public ATrustCertificateDtophoneNumberBase Title { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase Status { get; init; }
-    public ATrustCertificateDtophoneNumberBase Detail { get; init; }
-    public ATrustCertificateDtophoneNumberBase Instance { get; init; }
+    public string? Type { get; init; }
+    public string? Title { get; init; }
+    public long? Status { get; init; }
+    public string? Detail { get; init; }
+    public string? Instance { get; init; }
     public ATrustCertificateDto Errors { get; init; }
 }
 
@@ -2584,64 +1914,64 @@ public class InitialsDefinition
 public class IntegrationBulkEnvelopeDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
     public ExpirationMode ExpirationMode { get; init; }
     public ReminderConfigurationDto ReminderConfiguration { get; init; }
     public bool QualifiedTimeStamp { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public string? DefaultSubject { get; init; }
+    public string? DefaultBody { get; init; }
+    public string? SignatureReason { get; init; }
     public string SignatureFormat { get; init; }
     public List<FileOrderItem> Stages { get; init; }
     public List<Document> Files { get; init; }
-    public EnvelopeDtoagreementsBase Agreements { get; init; }
+    public List<Agreement>? Agreements { get; init; }
     public string Status { get; init; }
-    public ATrustCertificateDtophoneNumberBase StatusChangeReason { get; init; }
-    public ATrustCertificateDtophoneNumberBase SentAt { get; init; }
+    public string? StatusChangeReason { get; init; }
+    public string? SentAt { get; init; }
     public bool FileRestrictedVisibility { get; init; }
 }
 
 public class IntegrationTemplateDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
     public ExpirationMode ExpirationMode { get; init; }
     public ReminderConfigurationDto ReminderConfiguration { get; init; }
     public bool QualifiedTimeStamp { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
+    public string? DefaultSubject { get; init; }
+    public string? DefaultBody { get; init; }
+    public string? SignatureReason { get; init; }
     public string SignatureFormat { get; init; }
     public List<FileOrderItem> Stages { get; init; }
     public List<Document> Files { get; init; }
-    public EnvelopeDtoagreementsBase Agreements { get; init; }
+    public List<Agreement>? Agreements { get; init; }
 }
 
 public class InvisibleSignatureElementDto
 {
     public string ElementId { get; init; }
     public FormFieldSource Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public List<InvisibleSignatureElementDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public long GuidingOrder { get; init; }
 }
 
 public class InvisibleSignatureField
 {
-    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
+    public List<InvisibleSignatureFieldallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
@@ -2651,9 +1981,9 @@ public class InvisibleSignatureField
 
 public class InvisibleSignatureFieldDto
 {
-    public InvisibleSignatureElementDtoallowedSignatureTypesBase AllowedSignatureTypes { get; init; }
+    public List<InvisibleSignatureFieldDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -2699,7 +2029,7 @@ public class LinkElementDto
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public FormFieldSource Source { get; init; }
     public string ElementId { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -2737,8 +2067,8 @@ public class ListBoxField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
-    public ListBoxFieldfontBase Font { get; init; }
-    public DropDownFieldoptionsBase Options { get; init; }
+    public FontStyle? Font { get; init; }
+    public List<ListBoxFieldoptions>? Options { get; init; }
     public bool Multiselect { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
@@ -2756,7 +2086,7 @@ public class ListBoxFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public DropDownFieldDtooptionsBase Options { get; init; }
+    public List<ListBoxFieldDtooptions>? Options { get; init; }
     public bool Multiselect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -2779,7 +2109,7 @@ public class ListElementDto
     public bool IsMultiselect { get; init; }
     public bool IsChecked { get; init; }
     public FormFieldSource Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public long GuidingOrder { get; init; }
 }
 
@@ -2792,14 +2122,14 @@ public class ListItemEntry
 
 public class LocalCertificateSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
 public class MetadataValueDto
 {
     public string FieldDefinitionId { get; init; }
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public string? Value { get; init; }
 }
 
 public class NamedSignatureAppearanceLayoutDto
@@ -2811,7 +2141,7 @@ public class NamedSignatureAppearanceLayoutDto
     public bool DisplayDateTime { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayReason { get; init; }
-    public NamedSignatureAppearanceLayoutDtobackgroundImageBase BackgroundImage { get; init; }
+    public BackgroundImageDto? BackgroundImage { get; init; }
     public ImagePosition Position { get; init; }
 }
 
@@ -2867,19 +2197,19 @@ public class NotificationSettingsDto
 
 public class NumberInputConfig
 {
-    public NumberInputConfigvalueBase Value { get; init; }
-    public NumberInputConfigsymbolBase Symbol { get; init; }
+    public decimal? Value { get; init; }
+    public NumberInputConfigsymbol? Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
     public DecimalSeparatorType DecimalSeparator { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase DecimalPlaces { get; init; }
-    public NumberInputConfigvalueBase MinValue { get; init; }
-    public NumberInputConfigvalueBase MaxValue { get; init; }
+    public long? DecimalPlaces { get; init; }
+    public decimal? MinValue { get; init; }
+    public decimal? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
 public class NumberSymbol
 {
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public string? Value { get; init; }
     public string Position { get; init; }
 }
 
@@ -2895,20 +2225,20 @@ public class OAuthFieldDefinitionDto
     public string Path { get; init; }
     public string Mode { get; init; }
     public string Target { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase OAuthResourceUriId { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase OAuthJwtConfigId { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase OAuthProviderId { get; init; }
-    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
-    public ATrustCertificateDtophoneNumberBase GenericSigningPluginId { get; init; }
-    public ATrustCertificateDtophoneNumberBase GenericSigningPluginFieldKey { get; init; }
+    public long? OAuthResourceUriId { get; init; }
+    public long? OAuthJwtConfigId { get; init; }
+    public long? OAuthProviderId { get; init; }
+    public string? CustomFieldName { get; init; }
+    public string? GenericSigningPluginId { get; init; }
+    public string? GenericSigningPluginFieldKey { get; init; }
 }
 
 public class OAuthFieldReferenceDto
 {
-    public ATrustCertificateDtophoneNumberBase Id { get; init; }
+    public string? Id { get; init; }
     public string FieldTarget { get; init; }
-    public ATrustCertificateDtophoneNumberBase CustomFieldName { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase GenericSigningPluginReference { get; init; }
+    public string? CustomFieldName { get; init; }
+    public ATrustCertificateDto? GenericSigningPluginReference { get; init; }
 }
 
 public class OAuthJwtConfigDto
@@ -2920,7 +2250,7 @@ public class OAuthJwtConfigDto
     public bool ValidateAudience { get; init; }
     public bool ValidateIssuer { get; init; }
     public bool ValidateLifetime { get; init; }
-    public OAuthJwtConfigDtooAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
+    public List<OAuthFieldDefinitionDto>? OAuthFieldDefinitions { get; init; }
 }
 
 public class OAuthResourceUriDto
@@ -2928,8 +2258,8 @@ public class OAuthResourceUriDto
     public long Id { get; init; }
     public string Uri { get; init; }
     public string AccessTokenParamName { get; init; }
-    public ATrustCertificateDtophoneNumberBase EIdServiceCombination { get; init; }
-    public OAuthJwtConfigDtooAuthFieldDefinitionsBase OAuthFieldDefinitions { get; init; }
+    public string? EIdServiceCombination { get; init; }
+    public List<OAuthFieldDefinitionDto>? OAuthFieldDefinitions { get; init; }
 }
 
 public class OAuthSignerProvider
@@ -2938,21 +2268,21 @@ public class OAuthSignerProvider
     public string ExternalId { get; init; }
     public string Name { get; init; }
     public string ClientId { get; init; }
-    public ATrustCertificateDtophoneNumberBase ClientSecret { get; init; }
-    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
+    public string? ClientSecret { get; init; }
+    public string? Scope { get; init; }
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
-    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
+    public string? LogoutUri { get; init; }
     public long AuthenticationType { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase IsActive { get; init; }
-    public ATrustCertificateDtophoneNumberBase RedirectUrl { get; init; }
+    public bool? IsActive { get; init; }
+    public string? RedirectUrl { get; init; }
 }
 
 public class OAuthSignerProviderDetailsResponse
 {
     public OAuthSignerProvider OAuthSignerProvider { get; init; }
-    public OAuthSignerProviderDetailsResponseoAuthJwtConfigBase OAuthJwtConfig { get; init; }
-    public OAuthSignerProviderDetailsResponseoAuthResourceUrisBase OAuthResourceUris { get; init; }
+    public OAuthJwtConfigDto? OAuthJwtConfig { get; init; }
+    public List<OAuthResourceUriDto>? OAuthResourceUris { get; init; }
 }
 
 public class OAuthSignerProviderFieldModeResponse
@@ -2969,7 +2299,7 @@ public class OAuthSignerProvidersResponse
 
 public class OneTimePasswordSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -2978,8 +2308,8 @@ public class OneTimePasswordStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
-    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
+    public string? FontName { get; init; }
+    public long? FontSizeInPt { get; init; }
     public bool DisplayTransactionId { get; init; }
     public bool DisplayTransactionToken { get; init; }
     public bool DisplayPhoneNumber { get; init; }
@@ -3052,8 +2382,8 @@ public class OrganizationRecipientOAuthProviderDto
     public bool HasLateIdentSigTypes { get; init; }
     public bool ProvidesIdentification { get; init; }
     public long UpdateFieldComparisonValue { get; init; }
-    public OrganizationRecipientOAuthProviderDtoupdateFieldsBase UpdateFields { get; init; }
-    public OrganizationRecipientOAuthProviderDtoupdateFieldsBase ValidateFields { get; init; }
+    public List<OAuthFieldReferenceDto>? UpdateFields { get; init; }
+    public List<OAuthFieldReferenceDto>? ValidateFields { get; init; }
 }
 
 public class OrganizationRecipientSettingsDto
@@ -3090,7 +2420,7 @@ public class OrganizationUserDto
     public string Surname { get; init; }
     public string Email { get; init; }
     public OrganizationUserRegionalSettingsDto RegionalSettings { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
     public bool Enabled { get; init; }
 }
 
@@ -3113,14 +2443,14 @@ public class PageReadConfirmationDto
     public string ElementId { get; init; }
     public long PageNumber { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public long GuidingOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
 }
 
 public class PageReadConfirmationField
 {
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
@@ -3137,7 +2467,7 @@ public class PageReadConfirmationFieldDto
     public string Id { get; init; }
     public long Page { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -3166,9 +2496,9 @@ public class ParseBulkRecipientsResponse
 
 public class PdfDocumentSettingsDto
 {
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase PAdESConfiguration { get; init; }
+    public ATrustCertificateDto? PAdESConfiguration { get; init; }
     public bool AllowSigningOfLockedPdfDocuments { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CustomTimeStampSettings { get; init; }
+    public ATrustCertificateDto? CustomTimeStampSettings { get; init; }
 }
 
 public class PermissionDto
@@ -3211,7 +2541,7 @@ public class PhoneNumberInputConfig
 public class PluginSignature
 {
     public string PluginId { get; init; }
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -3223,7 +2553,7 @@ public class PoliciesResponse
 
 public class PolicyActionDto
 {
-    public ATrustCertificateDtophoneNumberBase Id { get; init; }
+    public string? Id { get; init; }
     public long SortOrder { get; init; }
     public string Type { get; init; }
     public StageConfigurationDto Stage { get; init; }
@@ -3245,10 +2575,10 @@ public class PolicyDto
     public string Name { get; init; }
     public bool IsActive { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
-    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
-    public PolicyDtoconditionsBase Conditions { get; init; }
-    public PolicyDtoactionsBase Actions { get; init; }
+    public string? Description { get; init; }
+    public string? DocumentClassId { get; init; }
+    public List<PolicyConditionDto>? Conditions { get; init; }
+    public List<PolicyActionDto>? Actions { get; init; }
 }
 
 public class PolicyListItemResponse
@@ -3256,15 +2586,15 @@ public class PolicyListItemResponse
     public string Id { get; init; }
     public string Name { get; init; }
     public bool IsActive { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public string? Description { get; init; }
 }
 
 public class PolicyRecipientSourceDto
 {
     public string Type { get; init; }
-    public PolicyRecipientSourceDtorecipientsBase Recipients { get; init; }
-    public ATrustCertificateDtophoneNumberBase UserGroupId { get; init; }
-    public ATrustCertificateDtophoneNumberBase BusinessRoleId { get; init; }
+    public List<BulkRecipientDefinition>? Recipients { get; init; }
+    public string? UserGroupId { get; init; }
+    public string? BusinessRoleId { get; init; }
 }
 
 public class RadioButtonElementDefinition
@@ -3282,7 +2612,7 @@ public class RadioButtonElementDto
     public string GroupName { get; init; }
     public bool IsChecked { get; init; }
     public bool IsSelectInUnison { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
@@ -3342,28 +2672,28 @@ public class RecipientAuthenticationSettingsResponse
 public class RecipientDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
-    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
+    public string? GivenName { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? Placeholder { get; init; }
+    public DbRecipientType? Type { get; init; }
     public bool IsP7mSigner { get; init; }
-    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
+    public NotificationChannel? NotificationChannel { get; init; }
     public long Order { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AuthenticationConfiguration { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureDataConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public RecipientDtoguidingOrderModeBase GuidingOrderMode { get; init; }
+    public string? LanguageCode { get; init; }
+    public ATrustCertificateDto? AuthenticationConfiguration { get; init; }
+    public ATrustCertificateDto? SignatureDataConfiguration { get; init; }
+    public string? StageId { get; init; }
+    public string? PersonalMessage { get; init; }
+    public GuidingOrderMode? GuidingOrderMode { get; init; }
     public bool IsDelegationEnabled { get; init; }
-    public RecipientDtogeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureProfile { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestmetadataBase Metadata { get; init; }
-    public RecipientDtoworkstepResultBase WorkstepResult { get; init; }
+    public OrganizationGeneralPoliciesDto? GeneralPoliciesOverrides { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public string? SignatureProfile { get; init; }
+    public List<RecipientDtometadata>? Metadata { get; init; }
+    public DbWorkstepResult? WorkstepResult { get; init; }
 }
 
 public class RecipientMetadataEntry
@@ -3383,7 +2713,7 @@ public class RegionalSettingsDto
 
 public class RelativeIntegrationExpirationDto
 {
-    public ClickToSignStampImprintDtofontSizeInPtBase AfterSendInSeconds { get; init; }
+    public long? AfterSendInSeconds { get; init; }
     public string Mode { get; init; }
 }
 
@@ -3398,20 +2728,20 @@ public class ReminderConfigurationDto
 public class RemoteCertificateEnvelopeBulkSignDto
 {
     public List<string> EnvelopeIds { get; init; }
-    public ATrustCertificateDtophoneNumberBase IpAddress { get; init; }
+    public string? IpAddress { get; init; }
     public string SignatureType { get; init; }
     public string CertificateUserId { get; init; }
     public string DevicePassword { get; init; }
     public string Otp { get; init; }
-    public ATrustCertificateDtophoneNumberBase OtpDeviceType { get; init; }
-    public ATrustCertificateDtophoneNumberBase OtpDeviceTypeId { get; init; }
-    public ATrustCertificateDtophoneNumberBase TransactionId { get; init; }
-    public ATrustCertificateDtophoneNumberBase PayloadFileId { get; init; }
+    public string? OtpDeviceType { get; init; }
+    public string? OtpDeviceTypeId { get; init; }
+    public string? TransactionId { get; init; }
+    public string? PayloadFileId { get; init; }
 }
 
 public class RemoteCertificateSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -3439,7 +2769,7 @@ public class RoleDetailsDto
     public string Name { get; init; }
     public List<PermissionDto> Permissions { get; init; }
     public string CreatedAt { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
+    public string? Description { get; init; }
     public bool IsSystemRole { get; init; }
 }
 
@@ -3481,17 +2811,17 @@ public class SealingCertificateResponse
 public class SenderAutomaticProfileDto
 {
     public string ProfileId { get; init; }
-    public ATrustCertificateDtophoneNumberBase ProfileFriendlyName { get; init; }
+    public string? ProfileFriendlyName { get; init; }
 }
 
 public class SenderDataFieldSettingDto
 {
     public bool Required { get; init; }
     public List<GenericSigningPluginSettingLabelDto> TranslatedLabels { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultValue { get; init; }
-    public ATrustCertificateDtophoneNumberBase Key { get; init; }
+    public string? DefaultValue { get; init; }
+    public string? Key { get; init; }
     public DataFieldType Type { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Items { get; init; }
+    public ATrustCertificateDto? Items { get; init; }
 }
 
 public class ServiceAccountListItemResponse
@@ -3527,7 +2857,7 @@ public class SignatureAppearanceLayoutDto
     public bool DisplayDateTime { get; init; }
     public bool DisplayEmail { get; init; }
     public bool DisplayReason { get; init; }
-    public NamedSignatureAppearanceLayoutDtobackgroundImageBase BackgroundImage { get; init; }
+    public BackgroundImageDto? BackgroundImage { get; init; }
     public ImagePosition Position { get; init; }
 }
 
@@ -3537,27 +2867,27 @@ public class SignatureElementDto
     public ATrustCertificateDto AllowedSignatureTypes { get; init; }
     public AreaReadElementDefinition ElementDefinition { get; init; }
     public FormFieldSource Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
+    public string? DisplayName { get; init; }
+    public string? ElementDescription { get; init; }
+    public bool? UseExternalTimestampServer { get; init; }
     public long GuidingOrder { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
+    public ATrustCertificateDto? TaskConfiguration { get; init; }
     public bool IsApprove { get; init; }
 }
 
 public class SignatureField
 {
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AllowedSignatureTypes { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
-    public ATrustCertificateDtophoneNumberBase ElementDescription { get; init; }
+    public ATrustCertificateDto? AllowedSignatureTypes { get; init; }
+    public string? DisplayName { get; init; }
+    public string? ElementDescription { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseExternalTimestampServer { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase TaskConfiguration { get; init; }
+    public bool? UseExternalTimestampServer { get; init; }
+    public ATrustCertificateDto? TaskConfiguration { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
@@ -3574,7 +2904,7 @@ public class SignatureFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public List<SignatureFieldDtoallowedSignatureTypesBase> AllowedSignatureTypes { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public bool Required { get; init; }
     public string FieldType { get; init; }
 }
@@ -3590,9 +2920,9 @@ public class SignatureImage
 public class SignaturePluginSignatureTypeDto
 {
     public string PluginId { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase Preferred { get; init; }
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
-    public SignaturePluginSignatureTypeDtostampImprintConfigurationBase StampImprintConfiguration { get; init; }
+    public bool? Preferred { get; init; }
+    public string? LayoutId { get; init; }
+    public ClickToSignStampImprintDto? StampImprintConfiguration { get; init; }
 }
 
 public class SignatureTaskUpdateRequest
@@ -3603,12 +2933,12 @@ public class SignatureTaskUpdateRequest
 
 public class SignatureTaskUpdateRequestsignature
 {
-    public ATrustCertificateDtophoneNumberBase Text { get; init; }
-    public ATrustCertificateDtophoneNumberBase TextFontFamily { get; init; }
-    public ATrustCertificateDtophoneNumberBase TextFontColor { get; init; }
-    public NumberInputConfigvalueBase TextFontSizeFraction { get; init; }
-    public SignatureTaskUpdateRequestsignaturepositionBase Position { get; init; }
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? Text { get; init; }
+    public string? TextFontFamily { get; init; }
+    public string? TextFontColor { get; init; }
+    public decimal? TextFontSizeFraction { get; init; }
+    public SignatureTaskUpdateRequestsignatureposition? Position { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -3633,7 +2963,7 @@ public class StageDto
 {
     public string Id { get; init; }
     public long MandatoryRecipientsNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
+    public string? Name { get; init; }
 }
 
 public class StampImprintConfigurationDto
@@ -3666,10 +2996,10 @@ public class SubstituteDelegationDto
     public string DelegateeFirstName { get; init; }
     public string DelegateeLastName { get; init; }
     public string DelegateeEmail { get; init; }
-    public ATrustCertificateDtophoneNumberBase Reason { get; init; }
-    public ATrustCertificateDtophoneNumberBase StartDate { get; init; }
-    public ATrustCertificateDtophoneNumberBase EndDate { get; init; }
-    public ATrustCertificateDtophoneNumberBase DelegateeUserId { get; init; }
+    public string? Reason { get; init; }
+    public string? StartDate { get; init; }
+    public string? EndDate { get; init; }
+    public string? DelegateeUserId { get; init; }
 }
 
 public class SupportedElectronicIdentitiesResponse
@@ -3694,8 +3024,8 @@ public class SwedishBankIdStampImprintDto
     public bool DisplayName { get; init; }
     public bool DisplaySignatureDate { get; init; }
     public bool DisplayExtraInformation { get; init; }
-    public ATrustCertificateDtophoneNumberBase FontName { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase FontSizeInPt { get; init; }
+    public string? FontName { get; init; }
+    public long? FontSizeInPt { get; init; }
     public bool DisplayTransactionId { get; init; }
 }
 
@@ -3707,7 +3037,7 @@ public class TemplateDto
     public List<TemplateAction> Actions { get; init; }
     public string CreatedAt { get; init; }
     public string UpdatedAt { get; init; }
-    public TemplateDtodefaultActionBase DefaultAction { get; init; }
+    public TemplateAction? DefaultAction { get; init; }
 }
 
 public class TemplateListDto
@@ -3718,20 +3048,20 @@ public class TemplateListDto
 
 public class TemplateStageStandardRecipientResponse
 {
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
+    public string? GivenName { get; init; }
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
+    public string? LanguageCode { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public NotificationChannel? NotificationChannel { get; init; }
+    public ATrustCertificateDto? Authentication { get; init; }
+    public ATrustCertificateDto? SignatureConfiguration { get; init; }
+    public string? PersonalMessage { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
     public bool IsDelegationEnabled { get; init; }
-    public TemplateStageStandardRecipientResponsemetadataBase Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -3741,8 +3071,8 @@ public class TemplateStageStandardRecipientSummaryDto
     public string Id { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase NotificationChannel { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? NotificationChannel { get; init; }
     public bool IsDelegationEnabled { get; init; }
     public string Type { get; init; }
 }
@@ -3756,7 +3086,7 @@ public class TemplateThumbnailDto
 
 public class TextAnnotationConfigDto
 {
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
+    public string? Value { get; init; }
     public string AnnotationType { get; init; }
 }
 
@@ -3776,11 +3106,11 @@ public class TextBoxElementDto
     public string ElementId { get; init; }
     public TextBoxElementDefinition ElementDefinition { get; init; }
     public FormFieldSource Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
-    public TextBoxElementDtovalidationBase Validation { get; init; }
+    public FileElementsFieldValidation? Validation { get; init; }
 }
 
 public class TextDefinition
@@ -3806,10 +3136,10 @@ public class TextFieldDto
 
 public class TextFieldDtotextInputConfig
 {
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
-    public TextFieldDtotextInputConfigformatBase Format { get; init; }
-    public ATrustCertificateDtophoneNumberBase MinValue { get; init; }
-    public ATrustCertificateDtophoneNumberBase MaxValue { get; init; }
+    public string? Value { get; init; }
+    public string? Format { get; init; }
+    public string? MinValue { get; init; }
+    public string? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -3820,12 +3150,12 @@ public class TextInputField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
-    public ListBoxFieldfontBase Font { get; init; }
+    public FontStyle? Font { get; init; }
     public string Text { get; init; }
     public bool Password { get; init; }
     public bool Multiline { get; init; }
     public long MaxLength { get; init; }
-    public TextBoxElementDtovalidationBase Validation { get; init; }
+    public FileElementsFieldValidation? Validation { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
@@ -3841,10 +3171,10 @@ public class TextTaskUpdateRequest
 
 public class TimeInputConfig
 {
-    public ATrustCertificateDtophoneNumberBase Value { get; init; }
-    public TimeInputConfigformatBase Format { get; init; }
-    public ATrustCertificateDtophoneNumberBase MinValue { get; init; }
-    public ATrustCertificateDtophoneNumberBase MaxValue { get; init; }
+    public string? Value { get; init; }
+    public TimeFormatSwaggerEnumProvider? Format { get; init; }
+    public string? MinValue { get; init; }
+    public string? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -3870,7 +3200,7 @@ public class TimeZonesLookupResponse
 
 public class TypeToSignSignature
 {
-    public ATrustCertificateDtophoneNumberBase LayoutId { get; init; }
+    public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
 
@@ -3895,25 +3225,25 @@ public class UpdateBulkEnvelopeDto
 {
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
     public ATrustCertificateDto ReminderConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase Name { get; init; }
-    public UpdateBulkEnvelopeDtorecipientsBase Recipients { get; init; }
-    public UpdateBulkEnvelopeDtostagesBase Stages { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SendCopyToAllRecipients { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase LateIdent { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase UseInvisibleSignatureWithTimestampForAllDocumentsAndRecipients { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultSubject { get; init; }
-    public ATrustCertificateDtophoneNumberBase DefaultBody { get; init; }
-    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase DocumentsIds { get; init; }
-    public EnvelopeDtoagreementsBase Agreements { get; init; }
-    public GenericSigningPluginSenderSettingsDtopredefinedSenderDataFieldsBase UserGroupSharingIds { get; init; }
+    public string? Name { get; init; }
+    public List<UpdateBulkEnvelopeDtorecipients>? Recipients { get; init; }
+    public List<BulkStageDto>? Stages { get; init; }
+    public bool? SendCopyToAllRecipients { get; init; }
+    public bool? LateIdent { get; init; }
+    public bool? UseInvisibleSignatureWithTimestampForAllDocumentsAndRecipients { get; init; }
+    public string? DefaultSubject { get; init; }
+    public string? DefaultBody { get; init; }
+    public List<string>? DocumentsIds { get; init; }
+    public List<Agreement>? Agreements { get; init; }
+    public List<string>? UserGroupSharingIds { get; init; }
     public EnvelopeType EnvelopeType { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase CallbackConfiguration { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase PreventFieldsEditingWhenFinished { get; init; }
-    public ATrustCertificateDtophoneNumberBase AfterSendRedirectUrl { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase AllowChangeSignatureReason { get; init; }
-    public UpdateBulkEnvelopeDtosignatureFormatBase SignatureFormat { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase FileRestrictedVisibility { get; init; }
+    public ATrustCertificateDto? CallbackConfiguration { get; init; }
+    public bool? PreventFieldsEditingWhenFinished { get; init; }
+    public string? AfterSendRedirectUrl { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? AllowChangeSignatureReason { get; init; }
+    public SignatureFormat? SignatureFormat { get; init; }
+    public bool? FileRestrictedVisibility { get; init; }
 }
 
 public class UpdateBulkEnvelopeForIntegrationDto
@@ -3921,12 +3251,12 @@ public class UpdateBulkEnvelopeForIntegrationDto
     public string Name { get; init; }
     public UpdateForIntegrationReminderDto Reminder { get; init; }
     public UpdateBulkEnvelopeForIntegrationDtoexpirationBase Expiration { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public UpdateBulkEnvelopeDtosignatureFormatBase SignatureFormat { get; init; }
-    public UpdateBulkEnvelopeForIntegrationDtonotificationMessagesBase NotificationMessages { get; init; }
-    public EnvelopeDtoagreementsBase Agreements { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase FileRestrictedVisibility { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
+    public string? SignatureReason { get; init; }
+    public SignatureFormat? SignatureFormat { get; init; }
+    public List<NotificationChannelMessagesDto>? NotificationMessages { get; init; }
+    public List<Agreement>? Agreements { get; init; }
+    public bool? FileRestrictedVisibility { get; init; }
 }
 
 public class UpdateBulkFileTasksRequest
@@ -3939,14 +3269,14 @@ public class UpdatedBasicSettingsDto
     public string Id { get; init; }
     public string GivenName { get; init; }
     public string Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class UpdateDisposableCertificateSettingsDto
 {
     public string LraId { get; init; }
     public string User { get; init; }
-    public ATrustCertificateDtophoneNumberBase Password { get; init; }
+    public string? Password { get; init; }
     public DisposableType DisposableType { get; init; }
     public bool ShowDisclaimerBeforeCertificateRequest { get; init; }
     public bool SendDisposableDisclaimerDocumentNotifications { get; init; }
@@ -3955,26 +3285,26 @@ public class UpdateDisposableCertificateSettingsDto
 public class UpdateEnvelopeRecipientDto
 {
     public string Id { get; init; }
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase Placeholder { get; init; }
-    public EnvelopeDetailRecipientDtotypeBase Type { get; init; }
-    public RecipientDtonotificationChannelBase NotificationChannel { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase Order { get; init; }
-    public ATrustCertificateDtophoneNumberBase LanguageCode { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase AuthenticationConfiguration { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase SignatureDataConfiguration { get; init; }
-    public ATrustCertificateDtophoneNumberBase StageId { get; init; }
-    public ATrustCertificateDtophoneNumberBase PersonalMessage { get; init; }
-    public RecipientDtoguidingOrderModeBase GuidingOrderMode { get; init; }
+    public string? GivenName { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? Placeholder { get; init; }
+    public DbRecipientType? Type { get; init; }
+    public NotificationChannel? NotificationChannel { get; init; }
+    public long? Order { get; init; }
+    public string? LanguageCode { get; init; }
+    public ATrustCertificateDto? AuthenticationConfiguration { get; init; }
+    public ATrustCertificateDto? SignatureDataConfiguration { get; init; }
+    public string? StageId { get; init; }
+    public string? PersonalMessage { get; init; }
+    public GuidingOrderMode? GuidingOrderMode { get; init; }
     public bool IsDelegationEnabled { get; init; }
-    public RecipientDtogeneralPoliciesOverridesBase GeneralPoliciesOverrides { get; init; }
-    public ATrustCertificateDtophoneNumberBase SignatureReason { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase SignatureReasonAllowChange { get; init; }
-    public TemplateStageStandardRecipientResponsemetadataBase Metadata { get; init; }
-    public ATrustCertificateDtophoneNumberBase SyncId { get; init; }
+    public OrganizationGeneralPoliciesDto? GeneralPoliciesOverrides { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
+    public string? SyncId { get; init; }
 }
 
 public class UpdateForIntegrationReminderDto
@@ -3988,8 +3318,8 @@ public class UpdateForIntegrationReminderDto
 public class UpdateOAuthSignerProviderDetailsRequest
 {
     public UpdateOAuthSignerProviderRequest OAuthSignerProvider { get; init; }
-    public OAuthSignerProviderDetailsResponseoAuthJwtConfigBase OAuthJwtConfig { get; init; }
-    public CreateOAuthSignerProviderDetailsRequestoAuthResourceUrisBase OAuthResourceUris { get; init; }
+    public OAuthJwtConfigDto? OAuthJwtConfig { get; init; }
+    public List<CreateOAuthResourceUriRequest>? OAuthResourceUris { get; init; }
 }
 
 public class UpdateOAuthSignerProviderRequest
@@ -4000,9 +3330,9 @@ public class UpdateOAuthSignerProviderRequest
     public string AuthorizationUri { get; init; }
     public string TokenUri { get; init; }
     public long AuthenticationType { get; init; }
-    public ATrustCertificateDtophoneNumberBase ClientSecret { get; init; }
-    public ATrustCertificateDtophoneNumberBase Scope { get; init; }
-    public ATrustCertificateDtophoneNumberBase LogoutUri { get; init; }
+    public string? ClientSecret { get; init; }
+    public string? Scope { get; init; }
+    public string? LogoutUri { get; init; }
 }
 
 public class UpdateOrganizationFeatureFlag
@@ -4022,7 +3352,7 @@ public class UpdateOrganizationUserDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public OrganizationUserRegionalSettingsDto UserRegionalSettings { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class UpdateOrganizationUserRolesDto
@@ -4035,10 +3365,10 @@ public class UpdatePolicyRequest
     public string Name { get; init; }
     public bool IsActive { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase Description { get; init; }
-    public ATrustCertificateDtophoneNumberBase DocumentClassId { get; init; }
-    public PolicyDtoconditionsBase Conditions { get; init; }
-    public PolicyDtoactionsBase Actions { get; init; }
+    public string? Description { get; init; }
+    public string? DocumentClassId { get; init; }
+    public List<PolicyConditionDto>? Conditions { get; init; }
+    public List<PolicyActionDto>? Actions { get; init; }
 }
 
 public class UpdateRegionalSettingsDto
@@ -4057,7 +3387,7 @@ public class UserAndOrganizationDto
     public string Email { get; init; }
     public string OrganizationId { get; init; }
     public string OrganizationName { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
+    public string? PhoneNumber { get; init; }
 }
 
 public class UserApplicationContextDto
@@ -4085,12 +3415,12 @@ public class UserGroupContactDto
 {
     public string Id { get; init; }
     public string UserGroupId { get; init; }
-    public ATrustCertificateDtophoneNumberBase Details { get; init; }
-    public ATrustCertificateDtophoneNumberBase GivenName { get; init; }
-    public ATrustCertificateDtophoneNumberBase Surname { get; init; }
-    public ATrustCertificateDtophoneNumberBase Email { get; init; }
-    public ATrustCertificateDtophoneNumberBase PhoneNumber { get; init; }
-    public ATrustCertificateDtophoneNumberBase CultureIsoCode { get; init; }
+    public string? Details { get; init; }
+    public string? GivenName { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? CultureIsoCode { get; init; }
 }
 
 public class UserGroupContactFieldDto
@@ -4122,7 +3452,7 @@ public class UserGroupCustomFieldUpdateData
 {
     public string UserGroupId { get; init; }
     public string Name { get; init; }
-    public ATrustCertificateDtophoneNumberBase Id { get; init; }
+    public string? Id { get; init; }
 }
 
 public class UserGroupCustomFieldUpdateRequest
@@ -4180,8 +3510,8 @@ public class UserGroupUserDto
     public string GivenName { get; init; }
     public string Surname { get; init; }
     public UserGroupPermissionDto Permissions { get; init; }
-    public ATrustCertificateDtophoneNumberBase BusinessRole { get; init; }
-    public ATrustCertificateDtophoneNumberBase BusinessRoleId { get; init; }
+    public string? BusinessRole { get; init; }
+    public string? BusinessRoleId { get; init; }
 }
 
 public class UserGroupUserListDto
@@ -4201,7 +3531,7 @@ public class ValidateOrganizationDto
 {
     public string Name { get; init; }
     public string IsoCulture { get; init; }
-    public ATrustCertificateDtophoneNumberBase OnePlatformBusinessRelationIdentifier { get; init; }
+    public string? OnePlatformBusinessRelationIdentifier { get; init; }
     public List<string> Features { get; init; }
 }
 
@@ -4223,7 +3553,7 @@ public class WebhookSubscriptionDto
 public class WebhookSubscriptionRequest
 {
     public string Url { get; init; }
-    public CreateEnvelopeStageStandardRecipientRequestauthenticationBase Authentication { get; init; }
+    public ATrustCertificateDto? Authentication { get; init; }
 }
 
 public class WorkUnitAreaReadConfirmationFieldResponse
@@ -4254,7 +3584,7 @@ public class WorkUnitDropDownFieldResponse
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public WorkUnitDropDownFieldResponseoptionsBase Options { get; init; }
+    public List<WorkUnitDropDownFieldResponseoptions>? Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public bool IsEditable { get; init; }
@@ -4265,9 +3595,9 @@ public class WorkUnitFieldTaskResponse
 {
     public WorkUnitFieldTaskResponsefieldBase Field { get; init; }
     public long SortOrder { get; init; }
-    public ATrustCertificateDtophoneNumberBase RecipientId { get; init; }
+    public string? RecipientId { get; init; }
     public ElementSource Source { get; init; }
-    public ATrustCertificateDtophoneNumberBase DisplayName { get; init; }
+    public string? DisplayName { get; init; }
     public bool Completed { get; init; }
 }
 
@@ -4295,7 +3625,7 @@ public class WorkUnitFieldTaskResponsefield
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public WorkUnitDropDownFieldResponseoptionsBase Options { get; init; }
+    public List<WorkUnitFieldTaskResponsefieldoptions>? Options { get; init; }
     public bool MultiSelect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -4336,7 +3666,7 @@ public class WorkUnitLinkFieldResponse
     public decimal PositionY { get; init; }
     public decimal Width { get; init; }
     public decimal Height { get; init; }
-    public ATrustCertificateDtophoneNumberBase Reference { get; init; }
+    public string? Reference { get; init; }
     public string FieldType { get; init; }
 }
 
@@ -4349,7 +3679,7 @@ public class WorkUnitListBoxFieldResponse
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public WorkUnitDropDownFieldResponseoptionsBase Options { get; init; }
+    public List<WorkUnitListBoxFieldResponseoptions>? Options { get; init; }
     public bool MultiSelect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -4358,13 +3688,13 @@ public class WorkUnitListBoxFieldResponse
 
 public class WorkUnitNumberInputConfigResponseResponse
 {
-    public NumberInputConfigvalueBase Value { get; init; }
-    public WorkUnitNumberInputConfigResponseResponsesymbolBase Symbol { get; init; }
-    public ATrustCertificateDtophoneNumberBase ThousandsSeparator { get; init; }
-    public WorkUnitNumberInputConfigResponseResponsedecimalSeparatorBase DecimalSeparator { get; init; }
-    public ClickToSignStampImprintDtofontSizeInPtBase DecimalPlaces { get; init; }
-    public NumberInputConfigvalueBase MinValue { get; init; }
-    public NumberInputConfigvalueBase MaxValue { get; init; }
+    public decimal? Value { get; init; }
+    public NumberSymbol? Symbol { get; init; }
+    public string? ThousandsSeparator { get; init; }
+    public WorkUnitDecimalSeparatorTypeResponse? DecimalSeparator { get; init; }
+    public long? DecimalPlaces { get; init; }
+    public decimal? MinValue { get; init; }
+    public decimal? MaxValue { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -4397,7 +3727,7 @@ public class WorkUnitPageReadConfirmationFieldResponse
 public class WorkUnitPhoneNumberInputConfigResponseResponse
 {
     public string Value { get; init; }
-    public ATrustCertificateDtophoneNumberBase Format { get; init; }
+    public string? Format { get; init; }
     public string TextInputType { get; init; }
 }
 
@@ -4418,7 +3748,7 @@ public class WorkUnitSignatureFieldResponse
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public List<WorkUnitSignatureFieldResponseallowedSignatureTypesBase> AllowedSignatureTypes { get; init; }
-    public CreateEnvelopeStageAutomaticRecipientRequestsignatureReasonAllowChangeBase QualifiedTimeStamp { get; init; }
+    public bool? QualifiedTimeStamp { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }

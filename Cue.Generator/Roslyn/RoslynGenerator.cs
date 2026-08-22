@@ -36,7 +36,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
 
     private MemberDeclarationSyntax CreateDisjunction(DisjunctionDefinition definition)
     {
-        var className = namer.BaseClassName(definition.DisjunctionPath);
+        var className = namer.DisjunctionName(definition.DisjunctionPath);
 
         var branchRecords = definition.BranchPaths
             .Select(branchPath =>
@@ -142,7 +142,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     private PropertyDeclarationSyntax DeclareProperty(CueStructField field)
     {
         var propName = namer.Identifier(field.Name);
-        var valueName = typeStore.GetTypeName(field.Value).Format(namer.TypeName, namer.BaseClassName);
+        var valueName = typeStore.GetTypeName(field.Value).Format(namer.TypeName, namer.DisjunctionName);
 
         var typeSyntax = SyntaxFactory.ParseTypeName(valueName);
         var semicolonToken = SyntaxFactory.Token(SyntaxKind.SemicolonToken);

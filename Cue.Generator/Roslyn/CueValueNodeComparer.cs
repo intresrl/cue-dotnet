@@ -34,6 +34,7 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
             (CueStringValue a, CueStringValue b) => a.ConcreteValue == b.ConcreteValue,
             (CueBytesValue a, CueBytesValue b) => ByteArraysEqual(a.ConcreteValue, b.ConcreteValue),
             (CueListValue a, CueListValue b) => Equals(a.ElementType, b.ElementType),
+            (CueNullable a, CueNullable b) => Equals(a.Value, b.Value),
             (CueStructValue a, CueStructValue b) => StructsEqual(a, b),
             (CueDisjunction a, CueDisjunction b) => DisjunctionsEqual(a, b),
             _ => false
@@ -95,6 +96,10 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
 
             case CueListValue l:
                 hash.Add(GetHashCode(l.ElementType));
+                break;
+            
+            case CueNullable n:
+                hash.Add(GetHashCode(n.Value));
                 break;
 
             case CueStructValue s:

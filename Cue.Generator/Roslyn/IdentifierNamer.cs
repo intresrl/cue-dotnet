@@ -4,7 +4,7 @@ namespace Cue.Generator.Roslyn;
 
 public interface IIdentifierNamer
 {
-    string BaseClassName(string path);
+    string DisjunctionName(string path);
     string TypeName(string path);
     string Identifier(string name);
 }
@@ -13,7 +13,7 @@ public partial class IdentifierNamer : IIdentifierNamer
 {
     private static int _anonymousIndex = 1;
 
-    public string BaseClassName(string path)
+    public string DisjunctionName(string path)
     {
         // Generate name like "ValueFormatBase" from a discriminator union path
         var typeName = TypeName(path);

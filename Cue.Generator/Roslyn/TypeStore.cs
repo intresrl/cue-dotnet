@@ -54,6 +54,7 @@ public class TypeStore : ITypeStore
             CueDisjunctionReference {Definition: var def} => TypeName.FromDisjunctionRef(def),
             CueDefinitionReference {Definition: var def} => TypeName.FromDefinitionRef(def),
             CueListValue l => $"List<{GetTypeName(l.ElementType)}>",
+            CueNullable l => $"{GetTypeName(l.Value)}?",
             CueBoolValue => $"bool",
             CueIntValue => $"long",
             CueFloatValue => $"double",

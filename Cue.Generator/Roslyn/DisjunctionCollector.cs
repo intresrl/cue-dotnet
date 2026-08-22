@@ -60,11 +60,12 @@ public class DisjunctionCollector
                     var disjunctionWithRef = new CueDisjunction(
                         dVal.Path,
                         dVal.Branches
-                            .Select(f => f switch
+                            .Select(CueValueNode (f) => f switch
                             {
                                 CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
                                 CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
-                                _ => f
+                                CueDefinitionReference dr => dr, 
+                                _ => throw new InvalidOperationException("str " + f)
                             })
                             .ToList(),
                         dVal.DiscriminatorField,

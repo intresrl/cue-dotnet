@@ -55,10 +55,16 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
 
         var kind = value.IncompleteKind();
 
-        if (kind is Kind.Top or Kind.Struct &&
-            DisjunctionBranches(value) is { } branches)
+        if (kind is Kind.Top or Kind.Struct && DisjunctionBranches(value) is { } branches)
         {
-            return VisitDisjunction(value, branches);
+            var disjunction = VisitDisjunction(value, branches);
+            return disjunction.Branches switch
+            {
+                [CueNullValue, CueNullValue] => new CueNullable(new CueBottomValue(value.Path())),
+                [CueNullValue, var a] => new CueNullable(a),
+                [var b, CueNullValue] => new CueNullable(b),
+                _ => disjunction
+            };
         }
 
         return kind switch
