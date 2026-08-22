@@ -68,7 +68,7 @@ public sealed record CueDisjunctionReference(string Definition) : CueValueNode(D
 public sealed record CueStructValue(string Path, IReadOnlyList<CueStructField> Fields)
     : CueValueNode(Path)
 {
-    public override string ToString() => $"Struct({string.Join(", ", Fields.Select(f => $"{f.Name}: {f.Value}"))}) at {Path}";
+    public override string ToString() => $"Struct({string.Join(", \n", Fields.Select(f => $"{f.Name}: {f.Value}"))}) at {Path}";
 }
 
 public sealed record CueStructField(string Name, CueValueNode Value, bool Optional = false);
@@ -94,7 +94,6 @@ public sealed record CueListValue(string Path, CueValueNode ElementType)
 {
     public override string ToString()
     {
-        var elementTypeName = ElementType.GetType().Name.Replace("Value", "").ToLowerInvariant();
-        return $"List<{elementTypeName}> at {Path}";
+        return $"List<{ElementType}> at {Path}";
     }
 }

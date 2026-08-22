@@ -84,11 +84,35 @@ public interface BulkEnvelopeFieldTaskItemfieldtextInputConfigBase
     };
 }
 
+public interface BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase
+{
+    public record AsLocalCertificateSignature(LocalCertificateSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsRemoteCertificateSignature(RemoteCertificateSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsDisposableCertificateSignature(DisposableCertificateSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record AsPluginSignature(PluginSignature value) : BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase;
+    public record Value(BulkEnvelopeFieldTaskItemfieldallowedSignatureTypesBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
 public interface EnvelopeStageItemDtorecipientsBase
 {
     public record AsEnvelopeStageStandardRecipientSummaryDto(EnvelopeStageStandardRecipientSummaryDto value) : EnvelopeStageItemDtorecipientsBase;
     public record AsEnvelopeStageAutomaticRecipientResponse(EnvelopeStageAutomaticRecipientResponse value) : EnvelopeStageItemDtorecipientsBase;
     public record Value(EnvelopeStageItemDtorecipientsBase[] Branches)
+    {
+        public bool Valid => Branches.Length == 1;
+    };
+}
+
+public interface InvisibleSignatureElementDtoallowedSignatureTypesBase
+{
+    public record AsLocalCertificateSignature(LocalCertificateSignature value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record AsRemoteCertificateSignature(RemoteCertificateSignature value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record AsDisposableCertificateSignature(DisposableCertificateSignature value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record AsPluginSignature(PluginSignature value) : InvisibleSignatureElementDtoallowedSignatureTypesBase;
+    public record Value(InvisibleSignatureElementDtoallowedSignatureTypesBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -259,7 +283,7 @@ public class AdminMeDto
     public string Surname { get; init; }
     public bool IsInstanceAdmin { get; init; }
     public bool IsAdminUser { get; init; }
-    public List<AdminMeDtousers> Users { get; init; }
+    public List<AdminMeUserDto> Users { get; init; }
 }
 
 public class AdminMeUserDto
@@ -308,7 +332,7 @@ public class AnnotationField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public AnnotationElementDefinitionvalueFormatBase ValueFormat { get; init; }
-    public AnnotationFieldfont? Font { get; init; }
+    public FontStyle? Font { get; init; }
     public string? ElementName { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
@@ -326,7 +350,7 @@ public class AnnotationFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public AnnotationFieldDtoannotationConfigBase AnnotationConfig { get; init; }
-    public AnnotationFieldDtofont? Font { get; init; }
+    public FontStyle? Font { get; init; }
     public string? ElementName { get; init; }
     public string FieldType { get; init; }
 }
@@ -535,7 +559,7 @@ public class BulkEnvelopeDetailDto
     public string Id { get; init; }
     public string Name { get; init; }
     public List<BulkEnvelopeDetailDtostages> Stages { get; init; }
-    public List<BulkEnvelopeDetailDtodocuments>? Documents { get; init; }
+    public List<Document>? Documents { get; init; }
 }
 
 public class BulkEnvelopeDetailDtostages
@@ -544,7 +568,7 @@ public class BulkEnvelopeDetailDtostages
     public long MandatoryRecipientsNumber { get; init; }
     public string? Name { get; init; }
     public string StageMode { get; init; }
-    public List<BulkEnvelopeDetailDtostagesrecipients>? Recipients { get; init; }
+    public List<BulkRecipientDto>? Recipients { get; init; }
 }
 
 public class BulkEnvelopeFieldTaskItem
@@ -597,7 +621,7 @@ public class BulkEnvelopeFieldTaskItemfieldtextInputConfig
 public class BulkEnvelopeFieldTaskItemfieldtextInputConfig
 {
     public decimal? Value { get; init; }
-    public BulkEnvelopeFieldTaskItemfieldtextInputConfigsymbol? Symbol { get; init; }
+    public NumberSymbol? Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
     public string DecimalSeparator { get; init; }
     public long? DecimalPlaces { get; init; }
@@ -623,7 +647,7 @@ public class BulkEnvelopeFieldTaskItemfield
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public List<BulkEnvelopeFieldTaskItemfieldoptions>? Options { get; init; }
+    public List<ListItemEntry>? Options { get; init; }
     public bool Multiselect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -645,7 +669,7 @@ public class BulkEnvelopeFileTasksResponse
 
 public class BulkEnvelopeListDto
 {
-    public List<BulkEnvelopeListDtobulkEnvelopes> BulkEnvelopes { get; init; }
+    public List<BulkEnvelopePartialDto> BulkEnvelopes { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -680,7 +704,7 @@ public class BulkRecipientDto
 
 public class BulkRecipientValidationErrorResponse
 {
-    public List<BulkRecipientValidationErrorResponseerrors> Errors { get; init; }
+    public List<RowError> Errors { get; init; }
 }
 
 public class BulkStageDto
@@ -835,14 +859,14 @@ public class ContactRequest
 
 public class CountriesDto
 {
-    public List<CountriesDtooptions> Options { get; init; }
+    public List<CountryListItemDto> Options { get; init; }
     public long? SelectedId { get; init; }
     public string? SelectedIsoCode { get; init; }
 }
 
 public class CountriesLookupResponse
 {
-    public List<CountriesLookupResponsecountries> Countries { get; init; }
+    public List<CountryDto> Countries { get; init; }
 }
 
 public class CountryDto
@@ -875,7 +899,7 @@ public class CreateDocumentClassRequest
 {
     public string Name { get; init; }
     public string Description { get; init; }
-    public List<CreateDocumentClassRequestmetadata> Metadata { get; init; }
+    public List<DocumentClassMetadataFieldDto> Metadata { get; init; }
 }
 
 public class CreatedPersonalAccessTokenResponse
@@ -893,7 +917,7 @@ public class CreateEnvelopeStageAutomaticRecipientRequest
     public string? SignatureProfile { get; init; }
     public string? SignatureReason { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
-    public List<CreateEnvelopeStageAutomaticRecipientRequestmetadata>? Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -917,7 +941,7 @@ public class CreateEnvelopeStageStandardRecipientRequest
     public ATrustCertificateDto? SignatureConfiguration { get; init; }
     public string? PersonalMessage { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
-    public List<CreateEnvelopeStageStandardRecipientRequestmetadata>? Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -1012,7 +1036,7 @@ public class CreatePolicyRequest
     public bool IsActive { get; init; }
     public string? Description { get; init; }
     public string? DocumentClassId { get; init; }
-    public List<CreatePolicyRequestconditions>? Conditions { get; init; }
+    public List<PolicyConditionDto>? Conditions { get; init; }
 }
 
 public class CreateRoleRequest
@@ -1065,7 +1089,7 @@ public class CreateTemplateStageStandardRecipientRequest
     public string? PersonalMessage { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
     public bool IsDelegationEnabled { get; init; }
-    public List<CreateTemplateStageStandardRecipientRequestmetadata>? Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -1225,7 +1249,7 @@ public class DropDownElementDto
     public bool? Editable { get; init; }
     public string? Value { get; init; }
     public long GuidingOrder { get; init; }
-    public List<DropDownElementDtoitems>? Items { get; init; }
+    public List<DropDownItemEntry>? Items { get; init; }
 }
 
 public class DropDownField
@@ -1235,8 +1259,8 @@ public class DropDownField
     public decimal PositionX { get; init; }
     public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
-    public DropDownFieldfont? Font { get; init; }
-    public List<DropDownFieldoptions>? Options { get; init; }
+    public FontStyle? Font { get; init; }
+    public List<Option>? Options { get; init; }
     public bool? Editable { get; init; }
     public string? SelectedValue { get; init; }
     public string FieldType { get; init; }
@@ -1255,7 +1279,7 @@ public class DropDownFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public List<DropDownFieldDtooptions>? Options { get; init; }
+    public List<ListItemEntry>? Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public string FieldType { get; init; }
@@ -1364,6 +1388,15 @@ public class EnvelopeDetailDto
     public bool PreventFieldsEditingWhenFinished { get; init; }
 }
 
+public class EnvelopeDetailDtostages
+{
+    public string Id { get; init; }
+    public long SortOrder { get; init; }
+    public long RequiredRecipientCompletions { get; init; }
+    public List<EnvelopeDetailRecipientDto> Recipients { get; init; }
+    public string? Name { get; init; }
+}
+
 public class EnvelopeDetailRecipientDto
 {
     public string Id { get; init; }
@@ -1417,7 +1450,7 @@ public class EnvelopeDto
     public ReminderConfigurationDto ReminderConfiguration { get; init; }
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
     public List<EnvelopeDtorecipients>? Recipients { get; init; }
-    public List<EnvelopeDtostages>? Stages { get; init; }
+    public List<StageDto>? Stages { get; init; }
     public List<Document>? Documents { get; init; }
     public List<Agreement>? Agreements { get; init; }
     public List<string> UserGroupSharingIds { get; init; }
@@ -1431,6 +1464,33 @@ public class EnvelopeDto
     public bool SignatureReasonAllowChange { get; init; }
     public string SignatureFormat { get; init; }
     public bool FileRestrictedVisibility { get; init; }
+}
+
+public class EnvelopeDtorecipients
+{
+    public string Id { get; init; }
+    public string? GivenName { get; init; }
+    public string? Surname { get; init; }
+    public string? Email { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? Placeholder { get; init; }
+    public DbRecipientType? Type { get; init; }
+    public bool IsP7mSigner { get; init; }
+    public string? NotificationChannel { get; init; }
+    public long Order { get; init; }
+    public string? LanguageCode { get; init; }
+    public ATrustCertificateDto? AuthenticationConfiguration { get; init; }
+    public ATrustCertificateDto? SignatureDataConfiguration { get; init; }
+    public string? StageId { get; init; }
+    public string? PersonalMessage { get; init; }
+    public string? GuidingOrderMode { get; init; }
+    public bool IsDelegationEnabled { get; init; }
+    public OrganizationGeneralPoliciesDto? GeneralPoliciesOverrides { get; init; }
+    public string? SignatureReason { get; init; }
+    public bool? SignatureReasonAllowChange { get; init; }
+    public string? SignatureProfile { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
+    public DbWorkstepResult? WorkstepResult { get; init; }
 }
 
 public class EnvelopeEventDto
@@ -1451,13 +1511,13 @@ public class EnvelopeFileDetailDocumentClassDto
 {
     public string DocumentClassId { get; init; }
     public string? Name { get; init; }
-    public List<EnvelopeFileDetailDocumentClassDtometadataValues>? MetadataValues { get; init; }
+    public List<EnvelopeFileMetadataValueDto>? MetadataValues { get; init; }
 }
 
 public class EnvelopeFileDetailDocumentClassRequest
 {
     public string DocumentClassId { get; init; }
-    public List<EnvelopeFileDetailDocumentClassRequestmetadataValues> MetadataValues { get; init; }
+    public List<MetadataValueDto> MetadataValues { get; init; }
 }
 
 public class EnvelopeFileMetadataValueDto
@@ -1480,7 +1540,7 @@ public class EnvelopeInsights
 
 public class EnvelopeListDto
 {
-    public List<EnvelopeListDtoenvelopes> Envelopes { get; init; }
+    public List<EnvelopePartialDto> Envelopes { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -1529,7 +1589,7 @@ public class EnvelopeStageAutomaticRecipientResponse
     public string? SignatureProfile { get; init; }
     public string? SignatureReason { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
-    public List<EnvelopeStageAutomaticRecipientResponsemetadata>? Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public string Type { get; init; }
 }
 
@@ -1562,8 +1622,8 @@ public class EnvelopeStageStandardRecipientResponse
     public string? PersonalMessage { get; init; }
     public string? SignatureReason { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
-    public List<EnvelopeStageStandardRecipientResponsemetadata>? Metadata { get; init; }
-    public EnvelopeStageStandardRecipientResponsegeneralPoliciesOverrides? GeneralPoliciesOverrides { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
+    public OrganizationGeneralPoliciesDto? GeneralPoliciesOverrides { get; init; }
     public string Type { get; init; }
 }
 
@@ -1626,7 +1686,7 @@ public class FileElementsDto
     public List<DropDownElementDto> DropDownElements { get; init; }
     public List<FileElementsDtolistElements> ListElements { get; init; }
     public List<DocumentReadConfirmationDto> DocumentReadConfirmations { get; init; }
-    public List<FileElementsDtopageReadConfirmations> PageReadConfirmations { get; init; }
+    public List<PageReadConfirmationDto> PageReadConfirmations { get; init; }
     public List<ApproveElementDto> AreaReadConfirmations { get; init; }
     public List<FileElementsDtolinkElements> LinkElements { get; init; }
     public List<AttachmentElementDto> AttachmentElements { get; init; }
@@ -1642,7 +1702,7 @@ public class FileElementsDtoinvisibleSignatureElements
     public string Source { get; init; }
     public string? RecipientId { get; init; }
     public bool Required { get; init; }
-    public List<FileElementsDtoinvisibleSignatureElementsallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
+    public List<InvisibleSignatureElementDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public bool? QualifiedTimeStamp { get; init; }
     public long GuidingOrder { get; init; }
 }
@@ -1661,7 +1721,7 @@ public class FileElementsDtolistElements
 {
     public DropDownElementDefinition ElementDefinition { get; init; }
     public string ElementId { get; init; }
-    public List<FileElementsDtolistElementsitems> Items { get; init; }
+    public List<ListItemEntry> Items { get; init; }
     public bool IsRequired { get; init; }
     public bool IsEditable { get; init; }
     public bool IsMultiselect { get; init; }
@@ -1717,7 +1777,7 @@ public class FileElementsDtotextBoxElements
     public bool Required { get; init; }
     public string Value { get; init; }
     public long GuidingOrder { get; init; }
-    public FileElementsDtotextBoxElementsvalidation? Validation { get; init; }
+    public FileElementsFieldValidation? Validation { get; init; }
 }
 
 public class FileElementsDtotextBoxElementselementDefinition
@@ -1852,7 +1912,7 @@ public class GenericSigningPluginDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
-    public List<GenericSigningPluginDtosignatureFriendlyNames>? SignatureFriendlyNames { get; init; }
+    public List<GenericSigningPluginSettingLabelDto>? SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
 }
 
@@ -1863,13 +1923,23 @@ public class GenericSigningPluginSenderSettingsDto
     public bool AllowUserSigning { get; init; }
     public bool AllowBatchUserSigning { get; init; }
     public bool AllowAutomaticSigning { get; init; }
-    public List<GenericSigningPluginSenderSettingsDtosignatureFriendlyNames>? SignatureFriendlyNames { get; init; }
+    public List<GenericSigningPluginSettingLabelDto>? SignatureFriendlyNames { get; init; }
     public string Category { get; init; }
     public string PluginFriendlyName { get; init; }
     public string? SignatureFriendlyName { get; init; }
     public List<GenericSigningPluginSenderSettingsDtosenderDataFields>? SenderDataFields { get; init; }
     public List<string>? PredefinedSenderDataFields { get; init; }
-    public List<GenericSigningPluginSenderSettingsDtoprofiles>? Profiles { get; init; }
+    public List<SenderAutomaticProfileDto>? Profiles { get; init; }
+}
+
+public class GenericSigningPluginSenderSettingsDtosenderDataFields
+{
+    public bool Required { get; init; }
+    public List<GenericSigningPluginSettingLabelDto> TranslatedLabels { get; init; }
+    public string? DefaultValue { get; init; }
+    public string? Key { get; init; }
+    public DataFieldType Type { get; init; }
+    public ATrustCertificateDto? Items { get; init; }
 }
 
 public class GenericSigningPluginSettingLabelDto
@@ -1880,13 +1950,13 @@ public class GenericSigningPluginSettingLabelDto
 
 public class GetOrganizationsListResponse
 {
-    public List<GetOrganizationsListResponseorganizations> Organizations { get; init; }
+    public List<OrganizationSummaryDto> Organizations { get; init; }
     public Pagination Pagination { get; init; }
 }
 
 public class GetUsersListResponse
 {
-    public List<GetUsersListResponseusers> Users { get; init; }
+    public List<OrganizationUserDto> Users { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -1966,7 +2036,7 @@ public class InvisibleSignatureElementDto
 
 public class InvisibleSignatureField
 {
-    public List<InvisibleSignatureFieldallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
+    public List<InvisibleSignatureElementDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
     public long Page { get; init; }
     public decimal PositionX { get; init; }
@@ -1981,7 +2051,7 @@ public class InvisibleSignatureField
 
 public class InvisibleSignatureFieldDto
 {
-    public List<InvisibleSignatureFieldDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
+    public List<InvisibleSignatureElementDtoallowedSignatureTypesBase>? AllowedSignatureTypes { get; init; }
     public string Id { get; init; }
     public bool? QualifiedTimeStamp { get; init; }
     public string FieldType { get; init; }
@@ -2068,7 +2138,7 @@ public class ListBoxField
     public decimal PositionY { get; init; }
     public bool ReadOnly { get; init; }
     public FontStyle? Font { get; init; }
-    public List<ListBoxFieldoptions>? Options { get; init; }
+    public List<Option>? Options { get; init; }
     public bool Multiselect { get; init; }
     public string FieldType { get; init; }
     public decimal Width { get; init; }
@@ -2086,7 +2156,7 @@ public class ListBoxFieldDto
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public FontStyle Font { get; init; }
-    public List<ListBoxFieldDtooptions>? Options { get; init; }
+    public List<ListItemEntry>? Options { get; init; }
     public bool Multiselect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -2103,7 +2173,7 @@ public class ListElementDto
 {
     public DropDownElementDefinition ElementDefinition { get; init; }
     public string ElementId { get; init; }
-    public List<ListElementDtoitems> Items { get; init; }
+    public List<ListItemEntry> Items { get; init; }
     public bool IsRequired { get; init; }
     public bool IsEditable { get; init; }
     public bool IsMultiselect { get; init; }
@@ -2198,7 +2268,7 @@ public class NotificationSettingsDto
 public class NumberInputConfig
 {
     public decimal? Value { get; init; }
-    public NumberInputConfigsymbol? Symbol { get; init; }
+    public NumberSymbol? Symbol { get; init; }
     public string ThousandsSeparator { get; init; }
     public DecimalSeparatorType DecimalSeparator { get; init; }
     public long? DecimalPlaces { get; init; }
@@ -2478,7 +2548,7 @@ public class PageReadConfirmationTaskUpdateRequest
 
 public class PaginatedRoles
 {
-    public List<PaginatedRolesroles> Roles { get; init; }
+    public List<RoleDto> Roles { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -2547,7 +2617,7 @@ public class PluginSignature
 
 public class PoliciesResponse
 {
-    public List<PoliciesResponsepolicies> Policies { get; init; }
+    public List<PolicyListItemResponse> Policies { get; init; }
     public Pagination Pagination { get; init; }
 }
 
@@ -2692,7 +2762,7 @@ public class RecipientDto
     public string? SignatureReason { get; init; }
     public bool? SignatureReasonAllowChange { get; init; }
     public string? SignatureProfile { get; init; }
-    public List<RecipientDtometadata>? Metadata { get; init; }
+    public List<RecipientMetadataEntry>? Metadata { get; init; }
     public DbWorkstepResult? WorkstepResult { get; init; }
 }
 
@@ -2937,7 +3007,7 @@ public class SignatureTaskUpdateRequestsignature
     public string? TextFontFamily { get; init; }
     public string? TextFontColor { get; init; }
     public decimal? TextFontSizeFraction { get; init; }
-    public SignatureTaskUpdateRequestsignatureposition? Position { get; init; }
+    public WorkUnitSignaturePosition? Position { get; init; }
     public string? LayoutId { get; init; }
     public string SignatureType { get; init; }
 }
@@ -3004,7 +3074,7 @@ public class SubstituteDelegationDto
 
 public class SupportedElectronicIdentitiesResponse
 {
-    public List<SupportedElectronicIdentitiesResponseelectronicIdentities> ElectronicIdentities { get; init; }
+    public List<SupportedElectronicIdentityResponse> ElectronicIdentities { get; init; }
 }
 
 public class SupportedElectronicIdentityResponse
@@ -3226,7 +3296,7 @@ public class UpdateBulkEnvelopeDto
     public ATrustCertificateDto ExpirationConfiguration { get; init; }
     public ATrustCertificateDto ReminderConfiguration { get; init; }
     public string? Name { get; init; }
-    public List<UpdateBulkEnvelopeDtorecipients>? Recipients { get; init; }
+    public List<UpdateEnvelopeRecipientDto>? Recipients { get; init; }
     public List<BulkStageDto>? Stages { get; init; }
     public bool? SendCopyToAllRecipients { get; init; }
     public bool? LateIdent { get; init; }
@@ -3584,7 +3654,7 @@ public class WorkUnitDropDownFieldResponse
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public List<WorkUnitDropDownFieldResponseoptions>? Options { get; init; }
+    public List<WorkUnitOptionResponse>? Options { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
     public bool IsEditable { get; init; }
@@ -3625,7 +3695,7 @@ public class WorkUnitFieldTaskResponsefield
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public List<WorkUnitFieldTaskResponsefieldoptions>? Options { get; init; }
+    public List<WorkUnitOptionResponse>? Options { get; init; }
     public bool MultiSelect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }
@@ -3679,7 +3749,7 @@ public class WorkUnitListBoxFieldResponse
     public decimal Width { get; init; }
     public decimal Height { get; init; }
     public WorkUnitFontStyleResponse Font { get; init; }
-    public List<WorkUnitListBoxFieldResponseoptions>? Options { get; init; }
+    public List<WorkUnitOptionResponse>? Options { get; init; }
     public bool MultiSelect { get; init; }
     public bool Required { get; init; }
     public bool ReadOnly { get; init; }

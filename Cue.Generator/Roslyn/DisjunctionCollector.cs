@@ -22,6 +22,7 @@ public class DisjunctionCollector
                 CueDisjunction d => (d.Branches, [d]),
                 CueStructValue s => (s.Fields.Select(f => f.Value), [s]),
                 CueListValue l => ([l.ElementType], []),
+                CueNullable nu => ([nu.Value], []),
                 _ => ([], [])
             })
             .ToArray();
@@ -41,12 +42,7 @@ public class DisjunctionCollector
                 case CueStructValue sVal:
                 {
                     var structWithRef = new CueStructValue(s.Path, sVal.Fields
-                        .Select(f => f.Value switch
-                        {
-                            CueDisjunction dd => f with { Value = new CueDisjunctionReference(definitionDict[dd].Path) },
-                            CueStructValue ss => f with { Value = new CueDefinitionReference(definitionDict[ss].Path) },
-                            _ => f
-                        })
+                        .Select(f => f with { Value = ConvertToReferences(definitionDict, f.Value) })
                         .ToList());
                     
                     _definitions[s] = structWithRef;
@@ -60,13 +56,7 @@ public class DisjunctionCollector
                     var disjunctionWithRef = new CueDisjunction(
                         dVal.Path,
                         dVal.Branches
-                            .Select(CueValueNode (f) => f switch
-                            {
-                                CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
-                                CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
-                                CueDefinitionReference dr => dr, 
-                                _ => throw new InvalidOperationException("str " + f)
-                            })
+                            .Select(b => ConvertToReferences(definitionDict, b))
                             .ToList(),
                         dVal.DiscriminatorField,
                         dVal.BranchPaths
@@ -93,6 +83,18 @@ public class DisjunctionCollector
 
             // be careful about these in the future. They will contain constraints potentially
             _ => node
+        };
+    }
+
+    private static CueValueNode ConvertToReferences(Dictionary<CueValueNode, CueValueNode> definitionDict, CueValueNode f)
+    {
+        return f switch
+        {
+            CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
+            CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
+            CueListValue l => l with { ElementType = ConvertToReferences(definitionDict, l.ElementType) },
+            CueNullable n => n with { Value = ConvertToReferences(definitionDict, n.Value) },
+            _ => f
         };
     }
 }
