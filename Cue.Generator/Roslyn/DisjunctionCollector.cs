@@ -21,7 +21,7 @@ public class DisjunctionCollector
             {
                 CueDisjunction d => (d.Branches, [d]),
                 CueStructValue s => (s.Fields.Select(f => f.Value), [s]),
-                CueListValue l => ([l.ElementType], []),
+                CueListValue l => (l.AnyIndexElement is {} a ? [..l.IndexedElements, a] : l.IndexedElements, []),
                 CueNullable nu => ([nu.Value], []),
                 _ => ([], [])
             })
@@ -78,7 +78,12 @@ public class DisjunctionCollector
             CueBottomValue or CueTopValue or CueTopValue or CueNullValue => node,
 
             CueStructValue s => new CueDefinitionReference(_definitions[s].Path),
-            CueListValue l => new CueListValue(l.Path, Visit(l.ElementType)),
+            CueListValue l => new CueListValue(
+                l.Path, 
+                l.AnyIndexElement is { } anyIdx 
+                    ? Visit(anyIdx) 
+                    : null, 
+                l.IndexedElements.Select(Visit).ToArray()),
             CueDisjunction d => new CueDisjunctionReference(_definitions[d].Path),
 
             // be careful about these in the future. They will contain constraints potentially
@@ -92,7 +97,9 @@ public class DisjunctionCollector
         {
             CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
             CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
-            CueListValue l => l with { ElementType = ConvertToReferences(definitionDict, l.ElementType) },
+            CueListValue l =>  l.AnyIndexElement is {} a 
+                ? l with { AnyIndexElement = ConvertToReferences(definitionDict, a) }
+                : l,
             CueNullable n => n with { Value = ConvertToReferences(definitionDict, n.Value) },
             _ => f
         };

@@ -120,7 +120,7 @@ public static class CueValueNodeArbitrary
                 "}"
             ]),
 
-            CueListValue { ElementType: var v } => $"""
+            CueListValue { AnyIndexElement: var v } => $"""
                                                     [
                                                       ... ({v.Source()})
                                                     ]

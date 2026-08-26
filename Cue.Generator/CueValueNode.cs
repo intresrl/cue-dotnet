@@ -89,11 +89,36 @@ public sealed record CueDisjunction(
          """;
 }
 
-public sealed record CueListValue(string Path, CueValueNode ElementType)
-    : CueValueNode(Path)
+public sealed record CueListValue : CueValueNode
 {
+    public CueValueNode? AnyIndexElement { get; init; }
+    public IReadOnlyList<CueValueNode> IndexedElements { get; init; }
+    
+    public CueListValue(
+        string Path, 
+        CueValueNode? AnyIndexElement, 
+        IReadOnlyList<CueValueNode> IndexedElements) : base(Path)
+    {
+        this.AnyIndexElement = AnyIndexElement;
+        this.IndexedElements = IndexedElements;
+
+        if (AnyIndexElement == null && IndexedElements.Count == 0)
+        {
+            throw new InvalidDataException("either provide any index or elements or both");
+        }
+    }
+
     public override string ToString()
     {
-        return $"List<{ElementType}> at {Path}";
+        if (IndexedElements.Count == 0)
+        {
+            return $"[...{AnyIndexElement}] at {Path}";
+        }
+        
+        var elements = string.Join(", ", IndexedElements);
+
+        return AnyIndexElement is null
+            ? $"[{elements}] at {Path}"
+            : $"[{elements}, ...{AnyIndexElement}] at {Path}";
     }
 }

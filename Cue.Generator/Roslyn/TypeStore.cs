@@ -53,7 +53,7 @@ public class TypeStore : ITypeStore
             // these branches are instead to fetch the type of struct fields
             CueDisjunctionReference {Definition: var def} => TypeName.FromDisjunctionRef(def),
             CueDefinitionReference {Definition: var def} => TypeName.FromDefinitionRef(def),
-            CueListValue l => $"List<{GetTypeName(l.ElementType)}>",
+            CueListValue l => $"List<{GetTypeName(l.AnyIndexElement ?? new CueTopValue(l.Path))}>", // TODO: fix and implement tuple elements here once discrete indices will be implemented
             CueNullable l => $"{GetTypeName(l.Value)}?",
             CueBoolValue => $"bool",
             CueIntValue => $"long",

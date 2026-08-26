@@ -151,11 +151,68 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
     private CueListValue VisitList(Value value)
     {
         var path = value.Path();
+        var count = GetConcreteElementCount(value);
 
-        using var elementValue = value.LookupAnyIndex();
-        var elementType = Visit(elementValue);
+        var elements = Enumerable.Range(0, (int)count)
+            .Select(index =>
+            {
+                using var element = value.Lookup($"[{index}]");
+                return Visit(element);
+            })
+            .ToList();
 
-        return new CueListValue(path, elementType);
+        Value? anyIndex;
+        try
+        {
+            anyIndex = value.LookupAnyIndex();
+        }
+        catch (CueError)
+        {
+            anyIndex = null;
+        }
+        
+        return new CueListValue(path, anyIndex is { } v ? Visit(v) : null, elements);
+    }
+
+    private static string FormatExpr(Value value)
+    {
+        var expr = value.Expr();
+
+        if (expr.Op is ExprOp.No)
+        {
+            return value.IsConcrete() ? value.GetLong().ToString() : "int";
+        }
+        
+        return $"({expr.Op} {string.Join(" ", expr.Values.Select(FormatExpr))})";
+    }
+
+    private static long GetConcreteElementCount(Value value)
+    {
+        using var len = value.Len();
+
+        if (len.IncompleteKind() != Kind.Int)
+        {
+            throw new InvalidDataException("List length must be an int.");
+        }
+
+        if (len.IsConcrete())
+        {
+            return len.GetLong();
+        }
+
+        try
+        {
+            var lb= len.ParseRange().LowerBound();
+            Console.WriteLine($"DEBUG LIST LENGTH {len.Path()}: {lb} = {FormatExpr(len)}");
+            return lb;
+        }
+        finally
+        {
+            foreach (var expressionValue in len.Expr().Values)
+            {
+                expressionValue.Dispose();
+            }
+        }
     }
 
     private CueDisjunction VisitDisjunction(Value value, IEnumerable<Value> branches)

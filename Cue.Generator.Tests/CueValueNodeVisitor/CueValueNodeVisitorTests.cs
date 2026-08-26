@@ -30,7 +30,7 @@ public sealed class CueValueNodeVisitorTests
 
         Assert.NotNull(node);
         var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.Int, GetKind(listNode.ElementType));
+        Assert.Equal(Kind.Int, GetKind(listNode.AnyIndexElement));
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public sealed class CueValueNodeVisitorTests
 
         Assert.NotNull(node);
         var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.String, GetKind(listNode.ElementType));
+        Assert.Equal(Kind.String, GetKind(listNode.AnyIndexElement));
     }
     
     [Fact]
@@ -150,7 +150,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.NotNull(node);
         Assert.IsType<CueListValue>(node);
         var listNode = (CueListValue)node;
-        Assert.IsType<CueStructValue>(listNode.ElementType);
+        Assert.IsType<CueStructValue>(listNode.AnyIndexElement);
     }
 
     [Fact]
