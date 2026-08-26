@@ -1,21 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-public interface MatchNMessageBase
+public interface MessagematchNMessageBase
 {
-    public record AsDateTimeMessage(DateTimeMessage value) : MatchNMessageBase;
-    public record AsTextMessage(TextMessage value) : MatchNMessageBase;
-    public record Value(MatchNMessageBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface SimpleOrMessageBase
-{
-    public record AsDateTimeMessage(DateTimeMessage value) : SimpleOrMessageBase;
-    public record AsTextMessage(TextMessage value) : SimpleOrMessageBase;
-    public record Value(SimpleOrMessageBase[] Branches)
+    public record AsDateTimeMessage(DateTimeMessage value) : MessagematchNMessageBase;
+    public record AsTextMessage(TextMessage value) : MessagematchNMessageBase;
+    public record Value(MessagematchNMessageBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
     };
@@ -30,8 +20,8 @@ public class DateTimeMessage
 
 public class Message
 {
-    public MatchNMessageBase MatchNMessage { get; init; }
-    public SimpleOrMessageBase SimpleOrMessage { get; init; }
+    public MessagematchNMessageBase MatchNMessage { get; init; }
+    public MessagematchNMessageBase SimpleOrMessage { get; init; }
 }
 
 public class TextMessage

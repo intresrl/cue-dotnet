@@ -1,23 +1,43 @@
 {
   "profiles": {
-    "simple": {
-      "commandName": "Project",
-      "commandLineArgs": "Examples/simple.cue Examples/simple.cs",
-      "workingDirectory": "../"
-    },
     "simple_discriminator": {
       "commandName": "Project",
-      "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs",
-      "workingDirectory": "../"
-    },
-    "simple_debug": {
-      "commandName": "Project",
-      "commandLineArgs": "Examples/simple.cue Examples/simple.cs --debug Examples/simple.debug.log",
-      "workingDirectory": "../"
-    },
-    "simple_discriminator_debug": {
-      "commandName": "Project",
       "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs --debug Examples/simple_discriminator.debug.log",
+      "workingDirectory": "../"
+    },
+    "01-core-types": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/01-core-types.cue Examples/01-core-types.cs --debug Examples/01-core-types.debug.log",
+      "workingDirectory": "../"
+    },
+    "02-structs-and-composition": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/02-structs-and-composition.cue Examples/02-structs-and-composition.cs --debug Examples/02-structs-and-composition.debug.log",
+      "workingDirectory": "../"
+    },
+    "03-collections-and-references": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/03-collections-and-references.cue Examples/03-collections-and-references.cs --debug Examples/03-collections-and-references.debug.log",
+      "workingDirectory": "../"
+    },
+    "04-unions-and-discriminators": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/04-unions-and-discriminators.cue Examples/04-unions-and-discriminators.cs --debug Examples/04-unions-and-discriminators.debug.log",
+      "workingDirectory": "../"
+    },
+    "05-matchn-and-advanced": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/05-matchn-and-advanced.cue Examples/05-matchn-and-advanced.cs --debug Examples/05-matchn-and-advanced.debug.log",
+      "workingDirectory": "../"
+    },
+    "06-top-level-selection": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/06-top-level-selection.cue Examples/06-top-level-selection.cs --debug Examples/06-top-level-selection.debug.log",
+      "workingDirectory": "../"
+    },
+    "07-complete-domain-model": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/07-complete-domain-model.cue Examples/07-complete-domain-model.cs --debug Examples/07-complete-domain-model.debug.log",
       "workingDirectory": "../"
     }
   }
