@@ -8,7 +8,7 @@ project for the respective licensing terms.
 ## Project structure
 
 > [!WARNING]
-> `cue-dotnet` depends on the separate [libcue](https://github.com/intresrl/libcue/tree/cue-api-dotnet-support)
+> `cue-dotnet` depends on the separate [libcue](https://github.com/intresrl/libcue)
 > project. The native library must be built first and copied to the root
 > of this repository before building, testing, or running the generator.
 
