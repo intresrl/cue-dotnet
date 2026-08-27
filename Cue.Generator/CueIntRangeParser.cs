@@ -1,14 +1,51 @@
+using System.ComponentModel;
 using Cuelang.Cue;
 
 namespace Cue.Generator;
 
+public interface Result;
+public sealed record Eq(long Value) : Result;
+public sealed record NotEq(long Value) : Result;
+public sealed record Gt(long Value, bool Included) : Result;
+public sealed record Lt(long Value, bool Included) : Result;
+public sealed record And(IEnumerable<Result> Value) : Result;
+public sealed record Or(IEnumerable<Result> Value) : Result;
+
+public readonly record struct Range : Result
+{
+    public bool StartIncluded { get; }
+    public long? Start { get; }
+    public long? End { get; }
+    public bool EndIncluded { get; }
+
+    
+    private Range(bool startIncluded, long? start, long? end, bool endIncluded)
+    {
+        // TODO: end range cannot be specified as LongMax
+        if (start > end)
+        {
+            throw new ArgumentException("Start must be less than end");
+        }
+
+        StartIncluded = startIncluded;
+        Start = start;
+        End = end;
+        EndIncluded = endIncluded;
+    }
+    
+    public static Range Closed(long start, long end) => new(true, start, end, true);
+    public static Range StartOpen(long start, long end) => new(false, start, end, true);
+    public static Range EndOpen(long start, long end) => new(true, start, end, false);
+    public static Range Open(long start, long end) => new(false, start, end, false);
+    public static Range Gte(long start) => new(true, start, null, false);
+    public static Range Gt(long start) => new(false, start, null, false);
+    public static Range Lt(long end) => new(false, null, end, false);
+    public static Range Lte(long end) => new(false, null, end, true);
+    public static readonly Range All = new(false, null, null, false);
+}
+
 public static class CueIntRangeParser
 {
-    public readonly record struct Range(long? Start, long? End);
-
-    private abstract record Result;
-    private sealed record Concrete(long Value) : Result;
-    private sealed record Ranges(IReadOnlyList<Range> Value) : Result;
 
     public static IReadOnlyList<Range> ParseRange(this Value value)
     {
@@ -32,13 +69,13 @@ public static class CueIntRangeParser
             {
                 ExprOp.No => ParseLeaf(value),
 
-                ExprOp.And => new Ranges(
+                ExprOp.And => new And(
                     expression.Values
                         .Select(ParseExpression)
                         .Select(ToRanges)
-                        .Aggregate(All(), Intersect)),
+                        .Aggregate(Range.All, Intersect)),
 
-                ExprOp.Or => new Ranges(
+                ExprOp.Or => new And(
                     Normalize(
                         expression.Values
                             .Select(ParseExpression)
@@ -49,7 +86,7 @@ public static class CueIntRangeParser
                 ExprOp.GreaterThan => ParseComparison(expression.Values, ExprOp.GreaterThan),
                 ExprOp.GreaterThanEqual => ParseComparison(expression.Values, ExprOp.GreaterThanEqual),
 
-                _ => new Ranges(All())
+                _ => new And(Range.All)
             };
         }
         finally
@@ -60,39 +97,40 @@ public static class CueIntRangeParser
 
     private static Result ParseLeaf(Value value)
     {
-        if (value.IncompleteKind() != Kind.Int || !value.IsConcrete()) return new Ranges(All());
+        if (value.IncompleteKind() != Kind.Int || !value.IsConcrete()) return new And(All());
 
-        return new Concrete(value.GetLong());
+        return new Eq(value.GetLong());
     }
 
-    private static Result ParseComparison(
-        IReadOnlyList<Value> values,
-        ExprOp op)
+    private static And ParseComparison(ExprResult r)
     {
-        if (values.Count != 1) return new Ranges(All());
+        if (r.Values is not [{ } unaryValue])
+        {
+            throw new ArgumentException("r is not a argument rejection");
+        }
 
-        var operand = ParseExpression(values[0]);
-
-        if (operand is not Concrete concrete) return new Ranges(All());
+        if (ParseExpression(unaryValue) is not Eq concrete) return new And(All());
 
         var value = concrete.Value;
 
-        return op switch
+        var result = r.Op switch
         {
-            ExprOp.LessThan => new Ranges([new Range(null, value)]),
-            ExprOp.LessThanEqual => new Ranges([new Range(null, Increment(value))]),
-            ExprOp.GreaterThan => new Ranges([new Range(Increment(value), null)]),
-            ExprOp.GreaterThanEqual => new Ranges([new Range(value, null)]),
-            _ => new Ranges(All())
+            ExprOp.LessThan => Range.Lt(value),
+            ExprOp.LessThanEqual => Range.Lte(value),
+            ExprOp.GreaterThan => Range.Gt(value),
+            ExprOp.GreaterThanEqual => Range.Gte(value),
+            _ => throw new ArgumentException()
         };
+
+        return new And([result]);
     }
 
     private static IReadOnlyList<Range> ToRanges(Result result)
     {
         return result switch
         {
-            Concrete concrete => [new Range(concrete.Value, Increment(concrete.Value))],
-            Ranges ranges => ranges.Value,
+            Eq concrete => [new Range(concrete.Value, Increment(concrete.Value))],
+            And ranges => ranges.Value,
 
             _ => throw new InvalidOperationException()
         };
@@ -177,10 +215,5 @@ public static class CueIntRangeParser
     private static long? Increment(long value)
     {
         return value == long.MaxValue ? null : value + 1;
-    }
-
-    private static IReadOnlyList<Range> All()
-    {
-        return [new Range(null, null)];
     }
 }
