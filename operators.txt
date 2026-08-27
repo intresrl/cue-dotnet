@@ -1,0 +1,42 @@
+noop is a 1-container with no effect it seems
+
+// number, strings, bytes
+EqualOp:         "==", yield bool
+AddOp:           "+",
+SubtractOp:      "-",
+
+// number
+MultiplyOp:      "*", 
+FloatQuotientOp: "/",
+NotEqualOp:      "!=",
+LessThanOp:      "<",
+LessEqualOp:     "<=",
+GreaterThanOp:   ">",
+GreaterEqualOp:  ">=",
+
+// integer
+IntQuotientOp:   "quo",
+IntRemainderOp:  "rem",
+IntDivideOp:     "div",
+IntModuloOp:     "mod",
+
+// bool
+BoolAndOp:       "&&",
+BoolOrOp:        "||",
+NotOp:           "!",
+
+// types
+AndOp:           "&", // conjunction
+OrOp:            "|", // disjunction
+SelectorOp: ".",
+IndexOp:    "[]",
+SliceOp:    "[:]",
+CallOp:     "()",
+
+// string
+MatchOp:         "=~",
+NotMatchOp:      "!~",
+InterpolationOp: `\()`,
+
+
+For any operator that accepts operands of type float, any operand may be of type int or float, in which case the result will be float if it cannot be represented as an int or if any of the operands are float, or int otherwise. So the result of 1 / 2 is 0.5 and is of type float.
