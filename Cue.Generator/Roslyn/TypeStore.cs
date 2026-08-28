@@ -1,45 +1,43 @@
 ﻿namespace Cue.Generator.Roslyn;
 
 public sealed record DisjunctionDefinition(string DisjunctionPath, string[] BranchPaths);
-public sealed record ConcreteDefinition(CueStructValue StructNode);
+public sealed record ContainerDefinition(string ListPath, TypeName ListType);
+public sealed record RecordDefinition(CueStructValue StructNode);
 
 public interface ITypeStore
 {
     void Collect(IEnumerable<CueValueNode> node);
     TypeName GetTypeName(CueValueNode fieldValue);
     IEnumerable<DisjunctionDefinition> GetAbstractDefinitions();
-    IEnumerable<ConcreteDefinition> GetConcreteDefinitions();
+    IEnumerable<RecordDefinition> GetRecordDefinitions();
+    IEnumerable<ContainerDefinition> GetContainerDefinitions();
 }
 
 public class TypeStore : ITypeStore
 {
-    // map from disjunction path -> (base class name, discriminator field, branch paths)
-    private readonly Dictionary<string, DisjunctionDefinition> _discriminatedUnions = new();
-
-    // map from struct path -> generated type name
-    private readonly Dictionary<string, CueStructValue> _concreteTypes = [];
+    private CollectionResult _collectionResult;
 
     public void Collect(IEnumerable<CueValueNode> node)
     {
-        var dd = new DisjunctionCollector();
-        var (structs, disjunctions, _) = dd.Visit(node);
-        
-        // collect struct nodes and assign type names
-        foreach (var v in structs)
-        {
-            _concreteTypes.Add(v.Path, v);
-        }
-
-        // collect discriminated unions and map inline branches to named structs
-        foreach (var d in disjunctions)
-        {
-            _discriminatedUnions[d.Path] = new DisjunctionDefinition(d.Path, d.Branches.Select(b => b.Path).ToArray());
-        }
+        _collectionResult = DisjunctionCollector.Visit(node);
     }
 
     public IEnumerable<DisjunctionDefinition> GetAbstractDefinitions()
     {
-        return _discriminatedUnions.Values.OrderBy(kv => kv.DisjunctionPath);
+        return _collectionResult.Disjunctions
+            .OrderBy(kv => kv.Path)
+            .Select(d => new DisjunctionDefinition(
+                d.Path, 
+                d.Branches.Select(b => b.Path).ToArray()
+            )
+        );
+    }
+    
+    public IEnumerable<ContainerDefinition> GetContainerDefinitions()
+    {
+        return _collectionResult.OtherDefinitions
+            .OrderBy(kv => kv.Path)
+            .Select(d => new ContainerDefinition(d.Path, GetTypeName(d)));
     }
 
     public TypeName GetTypeName(CueValueNode node)
@@ -47,13 +45,13 @@ public class TypeStore : ITypeStore
         return node switch
         {
             // we need these branches only to handle the actual interface and class definitions
-            CueDisjunction d => TypeName.FromDisjunctionRef(d.Path),
-            CueStructValue s => TypeName.FromDefinitionRef(s.Path),
+            CueDisjunction d => TypeName.FromRef(d.Path, NamingKind.Disjunction),
+            CueStructValue s => TypeName.FromRef(s.Path, NamingKind.Type),
             
             // these branches are instead to fetch the type of struct fields
-            CueDisjunctionReference {Definition: var def} => TypeName.FromDisjunctionRef(def),
-            CueDefinitionReference {Definition: var def} => TypeName.FromDefinitionRef(def),
-            CueListValue l => $"List<{GetTypeName(l.AnyIndexElement ?? new CueTopValue(l.Path))}>", // TODO: fix and implement tuple elements here once discrete indices will be implemented
+            CueDisjunctionReference {Definition: var def} => TypeName.FromRef(def, NamingKind.Disjunction),
+            CueDefinitionReference {Definition: var def} => TypeName.FromRef(def, NamingKind.Type),
+            CueListValue l => GetListTypeName(l),
             CueNullable l => $"{GetTypeName(l.Value)}?",
             CueBoolValue => $"bool",
             CueIntValue => $"long",
@@ -67,12 +65,30 @@ public class TypeStore : ITypeStore
         };
     }
 
-    public IEnumerable<ConcreteDefinition> GetConcreteDefinitions()
+    private TypeName GetListTypeName(CueListValue list)
     {
-        // create classes for each struct (keep deterministic order)
-        foreach (var (_, str) in _concreteTypes.OrderBy(kv => kv.Key))
+        return list switch
         {
-            yield return new ConcreteDefinition(str);
-        }
+            { Indexed: [], Tail: { } tail } => $"List<{GetTypeName(tail)}>",
+            { Indexed: { Count : > 0 } indexed, Tail: null } => GetTupleTypeName(indexed),
+            { Indexed: { Count : > 0 } indexed, Tail: { } tail } =>
+                $"CueList<{GetTupleTypeName(indexed)}, {GetTypeName(tail)}>",
+            
+            _ => throw new ArgumentOutOfRangeException(nameof(list), list, null)
+        };
+    }
+
+    private TypeName GetTupleTypeName(IReadOnlyList<CueValueNode> elements)
+    {
+        return elements is [{ } single] 
+            ? (TypeName)$"ValueTuple<{GetTypeName(single)}>" 
+            : $"({TypeName.Join($", ", elements.Select(GetTypeName))})";
+    }
+
+    public IEnumerable<RecordDefinition> GetRecordDefinitions()
+    {
+        return _collectionResult.Structs
+            .OrderBy(kv => kv.Path)
+            .Select(e => new RecordDefinition(e));
     }
 }

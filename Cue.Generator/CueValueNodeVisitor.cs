@@ -195,24 +195,9 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             throw new InvalidDataException("List length must be an int.");
         }
 
-        if (len.IsConcrete())
-        {
-            return len.GetLong();
-        }
-
-        try
-        {
-            var lb= len.ParseRange().LowerBound();
-            Console.WriteLine($"DEBUG LIST LENGTH {len.Path()}: {lb} = {FormatExpr(len)}");
-            return lb;
-        }
-        finally
-        {
-            foreach (var expressionValue in len.Expr().Values)
-            {
-                expressionValue.Dispose();
-            }
-        }
+        return len.IsConcrete() 
+            ? len.GetLong() 
+            : len.ParseRange().LowerBound();
     }
 
     private CueDisjunction VisitDisjunction(Value value, IEnumerable<Value> branches)

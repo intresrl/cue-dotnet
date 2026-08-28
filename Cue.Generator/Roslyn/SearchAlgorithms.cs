@@ -3,6 +3,11 @@
 public static class SearchAlgorithms
 {
     public static IEnumerable<T> BreadthFirstSearch<T>(
+        this CueValueNode root,
+        Func<CueValueNode, (IEnumerable<CueValueNode> Members, IEnumerable<T> Results)> selector)
+        => BreadthFirstSearch([root], selector);
+    
+    public static IEnumerable<T> BreadthFirstSearch<T>(
         this IEnumerable<CueValueNode> root,
         Func<CueValueNode, (IEnumerable<CueValueNode> Members, IEnumerable<T> Results)> selector)
     {

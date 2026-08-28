@@ -18,6 +18,8 @@
 
     <ItemGroup>
       <Compile Remove="Roslyn\Identifiers.cs" />
+      <Compile Remove="Prelude.cs" />
+      <EmbeddedResource Include="Prelude.cs" LogicalName="Cue.Generator.Prelude.cs" />
     </ItemGroup>
 
 </Project>

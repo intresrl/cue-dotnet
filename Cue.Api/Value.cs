@@ -87,7 +87,6 @@ public sealed unsafe class Value : IDisposable
             {
                 if (EqualTo.TryGetValue(x, out var v) && v.Contains(y))
                 {
-                    Console.WriteLine($"cache hit {EqualTo.Count()} count {EqualTo.Select(e => e.Value).Distinct().Count()} cliques");
                     return true;
                 }
 

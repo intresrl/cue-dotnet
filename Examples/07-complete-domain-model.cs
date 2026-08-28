@@ -1,6 +1,20 @@
 using System;
 using System.Collections.Generic;
 
+public readonly struct Role(string value)
+{
+    public string Value { get; } = value;
+
+    public implicit operator Role(string value) => new(value);
+}
+
+public readonly struct UserStatus(string value)
+{
+    public string Value { get; } = value;
+
+    public implicit operator UserStatus(string value) => new(value);
+}
+
 public interface ProductvalueBase
 {
     public record AsPhysicalProduct(PhysicalProduct value) : ProductvalueBase;

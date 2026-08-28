@@ -55,6 +55,8 @@
 
 #FixedLiteralTuple: ["header", 1, true]
 
+#FixedLiteralTupleWithTail: ["header", 1, false, ...{}]
+
 #MixedTuple: [
 	string,
 	int & >=0,

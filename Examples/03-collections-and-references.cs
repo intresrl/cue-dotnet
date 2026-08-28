@@ -1,5 +1,61 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Generic;
+
+public sealed class CueList<TConcrete, TAnyIndex>
+{
+    public required TConcrete Concrete { get; init; }
+    public List<TAnyIndex> AnyIndex { get; init; } = [];
+}
+
+public readonly struct FixedLiteralTuple((string, long, bool) value)
+{
+    public (string, long, bool) Value { get; } = value;
+
+    public implicit operator FixedLiteralTuple((string, long, bool) value) => new(value);
+}
+
+public readonly struct FixedLiteralTupleWithTail(CueList<(string, long, bool), Scores> value)
+{
+    public CueList<(string, long, bool), Scores> Value { get; } = value;
+
+    public implicit operator FixedLiteralTupleWithTail(CueList<(string, long, bool), Scores> value) => new(value);
+}
+
+public readonly struct FixedPrimitiveTuple((string, long, bool) value)
+{
+    public (string, long, bool) Value { get; } = value;
+
+    public implicit operator FixedPrimitiveTuple((string, long, bool) value) => new(value);
+}
+
+public readonly struct FixedStructTuple((FixedStructTuple, FixedStructTuple) value)
+{
+    public (FixedStructTuple, FixedStructTuple) Value { get; } = value;
+
+    public implicit operator FixedStructTuple((FixedStructTuple, FixedStructTuple) value) => new(value);
+}
+
+public readonly struct MixedTuple((string, long, string? ) value)
+{
+    public (string, long, string? ) Value { get; } = value;
+
+    public implicit operator MixedTuple((string, long, string? ) value) => new(value);
+}
+
+public readonly struct Role(string value)
+{
+    public string Value { get; } = value;
+
+    public implicit operator Role(string value) => new(value);
+}
+
+public readonly struct StringList(List<string> value)
+{
+    public List<string> Value { get; } = value;
+
+    public implicit operator StringList(List<string> value) => new(value);
+}
 
 public class CollectionsAndReferencesExample
 {

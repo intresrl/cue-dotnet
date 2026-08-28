@@ -55,12 +55,17 @@ public sealed record CueTopValue(string Path) : CueValueNode(Path)
     public override string ToString() => $"Top at {Path}";
 }
 
-public sealed record CueDefinitionReference(string Definition) : CueValueNode(Definition)
+public interface IReference
+{
+    string Definition { get; }
+}
+
+public sealed record CueDefinitionReference(string Definition) : CueValueNode(Definition), IReference
 {
     public override string ToString() => $"Reference to {Definition}";
 }
 
-public sealed record CueDisjunctionReference(string Definition) : CueValueNode(Definition)
+public sealed record CueDisjunctionReference(string Definition) : CueValueNode(Definition), IReference
 {
     public override string ToString() => $"Disjunction reference to {Definition}";
 }
@@ -91,18 +96,18 @@ public sealed record CueDisjunction(
 
 public sealed record CueListValue : CueValueNode
 {
-    public CueValueNode? AnyIndexElement { get; init; }
-    public IReadOnlyList<CueValueNode> IndexedElements { get; init; }
+    public CueValueNode? Tail { get; init; }
+    public IReadOnlyList<CueValueNode> Indexed { get; init; }
     
     public CueListValue(
         string Path, 
-        CueValueNode? AnyIndexElement, 
-        IReadOnlyList<CueValueNode> IndexedElements) : base(Path)
+        CueValueNode? Tail, 
+        IReadOnlyList<CueValueNode> Indexed) : base(Path)
     {
-        this.AnyIndexElement = AnyIndexElement;
-        this.IndexedElements = IndexedElements;
+        this.Tail = Tail;
+        this.Indexed = Indexed;
 
-        if (AnyIndexElement == null && IndexedElements.Count == 0)
+        if (Tail == null && Indexed.Count == 0)
         {
             throw new InvalidDataException("either provide any index or elements or both");
         }
@@ -110,15 +115,15 @@ public sealed record CueListValue : CueValueNode
 
     public override string ToString()
     {
-        if (IndexedElements.Count == 0)
+        if (Indexed.Count == 0)
         {
-            return $"[...{AnyIndexElement}] at {Path}";
+            return $"[...{Tail}] at {Path}";
         }
         
-        var elements = string.Join(", ", IndexedElements);
+        var elements = string.Join(", ", Indexed);
 
-        return AnyIndexElement is null
+        return Tail is null
             ? $"[{elements}] at {Path}"
-            : $"[{elements}, ...{AnyIndexElement}] at {Path}";
+            : $"[{elements}, ...{Tail}] at {Path}";
     }
 }

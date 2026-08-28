@@ -273,8 +273,8 @@ public sealed class DiscriminatedUnionTests
         var itemsField = node.Fields.First(f => f.Name == "items");
         var listValue = (CueListValue)itemsField.Value;
 
-        Assert.IsType<CueDisjunction>(listValue.AnyIndexElement);
-        var disjunction = (CueDisjunction)listValue.AnyIndexElement;
+        Assert.IsType<CueDisjunction>(listValue.Tail);
+        var disjunction = (CueDisjunction)listValue.Tail;
         Assert.True(disjunction.IsDiscriminated);
     }
 

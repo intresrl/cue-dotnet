@@ -3,16 +3,12 @@
 public record CollectionResult(
     IReadOnlyList<CueStructValue> Structs,
     IReadOnlyList<CueDisjunction> Disjunctions,
-    
-    // TODO: consider how to use this in the future when primitive type expression constraints will be implemented
-    IReadOnlyList<CueValueNode> Other
+    IReadOnlyList<CueValueNode> OtherDefinitions
 );
 
-public class DisjunctionCollector
+public static class DisjunctionCollector
 {
-    private readonly Dictionary<CueValueNode, CueValueNode> _definitions = new(new CueValueNodeComparer());
-
-    public CollectionResult Visit(IEnumerable<CueValueNode> nodes)
+    public static CollectionResult Visit(IEnumerable<CueValueNode> nodes)
     {
         var nodeArray = nodes.ToArray();
         
@@ -21,7 +17,7 @@ public class DisjunctionCollector
             {
                 CueDisjunction d => (d.Branches, [d]),
                 CueStructValue s => (s.Fields.Select(f => f.Value), [s]),
-                CueListValue l => (l.AnyIndexElement is {} a ? [..l.IndexedElements, a] : l.IndexedElements, []),
+                CueListValue l => (l.Tail is {} a ? [..l.Indexed, a] : l.Indexed, []),
                 CueNullable nu => ([nu.Value], []),
                 _ => ([], [])
             })
@@ -45,7 +41,6 @@ public class DisjunctionCollector
                         .Select(f => f with { Value = ConvertToReferences(definitionDict, f.Value) })
                         .ToList());
                     
-                    _definitions[s] = structWithRef;
                     sList.Add(structWithRef);
                     break;
                 }
@@ -62,44 +57,35 @@ public class DisjunctionCollector
                         dVal.BranchPaths
                     );
 
-                    _definitions[s] = disjunctionWithRef;
                     dList.Add(disjunctionWithRef);
                     break;
             }
         }
 
-        return new CollectionResult(sList, dList, nodeArray.Select(Visit).ToList());
+        return new CollectionResult(
+            sList, 
+            dList, 
+            nodeArray
+                .Select(e => ConvertToReferences(definitionDict, e))
+                .Where(e => e is not IReference)
+                .ToList());
     }
-
-    private CueValueNode Visit(CueValueNode node)
-    {
-        return node switch
-        {
-            CueBottomValue or CueTopValue or CueTopValue or CueNullValue => node,
-
-            CueStructValue s => new CueDefinitionReference(_definitions[s].Path),
-            CueListValue l => new CueListValue(
-                l.Path, 
-                l.AnyIndexElement is { } anyIdx 
-                    ? Visit(anyIdx) 
-                    : null, 
-                l.IndexedElements.Select(Visit).ToArray()),
-            CueDisjunction d => new CueDisjunctionReference(_definitions[d].Path),
-
-            // be careful about these in the future. They will contain constraints potentially
-            _ => node
-        };
-    }
-
+    
     private static CueValueNode ConvertToReferences(Dictionary<CueValueNode, CueValueNode> definitionDict, CueValueNode f)
     {
         return f switch
         {
             CueDisjunction dd => new CueDisjunctionReference(definitionDict[dd].Path),
             CueStructValue ss => new CueDefinitionReference(definitionDict[ss].Path),
-            CueListValue l =>  l.AnyIndexElement is {} a 
-                ? l with { AnyIndexElement = ConvertToReferences(definitionDict, a) }
-                : l,
+            CueListValue l => l with
+            {
+                Tail = l.Tail is { } a
+                    ? ConvertToReferences(definitionDict, a)
+                    : null,
+                Indexed = l.Indexed
+                    .Select(e => ConvertToReferences(definitionDict, e))
+                    .ToArray()
+            },
             CueNullable n => n with { Value = ConvertToReferences(definitionDict, n.Value) },
             _ => f
         };

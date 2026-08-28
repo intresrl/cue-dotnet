@@ -1,62 +1,74 @@
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Cue.Generator.Roslyn;
 
-[InterpolatedStringHandler]
-public class TypeName
+public enum NamingKind
 {
-    private readonly StringBuilder _template;
-    private string? _typePath;
-    private string? _baseTypePath;
+    Type,
+    Disjunction,
+    DisjunctionBranch
+}
+
+[InterpolatedStringHandler]
+public sealed class TypeName
+{
+    private readonly List<IPart> _parts = [];
 
     public TypeName(int literalLength, int formattedCount)
     {
-        _template = new StringBuilder(literalLength);
-        _typePath = null;
     }
 
-    public static TypeName FromDefinitionRef(string path)
-    { 
-        var tn = new TypeName(4, 0) { _typePath = path };
-        tn._template.Append("{0}");
-        return tn;
+    private TypeName(IEnumerable<IPart> parts)
+    {
+        _parts.AddRange(parts);
     }
-    
-    public static TypeName FromDisjunctionRef(string path)
-    { 
-        var tn = new TypeName(4, 0) { _baseTypePath = path };
-        tn._template.Append("{0}");
-        return tn;
+
+    public static TypeName FromRef(string path, NamingKind kind) => new([new Ref(path, kind)]);
+
+    public static TypeName Join(TypeName separator, IEnumerable<TypeName> names)
+    {
+        var nameArray = names.ToArray();
+        
+        var parts = nameArray
+            .SelectMany(IEnumerable<TypeName> (e, i) => i == nameArray.Length - 1 ? [e] : [e, separator])
+            .SelectMany(e => e._parts);
+
+        return new TypeName(parts);
     }
 
     public void AppendLiteral(string value)
     {
-        _template.Append(value);
+        if (value.Length != 0)
+        {
+            _parts.Add(new Literal(value));
+        }
     }
 
     public void AppendFormatted(TypeName value)
     {
-        _template.Append(value._template);
-
-        if (_typePath is not null || _baseTypePath is not null)
-        {
-            throw new InvalidOperationException("path already present in this type name");
-        }
-        
-        _typePath = value._typePath;
-        _baseTypePath = value._baseTypePath;
+        _parts.Add(new Nested(value));
     }
 
-    public string Format(Func<string, string> typeFormatter, Func<string, string> baseTypeFormatter)
+    public string Format(Func<string, NamingKind, string> formatter)
     {
-        if (_baseTypePath is not null)
-        {
-            return string.Format(_template.ToString(), baseTypeFormatter(_baseTypePath));   
-        }
-        
-        return _typePath is { } t 
-            ? string.Format(_template.ToString(), typeFormatter(t)) 
-            : _template.ToString();
+        return string.Join("", FormattedParts(formatter));
     }
+
+    private IEnumerable<string> FormattedParts(Func<string, NamingKind, string> formatter)
+    {
+        return _parts
+            .SelectMany(p => p switch
+            {
+                Literal l => [l.Value],
+                Ref r => [formatter(r.Path, r.Kind)],
+                Nested n => n.Value.FormattedParts(formatter),
+
+                _ => throw new InvalidOperationException()
+            });
+    }
+
+    private interface IPart;
+    private sealed record Literal(string Value) : IPart;
+    private sealed record Ref(string Path, NamingKind Kind) : IPart;
+    private sealed record Nested(TypeName Value) : IPart;
 }

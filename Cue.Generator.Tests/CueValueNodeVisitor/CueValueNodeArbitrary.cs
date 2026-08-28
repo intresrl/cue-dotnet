@@ -59,10 +59,9 @@ public static class CueValueNodeArbitrary
 
     private static Gen<CueValueNode> ListGen(int size)
     {
-        return Gen
-            .Choose(0, Math.Min(size, 4))
-            .SelectMany(_ => Generator)
-            .Select(CueValueNode (elementType) => new CueListValue("", elementType));
+        // TODO: single elements here too
+        return Generator
+            .Select(CueValueNode (elementType) => new CueListValue("", elementType, []));
     }
 
     // TODO: NUL character in strings bugs API because strings are CStrings
@@ -120,7 +119,7 @@ public static class CueValueNodeArbitrary
                 "}"
             ]),
 
-            CueListValue { AnyIndexElement: var v } => $"""
+            CueListValue { Tail: var v } => $"""
                                                     [
                                                       ... ({v.Source()})
                                                     ]

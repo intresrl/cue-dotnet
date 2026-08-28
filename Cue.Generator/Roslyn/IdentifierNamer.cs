@@ -4,8 +4,7 @@ namespace Cue.Generator.Roslyn;
 
 public interface IIdentifierNamer
 {
-    string DisjunctionName(string path);
-    string TypeName(string path);
+    string TypeName(string path, NamingKind kind);
     string Identifier(string name);
 }
 
@@ -13,14 +12,7 @@ public partial class IdentifierNamer : IIdentifierNamer
 {
     private static int _anonymousIndex = 1;
 
-    public string DisjunctionName(string path)
-    {
-        // Generate name like "ValueFormatBase" from a discriminator union path
-        var typeName = TypeName(path);
-        return typeName + "Base";
-    }
-
-    public string TypeName(string path)
+    private static string TypeName(string path)
     {
         if (string.IsNullOrEmpty(path)) return "Root";
 
@@ -29,6 +21,17 @@ public partial class IdentifierNamer : IIdentifierNamer
             .Replace(".", string.Empty);
 
         return ToPascalCase(SanitizeIdentifier(name));
+    }
+
+    public string TypeName(string path, NamingKind kind)
+    {
+        return kind switch
+        {
+            NamingKind.Type => TypeName(path),
+            NamingKind.Disjunction => TypeName(path) + "Base",
+            NamingKind.DisjunctionBranch => "As" + TypeName(path),
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
+        };
     }
 
     public string Identifier(string name)

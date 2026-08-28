@@ -33,8 +33,8 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
             (CueFloatValue a, CueFloatValue b) => a.ConcreteValue == b.ConcreteValue,
             (CueStringValue a, CueStringValue b) => a.ConcreteValue == b.ConcreteValue,
             (CueBytesValue a, CueBytesValue b) => ByteArraysEqual(a.ConcreteValue, b.ConcreteValue),
-            (CueListValue a, CueListValue b) => Equals(a.AnyIndexElement, b.AnyIndexElement)
-                                                && a.IndexedElements.SequenceEqual(b.IndexedElements, this),
+            (CueListValue a, CueListValue b) => Equals(a.Tail, b.Tail)
+                                                && a.Indexed.SequenceEqual(b.Indexed, this),
             (CueNullable a, CueNullable b) => Equals(a.Value, b.Value),
             (CueStructValue a, CueStructValue b) => StructsEqual(a, b),
             (CueDisjunction a, CueDisjunction b) => DisjunctionsEqual(a, b),
@@ -96,11 +96,11 @@ public class CueValueNodeComparer : IEqualityComparer<CueValueNode>
                 break;
 
             case CueListValue l:
-                if (l.AnyIndexElement is not null)
+                if (l.Tail is not null)
                 {
-                    hash.Add(GetHashCode(l.AnyIndexElement));
+                    hash.Add(GetHashCode(l.Tail));
                 }
-                foreach (var e in l.IndexedElements)
+                foreach (var e in l.Indexed)
                 {
                     hash.Add(e);
                 }

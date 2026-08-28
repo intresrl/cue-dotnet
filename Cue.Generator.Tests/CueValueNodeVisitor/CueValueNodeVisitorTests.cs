@@ -30,7 +30,7 @@ public sealed class CueValueNodeVisitorTests
 
         Assert.NotNull(node);
         var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.Int, GetKind(listNode.AnyIndexElement));
+        Assert.Equal(Kind.Int, GetKind(listNode.Tail));
     }
 
     [Fact]
@@ -42,7 +42,36 @@ public sealed class CueValueNodeVisitorTests
 
         Assert.NotNull(node);
         var listNode = Assert.IsType<CueListValue>(node);
-        Assert.Equal(Kind.String, GetKind(listNode.AnyIndexElement));
+        Assert.Equal(Kind.String, GetKind(listNode.Tail));
+    }
+
+    [Fact]
+    public void VisitFixedListCapturesIndexedElementsWithoutAnyIndex()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("[string, int, bool]");
+        var listNode = Assert.IsType<CueListValue>(CueValueVisitor.ForTests(value));
+
+        Assert.Null(listNode.Tail);
+        Assert.Collection(
+            listNode.Indexed,
+            value => Assert.Equal(Kind.String, GetKind(value)),
+            value => Assert.Equal(Kind.Int, GetKind(value)),
+            value => Assert.Equal(Kind.Bool, GetKind(value)));
+    }
+
+    [Fact]
+    public void VisitMixedListCapturesIndexedElementsAndAnyIndex()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("[string, int, ...bool]");
+        var listNode = Assert.IsType<CueListValue>(CueValueVisitor.ForTests(value));
+
+        Assert.Equal(Kind.Bool, GetKind(Assert.IsType<CueBoolValue>(listNode.Tail)));
+        Assert.Collection(
+            listNode.Indexed,
+            value => Assert.Equal(Kind.String, GetKind(value)),
+            value => Assert.Equal(Kind.Int, GetKind(value)));
     }
     
     [Fact]
@@ -150,7 +179,7 @@ public sealed class CueValueNodeVisitorTests
         Assert.NotNull(node);
         Assert.IsType<CueListValue>(node);
         var listNode = (CueListValue)node;
-        Assert.IsType<CueStructValue>(listNode.AnyIndexElement);
+        Assert.IsType<CueStructValue>(listNode.Tail);
     }
 
     [Fact]
