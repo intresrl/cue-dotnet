@@ -39,6 +39,11 @@
       "commandName": "Project",
       "commandLineArgs": "Examples/07-complete-domain-model.cue Examples/07-complete-domain-model.cs --debug Examples/07-complete-domain-model.debug.log",
       "workingDirectory": "../"
+    },
+    "08-cue-equality": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/08-cue-equality.cue Examples/08-cue-equality.cs --debug Examples/08-cue-equality.debug.log",
+      "workingDirectory": "../"
     }
   }
 }
