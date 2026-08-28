@@ -29,11 +29,11 @@ public readonly struct FixedPrimitiveTuple((string, long, bool) value)
     public implicit operator FixedPrimitiveTuple((string, long, bool) value) => new(value);
 }
 
-public readonly struct FixedStructTuple((FixedStructTuple, FixedStructTuple) value)
+public readonly struct FixedStructTuple((FixedStructTuple0, FixedStructTuple1) value)
 {
-    public (FixedStructTuple, FixedStructTuple) Value { get; } = value;
+    public (FixedStructTuple0, FixedStructTuple1) Value { get; } = value;
 
-    public implicit operator FixedStructTuple((FixedStructTuple, FixedStructTuple) value) => new(value);
+    public implicit operator FixedStructTuple((FixedStructTuple0, FixedStructTuple1) value) => new(value);
 }
 
 public readonly struct MixedTuple((string, long, string? ) value)
@@ -74,12 +74,12 @@ public class Department
     public List<User> Members { get; init; }
 }
 
-public class FixedStructTuple
+public class FixedStructTuple0
 {
     public string Id { get; init; }
 }
 
-public class FixedStructTuple
+public class FixedStructTuple1
 {
     public long Count { get; init; }
 }

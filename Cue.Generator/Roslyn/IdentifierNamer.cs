@@ -17,7 +17,10 @@ public partial class IdentifierNamer : IIdentifierNamer
         if (string.IsNullOrEmpty(path)) return "Root";
 
         // Remove dots and indexers
-        var name = Indexer().Replace(path, string.Empty)
+        var name = path
+            .Replace("[_]", "Any")
+            .Replace("[", string.Empty)
+            .Replace("]", string.Empty)
             .Replace(".", string.Empty);
 
         return ToPascalCase(SanitizeIdentifier(name));
@@ -59,7 +62,4 @@ public partial class IdentifierNamer : IIdentifierNamer
 
         return res;
     }
-
-    [GeneratedRegex(@"\[[^\]]*\]")]
-    private static partial Regex Indexer();
 }

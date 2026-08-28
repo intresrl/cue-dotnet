@@ -1,4 +1,4 @@
-// Tests open lists, lists of primitives, lists of definitions,
+﻿// Tests open lists, lists of primitives, lists of definitions,
 // inline list element structs, maps, nested object graphs,
 // top-level list definitions, and fixed/index-specific list schemas.
 //
