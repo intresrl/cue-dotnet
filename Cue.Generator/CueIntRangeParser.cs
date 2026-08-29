@@ -1,219 +1,120 @@
-using System.ComponentModel;
 using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-public interface Result;
-public sealed record Eq(long Value) : Result;
-public sealed record NotEq(long Value) : Result;
-public sealed record Gt(long Value, bool Included) : Result;
-public sealed record Lt(long Value, bool Included) : Result;
-public sealed record And(IEnumerable<Result> Value) : Result;
-public sealed record Or(IEnumerable<Result> Value) : Result;
+using ExtendedNumerics;
 
-public readonly record struct Range : Result
+public abstract record CueExpr;
+
+public enum CueBound
 {
-    public bool StartIncluded { get; }
-    public long? Start { get; }
-    public long? End { get; }
-    public bool EndIncluded { get; }
-
-    
-    private Range(bool startIncluded, long? start, long? end, bool endIncluded)
-    {
-        // TODO: end range cannot be specified as LongMax
-        if (start > end)
-        {
-            throw new ArgumentException("Start must be less than end");
-        }
-
-        StartIncluded = startIncluded;
-        Start = start;
-        End = end;
-        EndIncluded = endIncluded;
-    }
-    
-    public static Range Closed(long start, long end) => new(true, start, end, true);
-    public static Range StartOpen(long start, long end) => new(false, start, end, true);
-    public static Range EndOpen(long start, long end) => new(true, start, end, false);
-    public static Range Open(long start, long end) => new(false, start, end, false);
-    public static Range Gte(long start) => new(true, start, null, false);
-    public static Range Gt(long start) => new(false, start, null, false);
-    public static Range Lt(long end) => new(false, null, end, false);
-    public static Range Lte(long end) => new(false, null, end, true);
-    public static readonly Range All = new(false, null, null, false);
+    Uint,    // >=0
+    Uint8,   // >=0 & <=255
+    Int8,    // >=-128 & <=127
+    Uint16,  // >=0 & <=65535
+    Int16,   // >=-32_768 & <=32_767
+    Rune,    // >=0 & <=0x10FFFF
+    Uint32,  // >=0 & <=4_294_967_295
+    Int32,   // >=-2_147_483_648 & <=2_147_483_647
+    Uint64,  // >=0 & <=18_446_744_073_709_551_615
+    Int64,   // >=-9_223_372_036_854_775_808 & <=9_223_372_036_854_775_807
+    Int128,  // >=-170_141_183_460_469_231_731_687_303_715_884_105_728 & <=170_141_183_460_469_231_731_687_303_715_884_105_727
+    Uint128, // >=0 & <=340_282_366_920_938_463_463_374_607_431_768_211_455
+    Float
 }
 
-public static class CueIntRangeParser
+public sealed record PredefinedBound(CueBound Bound) : CueExpr
 {
+    public Kind CueKind => Bound == CueBound.Float ? Kind.Float : Kind.Int;
+}
 
-    public static IReadOnlyList<Range> ParseRange(this Value value)
-    {
-        return ToRanges(ParseExpression(value));
-    }
-    
-    public static long LowerBound(this IReadOnlyList<Range> value)
-    {
-        return value.Count != 0 && value[0].Start is { } s 
-            ? s
-            : long.MinValue;
-    }
+public sealed record NumberLiteral(BigDecimal Value) : CueExpr;
 
-    private static Result ParseExpression(Value value)
-    {
-        var expression = value.Expr();
+public sealed record BoolLiteral(bool Value) : CueExpr;
 
-        try
+public sealed record CueUnaryExpr(UnaryOperator Operator, CueExpr Operand) : CueExpr;
+
+public sealed record CueBinaryExpr(CueBinOp Operator, CueExpr Left, CueExpr Right) : CueExpr;
+
+public enum UnaryOperator
+{
+    NoOp,
+    Not
+}
+
+public enum CueBinOp
+{
+    // Number
+    Equal,
+    Add,
+    Subtract,
+    Multiply,
+    FloatQuotient,
+    NotEqual,
+    LessThan,
+    LessEqual,
+    GreaterThan,
+    GreaterEqual,
+
+    // Integer
+    IntQuotient,
+    IntRemainder,
+    IntDivide,
+    IntModulo,
+
+    // Boolean
+    BoolAnd,
+    BoolOr
+}
+
+public static class ExprParser
+{
+    private static CueExpr Parse(Value value)
+    {
+        var expr = value.Expr();
+
+        // NoOp is a transparent container. Its contents must be parsed as a leaf,
+        // not recursively as another expression.
+        if (expr.Op == ExprOp.No)
         {
-            return expression.Op switch
-            {
-                ExprOp.No => ParseLeaf(value),
-
-                ExprOp.And => new And(
-                    expression.Values
-                        .Select(ParseExpression)
-                        .Select(ToRanges)
-                        .Aggregate(Range.All, Intersect)),
-
-                ExprOp.Or => new And(
-                    Normalize(
-                        expression.Values
-                            .Select(ParseExpression)
-                            .SelectMany(ToRanges))),
-
-                ExprOp.LessThan => ParseComparison(expression.Values, ExprOp.LessThan),
-                ExprOp.LessThanEqual => ParseComparison(expression.Values, ExprOp.LessThanEqual),
-                ExprOp.GreaterThan => ParseComparison(expression.Values, ExprOp.GreaterThan),
-                ExprOp.GreaterThanEqual => ParseComparison(expression.Values, ExprOp.GreaterThanEqual),
-
-                _ => new And(Range.All)
-            };
-        }
-        finally
-        {
-            foreach (var child in expression.Values) child.Dispose();
-        }
-    }
-
-    private static Result ParseLeaf(Value value)
-    {
-        if (value.IncompleteKind() != Kind.Int || !value.IsConcrete()) return new And(All());
-
-        return new Eq(value.GetLong());
-    }
-
-    private static And ParseComparison(ExprResult r)
-    {
-        if (r.Values is not [{ } unaryValue])
-        {
-            throw new ArgumentException("r is not a argument rejection");
+            return ParseLeaf(value);
         }
 
-        if (ParseExpression(unaryValue) is not Eq concrete) return new And(All());
+        var values = expr.Values.Select(Parse).ToArray();
 
-        var value = concrete.Value;
-
-        var result = r.Op switch
+        return expr.Op switch
         {
-            ExprOp.LessThan => Range.Lt(value),
-            ExprOp.LessThanEqual => Range.Lte(value),
-            ExprOp.GreaterThan => Range.Gt(value),
-            ExprOp.GreaterThanEqual => Range.Gte(value),
-            _ => throw new ArgumentException()
-        };
+            // Number, string, bytes
+            ExprOp.Equal => new CueBinaryExpr(CueBinOp.Equal, values[0], values[1]),
+            ExprOp.Add => new CueBinaryExpr(CueBinOp.Add, values[0], values[1]),
+            ExprOp.Subtract => new CueBinaryExpr(CueBinOp.Subtract, values[0], values[1]),
 
-        return new And([result]);
-    }
+            // Number
+            ExprOp.Multiply => new CueBinaryExpr(CueBinOp.Multiply, values[0], values[1]),
+            ExprOp.FloatQuotient => new CueBinaryExpr(CueBinOp.FloatQuotient, values[0], values[1]),
+            ExprOp.NotEqual => new CueBinaryExpr(CueBinOp.NotEqual, values[0], values[1]),
+            ExprOp.LessThan => new CueBinaryExpr(CueBinOp.LessThan, values[0], values[1]),
+            ExprOp.LessThanEqual => new CueBinaryExpr(CueBinOp.LessEqual, values[0], values[1]),
+            ExprOp.GreaterThan => new CueBinaryExpr(CueBinOp.GreaterThan, values[0], values[1]),
+            ExprOp.GreaterThanEqual => new CueBinaryExpr(CueBinOp.GreaterEqual, values[0], values[1]),
 
-    private static IReadOnlyList<Range> ToRanges(Result result)
-    {
-        return result switch
-        {
-            Eq concrete => [new Range(concrete.Value, Increment(concrete.Value))],
-            And ranges => ranges.Value,
+            // Boolean
+            ExprOp.BooleanAnd => new CueBinaryExpr(CueBinOp.BoolAnd, values[0], values[1]),
+            ExprOp.BooleanOr => new CueBinaryExpr(CueBinOp.BoolOr, values[0], values[1]),
+            ExprOp.Not => new CueUnaryExpr(UnaryOperator.Not, values[0]),
 
-            _ => throw new InvalidOperationException()
+            _ => throw new ArgumentException(
+                $"Expression operator '{expr.Op}' is not supported by the number expression parser.",
+                nameof(value))
         };
     }
 
-    private static IReadOnlyList<Range> Intersect(IReadOnlyList<Range> left, IReadOnlyList<Range> right)
+    private static CueExpr ParseLeaf(Value value)
     {
-        var result = new List<Range>();
-        foreach (var x in left)
-        {
-            foreach (var y in right)
-            {
-                var start = MaxStart(x.Start, y.Start);
-                var end = MinEnd(x.End, y.End);
+        if (value.IncompleteKind() is not (Kind.Int or Kind.Float or Kind.Number) ||
+            !value.IsConcrete())
+            return new And(All());
 
-                if (start is null || end is null || start < end)
-                {
-                    result.Add(new Range(start, end));
-                }
-            }
-        }
-
-        return Normalize(result);
-    }
-
-    private static IReadOnlyList<Range> Normalize(IEnumerable<Range> ranges)
-    {
-        var ordered = ranges
-            .OrderBy(x => x.Start is null ? 0 : 1)
-            .ThenBy(x => x.Start)
-            .ToList();
-
-        if (ordered.Count == 0) return [];
-
-        var result = new List<Range> { ordered[0] };
-
-        foreach (var current in ordered.Skip(1))
-        {
-            var previous = result[^1];
-
-            if (!TouchesOrOverlaps(previous, current))
-            {
-                result.Add(current);
-                continue;
-            }
-
-            result[^1] = previous with { End = MaxEnd(previous.End, current.End) };
-        }
-
-        return result;
-    }
-
-    private static bool TouchesOrOverlaps(Range left, Range right)
-    {
-        return left.End is null ||
-               right.Start is null ||
-               right.Start <= left.End;
-    }
-
-    private static long? MaxStart(long? left, long? right)
-    {
-        if (left is null) return right;
-        if (right is null) return left;
-
-        return Math.Max(left.Value, right.Value);
-    }
-
-    private static long? MinEnd(long? left, long? right)
-    {
-        if (left is null) return right;
-        if (right is null) return left;
-        
-        return Math.Min(left.Value, right.Value);
-    }
-
-    private static long? MaxEnd(long? left, long? right)
-    {
-        if (left is null || right is null) return null;
-        return Math.Max(left.Value, right.Value);
-    }
-
-    private static long? Increment(long value)
-    {
-        return value == long.MaxValue ? null : value + 1;
+        return new NumberLiteral(value.GetDouble());
     }
 }
