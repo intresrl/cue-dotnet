@@ -2,119 +2,185 @@ using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-using ExtendedNumerics;
-
-public abstract record CueExpr;
-
-public enum CueBound
+public static class CueIntRangeParser
 {
-    Uint,    // >=0
-    Uint8,   // >=0 & <=255
-    Int8,    // >=-128 & <=127
-    Uint16,  // >=0 & <=65535
-    Int16,   // >=-32_768 & <=32_767
-    Rune,    // >=0 & <=0x10FFFF
-    Uint32,  // >=0 & <=4_294_967_295
-    Int32,   // >=-2_147_483_648 & <=2_147_483_647
-    Uint64,  // >=0 & <=18_446_744_073_709_551_615
-    Int64,   // >=-9_223_372_036_854_775_808 & <=9_223_372_036_854_775_807
-    Int128,  // >=-170_141_183_460_469_231_731_687_303_715_884_105_728 & <=170_141_183_460_469_231_731_687_303_715_884_105_727
-    Uint128, // >=0 & <=340_282_366_920_938_463_463_374_607_431_768_211_455
-    Float
-}
+    public readonly record struct Range(long? Start, long? End);
 
-public sealed record PredefinedBound(CueBound Bound) : CueExpr
-{
-    public Kind CueKind => Bound == CueBound.Float ? Kind.Float : Kind.Int;
-}
+    private abstract record Result;
+    private sealed record Concrete(long Value) : Result;
+    private sealed record Ranges(IReadOnlyList<Range> Value) : Result;
 
-public sealed record NumberLiteral(BigDecimal Value) : CueExpr;
-
-public sealed record BoolLiteral(bool Value) : CueExpr;
-
-public sealed record CueUnaryExpr(UnaryOperator Operator, CueExpr Operand) : CueExpr;
-
-public sealed record CueBinaryExpr(CueBinOp Operator, CueExpr Left, CueExpr Right) : CueExpr;
-
-public enum UnaryOperator
-{
-    NoOp,
-    Not
-}
-
-public enum CueBinOp
-{
-    // Number
-    Equal,
-    Add,
-    Subtract,
-    Multiply,
-    FloatQuotient,
-    NotEqual,
-    LessThan,
-    LessEqual,
-    GreaterThan,
-    GreaterEqual,
-
-    // Integer
-    IntQuotient,
-    IntRemainder,
-    IntDivide,
-    IntModulo,
-
-    // Boolean
-    BoolAnd,
-    BoolOr
-}
-
-public static class ExprParser
-{
-    private static CueExpr Parse(Value value)
+    public static IReadOnlyList<Range> ParseRange(this Value value)
     {
-        var expr = value.Expr();
+        return ToRanges(ParseExpression(value));
+    }
+    
+    public static long LowerBound(this IReadOnlyList<Range> value)
+    {
+        return value.Count != 0 && value[0].Start is { } s 
+            ? s
+            : long.MinValue;
+    }
 
-        // NoOp is a transparent container. Its contents must be parsed as a leaf,
-        // not recursively as another expression.
-        if (expr.Op == ExprOp.No)
+    private static Result ParseExpression(Value value)
+    {
+        var expression = value.Expr();
+
+        try
         {
-            return ParseLeaf(value);
+            return expression.Op switch
+            {
+                ExprOp.No => ParseLeaf(value),
+
+                ExprOp.And => new Ranges(
+                    expression.Values
+                        .Select(ParseExpression)
+                        .Select(ToRanges)
+                        .Aggregate(All(), Intersect)),
+
+                ExprOp.Or => new Ranges(
+                    Normalize(
+                        expression.Values
+                            .Select(ParseExpression)
+                            .SelectMany(ToRanges))),
+
+                ExprOp.LessThan => ParseComparison(expression.Values, ExprOp.LessThan),
+                ExprOp.LessThanEqual => ParseComparison(expression.Values, ExprOp.LessThanEqual),
+                ExprOp.GreaterThan => ParseComparison(expression.Values, ExprOp.GreaterThan),
+                ExprOp.GreaterThanEqual => ParseComparison(expression.Values, ExprOp.GreaterThanEqual),
+
+                _ => new Ranges(All())
+            };
         }
-
-        var values = expr.Values.Select(Parse).ToArray();
-
-        return expr.Op switch
+        finally
         {
-            // Number, string, bytes
-            ExprOp.Equal => new CueBinaryExpr(CueBinOp.Equal, values[0], values[1]),
-            ExprOp.Add => new CueBinaryExpr(CueBinOp.Add, values[0], values[1]),
-            ExprOp.Subtract => new CueBinaryExpr(CueBinOp.Subtract, values[0], values[1]),
+            foreach (var child in expression.Values) child.Dispose();
+        }
+    }
 
-            // Number
-            ExprOp.Multiply => new CueBinaryExpr(CueBinOp.Multiply, values[0], values[1]),
-            ExprOp.FloatQuotient => new CueBinaryExpr(CueBinOp.FloatQuotient, values[0], values[1]),
-            ExprOp.NotEqual => new CueBinaryExpr(CueBinOp.NotEqual, values[0], values[1]),
-            ExprOp.LessThan => new CueBinaryExpr(CueBinOp.LessThan, values[0], values[1]),
-            ExprOp.LessThanEqual => new CueBinaryExpr(CueBinOp.LessEqual, values[0], values[1]),
-            ExprOp.GreaterThan => new CueBinaryExpr(CueBinOp.GreaterThan, values[0], values[1]),
-            ExprOp.GreaterThanEqual => new CueBinaryExpr(CueBinOp.GreaterEqual, values[0], values[1]),
+    private static Result ParseLeaf(Value value)
+    {
+        if (value.IncompleteKind() != Kind.Int || !value.IsConcrete()) return new Ranges(All());
 
-            // Boolean
-            ExprOp.BooleanAnd => new CueBinaryExpr(CueBinOp.BoolAnd, values[0], values[1]),
-            ExprOp.BooleanOr => new CueBinaryExpr(CueBinOp.BoolOr, values[0], values[1]),
-            ExprOp.Not => new CueUnaryExpr(UnaryOperator.Not, values[0]),
+        return new Concrete(value.GetLong());
+    }
 
-            _ => throw new ArgumentException(
-                $"Expression operator '{expr.Op}' is not supported by the number expression parser.",
-                nameof(value))
+    private static Result ParseComparison(
+        IReadOnlyList<Value> values,
+        ExprOp op)
+    {
+        if (values.Count != 1) return new Ranges(All());
+
+        var operand = ParseExpression(values[0]);
+
+        if (operand is not Concrete concrete) return new Ranges(All());
+
+        var value = concrete.Value;
+
+        return op switch
+        {
+            ExprOp.LessThan => new Ranges([new Range(null, value)]),
+            ExprOp.LessThanEqual => new Ranges([new Range(null, Increment(value))]),
+            ExprOp.GreaterThan => new Ranges([new Range(Increment(value), null)]),
+            ExprOp.GreaterThanEqual => new Ranges([new Range(value, null)]),
+            _ => new Ranges(All())
         };
     }
 
-    private static CueExpr ParseLeaf(Value value)
+    private static IReadOnlyList<Range> ToRanges(Result result)
     {
-        if (value.IncompleteKind() is not (Kind.Int or Kind.Float or Kind.Number) ||
-            !value.IsConcrete())
-            return new And(All());
+        return result switch
+        {
+            Concrete concrete => [new Range(concrete.Value, Increment(concrete.Value))],
+            Ranges ranges => ranges.Value,
 
-        return new NumberLiteral(value.GetDouble());
+            _ => throw new InvalidOperationException()
+        };
+    }
+
+    private static IReadOnlyList<Range> Intersect(IReadOnlyList<Range> left, IReadOnlyList<Range> right)
+    {
+        var result = new List<Range>();
+        foreach (var x in left)
+        {
+            foreach (var y in right)
+            {
+                var start = MaxStart(x.Start, y.Start);
+                var end = MinEnd(x.End, y.End);
+
+                if (start is null || end is null || start < end)
+                {
+                    result.Add(new Range(start, end));
+                }
+            }
+        }
+
+        return Normalize(result);
+    }
+
+    private static IReadOnlyList<Range> Normalize(IEnumerable<Range> ranges)
+    {
+        var ordered = ranges
+            .OrderBy(x => x.Start is null ? 0 : 1)
+            .ThenBy(x => x.Start)
+            .ToList();
+
+        if (ordered.Count == 0) return [];
+
+        var result = new List<Range> { ordered[0] };
+
+        foreach (var current in ordered.Skip(1))
+        {
+            var previous = result[^1];
+
+            if (!TouchesOrOverlaps(previous, current))
+            {
+                result.Add(current);
+                continue;
+            }
+
+            result[^1] = previous with { End = MaxEnd(previous.End, current.End) };
+        }
+
+        return result;
+    }
+
+    private static bool TouchesOrOverlaps(Range left, Range right)
+    {
+        return left.End is null ||
+               right.Start is null ||
+               right.Start <= left.End;
+    }
+
+    private static long? MaxStart(long? left, long? right)
+    {
+        if (left is null) return right;
+        if (right is null) return left;
+
+        return Math.Max(left.Value, right.Value);
+    }
+
+    private static long? MinEnd(long? left, long? right)
+    {
+        if (left is null) return right;
+        if (right is null) return left;
+        
+        return Math.Min(left.Value, right.Value);
+    }
+
+    private static long? MaxEnd(long? left, long? right)
+    {
+        if (left is null || right is null) return null;
+        return Math.Max(left.Value, right.Value);
+    }
+
+    private static long? Increment(long value)
+    {
+        return value == long.MaxValue ? null : value + 1;
+    }
+
+    private static IReadOnlyList<Range> All()
+    {
+        return [new Range(null, null)];
     }
 }

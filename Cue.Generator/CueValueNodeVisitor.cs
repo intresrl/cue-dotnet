@@ -67,6 +67,11 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             };
         }
 
+        if (kind is Kind.Int or Kind.Float or Kind.Number)
+        {
+            Console.WriteLine($"DEBUG EXPR {value.Path()} = {FormatExpr(value)}");
+        }
+
         return kind switch
         {
             Kind.Bottom => new CueBottomValue(value.Path()),
@@ -180,7 +185,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
 
         if (expr.Op is ExprOp.No)
         {
-            return value.IsConcrete() ? value.GetLong().ToString() : "int";
+            return value.IsConcrete() ? value.GetLong().ToString() : $"({expr.Op} {string.Join(" ", expr.Values[0].Expr())})";
         }
         
         return $"({expr.Op} {string.Join(" ", expr.Values.Select(FormatExpr))})";

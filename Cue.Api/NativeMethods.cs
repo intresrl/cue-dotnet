@@ -135,6 +135,9 @@ internal static unsafe class NativeMethods
 
     [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
     internal static extern nuint cue_dec_double(nuint value, double* result);
+    
+    [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
+    internal static extern nuint cue_dec_float(nuint value, cue_float* result);
 
     [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
     internal static extern nuint cue_dec_string(nuint value, byte** result);
@@ -235,4 +238,13 @@ internal unsafe struct cue_expr_result
     public byte* call_name;
     public nuint* values;
     public nuint count;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+internal unsafe struct cue_float
+{
+    public nuint mantissa_len;
+    public int exponent;
+    public bool sign;
+    public nuint* mantissa;
 }
