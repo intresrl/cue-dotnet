@@ -1,39 +1,15 @@
 using System.Numerics;
-using Cuelang.Cue;
 using ExtendedNumerics;
 
 namespace Cue.Generator;
 
-public abstract record CueExpr;
-
-public static class NumberBoundExtensions
+public readonly record struct ExprBounds(BigInteger Lower, BigInteger Upper, bool IsUnbounded)
 {
-    private static readonly (BigInteger, BigInteger, Type)[] Bounds =
-    [
-        MinMaxValue<byte>(),
-        MinMaxValue<sbyte>(),
-        MinMaxValue<ushort>(),
-        MinMaxValue<short>(),
-        MinMaxValue<char>(),
-        MinMaxValue<uint>(),
-        MinMaxValue<int>(),
-        MinMaxValue<ulong>(),
-        MinMaxValue<long>(),
-        MinMaxValue<UInt128>(),
-        MinMaxValue<Int128>()
-    ];
-
-    private static (T, T, Type) MinMaxValue<T>() where T : IMinMaxValue<T>
-    {
-        return (T.MinValue, T.MaxValue, typeof(T));
-    }
-
-    public static Type TypeFor(BigInteger value)
-    {
-        return Bounds.FirstOrDefault(e => e is var (min, max, _) && min <= value && max >= value).Item3 ??
-               typeof(BigInteger);
-    }
+    public static ExprBounds Int(BigInteger lower, BigInteger upper) => new(lower, upper, false);
+    public static ExprBounds Unbounded => new(BigInteger.Zero, BigInteger.Zero, true);
 }
+
+public abstract record CueExpr;
 
 public sealed record CueAnyInt : CueExpr;
 
@@ -74,64 +50,174 @@ public enum CueBinOp
     GreaterEqual
 }
 
-public static class ExprParser
+
+public static class NumberBoundExtensions
 {
-    private static CueExpr Parse(Value value)
+    private static readonly (BigInteger, BigInteger, Type)[] Bounds =
+    [
+        MinMaxValue<byte>(),
+        MinMaxValue<sbyte>(),
+        MinMaxValue<ushort>(),
+        MinMaxValue<short>(),
+        MinMaxValue<char>(),
+        MinMaxValue<uint>(),
+        MinMaxValue<int>(),
+        MinMaxValue<ulong>(),
+        MinMaxValue<long>(),
+        MinMaxValue<UInt128>(),
+        MinMaxValue<Int128>()
+    ];
+
+    private static (T, T, Type) MinMaxValue<T>()
+        where T : IMinMaxValue<T>
     {
-        var expr = value.Expr();
+        return (T.MinValue, T.MaxValue, typeof(T));
+    }
 
-        // NoOp is a transparent container. Its contents must be parsed as a leaf,
-        // not recursively as another expression.
-        if (expr.Op == ExprOp.No) return ParseLeaf(value);
+    public static Type TypeFor(BigInteger value)
+    {
+        return Bounds.FirstOrDefault(
+            e => e is var (min, max, _) &&
+                 min <= value &&
+                 max >= value).Item3
+            ?? typeof(BigInteger);
+    }
 
-        var values = expr.Values.Select(Parse).ToArray();
+    public static BigInteger? LowerBound(CueExpr expr) =>
+        Analyze(expr).Lower;
 
-        return expr.Op switch
+    public static BigInteger? UpperBound(CueExpr expr) =>
+        Analyze(expr).Upper;
+
+    private static ExprBounds Analyze(CueExpr expr)
+    {
+        return expr switch
         {
-            // Arithmetic
-            ExprOp.Add => new CueBinaryExpr(CueBinOp.Add, values[0], values[1]), // Number, string, bytes
-            ExprOp.Subtract => new CueBinaryExpr(CueBinOp.Subtract, values[0], values[1]), // Number, string, bytes
-            ExprOp.Multiply => new CueBinaryExpr(CueBinOp.Multiply, values[0], values[1]),
-            ExprOp.FloatQuotient => new CueBinaryExpr(CueBinOp.FloatQuotient, values[0], values[1]),
+            CueAnyInt => ExprBounds.Unbounded,
+            CueAnyFloat => ExprBounds.Unbounded,
+            CueIntLiteral x => ExprBounds.Int(x.Value, x.Value),
+            CueFloatLiteral => ExprBounds.Unbounded,
+            CueBoolLiteral => ExprBounds.Unbounded,
 
-            // Comparison
-            ExprOp.Equal => new CueBinaryExpr(CueBinOp.Equal, values[0], values[1]), // Number, string, bytes
-            ExprOp.NotEqual => new CueBinaryExpr(CueBinOp.NotEqual, values[0], values[1]),
-            ExprOp.LessThan => new CueBinaryExpr(CueBinOp.LessThan, values[0], values[1]),
-            ExprOp.LessThanEqual => new CueBinaryExpr(CueBinOp.LessEqual, values[0], values[1]),
-            ExprOp.GreaterThan => new CueBinaryExpr(CueBinOp.GreaterThan, values[0], values[1]),
-            ExprOp.GreaterThanEqual => new CueBinaryExpr(CueBinOp.GreaterEqual, values[0], values[1]),
+            CueUnaryExpr x =>
+                AnalyzeUnary(x),
 
-            // Logic
-            ExprOp.BooleanAnd => new CueLogicalAnd(values),
-            ExprOp.BooleanOr => new CueLogicalOr(values),
-            ExprOp.Not => new CueUnaryExpr(UnaryOperator.Not, values[0]),
+            CueBinaryExpr x =>
+                AnalyzeBinary(x),
 
-            _ => throw new ArgumentException(
-                $"Expression operator '{expr.Op}' is not supported by the number expression parser.",
-                nameof(value))
+            CueLogicalAnd =>
+                ExprBounds.Bool,
+
+            CueLogicalOr =>
+                ExprBounds.Bool,
+
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(expr),
+                expr,
+                "Unsupported expression.")
         };
     }
 
-    private static CueExpr ParseLeaf(Value value)
+    private static ExprBounds AnalyzeUnary(CueUnaryExpr expr)
     {
-        var k = value.IncompleteKind();
-        var isFloat = k switch
+        return expr.Operator switch
         {
-            Kind.Float or Kind.Number => true,
-            Kind.Int => false,
-            _ => throw new ArgumentException($"Cannot parse leaf expression with kind {k}")
+            UnaryOperator.NoOp => Analyze(expr.Operand),
+            UnaryOperator.Not => ExprBounds.Unbounded, // TODO: fix
+
+            _ => throw new ArgumentOutOfRangeException()
         };
+    }
 
-        if (!value.IsConcrete()) return isFloat ? new CueAnyFloat() : new CueAnyInt();
+    private static ExprBounds AnalyzeBinary(CueBinaryExpr expr)
+    {
+        var left = Analyze(expr.Left);
+        var right = Analyze(expr.Right);
 
-        var (mantissa, exponent) = value.GetFloat();
+        // All comparisons produce bool.
+        switch (expr.Operator)
+        {
+            case CueBinOp.Equal:
+            case CueBinOp.NotEqual:
+            case CueBinOp.LessThan:
+            case CueBinOp.LessEqual:
+            case CueBinOp.GreaterThan:
+            case CueBinOp.GreaterEqual:
+                return ExprBounds.Unbounded;
+        }
 
-        if (exponent is < int.MinValue or > int.MaxValue)
-            throw new InvalidOperationException("exponent value too high");
+        // Float arithmetic remains float. We don't need to calculate
+        // its numerical lower/upper bound.
+        if (expr.Operator == CueBinOp.FloatQuotient)
+        {
+            return ExprBounds.Unbounded;
+        }
 
-        return isFloat
-            ? new CueFloatLiteral(new BigDecimal(mantissa, (int)exponent))
-            : new CueIntLiteral(exponent * BigInteger.Pow(2, (int)exponent));
+        return expr.Operator switch
+        {
+            CueBinOp.Add => Add(left, right),
+            CueBinOp.Subtract => Subtract(left, right),
+            CueBinOp.Multiply => Multiply(left, right),
+
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    private static ExprBounds Add(
+        ExprBounds a,
+        ExprBounds b)
+    {
+        return ExprBounds.Int(
+            a.Lower is { } al && b.Lower is { } bl
+                ? al + bl
+                : null,
+            a.Upper is { } au && b.Upper is { } bu
+                ? au + bu
+                : null);
+    }
+
+    private static ExprBounds Subtract(
+        ExprBounds a,
+        ExprBounds b)
+    {
+        return ExprBounds.Int(
+            a.Lower is { } al && b.Upper is { } bu
+                ? al - bu
+                : null,
+            a.Upper is { } au && b.Lower is { } bl
+                ? au - bl
+                : null);
+    }
+
+    private static ExprBounds Multiply(
+        ExprBounds a,
+        ExprBounds b)
+    {
+        // If either side has no bound, we can still derive some useful
+        // bounds for multiplication in special cases, but don't attempt
+        // symbolic sign analysis here. Return an unbounded result.
+        if (a.Lower is null || a.Upper is null ||
+            b.Lower is null || b.Upper is null)
+        {
+            return ExprBounds.AnyInt;
+        }
+
+        var al = a.Lower.Value;
+        var au = a.Upper.Value;
+        var bl = b.Lower.Value;
+        var bu = b.Upper.Value;
+
+        var p1 = al * bl;
+        var p2 = al * bu;
+        var p3 = au * bl;
+        var p4 = au * bu;
+
+        return ExprBounds.Int(
+            BigInteger.Min(
+                BigInteger.Min(p1, p2),
+                BigInteger.Min(p3, p4)),
+            BigInteger.Max(
+                BigInteger.Max(p1, p2),
+                BigInteger.Max(p3, p4)));
     }
 }
