@@ -62,7 +62,7 @@ public static class CueValueNodeArbitrary
         return Gen
             .Choose(0, Math.Min(size, 4))
             .SelectMany(_ => Generator)
-            .Select(CueValueNode (elementType) => new CueListValue("", elementType));
+            .Select(CueValueNode (elementType) => new CueListValue("", elementType, []));
     }
 
     // TODO: NUL character in strings bugs API because strings are CStrings

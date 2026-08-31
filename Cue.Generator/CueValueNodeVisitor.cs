@@ -14,16 +14,19 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 
         if (expr.Op is ExprOp.No)
         {
-            if (value.IsConcrete()) {
+            if (value.IsConcrete())
+            {
                 try
                 {
-                    return value.GetJson().ToString();
-                } catch {
+                    return value.GetJson();
+                }
+                catch
+                {
                     return $"???<{value.Path()}: {value.Kind()}>";
                 }
-            } else {
-               return $"(No ???<{expr.Values[0].Path()}: {expr.Values[0].IncompleteKind()}>)";
             }
+
+            return $"(No ???<{expr.Values[0].Path()}: {expr.Values[0].IncompleteKind()}>)";
         }
 
         return $"({call} {string.Join(" ", expr.Values.Select(FormatExpr))})";
@@ -67,7 +70,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 
     private CueValueNode Visit(Value value)
     {
-        writer.WriteLine($"DEBUG LIST LENGTH {value.Path()}: {FormatExpr(value)}");
+        writer?.WriteLine($"DEBUG LIST LENGTH {value.Path()}: {FormatExpr(value)}");
 
         foreach (var rootValue in rootDefinitions)
         {
@@ -78,6 +81,11 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
         }
 
         _definedPaths.Add(value.Path());
+        
+        if (value.Expr().Op == ExprOp.Selector)
+        {
+            return new CueDefinitionReference(value.Path());
+        }
 
         var kind = value.IncompleteKind();
 
@@ -216,8 +224,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 
         try
         {
-            var lb= len.ParseRange().LowerBound();
-            return lb;
+            var lb = len.LowerBound();
+            return (int) lb!.Value;
         }
         finally
         {
