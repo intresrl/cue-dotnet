@@ -2,7 +2,7 @@ using System.Numerics;
 using ExtendedNumerics;
 
 namespace Cue.Generator;
-
+#if false
 public readonly record struct ExprBounds(BigInteger Lower, BigInteger Upper, bool IsUnbounded)
 {
     public static ExprBounds Int(BigInteger lower, BigInteger upper) => new(lower, upper, false);
@@ -98,9 +98,7 @@ public static class NumberBoundExtensions
             CueIntLiteral x => ExprBounds.Int(x.Value, x.Value),
             CueFloatLiteral => ExprBounds.Unbounded,
             CueBoolLiteral => ExprBounds.Unbounded,
-
-            CueUnaryExpr x =>
-                AnalyzeUnary(x),
+            CueUnaryExpr x => AnalyzeUnary(x),
 
             CueBinaryExpr x =>
                 AnalyzeBinary(x),
@@ -221,3 +219,5 @@ public static class NumberBoundExtensions
                 BigInteger.Max(p3, p4)));
     }
 }
+
+#endif

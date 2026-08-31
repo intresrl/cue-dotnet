@@ -39,6 +39,11 @@
       "commandName": "Project",
       "commandLineArgs": "Examples/07-complete-domain-model.cue Examples/07-complete-domain-model.cs --debug Examples/07-complete-domain-model.debug.log",
       "workingDirectory": "../"
+    },
+    "09-expressions": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/09-expressions.cue Examples/09-expressions.cs --debug Examples/09-expressions.debug.log",
+      "workingDirectory": "../"
     }
   }
 }

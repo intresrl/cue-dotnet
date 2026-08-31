@@ -2,17 +2,41 @@ using Cuelang.Cue;
 
 namespace Cue.Generator;
 
-public sealed class CueValueVisitor(Value[] rootDefinitions)
+public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 {
     private readonly HashSet<string> _definedPaths = [];
-    
-    public static IEnumerable<CueValueNode> VisitRoot(Value value)
+
+    private static string FormatExpr(Value value)
+    {
+        var expr = value.Expr();
+
+        var call = expr.Op == ExprOp.Call ? $"Call<${expr.CallName}>" : expr.Op.ToString();
+
+        if (expr.Op is ExprOp.No)
+        {
+            if (value.IsConcrete()) {
+                try
+                {
+                    return value.GetJson().ToString();
+                } catch {
+                    return $"???<{value.Path()}: {value.Kind()}>";
+                }
+            } else {
+               return $"(No ???<{expr.Values[0].Path()}: {expr.Values[0].IncompleteKind()}>)";
+            }
+        }
+
+        return $"({call} {string.Join(" ", expr.Values.Select(FormatExpr))})";
+    }
+
+
+    public static IEnumerable<CueValueNode> VisitRoot(Value value, TextWriter? debug)
     {
         var definitions = value.Fields(new EvalOption.Definitions(true));
 
         try
         {
-            var visitor = new CueValueVisitor(definitions);
+            var visitor = new CueValueVisitor(definitions, debug);
             return definitions.Select(visitor.Visit).ToArray();
         }
         finally
@@ -24,13 +48,13 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             value.Dispose();
         }
     }
-    
+
     [Obsolete]
     public static CueValueNode ForTests(Value value)
     {
-        return new CueValueVisitor([]).Visit(value);
+        return new CueValueVisitor([], null).Visit(value);
     }
-    
+
     private static T? GetConcrete<T>(Value value, Func<Value, T> getConcrete) where T : struct
     {
         return !value.IsConcrete() ? null : getConcrete(value);
@@ -43,6 +67,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
 
     private CueValueNode Visit(Value value)
     {
+        writer.WriteLine($"DEBUG LIST LENGTH {value.Path()}: {FormatExpr(value)}");
+
         foreach (var rootValue in rootDefinitions)
         {
             if (Value.SchemaComparer.Equals(value, rootValue) && _definedPaths.Contains(rootValue.Path()))
@@ -50,7 +76,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
                 return new CueDefinitionReference(rootValue.Path());
             }
         }
-        
+
         _definedPaths.Add(value.Path());
 
         var kind = value.IncompleteKind();
@@ -65,11 +91,6 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
                 [var b, CueNullValue] => new CueNullable(b),
                 _ => disjunction
             };
-        }
-
-        if (kind is Kind.Int or Kind.Float or Kind.Number)
-        {
-            Console.WriteLine($"DEBUG EXPR {value.Path()} = {FormatExpr(value)}");
         }
 
         return kind switch
@@ -175,20 +196,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         {
             anyIndex = null;
         }
-        
+
         return new CueListValue(path, anyIndex is { } v ? Visit(v) : null, elements);
-    }
-
-    private static string FormatExpr(Value value)
-    {
-        var expr = value.Expr();
-
-        if (expr.Op is ExprOp.No)
-        {
-            return value.IsConcrete() ? value.GetLong().ToString() : $"({expr.Op} {string.Join(" ", expr.Values[0].Expr())})";
-        }
-        
-        return $"({expr.Op} {string.Join(" ", expr.Values.Select(FormatExpr))})";
     }
 
     private static long GetConcreteElementCount(Value value)
@@ -208,7 +217,6 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         try
         {
             var lb= len.ParseRange().LowerBound();
-            Console.WriteLine($"DEBUG LIST LENGTH {len.Path()}: {lb} = {FormatExpr(len)}");
             return lb;
         }
         finally

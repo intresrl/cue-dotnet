@@ -27,7 +27,6 @@ if (input is null || output is null)
 using var ctx = new CueContext();
 using var value = ctx.Compile(File.ReadAllText(input));
 
-var node = CueValueVisitor.VisitRoot(value);
 
 TextWriter? debugWriter = null;
 try
@@ -41,23 +40,25 @@ try
         }
         debugWriter = new StreamWriter(debugOutputPath, append: false);
     }
-    
+
+    var node = CueValueVisitor.VisitRoot(value, debugWriter);
+
     var services = new ServiceCollection();
     services.RegisterGenerator(debugWriter);
     using var serviceProvider = services.BuildServiceProvider();
 
     var gen = serviceProvider.GetRequiredService<IRoslynGenerator>();
-    
+
     var code = gen.GenerateCode(node);
-    
+
     File.WriteAllText(output, code);
     Console.WriteLine($"Wrote {output}");
-    
+
     if (debugOutputPath != null)
     {
         Console.WriteLine($"Debug output written to {debugOutputPath}");
     }
-    
+
     return 0;
 }
 finally
