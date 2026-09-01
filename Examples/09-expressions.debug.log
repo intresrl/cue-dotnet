@@ -37,32 +37,3 @@ DEBUG LIST LENGTH #Call: (Call<$len> (Selector ???<#Call: Struct> "s"))
 DEBUG LIST LENGTH obj: ???<obj: Struct>
 DEBUG LIST LENGTH obj.a: (No ???<obj.a: Int>)
 DEBUG LIST LENGTH list: [1,2,3]
-DEBUG LIST LENGTH list[0]: 1
-DEBUG LIST LENGTH list[1]: 2
-DEBUG LIST LENGTH list[2]: 3
-DEBUG LIST LENGTH list.[_]: (No ???<list.[_]: Int>)
-DEBUG LIST LENGTH #Selector: (Selector (Selector ???<#Selector: Struct> "obj") "a")
-DEBUG LIST LENGTH #Index: (Index (Selector ???<#Index: Struct> "list") 0)
-DEBUG LIST LENGTH #Slice: (Slice (Selector ???<#Slice: Struct> "list") 0 2)
-DEBUG LIST LENGTH #Slice[0]: 1
-DEBUG LIST LENGTH #Slice[1]: 2
-DEBUG LIST LENGTH #Interpolation: (Interpolation "value=" (Selector ???<#Interpolation: Struct> "x") "")
-DEBUG LIST LENGTH #ArithmeticTree: (Add (Selector ???<#ArithmeticTree: Struct> "x") (Multiply (Selector ???<#ArithmeticTree: Struct> "y") 2))
-DEBUG LIST LENGTH #BooleanTree: (BooleanAnd (GreaterThan (Selector ???<#BooleanTree: Struct> "x") 0) (LessThanEqual (Selector ???<#BooleanTree: Struct> "y") 10))
-DEBUG LIST LENGTH #MixedTree: (Or (And (No ???<#MixedTree: Int>) (GreaterThanEqual 0)) (No ???<#MixedTree: String>))
-DEBUG LIST LENGTH #MixedTree: (And (No ???<#MixedTree: Int>) (GreaterThanEqual 0))
-DEBUG LIST LENGTH #MixedTree: (No ???<#MixedTree: String>)
-DEBUG LIST LENGTH DateTimeMessage: ???<DateTimeMessage: Struct>
-DEBUG LIST LENGTH DateTimeMessage.type: "datetime"
-DEBUG LIST LENGTH DateTimeMessage.format: (No ???<DateTimeMessage.format: String>)
-DEBUG LIST LENGTH DateTimeMessage.timezone: (No ???<DateTimeMessage.timezone: String>)
-DEBUG LIST LENGTH TextMessage: ???<TextMessage: Struct>
-DEBUG LIST LENGTH TextMessage.type: "text"
-DEBUG LIST LENGTH TextMessage.maxLength: (No ???<TextMessage.maxLength: Int>)
-DEBUG LIST LENGTH TextMessage.pattern: (No ???<TextMessage.pattern: String>)
-DEBUG LIST LENGTH #matchNMessage: (Call<$matchN> 1 ???<#matchNMessage: List>)
-DEBUG LIST LENGTH #matchNMessage[0]: (Selector ???<#matchNMessage[0]: Struct> "DateTimeMessage")
-DEBUG LIST LENGTH #matchNMessage[1]: (Selector ???<#matchNMessage[1]: Struct> "TextMessage")
-DEBUG LIST LENGTH #simpleOrMessage: (Or (Selector ???<#simpleOrMessage: Struct> "DateTimeMessage") (Selector ???<#simpleOrMessage: Struct> "TextMessage"))
-DEBUG LIST LENGTH #simpleOrMessage: (Selector ???<#simpleOrMessage: Struct> "DateTimeMessage")
-DEBUG LIST LENGTH #simpleOrMessage: (Selector ???<#simpleOrMessage: Struct> "TextMessage")

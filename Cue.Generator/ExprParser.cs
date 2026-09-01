@@ -1,90 +1,7 @@
 using System.Numerics;
 using Cuelang.Cue;
-using ExtendedNumerics;
 
 namespace Cue.Generator;
-
-
-public abstract record CueExpr;
-
-public sealed record CueUnknownExpr : CueExpr;
-public sealed record CueIntegerExpr(BigInteger Value) : CueExpr;
-public sealed record CueFloatExpr(BigDecimal Value) : CueExpr;
-public sealed record CueStringExpr(string Value) : CueExpr;
-public sealed record CueBoolExpr(bool Value) : CueExpr;
-public sealed record CueUnaryExpr(CueUnaryExpr.Op Operator, CueExpr Operand) : CueExpr
-{
-    public enum Op
-    {
-        Add,
-        Subtract,
-        Equal,
-        NotEqual,
-        LessThan,
-        LessThanEqual,
-        GreaterThan,
-        GreaterThanEqual,
-        RegexMatch,
-        NotRegexMatch,
-        Not
-    }
-}
-
-public sealed record CueBinaryExpr(CueBinaryExpr.Op Operator, CueExpr Left, CueExpr Right) : CueExpr
-{
-    public enum Op
-    {
-        Add,
-        Subtract,
-        Multiply,
-        FloatQuotient,
-        BooleanAnd,
-        BooleanOr,
-        Equal,
-        NotEqual,
-        LessThan,
-        LessThanEqual,
-        GreaterThan,
-        GreaterThanEqual,
-        RegexMatch,
-        NotRegexMatch
-    }
-}
-
-public sealed record CueLogicalExpr : CueExpr
-{
-    public enum Op
-    {
-        And,
-        Or
-    }
-    
-    public CueLogicalExpr(Op Operator, IReadOnlyList<CueExpr> Values)
-    {
-        if (Values.Count < 2)
-        {
-            throw new ArgumentException("Logical expressions require at least two operands.", nameof(Values));
-        }
-
-        this.Operator = Operator;
-        this.Values = Values;
-    }
-
-    public Op Operator { get; }
-    public IReadOnlyList<CueExpr> Values { get; }
-
-    public void Deconstruct(out Op op, out IReadOnlyList<CueExpr> values)
-    {
-        op = Operator;
-        values = Values;
-    }
-}
-
-public sealed record CueSelectorExpr(CueExpr Target, string Field, string Path) : CueExpr;
-public sealed record CueIndexExpr(CueExpr Target, CueExpr Index) : CueExpr;
-public sealed record CueSliceExpr(CueExpr Target, CueExpr Start, CueExpr End) : CueExpr;
-public sealed record CueCallExpr(string Name, IReadOnlyList<CueExpr> Arguments) : CueExpr;
-public sealed record CueInterpolationExpr(IReadOnlyList<CueExpr> Values) : CueExpr;
 
 public readonly record struct ExprBounds(BigInteger? Lower, BigInteger? Upper)
 {
@@ -131,182 +48,144 @@ public static class NumberBoundExtensions
 
     extension(Value value)
     {
-        public BigInteger? LowerBound() => Analyze(value).Lower;
-        public BigInteger? UpperBound() => Analyze(value).Upper;
-        public ExprBounds Bounds() => Analyze(value);
+        public BigInteger? LowerBound() => ParseAndAnalyze(value).Lower;
+        public BigInteger? UpperBound() => ParseAndAnalyze(value).Upper;
+        public ExprBounds Bounds() => ParseAndAnalyze(value);
     }
 
-    private static ExprBounds Analyze(Value value)
+    private static ExprBounds ParseAndAnalyze(Value value)
     {
-        var expr = value.Expr();
+        var visitor = new CueExprVisitor();
+        var cueExpr = visitor.Visit(value);
+        return AnalyzeExpr(cueExpr);
+    }
 
-        return expr.Op switch
+    private static ExprBounds AnalyzeExpr(CueExpr expr)
+    {
+        return expr switch
         {
-            ExprOp.No => AnalyzeNo(value),
+            CueIntegerExpr integer => ExprBounds.Exact(integer.Value),
+            CueFloatExpr => ExprBounds.Unknown,
+            CueStringExpr => ExprBounds.Unknown,
+            CueBoolExpr => ExprBounds.Unknown,
+            CueBytesExpr => ExprBounds.Unknown,
+            CueUnknownExpr => ExprBounds.Unknown,
 
-            ExprOp.Add => AnalyzeFold(expr.Values, Add),
-            ExprOp.Subtract => AnalyzeSubtract(expr.Values),
-            ExprOp.Multiply => AnalyzeFold(expr.Values, Multiply),
-            ExprOp.FloatQuotient => ExprBounds.Unknown,
+            CueUnaryExpr unary => AnalyzeUnary(unary),
+            CueBinaryExpr binary => AnalyzeBinary(binary),
+            CueLogicalExpr logical => AnalyzeLogical(logical),
 
-            ExprOp.BooleanAnd or
-            ExprOp.BooleanOr or
-            ExprOp.Not => ExprBounds.Unknown,
+            CueSelectorExpr selector => AnalyzeExpr(selector.Target),
+            CueIndexExpr index => AnalyzeExpr(index.Target),
+            CueSliceExpr => ExprBounds.Unknown,
+            CueCallExpr call => AnalyzeCall(call),
+            CueInterpolationExpr => ExprBounds.Unknown,
+            CueRegexMatchExpr => ExprBounds.Unknown,
 
-            ExprOp.And => AnalyzeAnd(expr.Values),
-            ExprOp.Or => AnalyzeOr(expr.Values),
-
-            ExprOp.Equal => AnalyzeComparison(expr, static x => ExprBounds.Exact(x)),
-            ExprOp.NotEqual => ExprBounds.Unknown,
-            ExprOp.LessThan => AnalyzeComparison(expr, static x => ExprBounds.Range(null, x - 1)),
-            ExprOp.LessThanEqual => AnalyzeComparison(expr, static x => ExprBounds.Range(null, x)),
-            ExprOp.GreaterThan => AnalyzeComparison(expr, static x => ExprBounds.Range(x + 1, null)),
-            ExprOp.GreaterThanEqual => AnalyzeComparison(expr, static x => ExprBounds.Range(x, null)),
-
-            ExprOp.RegexMatch or
-            ExprOp.NotRegexMatch or
-            ExprOp.Slice or
-            ExprOp.Interpolation => ExprBounds.Unknown,
-
-            ExprOp.Selector => AnalyzeSelector(expr),
-            ExprOp.Index => AnalyzeIndex(expr),
-            ExprOp.Call => AnalyzeCall(expr),
-
-            _ => AnalyzeConcrete(value)
+            _ => ExprBounds.Unknown
         };
     }
 
-    private static ExprBounds AnalyzeNo(Value value)
+    private static ExprBounds AnalyzeUnary(CueUnaryExpr unary)
     {
-        return value.IsConcrete()
-            ? AnalyzeConcrete(value)
-            : ExprBounds.Unknown;
-    }
+        var operandBounds = AnalyzeExpr(unary.Operand);
 
-    private static ExprBounds AnalyzeFold(Value[] values, Func<ExprBounds, ExprBounds, ExprBounds> operation)
-    {
-        if (values.Length == 0)
-            return ExprBounds.Unknown;
-
-        var result = Analyze(values[0]);
-
-        for (var i = 1; i < values.Length; i++)
-            result = operation(result, Analyze(values[i]));
-
-        return result;
-    }
-
-    private static ExprBounds AnalyzeSubtract(Value[] values)
-    {
-        return values switch
+        return unary.Operator switch
         {
-            [] => ExprBounds.Unknown,
-            [{ } value] when Analyze(value) is var (lower, upper) => ExprBounds.Range(Negate(upper), Negate(lower)),
-            _ => AnalyzeFold(values, Subtract)
+            CueUnaryExpr.Op.Subtract => ExprBounds.Range(Negate(operandBounds.Upper), Negate(operandBounds.Lower)),
+            CueUnaryExpr.Op.Add => operandBounds,
+
+            // Comparison constraints: >= 3, < 10, etc.
+            // When these are unary, they directly represent range constraints
+            CueUnaryExpr.Op.LessThan =>
+                operandBounds switch
+                {
+                    { Lower: { } x } => ExprBounds.Range(null, x - 1),
+                    { Upper: { } x } => ExprBounds.Range(null, x - 1),
+                    _ => ExprBounds.Unknown
+                },
+            CueUnaryExpr.Op.LessThanEqual =>
+                operandBounds switch
+                {
+                    { Lower: { } x } => ExprBounds.Range(null, x),
+                    { Upper: { } x } => ExprBounds.Range(null, x),
+                    _ => ExprBounds.Unknown
+                },
+            CueUnaryExpr.Op.GreaterThan =>
+                operandBounds switch
+                {
+                    { Lower: { } x } => ExprBounds.Range(x + 1, null),
+                    { Upper: { } x } => ExprBounds.Range(x + 1, null),
+                    _ => ExprBounds.Unknown
+                },
+            CueUnaryExpr.Op.GreaterThanEqual =>
+                operandBounds switch
+                {
+                    { Lower: { } x } => ExprBounds.Range(x, null),
+                    { Upper: { } x } => ExprBounds.Range(x, null),
+                    _ => ExprBounds.Unknown
+                },
+
+            CueUnaryExpr.Op.Equal => operandBounds,
+            CueUnaryExpr.Op.NotEqual => ExprBounds.Unknown,
+            CueUnaryExpr.Op.RegexMatch => ExprBounds.Unknown,
+            CueUnaryExpr.Op.NotRegexMatch => ExprBounds.Unknown,
+            CueUnaryExpr.Op.Not => ExprBounds.Unknown,
+            _ => ExprBounds.Unknown
         };
     }
 
-    private static ExprBounds AnalyzeAnd(Value[] values) =>
-        values.Aggregate(
-            ExprBounds.Unknown,
-            static (current, value) =>
-                Intersect(current, AnalyzeConstraint(value)));
-
-    private static ExprBounds AnalyzeOr(Value[] values) =>
-        values
-            .Select(Analyze)
-            .Where(static x => x.IsKnown)
-            .Aggregate<ExprBounds, ExprBounds?>(
-                null,
-                static (current, value) =>
-                    current is null ? value : Union(current.Value, value))
-            ?? ExprBounds.Unknown;
-
-    private static ExprBounds AnalyzeConstraint(Value value)
+    private static ExprBounds AnalyzeBinary(CueBinaryExpr binary)
     {
-        var expr = value.Expr();
+        var leftBounds = AnalyzeExpr(binary.Left);
+        var rightBounds = AnalyzeExpr(binary.Right);
 
-        return expr.Op switch
+        return binary.Operator switch
         {
-            ExprOp.GreaterThan => AnalyzeComparison(expr, static x => ExprBounds.Range(x + 1, null)),
-            ExprOp.GreaterThanEqual => AnalyzeComparison(expr, static x => ExprBounds.Range(x, null)),
-            ExprOp.LessThan => AnalyzeComparison(expr, static x => ExprBounds.Range(null, x - 1)),
-            ExprOp.LessThanEqual => AnalyzeComparison(expr, static x => ExprBounds.Range(null, x)),
-            ExprOp.Equal => AnalyzeComparison(expr, static x => ExprBounds.Exact(x)),
-            
-            ExprOp.And => AnalyzeAnd(expr.Values),
-            ExprOp.Or => AnalyzeOr(expr.Values),
-            ExprOp.No => AnalyzeNo(value),
-
-            _ => Analyze(value)
+            CueBinaryExpr.Op.Add => Add(leftBounds, rightBounds),
+            CueBinaryExpr.Op.Subtract => Subtract(leftBounds, rightBounds),
+            CueBinaryExpr.Op.Multiply => Multiply(leftBounds, rightBounds),
+            CueBinaryExpr.Op.FloatQuotient => ExprBounds.Unknown,
+            CueBinaryExpr.Op.BooleanAnd => ExprBounds.Unknown,
+            CueBinaryExpr.Op.BooleanOr => ExprBounds.Unknown,
+            CueBinaryExpr.Op.Equal => ExprBounds.Unknown,
+            CueBinaryExpr.Op.NotEqual => ExprBounds.Unknown,
+            CueBinaryExpr.Op.LessThan => ExprBounds.Unknown,
+            CueBinaryExpr.Op.LessThanEqual => ExprBounds.Unknown,
+            CueBinaryExpr.Op.GreaterThan => ExprBounds.Unknown,
+            CueBinaryExpr.Op.GreaterThanEqual => ExprBounds.Unknown,
+            CueBinaryExpr.Op.RegexMatch => ExprBounds.Unknown,
+            CueBinaryExpr.Op.NotRegexMatch => ExprBounds.Unknown,
+            _ => ExprBounds.Unknown
         };
     }
 
-    private static ExprBounds AnalyzeComparison(
-        ExprResult expr,
-        Func<BigInteger, ExprBounds> createBounds)
+    private static ExprBounds AnalyzeLogical(CueLogicalExpr logical)
     {
-        return TryGetComparisonConstant(expr, out var constant)
-            ? createBounds(constant)
-            : ExprBounds.Unknown;
-    }
-
-    private static bool TryGetComparisonConstant(ExprResult expr, out BigInteger constant)
-    {
-        constant = default;
-        return expr.Values.Length == 1 && TryGetInteger(expr.Values[0], out constant);
-    }
-
-    private static ExprBounds AnalyzeSelector(ExprResult expr) =>
-        expr.Values.Length < 2
-            ? ExprBounds.Unknown
-            : Analyze(expr.Values[^1]);
-
-    private static ExprBounds AnalyzeIndex(ExprResult expr)
-    {
-        if (expr.Values.Length != 2)
-            return ExprBounds.Unknown;
-
-        var collection = expr.Values[0];
-        var index = expr.Values[1];
-
-        if (!TryGetInteger(index, out var i) ||
-            i < 0 ||
-            i > int.MaxValue ||
-            !collection.IsConcrete())
+        return logical.Operator switch
         {
-            return ExprBounds.Unknown;
-        }
-
-        var indexed = TryGetIndex(collection, (int)i);
-        return indexed is null ? ExprBounds.Unknown : Analyze(indexed);
+            CueLogicalExpr.Op.And => logical.Values
+                .Select(AnalyzeExpr)
+                .Aggregate(
+                    ExprBounds.Unknown,
+                    static (current, bounds) => Intersect(current, bounds)),
+            CueLogicalExpr.Op.Or => logical.Values
+                .Select(AnalyzeExpr)
+                .Where(static x => x.IsKnown)
+                .Aggregate<ExprBounds, ExprBounds?>(
+                    null,
+                    static (current, bounds) =>
+                        current is null ? bounds : Union(current.Value, bounds))
+                ?? ExprBounds.Unknown,
+            _ => ExprBounds.Unknown
+        };
     }
 
-    private static ExprBounds AnalyzeCall(ExprResult expr) =>
-        expr.CallName == "$len"
+    private static ExprBounds AnalyzeCall(CueCallExpr call)
+    {
+        return call.Name == "$len"
             ? ExprBounds.Range(BigInteger.Zero, null)
             : ExprBounds.Unknown;
-
-    private static ExprBounds AnalyzeConcrete(Value value) =>
-        TryGetInteger(value, out var integer)
-            ? ExprBounds.Exact(integer)
-            : ExprBounds.Unknown;
-
-    private static bool TryGetInteger(Value value, out BigInteger result)
-    {
-        result = default;
-
-        if (!value.IsConcrete())
-            return false;
-
-        try
-        {
-            return BigInteger.TryParse(value.GetJson(), out result);
-        }
-        catch
-        {
-            return false;
-        }
     }
 
     private static ExprBounds Add(ExprBounds a, ExprBounds b) =>
@@ -329,9 +208,9 @@ public static class NumberBoundExtensions
 
         var products = new[]
         {
-            aLower * bLower, 
+            aLower * bLower,
             aLower * bUpper,
-            aUpper * bLower, 
+            aUpper * bLower,
             aUpper * bUpper
         };
         return ExprBounds.Range(products.Min(), products.Max());
@@ -370,15 +249,4 @@ public static class NumberBoundExtensions
             ? BigInteger.Max(aVal, bVal)
             : null;
 
-    private static Value? TryGetIndex(Value value, int index)
-    {
-        try
-        {
-            return value.Lookup($"[{index}]");
-        }
-        catch (CueError)
-        {
-            return null;
-        }
-    }
 }
