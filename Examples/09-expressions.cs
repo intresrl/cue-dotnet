@@ -55,12 +55,12 @@ public interface OrBase
 
 public readonly record struct BoundRegexMatch(string Value)
 {
-    public static bool IsValid(string value) => value == "^x";
+    public static bool IsValid(string value) => System.Text.RegularExpressions.Regex.IsMatch(value, "^x");
 }
 
 public readonly record struct BoundRegexNotMatch(string Value)
 {
-    public static bool IsValid(string value) => value == "^x";
+    public static bool IsValid(string value) => !System.Text.RegularExpressions.Regex.IsMatch(value, "^x");
 }
 
 public readonly record struct Default(byte Value)

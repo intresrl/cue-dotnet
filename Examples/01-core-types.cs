@@ -48,7 +48,7 @@ public class CoreTypesExample
 
 public readonly record struct EmailString(string Value)
 {
-    public static bool IsValid(string value) => true && value == "^.+@.+$";
+    public static bool IsValid(string value) => true && System.Text.RegularExpressions.Regex.IsMatch(value, "^.+@.+$");
 }
 
 public readonly record struct LiteralBool(bool Value)

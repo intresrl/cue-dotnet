@@ -40,6 +40,11 @@ public static class ConstraintCodeGenerator
         if (expr.Operator == UnaryOp.Not)
             return PrefixUnaryExpression(LogicalNotExpression, GenerateExpression(expr.Operand, paramName, kind));
 
+        if (expr.Operator is UnaryOp.RegexMatch or UnaryOp.NotRegexMatch)
+        {
+            return GenerateRegexMatchExpression(expr.Operand, paramName, expr.Operator == UnaryOp.NotRegexMatch);
+        }
+
         var syntaxKind = expr.Operator switch
         {
             UnaryOp.GreaterThan => GreaterThanExpression,
@@ -91,6 +96,12 @@ public static class ConstraintCodeGenerator
 
     private static ExpressionSyntax GenerateBinaryExpression(CueBinaryExpr expr, string paramName, Kind kind)
     {
+        if (expr.Operator is BinaryOp.RegexMatch or BinaryOp.NotRegexMatch)
+        {
+            var patternOperand = expr.Left is CueStringExpr ? expr.Left : expr.Right;
+            return GenerateRegexMatchExpression(patternOperand, paramName, expr.Operator == BinaryOp.NotRegexMatch);
+        }
+
         var left = GenerateExpression(expr.Left, paramName, kind);
         var right = GenerateExpression(expr.Right, paramName, kind);
 
@@ -106,6 +117,23 @@ public static class ConstraintCodeGenerator
         };
 
         return BinaryExpression(syntaxKind, left, right);
+    }
+
+    private static ExpressionSyntax GenerateRegexMatchExpression(CueExpr patternExpr, string paramName, bool negate)
+    {
+        var patternArg = GenerateValueExpression(patternExpr);
+
+        var isMatchCall = InvocationExpression(
+            ParseName("System.Text.RegularExpressions.Regex.IsMatch"),
+            ArgumentList(SeparatedList(new[]
+            {
+                Argument(IdentifierName(paramName)),
+                Argument(patternArg)
+            })));
+
+        return negate
+            ? PrefixUnaryExpression(LogicalNotExpression, isMatchCall)
+            : isMatchCall;
     }
 
     private static ExpressionSyntax GenerateLogicalExpression(CueLogicalExpr expr, string paramName, Kind kind)
