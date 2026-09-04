@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using ExtendedNumerics;
 using System.Collections.Generic;
 
 public sealed class CueList<TConcrete, TAnyIndex>

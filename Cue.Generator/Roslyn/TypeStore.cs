@@ -36,8 +36,8 @@ public class TypeStore : ITypeStore
             var (constraint, type) = value switch
             {
                 CueIntValue { Constraint: { } c } => (c, NumberBoundExtensions.GetBoundsType(c)),
-                CueIntValue or CueNumberValue => (null, "BigInteger"),
-                CueFloatValue { Constraint: var c } => (c, "double"),
+                CueNumberValue => (null, "BigInteger"),
+                CueFloatValue { Constraint: var c } => (c, "BigDecimal"),
                 CueStringValue { Constraint: var c } => (c, "string"),
                 CueBoolValue { Constraint: var c } => (c, "bool"),
                 _ => (null, null)

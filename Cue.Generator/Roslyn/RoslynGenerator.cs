@@ -24,7 +24,8 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         {
             UsingDirective(ParseName("System")),
             UsingDirective(ParseName("System.Collections.Generic")),
-            UsingDirective(ParseName("System.Numerics"))
+            UsingDirective(ParseName("System.Numerics")),
+            UsingDirective(ParseName("ExtendedNumerics"))
         };
         var members = new List<MemberDeclarationSyntax>();
 
@@ -123,15 +124,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
 
     private static MethodDeclarationSyntax CreateIsValidMethod(string valueType, CueExpr? constraint)
     {
-        var kind = valueType switch
-        {
-            "byte" or "sbyte" or "ushort" or "short" or "uint" or "int" or "ulong" or "long" or "BigInteger" => Kind.Int,
-            "float" or "double" => Kind.Float,
-            "string" => Kind.String,
-            "bool" => Kind.Bool,
-            _ => Kind.Top
-        };
-        var expression = ConstraintCodeGenerator.GenerateValidationExpression(constraint, "value", kind);
+        var expression = ConstraintCodeGenerator.GenerateValidationExpression(constraint, "value", valueType);
         return MethodDeclaration(PredefinedType(Token(BoolKeyword)), "IsValid")
             .AddModifiers(Token(PublicKeyword), Token(StaticKeyword))
             .AddParameterListParameters(Parameter(Identifier("value")).WithType(ParseTypeName(valueType)))

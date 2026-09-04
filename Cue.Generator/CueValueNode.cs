@@ -1,3 +1,6 @@
+using System.Numerics;
+using ExtendedNumerics;
+
 namespace Cue.Generator;
 
 public abstract record CueValueNode(string Path)
@@ -25,12 +28,12 @@ public sealed record CueBoolValue(string Path, bool? ConcreteValue = null, CueEx
     public override string ToString() => $"Bool at {Path}";
 }
 
-public sealed record CueIntValue(string Path, long? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
+public sealed record CueIntValue(string Path, BigInteger? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Int at {Path}";
 }
 
-public sealed record CueFloatValue(string Path, double? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
+public sealed record CueFloatValue(string Path, BigDecimal? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Float at {Path}";
 }

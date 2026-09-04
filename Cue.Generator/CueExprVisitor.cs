@@ -112,10 +112,10 @@ public class CueExprVisitor(TextWriter? debugWriter) : ICueExprVisitor
         {
             return value.Kind() switch
             {
-                Kind.Int when value.GetFloat() is var (m, exp) => new CueIntegerExpr(m.Pow(exp)),
-                Kind.Float when value.GetFloat() is var (m, exp) => new CueFloatExpr(new BigDecimal(m, (int)exp)),
-                Kind.String => new CueStringExpr(JsonSerializer.Deserialize<string>(value.GetJson())!),
-                Kind.Bool => new CueBoolExpr(value.GetJson() == "true"),
+                Kind.Int => new CueIntegerExpr(value.GetFloat().ToBigInteger()),
+                Kind.Float => new CueFloatExpr(value.GetFloat().ToBigDecimal()),
+                Kind.String => new CueStringExpr(value.GetString()!),
+                Kind.Bool => new CueBoolExpr(value.GetBoolean()),
                 Kind.Bytes => new CueBytesExpr(value.GetBytes()),
                 _ => new CueUnknownExpr()
             };

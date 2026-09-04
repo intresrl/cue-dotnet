@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using ExtendedNumerics;
 
 public readonly record struct AnyBool(bool Value)
 {
@@ -61,9 +62,9 @@ public readonly record struct LiteralInt(byte Value)
     public static bool IsValid(byte value) => value == 42L;
 }
 
-public readonly record struct LiteralNumber(double Value)
+public readonly record struct LiteralNumber(BigDecimal Value)
 {
-    public static bool IsValid(double value) => value == 0.0000000000000000000000000000M;
+    public static bool IsValid(BigDecimal value) => value == ExtendedNumerics.BigDecimal.Parse("3.14000000000000000009540979117872439019265584647655487060546875");
 }
 
 public readonly record struct LiteralString(string Value)

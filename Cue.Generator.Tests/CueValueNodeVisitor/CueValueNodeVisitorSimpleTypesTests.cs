@@ -1,5 +1,7 @@
 using FsCheck;
 using FsCheck.Fluent;
+using System.Numerics;
+using ExtendedNumerics;
 
 namespace Cue.Generator.Tests.CueValueNodeVisitor;
 
@@ -61,8 +63,28 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
 
         Assert.NotNull(node);
         Assert.Equal(kind, GetKind(node));
-        Assert.Equal(concrete, GetConcreteValue(node));
+        AssertConcreteValueEqual(concrete, GetConcreteValue(node));
         Assert.Equal("", node.Path);
+    }
+
+    // Concrete int/float values are now represented internally as BigInteger/BigDecimal so they
+    // are captured exactly, but InlineData can't carry those types as constant attribute
+    // arguments - so InlineData still uses long/double, and we convert on the way out for
+    // comparison.
+    private static void AssertConcreteValueEqual(object? expected, object? actual)
+    {
+        switch (expected, actual)
+        {
+            case (long l, BigInteger bi):
+                Assert.Equal(l, (long)bi);
+                break;
+            case (double d, BigDecimal bd):
+                Assert.Equal(d, (double)bd);
+                break;
+            default:
+                Assert.Equal(expected, actual);
+                break;
+        }
     }
 
     [Fact]

@@ -1,34 +1,52 @@
 ﻿using System.Numerics;
+using Cuelang.Cue;
+using ExtendedNumerics;
 
 namespace Cue.Generator;
 
-public static class BigIntegerExtensions
+public static class CueFloatExtensions
 {
-    /// <summary>
-    /// BigInteger.Pow variant that supports negative exponents
-    /// </summary>
-    /// <param name="mantissa">The number to raise to the exponent power.</param>
-    /// <param name="exponent">The result of raising value to the exponent power.</param>
-    /// <exception cref="InvalidDataException">resulting value is not whole, or exponent is not an int32</exception>
-    public static BigInteger Pow(this BigInteger mantissa, long exponent)
+    extension(CueFloat value)
     {
-        if (mantissa == BigInteger.Zero)
+        private (BigInteger whole, BigInteger? divisor) Components()
         {
-            return BigInteger.Zero;
+            var (mantissa, twoExponent) = value;
+        
+            if (mantissa == BigInteger.Zero)
+            {
+                return (BigInteger.Zero, null);
+            }
+
+            return twoExponent switch
+            {
+                > int.MaxValue or < int.MinValue => throw new InvalidDataException("exponent is not an int32"),
+                >= 0 => (mantissa << (int)twoExponent, null),
+                < 0 => (mantissa, BigInteger.One << (int)-twoExponent)
+            };
         }
 
-        switch (exponent)
+        public BigInteger ToBigInteger()
         {
-            case > int.MaxValue or < int.MinValue:
-                throw new InvalidDataException("exponent is not an int32");
-            case >= 0:
-                return BigInteger.Pow(mantissa, (int) exponent);
+            var (whole, divisor) = value.Components();
+
+            if (divisor == null)
+            {
+                return whole;
+            }
+        
+            var (quotient, remainder) = BigInteger.DivRem(whole, divisor.Value);
+            return remainder == BigInteger.Zero
+                ? quotient
+                : throw new InvalidDataException("CUE integer has a fractional binary representation.");
         }
 
-        var divisor = BigInteger.One << (int)-exponent;
-        var (quotient, remainder) = BigInteger.DivRem(mantissa, divisor);
-        return remainder == BigInteger.Zero
-            ? quotient
-            : throw new InvalidDataException("CUE integer has a fractional binary representation.");
+        public BigDecimal ToBigDecimal()
+        {
+            var (whole, divisor) = value.Components();
+
+            return divisor != null
+                ? new BigDecimal(whole, 0) / divisor.Value
+                : whole;
+        }
     }
 }

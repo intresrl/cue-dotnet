@@ -77,8 +77,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
             Kind.Top => new CueTopValue(value.Path()),
 
             Kind.Bool => new CueBoolValue(value.Path(), concrete as bool?, constraint),
-            Kind.Int => new CueIntValue(value.Path(), concrete as long?, constraint),
-            Kind.Float => new CueFloatValue(value.Path(), concrete as double?, constraint),
+            Kind.Int => new CueIntValue(value.Path(), concrete as BigInteger?, constraint),
+            Kind.Float => new CueFloatValue(value.Path(), concrete as BigDecimal?, constraint),
             Kind.String => new CueStringValue(value.Path(), concrete as string, constraint),
             Kind.Bytes => new CueBytesValue(value.Path(), concrete as byte[]),
 
@@ -99,8 +99,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
         return value.Kind() switch
         {
             Kind.Bool => value.GetBoolean(),
-            Kind.Int => value.GetLong(),
-            Kind.Float => value.GetDouble(),
+            Kind.Int => value.GetFloat().ToBigInteger(),
+            Kind.Float => value.GetFloat().ToBigDecimal(),
             Kind.String => value.GetString(),
             Kind.Bytes => value.GetBytes(),
             _ => null
@@ -131,8 +131,8 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
     {
         return value.Kind() switch
         {
-            Kind.Int when value.GetFloat() is var (m, exp) => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueIntegerExpr(m.Pow(exp))),
-            Kind.Float when value.GetFloat() is var (m, exp) => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueFloatExpr(new BigDecimal(m, (int)exp))),
+            Kind.Int => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueIntegerExpr(value.GetFloat().ToBigInteger())),
+            Kind.Float => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueFloatExpr(value.GetFloat().ToBigDecimal())),
             Kind.String => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueStringExpr(value.GetString()!)),
             Kind.Bool => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueBoolExpr(value.GetBoolean())),
             _ => null
