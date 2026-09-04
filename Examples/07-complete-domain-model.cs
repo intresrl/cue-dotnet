@@ -1,15 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-public interface ProductvalueBase
-{
-    public record AsPhysicalProduct(PhysicalProduct value) : ProductvalueBase;
-    public record AsDigitalProduct(DigitalProduct value) : ProductvalueBase;
-    public record Value(ProductvalueBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
+using System.Numerics;
 
 public class Address
 {
@@ -67,6 +56,11 @@ public class Product
     public ProductvalueBase Value { get; init; }
 }
 
+public readonly record struct Role(string Value)
+{
+    public static bool IsValid(string value) => value == "admin" || value == "editor" || value == "viewer";
+}
+
 public class User
 {
     public string Id { get; init; }
@@ -75,4 +69,9 @@ public class User
     public UserStatus Status { get; init; }
     public List<Role> Roles { get; init; }
     public Address? Address { get; init; }
+}
+
+public readonly record struct UserStatus(string Value)
+{
+    public static bool IsValid(string value) => value == "active" || value == "disabled";
 }

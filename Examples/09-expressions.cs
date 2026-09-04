@@ -1,34 +1,23 @@
-using System;
-using System.Collections.Generic;
+using System.Numerics;
 
-public interface MatchNMessageBase
+public readonly record struct BoundRegexMatch(string Value)
 {
-    public record AsDateTimeMessage(DateTimeMessage value) : MatchNMessageBase;
-    public record AsTextMessage(TextMessage value) : MatchNMessageBase;
-    public record Value(MatchNMessageBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
+    public static bool IsValid(string value) => value == "^x";
 }
 
-public interface MixedTreeBase
+public readonly record struct BoundRegexNotMatch(string Value)
 {
-    public record AsUnify(Unify value) : MixedTreeBase;
-    public record AsS(S value) : MixedTreeBase;
-    public record Value(MixedTreeBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
+    public static bool IsValid(string value) => value == "^x";
 }
 
-public interface OrBase
+public readonly record struct Default(byte Value)
 {
-    public record AsOr(Or value) : OrBase;
-    public record AsS(S value) : OrBase;
-    public record Value(OrBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
+    public static bool IsValid(byte value) => value == 1L || value == 2L;
+}
+
+public readonly record struct Unify(BigInteger Value)
+{
+    public static bool IsValid(BigInteger value) => true && value >= 0L;
 }
 
 public class DateTimeMessage

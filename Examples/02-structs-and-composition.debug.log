@@ -1,36 +1,74 @@
 DEBUG LIST LENGTH #Address: ???<#Address: Struct>
 DEBUG LIST LENGTH #Address.street: (No ???<#Address.street: String>)
+visiting: (No ???<#Address.street: String>)
 DEBUG LIST LENGTH #Address.city: (No ???<#Address.city: String>)
+visiting: (No ???<#Address.city: String>)
 DEBUG LIST LENGTH #Address.country: (No ???<#Address.country: String>)
+visiting: (No ???<#Address.country: String>)
 DEBUG LIST LENGTH #Person: ???<#Person: Struct>
 DEBUG LIST LENGTH #Person.name: (No ???<#Person.name: String>)
+visiting: (No ???<#Person.name: String>)
 DEBUG LIST LENGTH #Person.address: (Selector ???<#Person.address: Struct> "#Address")
 DEBUG LIST LENGTH #Entity: ???<#Entity: Struct>
 DEBUG LIST LENGTH #Entity.id: (No ???<#Entity.id: String>)
+visiting: (No ???<#Entity.id: String>)
 DEBUG LIST LENGTH #Entity.createdAt: (No ???<#Entity.createdAt: String>)
+visiting: (No ???<#Entity.createdAt: String>)
 DEBUG LIST LENGTH #User: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
+visiting: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
+visiting: (Selector ???<#User: Struct> "#Entity")
+visiting: ???<#User: Struct>
+visiting: ???<#User: Struct>
 DEBUG LIST LENGTH #User.id: (No ???<#User.id: String>)
+visiting: (No ???<#User.id: String>)
 DEBUG LIST LENGTH #User.createdAt: (No ???<#User.createdAt: String>)
+visiting: (No ???<#User.createdAt: String>)
 DEBUG LIST LENGTH #User.name: (No ???<#User.name: String>)
+visiting: (No ???<#User.name: String>)
 DEBUG LIST LENGTH #User.email: (No ???<#User.email: String>)
+visiting: (No ???<#User.email: String>)
 DEBUG LIST LENGTH #Employee: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
+visiting: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
+visiting: (Selector ???<#Employee: Struct> "#User")
+visiting: ???<#Employee: Struct>
+visiting: ???<#Employee: Struct>
 DEBUG LIST LENGTH #Employee.employeeNumber: (No ???<#Employee.employeeNumber: String>)
+visiting: (No ???<#Employee.employeeNumber: String>)
 DEBUG LIST LENGTH #Employee.department: (No ???<#Employee.department: String>)
+visiting: (No ???<#Employee.department: String>)
 DEBUG LIST LENGTH #Employee.id: (No ???<#Employee.id: String>)
+visiting: (No ???<#Employee.id: String>)
 DEBUG LIST LENGTH #Employee.createdAt: (No ???<#Employee.createdAt: String>)
+visiting: (No ???<#Employee.createdAt: String>)
 DEBUG LIST LENGTH #Employee.name: (No ???<#Employee.name: String>)
+visiting: (No ???<#Employee.name: String>)
 DEBUG LIST LENGTH #Employee.email: (No ???<#Employee.email: String>)
+visiting: (No ???<#Employee.email: String>)
 DEBUG LIST LENGTH #TaggedEntity: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
+visiting: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
+visiting: (Selector ???<#TaggedEntity: Struct> "#Entity")
+visiting: ???<#TaggedEntity: Struct>
+visiting: {}
 DEBUG LIST LENGTH #TaggedEntity.id: (No ???<#TaggedEntity.id: String>)
+visiting: (No ???<#TaggedEntity.id: String>)
 DEBUG LIST LENGTH #TaggedEntity.createdAt: (No ???<#TaggedEntity.createdAt: String>)
+visiting: (No ???<#TaggedEntity.createdAt: String>)
 DEBUG LIST LENGTH #TaggedEntity.tags: []
+visiting: (And (No ???<#TaggedEntity.tags: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#TaggedEntity.tags: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
 #TaggedEntity.tags list concrete length: 0
 DEBUG LIST LENGTH #TaggedEntity.tags.[_]: (No ???<#TaggedEntity.tags.[_]: String>)
+visiting: (No ???<#TaggedEntity.tags.[_]: String>)
 DEBUG LIST LENGTH #Profile: ???<#Profile: Struct>
 DEBUG LIST LENGTH #Profile.displayName: (No ???<#Profile.displayName: String>)
+visiting: (No ???<#Profile.displayName: String>)
 DEBUG LIST LENGTH #Profile.settings: ???<#Profile.settings: Struct>
 DEBUG LIST LENGTH #Profile.settings.theme: (No ???<#Profile.settings.theme: String>)
+visiting: (No ???<#Profile.settings.theme: String>)
 DEBUG LIST LENGTH #Profile.settings.notifications: (No ???<#Profile.settings.notifications: Bool>)
+visiting: (No ???<#Profile.settings.notifications: Bool>)
 DEBUG LIST LENGTH #StructsAndCompositionExample: ???<#StructsAndCompositionExample: Struct>
 DEBUG LIST LENGTH #StructsAndCompositionExample.person: (Selector ???<#StructsAndCompositionExample.person: Struct> "#Person")
 DEBUG LIST LENGTH #StructsAndCompositionExample.user: (Selector ???<#StructsAndCompositionExample.user: Struct> "#User")

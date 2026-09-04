@@ -1,6 +1,8 @@
+using Cuelang.Cue;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxKind;
 
 namespace Cue.Generator.Roslyn;
 
@@ -15,23 +17,110 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     {
         typeStore.Collect(root);
 
-        var compilationUnit = SyntaxFactory.CompilationUnit()
+        var compilationUnit = CompilationUnit()
             .AddUsings(
-                SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")),
-                SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic"))
+                UsingDirective(ParseName("System.Numerics"))
             );
 
         // create abstract base classes for discriminated unions first
         var members = typeStore.GetAbstractDefinitions()
-            .Select(d => CreateDisjunction(d))
+            .Select(CreateDisjunction)
             .ToList();
 
         // create classes for each struct (keep deterministic order)
         members.AddRange(typeStore.GetConcreteDefinitions()
-            .Select(d => CreateClassDeclaration(d.StructNode.Path, d.StructNode)));
+            .Select(CreateTypeDefinition)
+            .Where(m => m != null)
+            .Cast<MemberDeclarationSyntax>()); // Filter out nulls from skipped bare types
 
         compilationUnit = compilationUnit.AddMembers([.. members]);
         return compilationUnit.NormalizeWhitespace().ToFullString();
+    }
+
+    private MemberDeclarationSyntax? CreateTypeDefinition(ConcreteDefinition definition)
+    {
+        // Skip bare types without constraints
+        if (definition.ValueNode is CueIntValue or CueFloatValue or CueStringValue or CueBoolValue or CueNumberValue
+            && typeStore.GetConstraint(definition.ValueNode.Path) is null or CueAnyExpr)
+            return null;
+
+        return definition.ValueNode switch
+        {
+            CueIntValue intVal => CreatePrimitiveTypeDefinition(definition.ValueNode.Path, intVal.Constraint),
+            CueFloatValue floatVal => CreatePrimitiveTypeDefinition(definition.ValueNode.Path, floatVal.Constraint),
+            CueStringValue stringVal => CreatePrimitiveTypeDefinition(definition.ValueNode.Path, stringVal.Constraint),
+            CueBoolValue boolVal => CreatePrimitiveTypeDefinition(definition.ValueNode.Path, boolVal.Constraint),
+            CueNumberValue => CreatePrimitiveTypeDefinition(definition.ValueNode.Path,
+                typeStore.GetConstraint(definition.ValueNode.Path)),
+            CueStructValue structVal => CreateClassDeclaration(structVal.Path, structVal),
+            _ => CreateClassDeclaration(definition.ValueNode.Path, null)
+        };
+    }
+
+    private StructDeclarationSyntax CreatePrimitiveTypeDefinition(string typePath, CueExpr? constraint)
+    {
+        var typeName = namer.TypeName(typePath);
+        var valueType = GetValueTypeForPath(typePath);
+
+        var valueParameter = Parameter(Identifier("Value"))
+            .WithType(ParseTypeName(valueType));
+
+        var structDecl = StructDeclaration(typeName)
+            .AddModifiers(Token(PublicKeyword), Token(ReadOnlyKeyword), Token(RecordKeyword))
+            .WithParameterList(ParameterList(SingletonSeparatedList(valueParameter)));
+
+        // Generate IsValid static method
+        var isValidMethod = CreateIsValidMethod(valueType, constraint);
+        structDecl = structDecl.AddMembers(isValidMethod);
+
+        return structDecl;
+    }
+
+    // Use lowercase names for standard types
+    private string GetValueTypeForPath(string typePath)
+    {
+        return typeStore.GetValueType(typePath) switch
+        {
+            "Byte" => "byte",
+            "SByte" => "sbyte",
+            "UInt16" => "ushort",
+            "Int16" => "short",
+            "UInt32" => "uint",
+            "Int32" => "int",
+            "UInt64" => "ulong",
+            "Int64" => "long",
+            "Single" => "float",
+            "Double" => "double",
+            null => "object",
+            var e => e
+        };
+    }
+
+    private MethodDeclarationSyntax CreateIsValidMethod(string valueType, CueExpr? constraint)
+    {
+        var kind = GetKindFromValueType(valueType);
+        var validationExpression = ConstraintCodeGenerator.GenerateValidationExpression(constraint, "value", kind);
+
+        var method = MethodDeclaration(PredefinedType(Token(BoolKeyword)), "IsValid")
+            .AddModifiers(Token(PublicKeyword), Token(StaticKeyword))
+            .AddParameterListParameters(Parameter(Identifier("value")).WithType(ParseTypeName(valueType)))
+            .WithExpressionBody(ArrowExpressionClause(validationExpression))
+            .WithSemicolonToken(Token(SemicolonToken));
+
+        return method;
+    }
+
+    private static Kind GetKindFromValueType(string valueType)
+    {
+        return valueType switch
+        {
+            "byte" or "sbyte" or "ushort" or "short" or "uint" or "int" or "ulong" or "long"
+                or "BigInteger" => Kind.Int,
+            "float" or "double" => Kind.Float,
+            "string" => Kind.String,
+            "bool" => Kind.Bool,
+            _ => Kind.Top
+        };
     }
 
     private MemberDeclarationSyntax CreateDisjunction(DisjunctionDefinition definition)
@@ -47,96 +136,83 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
                 var branchTypeName = namer.TypeName(branchPath);
                 var recordName = $"As{branchTypeName}";
 
-                return SyntaxFactory.RecordDeclaration(
+                return RecordDeclaration(
                         default,
-                        SyntaxFactory.TokenList(
-                            SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
-                        SyntaxFactory.Token(SyntaxKind.RecordKeyword),
-                        SyntaxFactory.Identifier(recordName),
-                        typeParameterList: null,
-                        parameterList: SyntaxFactory.ParameterList(
-                            SyntaxFactory.SingletonSeparatedList(
-                                SyntaxFactory.Parameter(
-                                        SyntaxFactory.Identifier("value"))
-                                    .WithType(
-                                        SyntaxFactory.IdentifierName(branchTypeName)))),
-                        baseList: SyntaxFactory.BaseList(
-                            SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(
-                                SyntaxFactory.SimpleBaseType(
-                                    SyntaxFactory.IdentifierName(className)))),
-                        constraintClauses: default,
-                        members: default)
-                    .WithSemicolonToken(
-                        SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                        TokenList(Token(PublicKeyword)),
+                        Token(RecordKeyword),
+                        Identifier(recordName),
+                        null,
+                        ParameterList(
+                            SingletonSeparatedList(
+                                Parameter(Identifier("value"))
+                                    .WithType(IdentifierName(branchTypeName)))),
+                        BaseList(
+                            SingletonSeparatedList<BaseTypeSyntax>(
+                                SimpleBaseType(IdentifierName(className)))),
+                        default,
+                        default)
+                    .WithSemicolonToken(Token(SemicolonToken));
             })
             .Cast<MemberDeclarationSyntax>()
             .ToList();
 
-        var branchesParameter = SyntaxFactory.Parameter(
-                SyntaxFactory.Identifier("Branches"))
+        var branchesParameter = Parameter(
+                Identifier("Branches"))
             .WithType(
-                SyntaxFactory.ArrayType(
-                        SyntaxFactory.IdentifierName(className))
+                ArrayType(IdentifierName(className))
                     .AddRankSpecifiers(
-                        SyntaxFactory.ArrayRankSpecifier(
-                            SyntaxFactory.SingletonSeparatedList<ExpressionSyntax>(
-                                SyntaxFactory.OmittedArraySizeExpression()))));
+                        ArrayRankSpecifier(
+                            SingletonSeparatedList<ExpressionSyntax>(
+                                OmittedArraySizeExpression()))));
 
-        var validProperty = SyntaxFactory.PropertyDeclaration(
-                SyntaxFactory.PredefinedType(
-                    SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
-                "Valid")
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+        var validProperty = PropertyDeclaration(PredefinedType(Token(BoolKeyword)), "Valid")
+            .AddModifiers(Token(PublicKeyword))
             .WithExpressionBody(
-                SyntaxFactory.ArrowExpressionClause(
-                    SyntaxFactory.BinaryExpression(
-                        SyntaxKind.EqualsExpression,
-                        SyntaxFactory.MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            SyntaxFactory.IdentifierName("Branches"),
-                            SyntaxFactory.IdentifierName("Length")),
-                        SyntaxFactory.LiteralExpression(
-                            SyntaxKind.NumericLiteralExpression,
-                            SyntaxFactory.Literal(1)))))
+                ArrowExpressionClause(
+                    BinaryExpression(
+                        EqualsExpression,
+                        MemberAccessExpression(
+                            SimpleMemberAccessExpression,
+                            IdentifierName("Branches"),
+                            IdentifierName("Length")),
+                        LiteralExpression(NumericLiteralExpression, Literal(1)))))
             .WithSemicolonToken(
-                SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                Token(SemicolonToken));
 
-        var valueRecord = SyntaxFactory.RecordDeclaration(
+        var valueRecord = RecordDeclaration(
                 default,
-                SyntaxFactory.TokenList(
-                    SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
-                SyntaxFactory.Token(SyntaxKind.RecordKeyword),
-                SyntaxFactory.Identifier("Value"),
-                typeParameterList: null,
-                parameterList: SyntaxFactory.ParameterList(
-                    SyntaxFactory.SingletonSeparatedList(branchesParameter)),
-                baseList: null,
-                constraintClauses: default,
-                members: SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-                    validProperty))
+                TokenList(Token(PublicKeyword)),
+                Token(RecordKeyword),
+                Identifier("Value"),
+                null,
+                ParameterList(
+                    SingletonSeparatedList(branchesParameter)),
+                null,
+                default,
+                SingletonList<MemberDeclarationSyntax>(validProperty))
             .WithSemicolonToken(
-                SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                Token(SemicolonToken));
 
-        return SyntaxFactory.InterfaceDeclaration(className)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+        return InterfaceDeclaration(className)
+            .AddModifiers(Token(PublicKeyword))
             .AddMembers([
-                ..branchRecords,
+                .. branchRecords,
                 valueRecord
             ]);
     }
 
-
-    private ClassDeclarationSyntax CreateClassDeclaration(
-        string typePath,
-        CueStructValue node)
+    private ClassDeclarationSyntax CreateClassDeclaration(string typePath, CueStructValue? node)
     {
-        var classDecl = SyntaxFactory.ClassDeclaration(namer.TypeName(typePath))
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+        var classDecl = ClassDeclaration(namer.TypeName(typePath))
+            .AddModifiers(Token(PublicKeyword));
 
         // If this class extends a base class, add it
-        return classDecl.AddMembers([
-            .. node.Fields.Select(DeclareProperty)
-        ]);
+        if (node != null)
+            return classDecl.AddMembers([
+                .. node.Fields.Select(DeclareProperty)
+            ]);
+
+        return classDecl;
     }
 
     private PropertyDeclarationSyntax DeclareProperty(CueStructField field)
@@ -144,14 +220,14 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         var propName = namer.Identifier(field.Name);
         var valueName = typeStore.GetTypeName(field.Value).Format(namer.TypeName, namer.DisjunctionName);
 
-        var typeSyntax = SyntaxFactory.ParseTypeName(valueName);
-        var semicolonToken = SyntaxFactory.Token(SyntaxKind.SemicolonToken);
+        var typeSyntax = ParseTypeName(valueName);
+        var semicolonToken = Token(SemicolonToken);
 
-        return SyntaxFactory.PropertyDeclaration(typeSyntax, propName)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+        return PropertyDeclaration(typeSyntax, propName)
+            .AddModifiers(Token(PublicKeyword))
             .AddAccessorListAccessors(
-                SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration).WithSemicolonToken(semicolonToken),
-                SyntaxFactory.AccessorDeclaration(SyntaxKind.InitAccessorDeclaration).WithSemicolonToken(semicolonToken)
+                AccessorDeclaration(GetAccessorDeclaration).WithSemicolonToken(semicolonToken),
+                AccessorDeclaration(InitAccessorDeclaration).WithSemicolonToken(semicolonToken)
             );
     }
 }

@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Numerics;
 
 public class CollectionsAndReferencesExample
 {
@@ -49,6 +48,11 @@ public class Organization
 {
     public string Name { get; init; }
     public List<Department> Departments { get; init; }
+}
+
+public readonly record struct Role(string Value)
+{
+    public static bool IsValid(string value) => value == "admin" || value == "editor" || value == "viewer";
 }
 
 public class Scores

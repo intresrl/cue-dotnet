@@ -20,22 +20,22 @@ public sealed record CueNullable(CueValueNode Value) : CueValueNode(Value.Path)
     public override string ToString() => $"Nullable {Value}";
 }
 
-public sealed record CueBoolValue(string Path, bool? ConcreteValue = null) : CueValueNode(Path)
+public sealed record CueBoolValue(string Path, bool? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Bool at {Path}";
 }
 
-public sealed record CueIntValue(string Path, long? ConcreteValue = null) : CueValueNode(Path)
+public sealed record CueIntValue(string Path, long? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Int at {Path}";
 }
 
-public sealed record CueFloatValue(string Path, double? ConcreteValue = null) : CueValueNode(Path)
+public sealed record CueFloatValue(string Path, double? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"Float at {Path}";
 }
 
-public sealed record CueStringValue(string Path, string? ConcreteValue = null) : CueValueNode(Path)
+public sealed record CueStringValue(string Path, string? ConcreteValue = null, CueExpr? Constraint = null) : CueValueNode(Path)
 {
     public override string ToString() => $"String at {Path}";
 }

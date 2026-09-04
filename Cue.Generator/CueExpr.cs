@@ -33,8 +33,8 @@ public sealed record CueUnaryExpr(CueUnaryExpr.Op Operator, CueExpr Operand) : C
 {
     public enum Op
     {
-        Add,
-        Subtract,
+        Plus,
+        Minus,
         Equal,
         NotEqual,
         LessThan,

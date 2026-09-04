@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <Compile Remove="Roslyn\Identifiers.cs" />
+      <Compile Remove="CueValueNodeVisitor.cs" />
     </ItemGroup>
 
 </Project>

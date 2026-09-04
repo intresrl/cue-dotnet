@@ -8,12 +8,22 @@ plainList list concrete length: 2
 DEBUG LIST LENGTH plainList[0]: "ignored"
 DEBUG LIST LENGTH plainList[1]: "also ignored"
 DEBUG LIST LENGTH #ConvertedString: (No ???<#ConvertedString: String>)
+visiting: (No ???<#ConvertedString: String>)
 DEBUG LIST LENGTH #ConvertedPerson: ???<#ConvertedPerson: Struct>
 DEBUG LIST LENGTH #ConvertedPerson.name: (No ???<#ConvertedPerson.name: String>)
 DEBUG LIST LENGTH #ConvertedPerson.age: (No ???<#ConvertedPerson.age: Int>)
+visiting: (No ???<#ConvertedPerson.age: Int>)
 DEBUG LIST LENGTH #ConvertedList: []
+visiting: (And (No ???<#ConvertedList: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#ConvertedList: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
 #ConvertedList list concrete length: 0
 DEBUG LIST LENGTH #ConvertedList.[_]: (No ???<#ConvertedList.[_]: String>)
 DEBUG LIST LENGTH #ConvertedSettings: ???<#ConvertedSettings: Struct>
 DEBUG LIST LENGTH #ConvertedSettings.enabled: (No ???<#ConvertedSettings.enabled: Bool>)
+visiting: (No ???<#ConvertedSettings.enabled: Bool>)
 DEBUG LIST LENGTH #ConvertedSettings.mode: (Or "simple" "advanced")
+visiting: (Or "simple" "advanced")
+visiting: "simple"
+visiting: "advanced"

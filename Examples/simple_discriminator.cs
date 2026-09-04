@@ -1,15 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-public interface MessagematchNMessageBase
-{
-    public record AsDateTimeMessage(DateTimeMessage value) : MessagematchNMessageBase;
-    public record AsTextMessage(TextMessage value) : MessagematchNMessageBase;
-    public record Value(MessagematchNMessageBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
+using System.Numerics;
 
 public class DateTimeMessage
 {

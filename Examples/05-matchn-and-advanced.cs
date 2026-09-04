@@ -1,26 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-public interface AnnotationValuevalueBase
-{
-    public record AsTextValue(TextValue value) : AnnotationValuevalueBase;
-    public record AsNumberValue(NumberValue value) : AnnotationValuevalueBase;
-    public record AsBooleanValue(BooleanValue value) : AnnotationValuevalueBase;
-    public record Value(AnnotationValuevalueBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
-public interface ContactValuevalueBase
-{
-    public record AsEmailValue(EmailValue value) : ContactValuevalueBase;
-    public record AsPhoneValue(PhoneValue value) : ContactValuevalueBase;
-    public record Value(ContactValuevalueBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
+using System.Numerics;
 
 public class AnnotationValue
 {
