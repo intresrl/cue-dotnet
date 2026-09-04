@@ -1,19 +1,6 @@
 using System;
 using System.Collections.Generic;
-
-public readonly struct Role(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator Role(string value) => new(value);
-}
-
-public readonly struct UserStatus(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator UserStatus(string value) => new(value);
-}
+using System.Numerics;
 
 public interface ProductvalueBase
 {
@@ -81,6 +68,11 @@ public class Product
     public ProductvalueBase Value { get; init; }
 }
 
+public readonly record struct Role(string Value)
+{
+    public static bool IsValid(string value) => value == "admin" || value == "editor" || value == "viewer";
+}
+
 public class User
 {
     public string Id { get; init; }
@@ -89,4 +81,9 @@ public class User
     public UserStatus Status { get; init; }
     public List<Role> Roles { get; init; }
     public Address? Address { get; init; }
+}
+
+public readonly record struct UserStatus(string Value)
+{
+    public static bool IsValid(string value) => value == "active" || value == "disabled";
 }

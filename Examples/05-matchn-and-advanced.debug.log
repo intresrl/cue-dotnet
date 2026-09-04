@@ -1,0 +1,46 @@
+DEBUG LIST LENGTH #EmailValue: ???<#EmailValue: Struct>
+DEBUG LIST LENGTH #EmailValue.type: "email"
+DEBUG LIST LENGTH #EmailValue.address: (No ???<#EmailValue.address: String>)
+visiting: (No ???<#EmailValue.address: String>)
+DEBUG LIST LENGTH #PhoneValue: ???<#PhoneValue: Struct>
+DEBUG LIST LENGTH #PhoneValue.type: "phone"
+DEBUG LIST LENGTH #PhoneValue.number: (No ???<#PhoneValue.number: String>)
+visiting: (No ???<#PhoneValue.number: String>)
+DEBUG LIST LENGTH #ContactValue: ???<#ContactValue: Struct>
+DEBUG LIST LENGTH #ContactValue.value: (Call<$matchN> 1 ???<#ContactValue.value: List>)
+DEBUG LIST LENGTH #ContactValue.value[0]: (Selector ???<#ContactValue.value[0]: Struct> "#EmailValue")
+DEBUG LIST LENGTH #ContactValue.value[1]: (Selector ???<#ContactValue.value[1]: Struct> "#PhoneValue")
+DEBUG LIST LENGTH #TextValue: ???<#TextValue: Struct>
+DEBUG LIST LENGTH #TextValue.kind: "text"
+DEBUG LIST LENGTH #TextValue.value: (No ???<#TextValue.value: String>)
+visiting: (No ???<#TextValue.value: String>)
+DEBUG LIST LENGTH #NumberValue: ???<#NumberValue: Struct>
+DEBUG LIST LENGTH #NumberValue.kind: "number"
+DEBUG LIST LENGTH #NumberValue.value: (No ???<#NumberValue.value: Number>)
+visiting: (No ???<#NumberValue.value: Number>)
+DEBUG LIST LENGTH #BooleanValue: ???<#BooleanValue: Struct>
+DEBUG LIST LENGTH #BooleanValue.kind: "boolean"
+DEBUG LIST LENGTH #BooleanValue.value: (No ???<#BooleanValue.value: Bool>)
+visiting: (No ???<#BooleanValue.value: Bool>)
+DEBUG LIST LENGTH #AnnotationValue: ???<#AnnotationValue: Struct>
+DEBUG LIST LENGTH #AnnotationValue.value: (Call<$matchN> 1 ???<#AnnotationValue.value: List>)
+DEBUG LIST LENGTH #AnnotationValue.value[0]: (Selector ???<#AnnotationValue.value[0]: Struct> "#TextValue")
+DEBUG LIST LENGTH #AnnotationValue.value[1]: (Selector ???<#AnnotationValue.value[1]: Struct> "#NumberValue")
+DEBUG LIST LENGTH #AnnotationValue.value[2]: (Selector ???<#AnnotationValue.value[2]: Struct> "#BooleanValue")
+DEBUG LIST LENGTH #CompositeRecord: ???<#CompositeRecord: Struct>
+DEBUG LIST LENGTH #CompositeRecord.id: (No ???<#CompositeRecord.id: String>)
+visiting: (No ???<#CompositeRecord.id: String>)
+DEBUG LIST LENGTH #CompositeRecord.annotation: (Selector ???<#CompositeRecord.annotation: Struct> "#AnnotationValue")
+DEBUG LIST LENGTH #CompositeRecord.contacts: []
+visiting: (And (No ???<#CompositeRecord.contacts: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#CompositeRecord.contacts: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#CompositeRecord.contacts list concrete length: 0
+DEBUG LIST LENGTH #CompositeRecord.contacts.[_]: (Selector ???<#CompositeRecord.contacts.[_]: Struct> "#ContactValue")
+DEBUG LIST LENGTH #CompositeRecord.description: (Or null (No ???<#CompositeRecord.description: String>))
+DEBUG LIST LENGTH #CompositeRecord.description: null
+DEBUG LIST LENGTH #CompositeRecord.description: (No ???<#CompositeRecord.description: String>)
+visiting: (No ???<#CompositeRecord.description: String>)
+DEBUG LIST LENGTH #MatchNAndAdvancedExample: ???<#MatchNAndAdvancedExample: Struct>
+DEBUG LIST LENGTH #MatchNAndAdvancedExample.record: (Selector ???<#MatchNAndAdvancedExample.record: Struct> "#CompositeRecord")

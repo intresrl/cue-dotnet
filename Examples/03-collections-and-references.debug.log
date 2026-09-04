@@ -1,0 +1,129 @@
+DEBUG LIST LENGTH #Role: (Or "admin" "editor" "viewer")
+visiting: (Or "admin" "editor" "viewer")
+visiting: "admin"
+visiting: "editor"
+visiting: "viewer"
+DEBUG LIST LENGTH #Item: ???<#Item: Struct>
+DEBUG LIST LENGTH #Item.sku: (No ???<#Item.sku: String>)
+visiting: (No ???<#Item.sku: String>)
+DEBUG LIST LENGTH #Item.quantity: (And (No ???<#Item.quantity: Int>) (GreaterThan 0))
+visiting: (And (No ???<#Item.quantity: Int>) (GreaterThan 0))
+visiting: (No ???<#Item.quantity: Int>)
+visiting: (GreaterThan 0)
+visiting: 0
+DEBUG LIST LENGTH #Order: ???<#Order: Struct>
+DEBUG LIST LENGTH #Order.id: (No ???<#Order.id: String>)
+visiting: (No ???<#Order.id: String>)
+DEBUG LIST LENGTH #Order.items: []
+visiting: (And (No ???<#Order.items: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Order.items: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Order.items list concrete length: 0
+DEBUG LIST LENGTH #Order.items.[_]: (Selector ???<#Order.items.[_]: Struct> "#Item")
+DEBUG LIST LENGTH #User: ???<#User: Struct>
+DEBUG LIST LENGTH #User.id: (No ???<#User.id: String>)
+visiting: (No ???<#User.id: String>)
+DEBUG LIST LENGTH #User.roles: []
+visiting: (And (No ???<#User.roles: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#User.roles: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#User.roles list concrete length: 0
+DEBUG LIST LENGTH #User.roles.[_]: (Selector ???<#User.roles.[_]: Struct> "#Role")
+DEBUG LIST LENGTH #InlineOrder: {"items":[]}
+DEBUG LIST LENGTH #InlineOrder.items: []
+visiting: (And (No ???<#InlineOrder.items: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#InlineOrder.items: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#InlineOrder.items list concrete length: 0
+DEBUG LIST LENGTH #InlineOrder.items.[_]: ???<#InlineOrder.items.[_]: Struct>
+DEBUG LIST LENGTH #InlineOrder.items.[_].sku: (No ???<#InlineOrder.items.[_].sku: String>)
+visiting: (No ???<#InlineOrder.items.[_].sku: String>)
+DEBUG LIST LENGTH #InlineOrder.items.[_].quantity: (No ???<#InlineOrder.items.[_].quantity: Int>)
+visiting: (No ???<#InlineOrder.items.[_].quantity: Int>)
+DEBUG LIST LENGTH #Scores: {}
+DEBUG LIST LENGTH #Department: ???<#Department: Struct>
+DEBUG LIST LENGTH #Department.name: (No ???<#Department.name: String>)
+visiting: (No ???<#Department.name: String>)
+DEBUG LIST LENGTH #Department.members: []
+visiting: (And (No ???<#Department.members: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Department.members: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Department.members list concrete length: 0
+DEBUG LIST LENGTH #Department.members.[_]: (Selector ???<#Department.members.[_]: Struct> "#User")
+DEBUG LIST LENGTH #Organization: ???<#Organization: Struct>
+DEBUG LIST LENGTH #Organization.name: (No ???<#Organization.name: String>)
+visiting: (No ???<#Organization.name: String>)
+DEBUG LIST LENGTH #Organization.departments: []
+visiting: (And (No ???<#Organization.departments: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Organization.departments: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Organization.departments list concrete length: 0
+DEBUG LIST LENGTH #Organization.departments.[_]: (Selector ???<#Organization.departments.[_]: Struct> "#Department")
+DEBUG LIST LENGTH #StringList: []
+visiting: (And (No ???<#StringList: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#StringList: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#StringList list concrete length: 0
+DEBUG LIST LENGTH #StringList.[_]: (No ???<#StringList.[_]: String>)
+visiting: (No ???<#StringList.[_]: String>)
+DEBUG LIST LENGTH #IntegerList: []
+DEBUG LIST LENGTH #RoleList: []
+DEBUG LIST LENGTH #ItemList: []
+DEBUG LIST LENGTH #FixedPrimitiveTuple: ???<#FixedPrimitiveTuple: List>
+#FixedPrimitiveTuple list concrete length: 3
+DEBUG LIST LENGTH #FixedPrimitiveTuple[0]: (No ???<#FixedPrimitiveTuple[0]: String>)
+visiting: (No ???<#FixedPrimitiveTuple[0]: String>)
+DEBUG LIST LENGTH #FixedPrimitiveTuple[1]: (No ???<#FixedPrimitiveTuple[1]: Int>)
+visiting: (No ???<#FixedPrimitiveTuple[1]: Int>)
+DEBUG LIST LENGTH #FixedPrimitiveTuple[2]: (No ???<#FixedPrimitiveTuple[2]: Bool>)
+visiting: (No ???<#FixedPrimitiveTuple[2]: Bool>)
+DEBUG LIST LENGTH #FixedLiteralTuple: ["header",1,true]
+#FixedLiteralTuple list concrete length: 3
+DEBUG LIST LENGTH #FixedLiteralTuple[0]: "header"
+DEBUG LIST LENGTH #FixedLiteralTuple[1]: 1
+DEBUG LIST LENGTH #FixedLiteralTuple[2]: true
+DEBUG LIST LENGTH #FixedLiteralTupleWithTail: ["header",1,false]
+visiting: (And (No ???<#FixedLiteralTupleWithTail: Int>) (GreaterThanEqual 3))
+visiting: (No ???<#FixedLiteralTupleWithTail: Int>)
+visiting: (GreaterThanEqual 3)
+visiting: 3
+#FixedLiteralTupleWithTail list concrete length: 3
+DEBUG LIST LENGTH #FixedLiteralTupleWithTail[0]: "header"
+DEBUG LIST LENGTH #FixedLiteralTupleWithTail[1]: 1
+DEBUG LIST LENGTH #FixedLiteralTupleWithTail[2]: false
+DEBUG LIST LENGTH #FixedLiteralTupleWithTail.[_]: {}
+DEBUG LIST LENGTH #MixedTuple: ???<#MixedTuple: List>
+#MixedTuple list concrete length: 3
+DEBUG LIST LENGTH #MixedTuple[0]: (No ???<#MixedTuple[0]: String>)
+visiting: (No ???<#MixedTuple[0]: String>)
+DEBUG LIST LENGTH #MixedTuple[1]: (And (No ???<#MixedTuple[1]: Int>) (GreaterThanEqual 0))
+visiting: (And (No ???<#MixedTuple[1]: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#MixedTuple[1]: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+DEBUG LIST LENGTH #MixedTuple[2]: (Or null (No ???<#MixedTuple[2]: String>))
+DEBUG LIST LENGTH #MixedTuple[2]: null
+DEBUG LIST LENGTH #MixedTuple[2]: (No ???<#MixedTuple[2]: String>)
+visiting: (No ???<#MixedTuple[2]: String>)
+DEBUG LIST LENGTH #FixedStructTuple: ???<#FixedStructTuple: List>
+#FixedStructTuple list concrete length: 2
+DEBUG LIST LENGTH #FixedStructTuple[0]: ???<#FixedStructTuple[0]: Struct>
+DEBUG LIST LENGTH #FixedStructTuple[0].id: (No ???<#FixedStructTuple[0].id: String>)
+visiting: (No ???<#FixedStructTuple[0].id: String>)
+DEBUG LIST LENGTH #FixedStructTuple[1]: ???<#FixedStructTuple[1]: Struct>
+DEBUG LIST LENGTH #FixedStructTuple[1].count: (No ???<#FixedStructTuple[1].count: Int>)
+visiting: (No ???<#FixedStructTuple[1].count: Int>)
+DEBUG LIST LENGTH #CollectionsAndReferencesExample: ???<#CollectionsAndReferencesExample: Struct>
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.order: (Selector ???<#CollectionsAndReferencesExample.order: Struct> "#Order")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.user: (Selector ???<#CollectionsAndReferencesExample.user: Struct> "#User")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.inlineOrder: (Selector ???<#CollectionsAndReferencesExample.inlineOrder: Struct> "#InlineOrder")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.scores: (Selector ???<#CollectionsAndReferencesExample.scores: Struct> "#Scores")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.organization: (Selector ???<#CollectionsAndReferencesExample.organization: Struct> "#Organization")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.strings: (Selector ???<#CollectionsAndReferencesExample.strings: Struct> "#StringList")
+DEBUG LIST LENGTH #CollectionsAndReferencesExample.items: (Selector ???<#CollectionsAndReferencesExample.items: Struct> "#ItemList")

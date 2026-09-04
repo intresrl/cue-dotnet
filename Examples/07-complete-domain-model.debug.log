@@ -1,0 +1,106 @@
+DEBUG LIST LENGTH #UserStatus: (Or "active" "disabled")
+visiting: (Or "active" "disabled")
+visiting: "active"
+visiting: "disabled"
+DEBUG LIST LENGTH #Role: (Or "admin" "editor" "viewer")
+visiting: (Or "admin" "editor" "viewer")
+visiting: "admin"
+visiting: "editor"
+visiting: "viewer"
+DEBUG LIST LENGTH #Address: ???<#Address: Struct>
+DEBUG LIST LENGTH #Address.street: (No ???<#Address.street: String>)
+visiting: (No ???<#Address.street: String>)
+DEBUG LIST LENGTH #Address.city: (No ???<#Address.city: String>)
+visiting: (No ???<#Address.city: String>)
+DEBUG LIST LENGTH #Address.country: (Or null (No ???<#Address.country: String>))
+DEBUG LIST LENGTH #Address.country: null
+DEBUG LIST LENGTH #Address.country: (No ???<#Address.country: String>)
+visiting: (No ???<#Address.country: String>)
+DEBUG LIST LENGTH #BaseEntity: ???<#BaseEntity: Struct>
+DEBUG LIST LENGTH #BaseEntity.id: (No ???<#BaseEntity.id: String>)
+visiting: (No ???<#BaseEntity.id: String>)
+DEBUG LIST LENGTH #User: (And (Selector ???<#User: Struct> "#BaseEntity") ???<#User: Struct>)
+visiting: (And (Selector ???<#User: Struct> "#BaseEntity") ???<#User: Struct>)
+visiting: (Selector ???<#User: Struct> "#BaseEntity")
+visiting: ???<#User: Struct>
+visiting: ???<#User: Struct>
+DEBUG LIST LENGTH #User.id: (No ???<#User.id: String>)
+visiting: (No ???<#User.id: String>)
+DEBUG LIST LENGTH #User.name: (No ???<#User.name: String>)
+visiting: (No ???<#User.name: String>)
+DEBUG LIST LENGTH #User.email: (And (No ???<#User.email: String>) (RegexMatch "^.+@.+$"))
+visiting: (And (No ???<#User.email: String>) (RegexMatch "^.+@.+$"))
+visiting: (No ???<#User.email: String>)
+visiting: (RegexMatch "^.+@.+$")
+visiting: "^.+@.+$"
+DEBUG LIST LENGTH #User.status: (Selector ???<#User.status: Struct> "#UserStatus")
+DEBUG LIST LENGTH #User.roles: []
+visiting: (And (No ???<#User.roles: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#User.roles: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#User.roles list concrete length: 0
+DEBUG LIST LENGTH #User.roles.[_]: (Selector ???<#User.roles.[_]: Struct> "#Role")
+DEBUG LIST LENGTH #User.address: (Or null (Selector ???<#User.address: Struct> "#Address"))
+DEBUG LIST LENGTH #User.address: null
+DEBUG LIST LENGTH #User.address: (Selector ???<#User.address: Struct> "#Address")
+DEBUG LIST LENGTH #PhysicalProduct: ???<#PhysicalProduct: Struct>
+DEBUG LIST LENGTH #PhysicalProduct.type: "physical"
+DEBUG LIST LENGTH #PhysicalProduct.sku: (No ???<#PhysicalProduct.sku: String>)
+visiting: (No ???<#PhysicalProduct.sku: String>)
+DEBUG LIST LENGTH #PhysicalProduct.weight: (And (No ???<#PhysicalProduct.weight: Number>) (GreaterThan 0))
+visiting: (And (No ???<#PhysicalProduct.weight: Number>) (GreaterThan 0))
+visiting: (No ???<#PhysicalProduct.weight: Number>)
+visiting: (GreaterThan 0)
+visiting: 0
+DEBUG LIST LENGTH #DigitalProduct: ???<#DigitalProduct: Struct>
+DEBUG LIST LENGTH #DigitalProduct.type: "digital"
+DEBUG LIST LENGTH #DigitalProduct.sku: (No ???<#DigitalProduct.sku: String>)
+visiting: (No ???<#DigitalProduct.sku: String>)
+DEBUG LIST LENGTH #DigitalProduct.downloadUrl: (No ???<#DigitalProduct.downloadUrl: String>)
+visiting: (No ???<#DigitalProduct.downloadUrl: String>)
+DEBUG LIST LENGTH #Product: ???<#Product: Struct>
+DEBUG LIST LENGTH #Product.value: (Or (Selector ???<#Product.value: Struct> "#PhysicalProduct") (Selector ???<#Product.value: Struct> "#DigitalProduct"))
+DEBUG LIST LENGTH #Product.value: (Selector ???<#Product.value: Struct> "#PhysicalProduct")
+DEBUG LIST LENGTH #Product.value: (Selector ???<#Product.value: Struct> "#DigitalProduct")
+DEBUG LIST LENGTH #OrderLine: ???<#OrderLine: Struct>
+DEBUG LIST LENGTH #OrderLine.product: (Selector ???<#OrderLine.product: Struct> "#Product")
+DEBUG LIST LENGTH #OrderLine.quantity: (And (No ???<#OrderLine.quantity: Int>) (GreaterThan 0))
+visiting: (And (No ???<#OrderLine.quantity: Int>) (GreaterThan 0))
+visiting: (No ???<#OrderLine.quantity: Int>)
+visiting: (GreaterThan 0)
+visiting: 0
+DEBUG LIST LENGTH #Order: (And (Selector ???<#Order: Struct> "#BaseEntity") ???<#Order: Struct>)
+visiting: (And (Selector ???<#Order: Struct> "#BaseEntity") ???<#Order: Struct>)
+visiting: (Selector ???<#Order: Struct> "#BaseEntity")
+visiting: ???<#Order: Struct>
+visiting: ???<#Order: Struct>
+DEBUG LIST LENGTH #Order.customer: (Selector ???<#Order.customer: Struct> "#User")
+DEBUG LIST LENGTH #Order.id: (No ???<#Order.id: String>)
+visiting: (No ???<#Order.id: String>)
+DEBUG LIST LENGTH #Order.lines: []
+visiting: (And (No ???<#Order.lines: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Order.lines: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Order.lines list concrete length: 0
+DEBUG LIST LENGTH #Order.lines.[_]: (Selector ???<#Order.lines.[_]: Struct> "#OrderLine")
+DEBUG LIST LENGTH #Organization: ???<#Organization: Struct>
+DEBUG LIST LENGTH #Organization.name: (No ???<#Organization.name: String>)
+visiting: (No ???<#Organization.name: String>)
+DEBUG LIST LENGTH #Organization.users: []
+visiting: (And (No ???<#Organization.users: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Organization.users: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Organization.users list concrete length: 0
+DEBUG LIST LENGTH #Organization.users.[_]: (Selector ???<#Organization.users.[_]: Struct> "#User")
+DEBUG LIST LENGTH #Organization.orders: []
+visiting: (And (No ???<#Organization.orders: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#Organization.orders: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+#Organization.orders list concrete length: 0
+DEBUG LIST LENGTH #Organization.orders.[_]: (Selector ???<#Organization.orders.[_]: Struct> "#Order")
+DEBUG LIST LENGTH #CompleteDomainModel: ???<#CompleteDomainModel: Struct>
+DEBUG LIST LENGTH #CompleteDomainModel.organization: (Selector ???<#CompleteDomainModel.organization: Struct> "#Organization")

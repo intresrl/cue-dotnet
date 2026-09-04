@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 public readonly struct ConvertedList(List<ConvertedString> value)
 {
@@ -8,39 +9,11 @@ public readonly struct ConvertedList(List<ConvertedString> value)
     public implicit operator ConvertedList(List<ConvertedString> value) => new(value);
 }
 
-public readonly struct ConvertedString(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator ConvertedString(string value) => new(value);
-}
-
-public readonly struct PlainBool(bool value)
-{
-    public bool Value { get; } = value;
-
-    public implicit operator PlainBool(bool value) => new(value);
-}
-
-public readonly struct PlainInt(long value)
-{
-    public long Value { get; } = value;
-
-    public implicit operator PlainInt(long value) => new(value);
-}
-
 public readonly struct PlainList((string, string) value)
 {
     public (string, string) Value { get; } = value;
 
     public implicit operator PlainList((string, string) value) => new(value);
-}
-
-public readonly struct PlainString(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator PlainString(string value) => new(value);
 }
 
 public class ConvertedPerson
@@ -53,6 +26,26 @@ public class ConvertedSettings
 {
     public bool Enabled { get; init; }
     public string Mode { get; init; }
+}
+
+public readonly record struct ConvertedString(string Value)
+{
+    public static bool IsValid(string value) => true;
+}
+
+public readonly record struct PlainBool(bool Value)
+{
+    public static bool IsValid(bool value) => value == true;
+}
+
+public readonly record struct PlainInt(byte Value)
+{
+    public static bool IsValid(byte value) => value == 123L;
+}
+
+public readonly record struct PlainString(string Value)
+{
+    public static bool IsValid(string value) => value == "this top-level property should be ignored";
 }
 
 public class PlainStruct

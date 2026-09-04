@@ -1,0 +1,23 @@
+DEBUG LIST LENGTH #A: ???<#A: List>
+#A list concrete length: 3
+DEBUG LIST LENGTH #A[0]: (No ???<#A[0]: String>)
+visiting: (No ???<#A[0]: String>)
+DEBUG LIST LENGTH #A[1]: (No ???<#A[1]: Int>)
+visiting: (No ???<#A[1]: Int>)
+DEBUG LIST LENGTH #A[2]: (No ???<#A[2]: Bool>)
+visiting: (No ???<#A[2]: Bool>)
+DEBUG LIST LENGTH #B: ["header",1,true]
+#B list concrete length: 3
+DEBUG LIST LENGTH #B[0]: "header"
+DEBUG LIST LENGTH #B[1]: 1
+DEBUG LIST LENGTH #B[2]: true
+DEBUG LIST LENGTH #C: ["header",1,false]
+visiting: (And (No ???<#C: Int>) (GreaterThanEqual 3))
+visiting: (No ???<#C: Int>)
+visiting: (GreaterThanEqual 3)
+visiting: 3
+#C list concrete length: 3
+DEBUG LIST LENGTH #C[0]: "header"
+DEBUG LIST LENGTH #C[1]: 1
+DEBUG LIST LENGTH #C[2]: false
+DEBUG LIST LENGTH #C.[_]: {}

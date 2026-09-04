@@ -1,0 +1,112 @@
+DEBUG LIST LENGTH #PrimitiveTypes: ???<#PrimitiveTypes: Struct>
+DEBUG LIST LENGTH #PrimitiveTypes.text: (No ???<#PrimitiveTypes.text: String>)
+visiting: (No ???<#PrimitiveTypes.text: String>)
+DEBUG LIST LENGTH #PrimitiveTypes.integer: (No ???<#PrimitiveTypes.integer: Int>)
+visiting: (No ???<#PrimitiveTypes.integer: Int>)
+DEBUG LIST LENGTH #PrimitiveTypes.decimal: (No ???<#PrimitiveTypes.decimal: Number>)
+visiting: (No ???<#PrimitiveTypes.decimal: Number>)
+DEBUG LIST LENGTH #PrimitiveTypes.enabled: (No ???<#PrimitiveTypes.enabled: Bool>)
+visiting: (No ???<#PrimitiveTypes.enabled: Bool>)
+DEBUG LIST LENGTH #ConcreteValues: {"status":"active","version":1,"enabled":true}
+DEBUG LIST LENGTH #ConcreteValues.status: "active"
+DEBUG LIST LENGTH #ConcreteValues.version: 1
+DEBUG LIST LENGTH #ConcreteValues.enabled: true
+DEBUG LIST LENGTH #OptionalAndNullable: ???<#OptionalAndNullable: Struct>
+DEBUG LIST LENGTH #OptionalAndNullable.required: (No ???<#OptionalAndNullable.required: String>)
+visiting: (No ???<#OptionalAndNullable.required: String>)
+DEBUG LIST LENGTH #OptionalAndNullable.optional: (No ???<#OptionalAndNullable.optional: String>)
+visiting: (No ???<#OptionalAndNullable.optional: String>)
+DEBUG LIST LENGTH #OptionalAndNullable.nullable: (Or null (No ???<#OptionalAndNullable.nullable: String>))
+DEBUG LIST LENGTH #OptionalAndNullable.nullable: null
+DEBUG LIST LENGTH #OptionalAndNullable.nullable: (No ???<#OptionalAndNullable.nullable: String>)
+visiting: (No ???<#OptionalAndNullable.nullable: String>)
+DEBUG LIST LENGTH #OptionalAndNullable.optionalNullable: (Or null (No ???<#OptionalAndNullable.optionalNullable: String>))
+DEBUG LIST LENGTH #OptionalAndNullable.optionalNullable: null
+DEBUG LIST LENGTH #OptionalAndNullable.optionalNullable: (No ???<#OptionalAndNullable.optionalNullable: String>)
+visiting: (No ???<#OptionalAndNullable.optionalNullable: String>)
+DEBUG LIST LENGTH #ConstrainedValues: ???<#ConstrainedValues: Struct>
+DEBUG LIST LENGTH #ConstrainedValues.age: (And (And (No ???<#ConstrainedValues.age: Int>) (GreaterThanEqual 0)) (LessThanEqual 150))
+visiting: (And (And (No ???<#ConstrainedValues.age: Int>) (GreaterThanEqual 0)) (LessThanEqual 150))
+visiting: (And (No ???<#ConstrainedValues.age: Int>) (GreaterThanEqual 0))
+visiting: (No ???<#ConstrainedValues.age: Int>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+visiting: (LessThanEqual 150)
+visiting: 150
+DEBUG LIST LENGTH #ConstrainedValues.percentage: (And (And (No ???<#ConstrainedValues.percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting: (And (And (No ???<#ConstrainedValues.percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting: (And (No ???<#ConstrainedValues.percentage: Number>) (GreaterThanEqual 0))
+visiting: (No ???<#ConstrainedValues.percentage: Number>)
+visiting: (GreaterThanEqual 0)
+visiting: 0
+visiting: (LessThanEqual 100)
+visiting: 100
+DEBUG LIST LENGTH #ConstrainedValues.email: (And (No ???<#ConstrainedValues.email: String>) (RegexMatch "^.+@.+$"))
+visiting: (And (No ???<#ConstrainedValues.email: String>) (RegexMatch "^.+@.+$"))
+visiting: (No ???<#ConstrainedValues.email: String>)
+visiting: (RegexMatch "^.+@.+$")
+visiting: "^.+@.+$"
+DEBUG LIST LENGTH #Status: (Or "pending" "running" "completed")
+visiting: (Or "pending" "running" "completed")
+visiting: "pending"
+visiting: "running"
+visiting: "completed"
+DEBUG LIST LENGTH #Priority: (Or 1 2 3)
+visiting: (Or 1 2 3)
+visiting: 1
+visiting: 2
+visiting: 3
+DEBUG LIST LENGTH #AnyString: (No ???<#AnyString: String>)
+visiting: (No ???<#AnyString: String>)
+DEBUG LIST LENGTH #NonEmptyString: (And (No ???<#NonEmptyString: String>) (NotEqual ""))
+visiting: (And (No ???<#NonEmptyString: String>) (NotEqual ""))
+visiting: (No ???<#NonEmptyString: String>)
+visiting: (NotEqual "")
+visiting: ""
+DEBUG LIST LENGTH #EmailString: (And (No ???<#EmailString: String>) (RegexMatch "^.+@.+$"))
+visiting: (And (No ???<#EmailString: String>) (RegexMatch "^.+@.+$"))
+visiting: (No ???<#EmailString: String>)
+visiting: (RegexMatch "^.+@.+$")
+visiting: "^.+@.+$"
+DEBUG LIST LENGTH #LiteralString: "hello"
+DEBUG LIST LENGTH #StringChoice: (Or "alpha" "beta" "gamma")
+visiting: (Or "alpha" "beta" "gamma")
+visiting: "alpha"
+visiting: "beta"
+visiting: "gamma"
+DEBUG LIST LENGTH #AnyInt: (No ???<#AnyInt: Int>)
+visiting: (No ???<#AnyInt: Int>)
+DEBUG LIST LENGTH #PositiveInt: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
+visiting: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
+visiting: (No ???<#PositiveInt: Int>)
+visiting: (GreaterThan 0)
+visiting: 0
+DEBUG LIST LENGTH #BoundedInt: (And (And (No ???<#BoundedInt: Int>) (GreaterThanEqual 1)) (LessThanEqual 10))
+visiting: (And (And (No ???<#BoundedInt: Int>) (GreaterThanEqual 1)) (LessThanEqual 10))
+visiting: (And (No ???<#BoundedInt: Int>) (GreaterThanEqual 1))
+visiting: (No ???<#BoundedInt: Int>)
+visiting: (GreaterThanEqual 1)
+visiting: 1
+visiting: (LessThanEqual 10)
+visiting: 10
+DEBUG LIST LENGTH #LiteralInt: 42
+DEBUG LIST LENGTH #IntChoice: (Or 1 2 3)
+DEBUG LIST LENGTH #AnyNumber: (No ???<#AnyNumber: Number>)
+visiting: (No ???<#AnyNumber: Number>)
+DEBUG LIST LENGTH #PositiveNumber: (And (No ???<#PositiveNumber: Number>) (GreaterThan 0))
+visiting: (And (No ???<#PositiveNumber: Number>) (GreaterThan 0))
+visiting: (No ???<#PositiveNumber: Number>)
+visiting: (GreaterThan 0)
+visiting: 0
+DEBUG LIST LENGTH #LiteralNumber: 3.14
+DEBUG LIST LENGTH #AnyBool: (No ???<#AnyBool: Bool>)
+visiting: (No ???<#AnyBool: Bool>)
+DEBUG LIST LENGTH #LiteralBool: true
+DEBUG LIST LENGTH #NullValue: null
+DEBUG LIST LENGTH #CoreTypesExample: ???<#CoreTypesExample: Struct>
+DEBUG LIST LENGTH #CoreTypesExample.primitives: (Selector ???<#CoreTypesExample.primitives: Struct> "#PrimitiveTypes")
+DEBUG LIST LENGTH #CoreTypesExample.concrete: (Selector ???<#CoreTypesExample.concrete: Struct> "#ConcreteValues")
+DEBUG LIST LENGTH #CoreTypesExample.fields: (Selector ???<#CoreTypesExample.fields: Struct> "#OptionalAndNullable")
+DEBUG LIST LENGTH #CoreTypesExample.constrained: (Selector ???<#CoreTypesExample.constrained: Struct> "#ConstrainedValues")
+DEBUG LIST LENGTH #CoreTypesExample.status: (Selector ???<#CoreTypesExample.status: Struct> "#Status")
+DEBUG LIST LENGTH #CoreTypesExample.priority: (Selector ???<#CoreTypesExample.priority: Struct> "#Priority")

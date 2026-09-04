@@ -1,18 +1,20 @@
+﻿using System.Numerics;
 using Cuelang.Cue;
+using ExtendedNumerics;
 
 namespace Cue.Generator;
 
-public sealed class CueValueVisitor(Value[] rootDefinitions)
+public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer, ICueExprVisitor cueExprVisitor)
 {
     private readonly HashSet<string> _definedPaths = [];
-    
-    public static IEnumerable<CueValueNode> VisitRoot(Value value)
+
+    public static IEnumerable<CueValueNode> VisitRoot(Value value, TextWriter? debug = null)
     {
         var definitions = value.Fields(new EvalOption.Definitions(true));
 
         try
         {
-            var visitor = new CueValueVisitor(definitions);
+            var visitor = new CueValueVisitor(definitions, debug, new CueExprVisitor(debug));
             return definitions.Select(visitor.Visit).ToArray();
         }
         finally
@@ -24,25 +26,17 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             value.Dispose();
         }
     }
-    
+
     [Obsolete]
     public static CueValueNode ForTests(Value value)
     {
-        return new CueValueVisitor([]).Visit(value);
-    }
-    
-    private static T? GetConcrete<T>(Value value, Func<Value, T> getConcrete) where T : struct
-    {
-        return !value.IsConcrete() ? null : getConcrete(value);
+        return new CueValueVisitor([], null, new CueExprVisitor(null)).Visit(value);
     }
 
-    private static T? GetConcreteReference<T>(Value value, Func<Value, T> getConcrete) where T : class
+    public CueValueNode Visit(Value value)
     {
-        return !value.IsConcrete() ? null : getConcrete(value);
-    }
+        writer?.WriteLine($"DEBUG LIST LENGTH {value.Path()}: {value.FormatExpr()}");
 
-    private CueValueNode Visit(Value value)
-    {
         foreach (var rootValue in rootDefinitions)
         {
             if (Value.SchemaComparer.Equals(value, rootValue) && _definedPaths.Contains(rootValue.Path()))
@@ -50,8 +44,13 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
                 return new CueDefinitionReference(rootValue.Path());
             }
         }
-        
+
         _definedPaths.Add(value.Path());
+        
+        if (value.Expr() is { Op: ExprOp.Selector, Values: [_, { } schemaValue] } && schemaValue.Kind() == Kind.String)
+        {
+            return new CueDefinitionReference(schemaValue.GetString()!);
+        }
 
         var kind = value.IncompleteKind();
 
@@ -67,6 +66,9 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             };
         }
 
+        var concrete = GetConcreteValue(value);
+        var constraint = ExtractConstraint(value);
+
         return kind switch
         {
             Kind.Bottom => new CueBottomValue(value.Path()),
@@ -74,16 +76,66 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             Kind.Number => new CueNumberValue(value.Path()),
             Kind.Top => new CueTopValue(value.Path()),
 
-            Kind.Bool => new CueBoolValue(value.Path(), GetConcrete(value, v => v.GetBoolean())),
-            Kind.Int => new CueIntValue(value.Path(), GetConcrete(value, v => v.GetLong())),
-            Kind.Float => new CueFloatValue(value.Path(), GetConcrete(value, v => v.GetDouble())),
-            Kind.String => new CueStringValue(value.Path(), GetConcreteReference(value, v => v.GetString()!)),
-            Kind.Bytes => new CueBytesValue(value.Path(), GetConcreteReference(value, v => v.GetBytes())),
+            Kind.Bool => new CueBoolValue(value.Path(), concrete as bool?, constraint),
+            Kind.Int => new CueIntValue(value.Path(), concrete as long?, constraint),
+            Kind.Float => new CueFloatValue(value.Path(), concrete as double?, constraint),
+            Kind.String => new CueStringValue(value.Path(), concrete as string, constraint),
+            Kind.Bytes => new CueBytesValue(value.Path(), concrete as byte[]),
 
             Kind.Struct => VisitStruct(value),
             Kind.List => VisitList(value),
 
             _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Unexpected kind")
+        };
+    }
+
+    private static object? GetConcreteValue(Value value)
+    {
+        if (!value.IsConcrete())
+        {
+            return null;
+        }
+
+        return value.Kind() switch
+        {
+            Kind.Bool => value.GetBoolean(),
+            Kind.Int => value.GetLong(),
+            Kind.Float => value.GetDouble(),
+            Kind.String => value.GetString(),
+            Kind.Bytes => value.GetBytes(),
+            _ => null
+        };
+    }
+
+    private CueExpr? ExtractConstraint(Value value)
+    {
+        var expr = value.Expr();
+        
+        // If the value is concrete and has no expression (ExprOp.No), create an equality constraint
+        if (expr.Op == ExprOp.No && value.IsConcrete())
+        {
+            return CreateConcreteConstraint(value);
+        }
+
+        try
+        {
+            return cueExprVisitor.Visit(value);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static CueExpr? CreateConcreteConstraint(Value value)
+    {
+        return value.Kind() switch
+        {
+            Kind.Int when value.GetFloat() is var (m, exp) => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueIntegerExpr(m.Pow(exp))),
+            Kind.Float when value.GetFloat() is var (m, exp) => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueFloatExpr(new BigDecimal(m, (int)exp))),
+            Kind.String => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueStringExpr(value.GetString()!)),
+            Kind.Bool => new CueUnaryExpr(CueUnaryExpr.Op.Equal, new CueBoolExpr(value.GetBoolean())),
+            _ => null
         };
     }
 
@@ -152,8 +204,10 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
     {
         var path = value.Path();
         var count = GetConcreteElementCount(value);
+        
+        writer?.WriteLine($"{path} list concrete length: {count}");
 
-        var elements = Enumerable.Range(0, (int)count)
+        var elements = Enumerable.Range(0, count)
             .Select(index =>
             {
                 using var element = value.Lookup($"[{index}]");
@@ -170,23 +224,11 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         {
             anyIndex = null;
         }
-        
+
         return new CueListValue(path, anyIndex is { } v ? Visit(v) : null, elements);
     }
 
-    private static string FormatExpr(Value value)
-    {
-        var expr = value.Expr();
-
-        if (expr.Op is ExprOp.No)
-        {
-            return value.IsConcrete() ? value.GetLong().ToString() : "int";
-        }
-        
-        return $"({expr.Op} {string.Join(" ", expr.Values.Select(FormatExpr))})";
-    }
-
-    private static long GetConcreteElementCount(Value value)
+    private int GetConcreteElementCount(Value value)
     {
         using var len = value.Len();
 
@@ -195,9 +237,24 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
             throw new InvalidDataException("List length must be an int.");
         }
 
-        return len.IsConcrete() 
-            ? len.GetLong() 
-            : len.ParseRange().LowerBound();
+        if (len.IsConcrete())
+        {
+            return (int) len.GetLong();
+        }
+
+        try
+        {
+            var expr = cueExprVisitor.Visit(len);
+            var lb = expr.Bounds().Lower ?? BigInteger.Zero;
+            return (int) lb;
+        }
+        finally
+        {
+            foreach (var expressionValue in len.Expr().Values)
+            {
+                expressionValue.Dispose();
+            }
+        }
     }
 
     private CueDisjunction VisitDisjunction(Value value, IEnumerable<Value> branches)
@@ -224,7 +281,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
         var field = branch.Fields.FirstOrDefault(f => f.Name == name);
 
         return (field?.Value as CueStringValue)?.ConcreteValue
-            ?? throw new InvalidOperationException($"branch {branch} has no discriminator property '{name}'");
+               ?? throw new InvalidOperationException($"branch {branch} has no discriminator property '{name}'");
     }
 
     private static (string? name, Dictionary<string, string> branches) FindDiscriminatorField(List<CueValueNode> branches)
@@ -238,20 +295,12 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
 
         var namesPerBranch = structBranches
             .Select(e => e.Fields
-                .Where(f => f.Value is CueStringValue
-                {
-                    ConcreteValue: not null
-                })
-                .Select(f => new
-                {
-                    f.Name,
-                    Value = (CueStringValue)f.Value
-                }))
+                .Where(f => f.Value is CueStringValue { ConcreteValue: not null })
+                .Select(f => new { f.Name, Value = (CueStringValue)f.Value }))
             .ToArray();
 
         var fields = namesPerBranch
-            .Aggregate((a, b) =>
-                a.IntersectBy(b.Select(e => e.Name), e => e.Name))
+            .Aggregate((a, b) => a.IntersectBy(b.Select(e => e.Name), e => e.Name))
             .ToArray();
 
         var name = fields
@@ -262,8 +311,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions)
                     .Select(b => GetDiscriminatorValue(b, field.Name))
                     .ToArray()
             })
-            .Where(t =>
-                t.allValues.Distinct().Count() == t.allValues.Length)
+            .Where(t => t.allValues.Distinct().Count() == t.allValues.Length)
             .Select(t => t.field.Name)
             .FirstOrDefault();
 

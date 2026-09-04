@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -282,6 +283,31 @@ public sealed unsafe class Value : IDisposable
         var err = NativeMethods.cue_dec_double(Handle, &result);
         Context.ThrowIfError(err);
         return result;
+    }
+
+    private static CueFloat ParseCueFloat(cue_float result)
+    {
+        switch (result.mantissa_len)
+        {
+            case 0:
+                return new CueFloat(BigInteger.Zero, 0);
+            case > int.MaxValue:
+                throw new OverflowException();
+            default:
+            {
+                var bytes = new ReadOnlySpan<byte>((byte*)result.mantissa, checked((int)result.mantissa_len));
+                var mantissa = new BigInteger(bytes, isUnsigned: true, isBigEndian: true);
+                return new CueFloat(result.sign ? -mantissa : mantissa, result.exponent);
+            }
+        }
+    }
+    
+    public CueFloat GetFloat()
+    {
+        cue_float result;
+        var err = NativeMethods.cue_dec_float(Handle, &result);
+        Context.ThrowIfError(err);
+        return ParseCueFloat(result);
     }
 
     public string? GetString()

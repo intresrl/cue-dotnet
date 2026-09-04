@@ -5,6 +5,11 @@
       "commandLineArgs": "Examples/simple_discriminator.cue Examples/simple_discriminator.cs --debug Examples/simple_discriminator.debug.log",
       "workingDirectory": "../"
     },
+    "00-primitive-translation": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/00-primitive-translation.cue Examples/00-primitive-translation.cs --debug Examples/00-primitive-translation.debug.log",
+      "workingDirectory": "../"
+    },
     "01-core-types": {
       "commandName": "Project",
       "commandLineArgs": "Examples/01-core-types.cue Examples/01-core-types.cs --debug Examples/01-core-types.debug.log",
@@ -43,6 +48,11 @@
     "08-cue-equality": {
       "commandName": "Project",
       "commandLineArgs": "Examples/08-cue-equality.cue Examples/08-cue-equality.cs --debug Examples/08-cue-equality.debug.log",
+      "workingDirectory": "../"
+    },
+    "09-expressions": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples/09-expressions.cue Examples/09-expressions.cs --debug Examples/09-expressions.debug.log",
       "workingDirectory": "../"
     }
   }

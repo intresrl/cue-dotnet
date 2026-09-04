@@ -1,123 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
-public readonly struct AnyBool(bool value)
+public readonly record struct AnyBool(bool Value)
 {
-    public bool Value { get; } = value;
-
-    public implicit operator AnyBool(bool value) => new(value);
+    public static bool IsValid(bool value) => true;
 }
 
-public readonly struct AnyInt(long value)
+public readonly record struct AnyInt(BigInteger Value)
 {
-    public long Value { get; } = value;
-
-    public implicit operator AnyInt(long value) => new(value);
+    public static bool IsValid(BigInteger value) => true;
 }
 
-public readonly struct AnyNumber(decimal value)
+public readonly record struct AnyString(string Value)
 {
-    public decimal Value { get; } = value;
-
-    public implicit operator AnyNumber(decimal value) => new(value);
+    public static bool IsValid(string value) => true;
 }
 
-public readonly struct AnyString(string value)
+public readonly record struct BoundedInt(byte Value)
 {
-    public string Value { get; } = value;
-
-    public implicit operator AnyString(string value) => new(value);
-}
-
-public readonly struct BoundedInt(long value)
-{
-    public long Value { get; } = value;
-
-    public implicit operator BoundedInt(long value) => new(value);
-}
-
-public readonly struct EmailString(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator EmailString(string value) => new(value);
-}
-
-public readonly struct LiteralBool(bool value)
-{
-    public bool Value { get; } = value;
-
-    public implicit operator LiteralBool(bool value) => new(value);
-}
-
-public readonly struct LiteralInt(long value)
-{
-    public long Value { get; } = value;
-
-    public implicit operator LiteralInt(long value) => new(value);
-}
-
-public readonly struct LiteralNumber(double value)
-{
-    public double Value { get; } = value;
-
-    public implicit operator LiteralNumber(double value) => new(value);
-}
-
-public readonly struct LiteralString(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator LiteralString(string value) => new(value);
-}
-
-public readonly struct NonEmptyString(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator NonEmptyString(string value) => new(value);
-}
-
-public readonly struct NullValue(object value)
-{
-    public object Value { get; } = value;
-
-    public implicit operator NullValue(object value) => new(value);
-}
-
-public readonly struct PositiveInt(long value)
-{
-    public long Value { get; } = value;
-
-    public implicit operator PositiveInt(long value) => new(value);
-}
-
-public readonly struct PositiveNumber(decimal value)
-{
-    public decimal Value { get; } = value;
-
-    public implicit operator PositiveNumber(decimal value) => new(value);
-}
-
-public readonly struct Priority(long value)
-{
-    public long Value { get; } = value;
-
-    public implicit operator Priority(long value) => new(value);
-}
-
-public readonly struct Status(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator Status(string value) => new(value);
-}
-
-public readonly struct StringChoice(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator StringChoice(string value) => new(value);
+    public static bool IsValid(byte value) => true && value >= 1L && value <= 10L;
 }
 
 public class ConcreteValues
@@ -144,6 +46,36 @@ public class CoreTypesExample
     public Priority Priority { get; init; }
 }
 
+public readonly record struct EmailString(string Value)
+{
+    public static bool IsValid(string value) => true && value == "^.+@.+$";
+}
+
+public readonly record struct LiteralBool(bool Value)
+{
+    public static bool IsValid(bool value) => value == true;
+}
+
+public readonly record struct LiteralInt(byte Value)
+{
+    public static bool IsValid(byte value) => value == 42L;
+}
+
+public readonly record struct LiteralNumber(double Value)
+{
+    public static bool IsValid(double value) => value == 0.0000000000000000000000000000M;
+}
+
+public readonly record struct LiteralString(string Value)
+{
+    public static bool IsValid(string value) => value == "hello";
+}
+
+public readonly record struct NonEmptyString(string Value)
+{
+    public static bool IsValid(string value) => true && value != "";
+}
+
 public class OptionalAndNullable
 {
     public string Required { get; init; }
@@ -152,10 +84,30 @@ public class OptionalAndNullable
     public string? OptionalNullable { get; init; }
 }
 
+public readonly record struct PositiveInt(BigInteger Value)
+{
+    public static bool IsValid(BigInteger value) => true && value > 0L;
+}
+
 public class PrimitiveTypes
 {
     public string Text { get; init; }
     public long Integer { get; init; }
     public decimal Decimal { get; init; }
     public bool Enabled { get; init; }
+}
+
+public readonly record struct Priority(byte Value)
+{
+    public static bool IsValid(byte value) => value == 1L || value == 2L || value == 3L;
+}
+
+public readonly record struct Status(string Value)
+{
+    public static bool IsValid(string value) => value == "pending" || value == "running" || value == "completed";
+}
+
+public readonly record struct StringChoice(string Value)
+{
+    public static bool IsValid(string value) => value == "alpha" || value == "beta" || value == "gamma";
 }

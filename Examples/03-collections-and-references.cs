@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Collections.Generic;
 
 public sealed class CueList<TConcrete, TAnyIndex>
@@ -41,13 +42,6 @@ public readonly struct MixedTuple((string, long, string? ) value)
     public (string, long, string? ) Value { get; } = value;
 
     public implicit operator MixedTuple((string, long, string? ) value) => new(value);
-}
-
-public readonly struct Role(string value)
-{
-    public string Value { get; } = value;
-
-    public implicit operator Role(string value) => new(value);
 }
 
 public readonly struct StringList(List<string> value)
@@ -105,6 +99,11 @@ public class Organization
 {
     public string Name { get; init; }
     public List<Department> Departments { get; init; }
+}
+
+public readonly record struct Role(string Value)
+{
+    public static bool IsValid(string value) => value == "admin" || value == "editor" || value == "viewer";
 }
 
 public class Scores
