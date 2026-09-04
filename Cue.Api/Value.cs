@@ -296,8 +296,9 @@ public sealed unsafe class Value : IDisposable
                 throw new OverflowException();
             default:
             {
-                var bytes = new ReadOnlySpan<byte>(result.mantissa, checked((int)result.mantissa_len));
-                return new CueFloat(new BigInteger(bytes, isUnsigned: true, isBigEndian: true), result.exponent);
+                var bytes = new ReadOnlySpan<byte>((byte*)result.mantissa, checked((int)result.mantissa_len));
+                var mantissa = new BigInteger(bytes, isUnsigned: true, isBigEndian: true);
+                return new CueFloat(result.sign ? -mantissa : mantissa, result.exponent);
             }
         }
     }

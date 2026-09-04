@@ -9,6 +9,32 @@ using System.Text.Json;
 
 namespace Cue.Generator;
 
+public static class BigIntegerExtensions
+{
+    /// <summary>
+    /// BigInteger.Pow variant that supports negative exponents
+    /// </summary>
+    /// <param name="mantissa">The number to raise to the exponent power.</param>
+    /// <param name="exponent">The result of raising value to the exponent power.</param>
+    /// <exception cref="InvalidDataException">resulting value is not whole, or exponent is not an int32</exception>
+    public static BigInteger Pow(this BigInteger mantissa, long exponent)
+    {
+        switch (exponent)
+        {
+            case > int.MaxValue or < int.MinValue:
+                throw new InvalidDataException("exponent is not an int32");
+            case >= 0:
+                return BigInteger.Pow(mantissa, (int) exponent);
+        }
+
+        var divisor = BigInteger.One << (int)-exponent;
+        var (quotient, remainder) = BigInteger.DivRem(mantissa, divisor);
+        return remainder == BigInteger.Zero
+            ? quotient
+            : throw new InvalidDataException("CUE integer has a fractional binary representation.");
+    }
+}
+
 public class CueExprVisitor
 {
     private static string FormatExpr(Value value)
@@ -149,7 +175,7 @@ public class CueExprVisitor
 
         return value.IncompleteKind() switch
         {
-            Kind.Int when value.GetFloat() is var (m, exp) => new CueIntegerExpr(BigInteger.Pow(m, (int)exp)),
+            Kind.Int when value.GetFloat() is var (m, exp) => new CueIntegerExpr(m.Pow(exp)),
             Kind.Float when value.GetFloat() is var (m, exp) => new CueFloatExpr(new BigDecimal(m, (int)exp)),
             Kind.String => new CueStringExpr(JsonSerializer.Deserialize<string>(value.GetJson())!),
             Kind.Bool => new CueBoolExpr(value.GetJson() == "true"),

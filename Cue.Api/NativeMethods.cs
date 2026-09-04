@@ -244,7 +244,8 @@ internal unsafe struct cue_expr_result
 internal unsafe struct cue_float
 {
     public nuint mantissa_len;
-    public int exponent;
+    public long exponent;
+    [MarshalAs(UnmanagedType.I1)]
     public bool sign;
-    public nuint* mantissa;
+    public bool* mantissa;
 }

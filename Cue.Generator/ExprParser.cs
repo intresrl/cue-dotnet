@@ -164,12 +164,12 @@ public static class NumberBoundExtensions
     {
         return logical.Operator switch
         {
-            CueLogicalExpr.Op.And => logical.Values
+            CueLogicalExpr.Op.And or CueLogicalExpr.Op.Conjunction => logical.Values
                 .Select(AnalyzeExpr)
                 .Aggregate(
                     ExprBounds.Unknown,
                     static (current, bounds) => Intersect(current, bounds)),
-            CueLogicalExpr.Op.Or => logical.Values
+            CueLogicalExpr.Op.Or or CueLogicalExpr.Op.Disjunction => logical.Values
                 .Select(AnalyzeExpr)
                 .Where(static x => x.IsKnown)
                 .Aggregate<ExprBounds, ExprBounds?>(

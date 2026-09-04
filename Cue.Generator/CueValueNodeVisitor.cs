@@ -33,7 +33,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
     }
 
 
-    public static IEnumerable<CueValueNode> VisitRoot(Value value, TextWriter? debug)
+    public static IEnumerable<CueValueNode> VisitRoot(Value value, TextWriter? debug = null)
     {
         var definitions = value.Fields(new EvalOption.Definitions(true));
 
