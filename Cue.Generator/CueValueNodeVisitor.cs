@@ -1,3 +1,4 @@
+using System.Numerics;
 using Cuelang.Cue;
 
 namespace Cue.Generator;
@@ -82,9 +83,9 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 
         _definedPaths.Add(value.Path());
         
-        if (value.Expr().Op == ExprOp.Selector)
+        if (value.Expr() is { Op: ExprOp.Selector, Values: [_, { } schemaValue] } && schemaValue.Kind() == Kind.String)
         {
-            return new CueDefinitionReference(value.Path());
+            return new CueDefinitionReference(schemaValue.GetString()!);
         }
 
         var kind = value.IncompleteKind();
@@ -186,8 +187,10 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
     {
         var path = value.Path();
         var count = GetConcreteElementCount(value);
+        
+        writer?.WriteLine($"{path} list concrete length: {count}");
 
-        var elements = Enumerable.Range(0, (int)count)
+        var elements = Enumerable.Range(0, count)
             .Select(index =>
             {
                 using var element = value.Lookup($"[{index}]");
@@ -208,7 +211,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
         return new CueListValue(path, anyIndex is { } v ? Visit(v) : null, elements);
     }
 
-    private static long GetConcreteElementCount(Value value)
+    private static int GetConcreteElementCount(Value value)
     {
         using var len = value.Len();
 
@@ -219,13 +222,15 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer)
 
         if (len.IsConcrete())
         {
-            return len.GetLong();
+            return (int) len.GetLong();
         }
 
         try
         {
-            var lb = len.LowerBound();
-            return (int) lb!.Value;
+            var exprVisitor = new CueExprVisitor();
+            var expr = exprVisitor.Visit(len);
+            var lb = expr.Bounds().Lower ?? BigInteger.Zero;
+            return (int) lb;
         }
         finally
         {

@@ -97,6 +97,11 @@ public sealed record CueLogicalExpr : CueExpr
         op = Operator;
         values = Values;
     }
+
+    public override string ToString()
+    {
+        return $"{nameof(Operator)}: {Operator}, {nameof(Values)}: [{string.Join(",\n", Values)}]";
+    }
 }
 
 public sealed record CueSelectorExpr(CueExpr Target, string Field, string Path) : CueExpr;

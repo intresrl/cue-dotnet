@@ -1,0 +1,19 @@
+DEBUG LIST LENGTH plainString: "this top-level property should be ignored"
+DEBUG LIST LENGTH plainInt: 123
+DEBUG LIST LENGTH plainBool: true
+DEBUG LIST LENGTH plainStruct: {"name":"ignored"}
+DEBUG LIST LENGTH plainStruct.name: "ignored"
+DEBUG LIST LENGTH plainList: ["ignored","also ignored"]
+plainList list concrete length: 2
+DEBUG LIST LENGTH plainList[0]: "ignored"
+DEBUG LIST LENGTH plainList[1]: "also ignored"
+DEBUG LIST LENGTH #ConvertedString: (No ???<#ConvertedString: String>)
+DEBUG LIST LENGTH #ConvertedPerson: ???<#ConvertedPerson: Struct>
+DEBUG LIST LENGTH #ConvertedPerson.name: (No ???<#ConvertedPerson.name: String>)
+DEBUG LIST LENGTH #ConvertedPerson.age: (No ???<#ConvertedPerson.age: Int>)
+DEBUG LIST LENGTH #ConvertedList: []
+#ConvertedList list concrete length: 0
+DEBUG LIST LENGTH #ConvertedList.[_]: (No ???<#ConvertedList.[_]: String>)
+DEBUG LIST LENGTH #ConvertedSettings: ???<#ConvertedSettings: Struct>
+DEBUG LIST LENGTH #ConvertedSettings.enabled: (No ???<#ConvertedSettings.enabled: Bool>)
+DEBUG LIST LENGTH #ConvertedSettings.mode: (Or "simple" "advanced")

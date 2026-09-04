@@ -19,6 +19,11 @@ public static class BigIntegerExtensions
     /// <exception cref="InvalidDataException">resulting value is not whole, or exponent is not an int32</exception>
     public static BigInteger Pow(this BigInteger mantissa, long exponent)
     {
+        if (mantissa == BigInteger.Zero)
+        {
+            return BigInteger.Zero;
+        }
+
         switch (exponent)
         {
             case > int.MaxValue or < int.MinValue:
@@ -173,7 +178,7 @@ public class CueExprVisitor
                 : new CueUnknownExpr();
         }
 
-        return value.IncompleteKind() switch
+        return value.Kind() switch
         {
             Kind.Int when value.GetFloat() is var (m, exp) => new CueIntegerExpr(m.Pow(exp)),
             Kind.Float when value.GetFloat() is var (m, exp) => new CueFloatExpr(new BigDecimal(m, (int)exp)),

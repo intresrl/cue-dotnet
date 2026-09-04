@@ -1,0 +1,15 @@
+DEBUG LIST LENGTH #DateTimeMessage: ???<#DateTimeMessage: Struct>
+DEBUG LIST LENGTH #DateTimeMessage.type: "datetime"
+DEBUG LIST LENGTH #DateTimeMessage.format: (No ???<#DateTimeMessage.format: String>)
+DEBUG LIST LENGTH #DateTimeMessage.timezone: (No ???<#DateTimeMessage.timezone: String>)
+DEBUG LIST LENGTH #TextMessage: ???<#TextMessage: Struct>
+DEBUG LIST LENGTH #TextMessage.type: "text"
+DEBUG LIST LENGTH #TextMessage.maxLength: (No ???<#TextMessage.maxLength: Int>)
+DEBUG LIST LENGTH #TextMessage.pattern: (No ???<#TextMessage.pattern: String>)
+DEBUG LIST LENGTH #Message: ???<#Message: Struct>
+DEBUG LIST LENGTH #Message.matchNMessage: (Call<$matchN> 1 ???<#Message.matchNMessage: List>)
+DEBUG LIST LENGTH #Message.matchNMessage[0]: (Selector ???<#Message.matchNMessage[0]: Struct> "#DateTimeMessage")
+DEBUG LIST LENGTH #Message.matchNMessage[1]: (Selector ???<#Message.matchNMessage[1]: Struct> "#TextMessage")
+DEBUG LIST LENGTH #Message.simpleOrMessage: (Or (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage") (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage"))
+DEBUG LIST LENGTH #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage")
+DEBUG LIST LENGTH #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage")

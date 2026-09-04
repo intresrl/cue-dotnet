@@ -118,6 +118,14 @@ dotnet run --project Cue.Generator -- Examples/simple.cue generated.cs
 
 An optional debug output path can be supplied via the `--debug` parameter.
 
+To regenerate every example, use the shell script from the repository
+root. It discovers all `.cue` files beneath `Examples` automatically and writes
+the corresponding `.cs` and `.debug.log` files alongside each schema:
+
+```shell
+bash ./run-generator-examples.sh
+```
+
 ### Generator concepts
 
 The current implementation and tests cover CUE concepts including:

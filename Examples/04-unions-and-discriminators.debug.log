@@ -1,0 +1,65 @@
+DEBUG LIST LENGTH #StringOrInteger: ???<#StringOrInteger: Struct>
+DEBUG LIST LENGTH #StringOrInteger.value: (Or (No ???<#StringOrInteger.value: String>) (No ???<#StringOrInteger.value: Int>))
+DEBUG LIST LENGTH #StringOrInteger.value: (No ???<#StringOrInteger.value: String>)
+DEBUG LIST LENGTH #StringOrInteger.value: (No ???<#StringOrInteger.value: Int>)
+DEBUG LIST LENGTH #EmailContact: ???<#EmailContact: Struct>
+DEBUG LIST LENGTH #EmailContact.address: (No ???<#EmailContact.address: String>)
+DEBUG LIST LENGTH #PhoneContact: ???<#PhoneContact: Struct>
+DEBUG LIST LENGTH #PhoneContact.number: (No ???<#PhoneContact.number: String>)
+DEBUG LIST LENGTH #Contact: ???<#Contact: Struct>
+DEBUG LIST LENGTH #Contact.value: (Or (Selector ???<#Contact.value: Struct> "#EmailContact") (Selector ???<#Contact.value: Struct> "#PhoneContact"))
+DEBUG LIST LENGTH #Contact.value: (Selector ???<#Contact.value: Struct> "#EmailContact")
+DEBUG LIST LENGTH #Contact.value: (Selector ???<#Contact.value: Struct> "#PhoneContact")
+DEBUG LIST LENGTH #Cat: ???<#Cat: Struct>
+DEBUG LIST LENGTH #Cat.type: "cat"
+DEBUG LIST LENGTH #Cat.name: (No ???<#Cat.name: String>)
+DEBUG LIST LENGTH #Cat.lives: (No ???<#Cat.lives: Int>)
+DEBUG LIST LENGTH #Dog: ???<#Dog: Struct>
+DEBUG LIST LENGTH #Dog.type: "dog"
+DEBUG LIST LENGTH #Dog.name: (No ???<#Dog.name: String>)
+DEBUG LIST LENGTH #Dog.breed: (No ???<#Dog.breed: String>)
+DEBUG LIST LENGTH #Bird: ???<#Bird: Struct>
+DEBUG LIST LENGTH #Bird.type: "bird"
+DEBUG LIST LENGTH #Bird.name: (No ???<#Bird.name: String>)
+DEBUG LIST LENGTH #Bird.canFly: (No ???<#Bird.canFly: Bool>)
+DEBUG LIST LENGTH #Pet: ???<#Pet: Struct>
+DEBUG LIST LENGTH #Pet.value: (Or (Selector ???<#Pet.value: Struct> "#Cat") (Selector ???<#Pet.value: Struct> "#Dog") (Selector ???<#Pet.value: Struct> "#Bird"))
+DEBUG LIST LENGTH #Pet.value: (Selector ???<#Pet.value: Struct> "#Cat")
+DEBUG LIST LENGTH #Pet.value: (Selector ???<#Pet.value: Struct> "#Dog")
+DEBUG LIST LENGTH #Pet.value: (Selector ???<#Pet.value: Struct> "#Bird")
+DEBUG LIST LENGTH #CreatedEvent: ???<#CreatedEvent: Struct>
+DEBUG LIST LENGTH #CreatedEvent.status: "created"
+DEBUG LIST LENGTH #CreatedEvent.id: (No ???<#CreatedEvent.id: String>)
+DEBUG LIST LENGTH #DeletedEvent: ???<#DeletedEvent: Struct>
+DEBUG LIST LENGTH #DeletedEvent.status: "deleted"
+DEBUG LIST LENGTH #DeletedEvent.id: (No ???<#DeletedEvent.id: String>)
+DEBUG LIST LENGTH #Event: ???<#Event: Struct>
+DEBUG LIST LENGTH #Event.value: (Or (Selector ???<#Event.value: Struct> "#CreatedEvent") (Selector ???<#Event.value: Struct> "#DeletedEvent"))
+DEBUG LIST LENGTH #Event.value: (Selector ???<#Event.value: Struct> "#CreatedEvent")
+DEBUG LIST LENGTH #Event.value: (Selector ???<#Event.value: Struct> "#DeletedEvent")
+DEBUG LIST LENGTH #Circle: ???<#Circle: Struct>
+DEBUG LIST LENGTH #Circle.kind: "circle"
+DEBUG LIST LENGTH #Circle.radius: (No ???<#Circle.radius: Number>)
+DEBUG LIST LENGTH #Rectangle: ???<#Rectangle: Struct>
+DEBUG LIST LENGTH #Rectangle.kind: "rectangle"
+DEBUG LIST LENGTH #Rectangle.width: (No ???<#Rectangle.width: Number>)
+DEBUG LIST LENGTH #Rectangle.height: (No ???<#Rectangle.height: Number>)
+DEBUG LIST LENGTH #Drawing: ???<#Drawing: Struct>
+DEBUG LIST LENGTH #Drawing.name: (No ???<#Drawing.name: String>)
+DEBUG LIST LENGTH #Drawing.shape: (Or (Selector ???<#Drawing.shape: Struct> "#Circle") (Selector ???<#Drawing.shape: Struct> "#Rectangle"))
+DEBUG LIST LENGTH #Drawing.shape: (Selector ???<#Drawing.shape: Struct> "#Circle")
+DEBUG LIST LENGTH #Drawing.shape: (Selector ???<#Drawing.shape: Struct> "#Rectangle")
+DEBUG LIST LENGTH #Zoo: {"animals":[]}
+DEBUG LIST LENGTH #Zoo.animals: []
+#Zoo.animals list concrete length: 0
+DEBUG LIST LENGTH #Zoo.animals.[_]: (Or (Selector ???<#Zoo.animals.[_]: Struct> "#Cat") (Selector ???<#Zoo.animals.[_]: Struct> "#Dog") (Selector ???<#Zoo.animals.[_]: Struct> "#Bird"))
+DEBUG LIST LENGTH #Zoo.animals.[_]: (Selector ???<#Zoo.animals.[_]: Struct> "#Cat")
+DEBUG LIST LENGTH #Zoo.animals.[_]: (Selector ???<#Zoo.animals.[_]: Struct> "#Dog")
+DEBUG LIST LENGTH #Zoo.animals.[_]: (Selector ???<#Zoo.animals.[_]: Struct> "#Bird")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample: ???<#UnionsAndDiscriminatorsExample: Struct>
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.primitiveUnion: (Selector ???<#UnionsAndDiscriminatorsExample.primitiveUnion: Struct> "#StringOrInteger")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.contact: (Selector ???<#UnionsAndDiscriminatorsExample.contact: Struct> "#Contact")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.pet: (Selector ???<#UnionsAndDiscriminatorsExample.pet: Struct> "#Pet")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.event: (Selector ???<#UnionsAndDiscriminatorsExample.event: Struct> "#Event")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.drawing: (Selector ???<#UnionsAndDiscriminatorsExample.drawing: Struct> "#Drawing")
+DEBUG LIST LENGTH #UnionsAndDiscriminatorsExample.zoo: (Selector ???<#UnionsAndDiscriminatorsExample.zoo: Struct> "#Zoo")
