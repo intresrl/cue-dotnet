@@ -65,7 +65,7 @@ public readonly record struct LiteralInt(byte Value)
 
 public readonly record struct LiteralNumber(BigDecimal Value)
 {
-    public static bool IsValid(BigDecimal value) => value == BigDecimal.Parse("3.14000000000000000009540979117872439019265584647655487060546875");
+    public static bool IsValid(BigDecimal value) => value == 3.139648M;
 }
 
 public readonly record struct LiteralString(string Value)

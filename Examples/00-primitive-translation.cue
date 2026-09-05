@@ -13,5 +13,7 @@
 #OutsideRange: <0 | >100
 #ByteLike: int & >=0 & <=255
 #Int16Like: int & >=-32768 & <=32767
+#VeryBigInteger: 123456789012345678901234567890
+#VeryBigDecimal: 123456789012345678901234567890.123456789
 #ExactString: "active"
 #ExactBool: true

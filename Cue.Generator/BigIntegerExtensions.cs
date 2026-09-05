@@ -8,7 +8,7 @@ public static class CueFloatExtensions
 {
     extension(CueFloat value)
     {
-        private (BigInteger whole, BigInteger? divisor) Components()
+        private (BigInteger whole, int? inverseTwoExponent) Components()
         {
             var (mantissa, twoExponent) = value;
         
@@ -21,7 +21,7 @@ public static class CueFloatExtensions
             {
                 > int.MaxValue or < int.MinValue => throw new InvalidDataException("exponent is not an int32"),
                 >= 0 => (mantissa << (int)twoExponent, null),
-                < 0 => (mantissa, BigInteger.One << (int)-twoExponent)
+                < 0 => (mantissa, (int)-twoExponent)
             };
         }
 
@@ -34,7 +34,7 @@ public static class CueFloatExtensions
                 return whole;
             }
         
-            var (quotient, remainder) = BigInteger.DivRem(whole, divisor.Value);
+            var (quotient, remainder) = BigInteger.DivRem(whole, BigInteger.One << divisor.Value);
             return remainder == BigInteger.Zero
                 ? quotient
                 : throw new InvalidDataException("CUE integer has a fractional binary representation.");
@@ -44,9 +44,16 @@ public static class CueFloatExtensions
         {
             var (whole, divisor) = value.Components();
 
-            return divisor != null
-                ? new BigDecimal(whole, 0) / divisor.Value
-                : whole;
+            if (divisor == null)
+            {
+                return whole;
+            }
+
+            var result = new BigDecimal(whole, 0) / (BigInteger.One << divisor.Value);
+            
+            // consider only number of significant digits in original mantissa
+            var wholeBase10Digits = (int) Math.Ceiling(whole.GetBitLength() * Math.Log10(2.0));
+            return BigDecimal.Truncate(result, divisor.Value - wholeBase10Digits);
         }
     }
 }

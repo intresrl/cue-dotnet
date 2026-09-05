@@ -73,3 +73,13 @@ public readonly record struct SmallInt(byte Value)
 {
     public static bool IsValid(byte value) => value >= 0 && value <= 100;
 }
+
+public readonly record struct VeryBigDecimal(BigDecimal Value)
+{
+    public static bool IsValid(BigDecimal value) => value == BigDecimal.Parse("123456789012345678901234567890.123456789");
+}
+
+public readonly record struct VeryBigInteger(BigInteger Value)
+{
+    public static bool IsValid(BigInteger value) => value == BigInteger.Parse("123456789012345678901234567890");
+}
