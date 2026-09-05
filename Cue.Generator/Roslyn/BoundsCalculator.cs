@@ -40,14 +40,14 @@ public static class NumberBoundExtensions
         return typeof(BigInteger);
     }
 
-    public static string GetBoundsType(CueExpr? constraint)
+    public static Type GetBoundsType(CueExpr? constraint)
     {
         var (lower, upper) = ExtractBounds(constraint);
 
         // If we have no bounds, default to BigInteger
         if (lower == null && upper == null)
         {
-            return "BigInteger";
+            return typeof(BigInteger);
         }
 
         // Find the tightest type that can hold both bounds
@@ -55,7 +55,7 @@ public static class NumberBoundExtensions
         var upperType = upper != null ? TypeFor(upper.Value) : typeof(BigInteger);
 
         // Use the "larger" type if they differ
-        return GetLargerType(lowerType, upperType).Name;
+        return GetLargerType(lowerType, upperType);
     }
 
     private static (BigInteger? lower, BigInteger? upper) ExtractBounds(CueExpr? constraint)

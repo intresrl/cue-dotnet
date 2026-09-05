@@ -41,7 +41,7 @@ public readonly record struct PlainBool(bool Value)
 
 public readonly record struct PlainInt(byte Value)
 {
-    public static bool IsValid(byte value) => value == 123L;
+    public static bool IsValid(byte value) => value == 123;
 }
 
 public readonly record struct PlainString(string Value)

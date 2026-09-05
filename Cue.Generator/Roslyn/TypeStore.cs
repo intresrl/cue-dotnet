@@ -1,3 +1,6 @@
+using System.Numerics;
+using ExtendedNumerics;
+
 namespace Cue.Generator.Roslyn;
 
 public sealed record DisjunctionDefinition(string DisjunctionPath, string[] BranchPaths);
@@ -12,7 +15,7 @@ public interface ITypeStore
     IEnumerable<ConcreteDefinition> GetConcreteDefinitions();
     IEnumerable<ContainerDefinition> GetContainerDefinitions();
     CueExpr? GetConstraint(string typePath);
-    string? GetValueType(string typePath);
+    Type? GetValueType(string typePath);
 }
 
 public class TypeStore : ITypeStore
@@ -20,7 +23,7 @@ public class TypeStore : ITypeStore
     private CollectionResult _collectionResult = new([], [], []);
     private readonly Dictionary<string, CueValueNode> _concreteTypes = [];
     private readonly Dictionary<string, CueExpr> _constraints = [];
-    private readonly Dictionary<string, string> _valueTypes = [];
+    private readonly Dictionary<string, Type?> _valueTypes = [];
 
     public void Collect(IEnumerable<CueValueNode> nodes)
     {
@@ -36,10 +39,10 @@ public class TypeStore : ITypeStore
             var (constraint, type) = value switch
             {
                 CueIntValue { Constraint: { } c } => (c, NumberBoundExtensions.GetBoundsType(c)),
-                CueNumberValue => (null, "BigInteger"),
-                CueFloatValue { Constraint: var c } => (c, "BigDecimal"),
-                CueStringValue { Constraint: var c } => (c, "string"),
-                CueBoolValue { Constraint: var c } => (c, "bool"),
+                CueNumberValue => (null, typeof(BigInteger)),
+                CueFloatValue { Constraint: var c } => (c, typeof(BigDecimal)),
+                CueStringValue { Constraint: var c } => (c, typeof(string)),
+                CueBoolValue { Constraint: var c } => (c, typeof(bool)),
                 _ => (null, null)
             };
 
@@ -118,7 +121,7 @@ public class TypeStore : ITypeStore
 
     public CueExpr? GetConstraint(string typePath) => _constraints.GetValueOrDefault(typePath);
 
-    public string? GetValueType(string typePath) => _valueTypes.GetValueOrDefault(typePath);
+    public Type? GetValueType(string typePath) => _valueTypes.GetValueOrDefault(typePath);
 
     public IEnumerable<ConcreteDefinition> GetConcreteDefinitions()
     {

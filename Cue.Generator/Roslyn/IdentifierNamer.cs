@@ -8,7 +8,7 @@ public interface IIdentifierNamer
     string Identifier(string name);
 }
 
-public partial class IdentifierNamer : IIdentifierNamer
+public class IdentifierNamer : IIdentifierNamer
 {
     private static int _anonymousIndex = 1;
 

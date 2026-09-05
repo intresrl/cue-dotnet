@@ -12,22 +12,22 @@ namespace Cue.Generator.Roslyn;
 
 public static class ConstraintCodeGenerator
 {
-    public static ExpressionSyntax GenerateValidationExpression(CueExpr? constraint, string paramName, string valueType)
+    public static ExpressionSyntax GenerateValidationExpression(CueExpr? constraint, string paramName, TypeSyntax valueType)
     {
         return constraint == null
             ? LiteralExpression(TrueLiteralExpression)
             : GenerateExpression(constraint, paramName, valueType);
     }
 
-    private static ExpressionSyntax GenerateExpression(CueExpr expr, string paramName, string valueType)
+    private static ExpressionSyntax GenerateExpression(CueExpr expr, string paramName, TypeSyntax valueType)
     {
         return expr switch
         {
             CueUnaryExpr unary => GenerateUnaryExpression(unary, paramName, valueType),
             CueBinaryExpr binary => GenerateBinaryExpression(binary, paramName, valueType),
             CueLogicalExpr logical => GenerateLogicalExpression(logical, paramName, valueType),
-            CueIntegerExpr integer => BinaryExpression(EqualsExpression, IdentifierName(paramName), CreateNumericLiteral(integer.Value, valueType)),
-            CueFloatExpr floatVal => BinaryExpression(EqualsExpression, IdentifierName(paramName), CreateDecimalLiteral(floatVal.Value, valueType)),
+            CueIntegerExpr integer => BinaryExpression(EqualsExpression, IdentifierName(paramName), CreateNumericLiteral(integer.Value)),
+            CueFloatExpr floatVal => BinaryExpression(EqualsExpression, IdentifierName(paramName), CreateDecimalLiteral(floatVal.Value)),
             CueStringExpr str => BinaryExpression(EqualsExpression, IdentifierName(paramName), LiteralExpression(StringLiteralExpression, Literal(str.Value))),
             CueBoolExpr { Value: true } => BinaryExpression(EqualsExpression, IdentifierName(paramName), LiteralExpression(TrueLiteralExpression)),
             CueBoolExpr { Value: false } => BinaryExpression(NotEqualsExpression, IdentifierName(paramName), LiteralExpression(FalseLiteralExpression)),
@@ -35,7 +35,7 @@ public static class ConstraintCodeGenerator
         };
     }
 
-    private static ExpressionSyntax GenerateUnaryExpression(CueUnaryExpr expr, string paramName, string valueType)
+    private static ExpressionSyntax GenerateUnaryExpression(CueUnaryExpr expr, string paramName, TypeSyntax valueType)
     {
         if (expr.Operator == UnaryOp.Not)
         {
@@ -59,105 +59,75 @@ public static class ConstraintCodeGenerator
         };
 
         return syntaxKind is { } k
-            ? BinaryExpression(k, IdentifierName(paramName), GenerateValueExpression(expr.Operand, valueType))
+            ? BinaryExpression(k, IdentifierName(paramName), GenerateValueExpression(expr.Operand))
             : GenerateExpression(expr.Operand, paramName, valueType);
     }
 
-    private static ExpressionSyntax GenerateValueExpression(CueExpr expr, string valueType)
+    private static ExpressionSyntax GenerateValueExpression(CueExpr expr)
     {
         return expr switch
         {
-            CueIntegerExpr integer => CreateNumericLiteral(integer.Value, valueType),
-            CueFloatExpr floatVal => CreateDecimalLiteral(floatVal.Value, valueType),
+            CueIntegerExpr integer => CreateNumericLiteral(integer.Value),
+            CueFloatExpr floatVal => CreateDecimalLiteral(floatVal.Value),
             CueStringExpr str => LiteralExpression(StringLiteralExpression, Literal(str.Value)),
             CueBoolExpr boolVal => LiteralExpression(boolVal.Value ? TrueLiteralExpression : FalseLiteralExpression),
-            CueUnaryExpr { Operator: UnaryOp.Minus } unary => GenerateNegatedExpression(GenerateValueExpression(unary.Operand, valueType)),
+            CueUnaryExpr { Operator: UnaryOp.Minus } unary => GenerateNegatedExpression(GenerateValueExpression(unary.Operand)),
             _ => LiteralExpression(NumericLiteralExpression, Literal(0))
         };
     }
 
-    /// <summary>
-    /// Renders an integer literal as the given CLR <paramref name="valueType"/> so the generated
-    /// comparison compiles and the value is preserved exactly, regardless of magnitude:
-    /// values that fit in <see cref="long"/>/<see cref="ulong"/> are emitted as suffixed integer
-    /// literals, and larger values are emitted as <c>BigInteger.Parse("...")</c> using the exact
-    /// decimal digits (no value is ever silently truncated).
-    /// </summary>
-    private static ExpressionSyntax CreateNumericLiteral(BigInteger value, string valueType)
+    private static ExpressionSyntax CreateNumericLiteral(BigInteger value)
     {
-        if (valueType is "BigInteger" && (value < long.MinValue || value > long.MaxValue))
+        var literalType = NumberBoundExtensions.TypeFor(value);
+
+        if (literalType == typeof(BigInteger))
         {
-            // Outside long range: parse from the exact decimal string so no precision is lost,
-            // e.g. `BigInteger.Parse("123456789012345678901234567890")`.
             return InvocationExpression(
-                ParseName("System.Numerics.BigInteger.Parse"),
+                ParseName("BigInteger.Parse"),
                 ArgumentList(SingletonSeparatedList(
                     Argument(LiteralExpression(StringLiteralExpression, Literal(value.ToString()))))));
         }
 
-        // Within long/ulong range: an ordinary suffixed integer literal round-trips exactly and
-        // implicitly converts to any narrower integral CLR type (byte, short, int, etc.).
-        return value > long.MaxValue
-            ? LiteralExpression(NumericLiteralExpression, Literal((ulong)value))
-            : LiteralExpression(NumericLiteralExpression, Literal((long)value));
-    }
-
-    /// <summary>
-    /// Renders a float/number literal as the given CLR <paramref name="valueType"/> so the
-    /// generated comparison compiles (e.g. a `double` field can't be compared against a
-    /// `decimal` literal) and the value is preserved exactly wherever the target type allows it:
-    /// values that don't fit in the target type exactly are emitted as a `.Parse("...")` call
-    /// using the exact decimal digits rather than silently rounding.
-    /// </summary>
-    private static ExpressionSyntax CreateDecimalLiteral(BigDecimal value, string valueType)
-    {
-        switch (valueType)
+        var literalValue = literalType switch
         {
-            case "float":
-                return LiteralExpression(NumericLiteralExpression, Literal((float)value));
-
-            case "double":
-                return LiteralExpression(NumericLiteralExpression, Literal((double)value));
-
-            case "decimal":
-                if (TryToExactDecimal(value, out var exact))
-                {
-                    return LiteralExpression(NumericLiteralExpression, Literal(exact));
-                }
-
-                // Outside decimal's range/precision: parse from the exact decimal string, e.g.
-                // `decimal.Parse("123456789012345678901234567890.123456789")`.
-                return InvocationExpression(
-                    ParseName("decimal.Parse"),
-                    ArgumentList(SingletonSeparatedList(
-                        Argument(LiteralExpression(StringLiteralExpression, Literal(value.ToString()))))));
-
-            default:
-                // BigDecimal (or any other/unknown numeric type): parse from the exact decimal
-                // string so the value is captured exactly regardless of magnitude or precision,
-                // e.g. `BigDecimal.Parse("123456789012345678901234567890.123456789")`.
-                return InvocationExpression(
-                    ParseName("ExtendedNumerics.BigDecimal.Parse"),
-                    ArgumentList(SingletonSeparatedList(
-                        Argument(LiteralExpression(StringLiteralExpression, Literal(value.ToString()))))));
-        }
+            _ when literalType == typeof(byte) => Literal((byte)value),
+            _ when literalType == typeof(sbyte) => Literal((sbyte)value),
+            _ when literalType == typeof(short) => Literal((short)value),
+            _ when literalType == typeof(ushort) => Literal((ushort)value),
+            _ when literalType == typeof(int) => Literal((int)value),
+            _ when literalType == typeof(uint) => Literal((uint)value),
+            _ when literalType == typeof(long) => Literal((long)value),
+            _ when literalType == typeof(ulong) => Literal((ulong)value),
+            _ => throw new InvalidCastException($"Cannot convert BigInteger to {literalType}")
+        };
+        
+        return LiteralExpression(NumericLiteralExpression, literalValue);
     }
 
-    private static bool TryToExactDecimal(BigDecimal value, out decimal exact)
+    private static ExpressionSyntax CreateDecimalLiteral(BigDecimal value)
+    {
+        return DecimalValue(value) is { } exact
+            ? LiteralExpression(NumericLiteralExpression, Literal(exact))
+            : InvocationExpression(
+                ParseName("BigDecimal.Parse"),
+                ArgumentList(SingletonSeparatedList(
+                    Argument(LiteralExpression(StringLiteralExpression, Literal(value.ToString()))))));
+    }
+
+    private static decimal? DecimalValue(BigDecimal value)
     {
         try
         {
-            exact = (decimal)value;
+            var exact = (decimal)value;
+            
+            // decimal has less precision than BigDecimal, so round-trip the conversion to make sure
+            // no digits were silently dropped before trusting it.
+            return new BigDecimal(exact) == value ? exact : null;
         }
         catch (OverflowException)
         {
-            exact = 0;
-            return false;
+            return null;
         }
-
-        // decimal has less precision than BigDecimal, so round-trip the conversion to make sure
-        // no digits were silently dropped before trusting it.
-        return new BigDecimal(exact) == value;
     }
 
     private static ExpressionSyntax GenerateNegatedExpression(ExpressionSyntax expr)
@@ -165,7 +135,7 @@ public static class ConstraintCodeGenerator
         return PrefixUnaryExpression(UnaryMinusExpression, expr);
     }
 
-    private static ExpressionSyntax GenerateBinaryExpression(CueBinaryExpr expr, string paramName, string valueType)
+    private static ExpressionSyntax GenerateBinaryExpression(CueBinaryExpr expr, string paramName, TypeSyntax valueType)
     {
         if (expr.Operator is BinaryOp.RegexMatch or BinaryOp.NotRegexMatch)
         {
@@ -192,7 +162,7 @@ public static class ConstraintCodeGenerator
 
     private static ExpressionSyntax GenerateRegexMatchExpression(CueExpr patternExpr, string paramName, bool negate)
     {
-        var patternArg = GenerateValueExpression(patternExpr, "string");
+        var patternArg = GenerateValueExpression(patternExpr);
 
         var isMatchCall = InvocationExpression(
             ParseName("System.Text.RegularExpressions.Regex.IsMatch"),
@@ -206,7 +176,7 @@ public static class ConstraintCodeGenerator
             : isMatchCall;
     }
 
-    private static ExpressionSyntax GenerateLogicalExpression(CueLogicalExpr expr, string paramName, string valueType)
+    private static ExpressionSyntax GenerateLogicalExpression(CueLogicalExpr expr, string paramName, TypeSyntax valueType)
     {
         var expressions = expr.Values.Select(v => GenerateExpression(v, paramName, valueType)).ToList();
 

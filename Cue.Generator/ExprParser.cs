@@ -11,41 +11,6 @@ public readonly record struct ExprBounds(BigInteger? Lower, BigInteger? Upper)
 
 public static class NumberBoundExtensions
 {
-    private static readonly (BigInteger Min, BigInteger Max, Type Type)[] NetBounds =
-    [
-        MinMaxValue<byte>(),
-        MinMaxValue<sbyte>(),
-        MinMaxValue<ushort>(),
-        MinMaxValue<short>(),
-        MinMaxValue<char>(),
-        MinMaxValue<uint>(),
-        MinMaxValue<int>(),
-        MinMaxValue<ulong>(),
-        MinMaxValue<long>(),
-        MinMaxValue<UInt128>(),
-        MinMaxValue<Int128>()
-    ];
-
-    private static (BigInteger, BigInteger, Type) MinMaxValue<T>()
-        where T : IMinMaxValue<T>
-        => (
-            BigInteger.Parse(T.MinValue.ToString()!),
-            BigInteger.Parse(T.MaxValue.ToString()!),
-            typeof(T));
-
-    public static Type TypeFor(BigInteger value)
-    {
-        foreach (var (min, max, type) in NetBounds)
-        {
-            if (min <= value && value <= max)
-            {
-                return type;
-            }
-        }
-
-        return typeof(BigInteger);
-    }
-
     extension(CueExpr expr)
     {
         public ExprBounds Bounds() => AnalyzeExpr(expr);

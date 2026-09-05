@@ -14,7 +14,9 @@
     <ItemGroup>
       <PackageReference Include="ExtendedNumerics.BigDecimal" Version="3003.2.0.161" />
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+      <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.9.2" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+      <PackageReference Include="System.CodeDom" Version="10.0.11" />
     </ItemGroup>
 
     <ItemGroup>

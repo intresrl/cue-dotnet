@@ -1,5 +1,6 @@
+using System.Numerics;
 using System.Reflection;
-using Cuelang.Cue;
+using ExtendedNumerics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,18 +16,29 @@ public interface IRoslynGenerator
 
 public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer) : IRoslynGenerator
 {
+    private static readonly UsingDirectiveSyntax[] DefaultUsings =
+    [
+        UsingDirective(ParseName("System")),
+        UsingDirective(ParseName("System.Collections.Generic")),
+        UsingDirective(ParseName("System.Numerics")),
+        UsingDirective(ParseName("ExtendedNumerics"))
+    ];
+    
+    private readonly Compilation _compilation = CSharpCompilation.Create(
+        "",
+        [CSharpSyntaxTree.Create(CompilationUnit().AddUsings(DefaultUsings))],
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(BigInteger).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(BigDecimal).Assembly.Location)
+        ]);
+    
     public string GenerateCode(IEnumerable<CueValueNode> root)
     {
         var roots = root.ToArray();
         typeStore.Collect(roots);
 
-        var usings = new List<UsingDirectiveSyntax>
-        {
-            UsingDirective(ParseName("System")),
-            UsingDirective(ParseName("System.Collections.Generic")),
-            UsingDirective(ParseName("System.Numerics")),
-            UsingDirective(ParseName("ExtendedNumerics"))
-        };
+        var usings = DefaultUsings.ToList();
         var members = new List<MemberDeclarationSyntax>();
 
         if (roots.Any(ContainsMixedList))
@@ -96,38 +108,37 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         };
     }
 
+    private TypeSyntax GetTypeSymbol(string typePath)
+    {
+        var type = typeStore.GetValueType(typePath) ?? typeof(object);
+        var symbol = type.FullName != null ? _compilation.GetTypeByMetadataName(type.FullName) : null;
+        
+        var name = symbol?.ToDisplayString(
+                       SymbolDisplayFormat.MinimallyQualifiedFormat
+                           .WithMiscellaneousOptions(
+                               SymbolDisplayFormat.MinimallyQualifiedFormat.MiscellaneousOptions |
+                               SymbolDisplayMiscellaneousOptions.UseSpecialTypes))
+                   ?? type.Name;
+
+        return ParseTypeName(name);
+    }
+
     private StructDeclarationSyntax CreatePrimitiveTypeDefinition(string typePath, CueExpr? constraint)
     {
-        var valueType = GetValueTypeForPath(typePath);
+        var name = GetTypeSymbol(typePath);
         return StructDeclaration(namer.TypeName(typePath, NamingKind.Type))
             .AddModifiers(Token(PublicKeyword), Token(ReadOnlyKeyword), Token(RecordKeyword))
             .WithParameterList(ParameterList(SingletonSeparatedList(
-                Parameter(Identifier("Value")).WithType(ParseTypeName(valueType)))))
-            .AddMembers(CreateIsValidMethod(valueType, constraint));
+                Parameter(Identifier("Value")).WithType(name))))
+            .AddMembers(CreateIsValidMethod(name, constraint));
     }
 
-    private string GetValueTypeForPath(string typePath) => typeStore.GetValueType(typePath) switch
-    {
-        "Byte" => "byte",
-        "SByte" => "sbyte",
-        "UInt16" => "ushort",
-        "Int16" => "short",
-        "UInt32" => "uint",
-        "Int32" => "int",
-        "UInt64" => "ulong",
-        "Int64" => "long",
-        "Single" => "float",
-        "Double" => "double",
-        null => "object",
-        var valueType => valueType
-    };
-
-    private static MethodDeclarationSyntax CreateIsValidMethod(string valueType, CueExpr? constraint)
+    private static MethodDeclarationSyntax CreateIsValidMethod(TypeSyntax valueType, CueExpr? constraint)
     {
         var expression = ConstraintCodeGenerator.GenerateValidationExpression(constraint, "value", valueType);
         return MethodDeclaration(PredefinedType(Token(BoolKeyword)), "IsValid")
             .AddModifiers(Token(PublicKeyword), Token(StaticKeyword))
-            .AddParameterListParameters(Parameter(Identifier("value")).WithType(ParseTypeName(valueType)))
+            .AddParameterListParameters(Parameter(Identifier("value")).WithType(valueType))
             .WithExpressionBody(ArrowExpressionClause(expression))
             .WithSemicolonToken(Token(SemicolonToken));
     }
@@ -135,8 +146,8 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     private MemberDeclarationSyntax CreateDisjunction(DisjunctionDefinition definition)
     {
         var className = namer.TypeName(definition.DisjunctionPath, NamingKind.Disjunction);
-        var branchRecords = definition.BranchPaths.Select(branchPath =>
-            (MemberDeclarationSyntax)RecordDeclaration(
+        var branchRecords = definition.BranchPaths.Select(MemberDeclarationSyntax (branchPath) =>
+            RecordDeclaration(
                 default,
                 TokenList(Token(PublicKeyword)),
                 Token(RecordKeyword),

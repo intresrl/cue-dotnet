@@ -20,7 +20,7 @@ public readonly record struct AnyString(string Value)
 
 public readonly record struct BoundedInt(byte Value)
 {
-    public static bool IsValid(byte value) => true && value >= 1L && value <= 10L;
+    public static bool IsValid(byte value) => true && value >= 1 && value <= 10;
 }
 
 public class ConcreteValues
@@ -59,12 +59,12 @@ public readonly record struct LiteralBool(bool Value)
 
 public readonly record struct LiteralInt(byte Value)
 {
-    public static bool IsValid(byte value) => value == 42L;
+    public static bool IsValid(byte value) => value == 42;
 }
 
 public readonly record struct LiteralNumber(BigDecimal Value)
 {
-    public static bool IsValid(BigDecimal value) => value == ExtendedNumerics.BigDecimal.Parse("3.14000000000000000009540979117872439019265584647655487060546875");
+    public static bool IsValid(BigDecimal value) => value == BigDecimal.Parse("3.14000000000000000009540979117872439019265584647655487060546875");
 }
 
 public readonly record struct LiteralString(string Value)
@@ -87,7 +87,7 @@ public class OptionalAndNullable
 
 public readonly record struct PositiveInt(BigInteger Value)
 {
-    public static bool IsValid(BigInteger value) => true && value > 0L;
+    public static bool IsValid(BigInteger value) => true && value > 0;
 }
 
 public class PrimitiveTypes
@@ -100,7 +100,7 @@ public class PrimitiveTypes
 
 public readonly record struct Priority(byte Value)
 {
-    public static bool IsValid(byte value) => value == 1L || value == 2L || value == 3L;
+    public static bool IsValid(byte value) => value == 1 || value == 2 || value == 3;
 }
 
 public readonly record struct Status(string Value)

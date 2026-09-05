@@ -66,12 +66,12 @@ public readonly record struct BoundRegexNotMatch(string Value)
 
 public readonly record struct Default(byte Value)
 {
-    public static bool IsValid(byte value) => value == 1L || value == 2L;
+    public static bool IsValid(byte value) => value == 1 || value == 2;
 }
 
 public readonly record struct Unify(BigInteger Value)
 {
-    public static bool IsValid(BigInteger value) => true && value >= 0L;
+    public static bool IsValid(BigInteger value) => true && value >= 0;
 }
 
 public readonly record struct B(bool Value)
