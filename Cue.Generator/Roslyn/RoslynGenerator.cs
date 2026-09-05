@@ -21,7 +21,8 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         UsingDirective(ParseName("System")),
         UsingDirective(ParseName("System.Collections.Generic")),
         UsingDirective(ParseName("System.Numerics")),
-        UsingDirective(ParseName("ExtendedNumerics"))
+        UsingDirective(ParseName("ExtendedNumerics")),
+        UsingDirective(ParseName("System.Text.RegularExpressions"))
     ];
     
     private readonly Compilation _compilation = CSharpCompilation.Create(

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ExtendedNumerics;
+using System.Text.RegularExpressions;
 
 public readonly struct ConvertedList(List<ConvertedString> value)
 {

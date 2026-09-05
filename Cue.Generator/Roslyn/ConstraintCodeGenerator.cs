@@ -1,5 +1,6 @@
 using System.Numerics;
 using ExtendedNumerics;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -165,11 +166,8 @@ public static class ConstraintCodeGenerator
         var patternArg = GenerateValueExpression(patternExpr);
 
         var isMatchCall = InvocationExpression(
-            ParseName("System.Text.RegularExpressions.Regex.IsMatch"),
-            ArgumentList(SeparatedList([
-                Argument(IdentifierName(paramName)),
-                Argument(patternArg)
-            ])));
+            ParseName("Regex.IsMatch"),
+            ArgumentList(SeparatedList([Argument(IdentifierName(paramName)), Argument(patternArg)])));
 
         return negate
             ? PrefixUnaryExpression(LogicalNotExpression, isMatchCall)
@@ -178,7 +176,15 @@ public static class ConstraintCodeGenerator
 
     private static ExpressionSyntax GenerateLogicalExpression(CueLogicalExpr expr, string paramName, TypeSyntax valueType)
     {
-        var expressions = expr.Values.Select(v => GenerateExpression(v, paramName, valueType)).ToList();
+        // remove neutral elements
+        var neutralElement = expr.Operator is LogicalOp.And or LogicalOp.Conjunction
+            ? TrueLiteralExpression
+            : FalseLiteralExpression;
+
+        var valuesNoNeutral = expr.Values
+            .Select(v => GenerateExpression(v, paramName, valueType))
+            .Where(v => !v.IsKind(neutralElement))
+            .ToList();
 
         var syntaxKind = expr.Operator switch
         {
@@ -186,15 +192,13 @@ public static class ConstraintCodeGenerator
             LogicalOp.Conjunction => LogicalAndExpression,
             LogicalOp.Or => LogicalOrExpression,
             LogicalOp.Disjunction => LogicalOrExpression,
-            _ => LogicalAndExpression
+            _ => throw new InvalidOperationException("Unknown logical operator")
         };
 
-        var result = expressions[0];
-        for (var i = 1; i < expressions.Count; i++)
-        {
-            result = BinaryExpression(syntaxKind, result, expressions[i]);
-        }
-
-        return result;
+        return valuesNoNeutral.FirstOrDefault() is { } first
+            ? valuesNoNeutral
+                .Skip(1)
+                .Aggregate(first, (acc, e) => BinaryExpression(syntaxKind, acc, e))
+            : LiteralExpression(neutralElement);
     }
 }

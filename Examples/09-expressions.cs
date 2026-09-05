@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ExtendedNumerics;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 public sealed class CueList<TConcrete, TAnyIndex>
@@ -56,12 +57,12 @@ public interface OrBase
 
 public readonly record struct BoundRegexMatch(string Value)
 {
-    public static bool IsValid(string value) => System.Text.RegularExpressions.Regex.IsMatch(value, "^x");
+    public static bool IsValid(string value) => Regex.IsMatch(value, "^x");
 }
 
 public readonly record struct BoundRegexNotMatch(string Value)
 {
-    public static bool IsValid(string value) => !System.Text.RegularExpressions.Regex.IsMatch(value, "^x");
+    public static bool IsValid(string value) => !Regex.IsMatch(value, "^x");
 }
 
 public readonly record struct Default(byte Value)
@@ -71,7 +72,7 @@ public readonly record struct Default(byte Value)
 
 public readonly record struct Unify(BigInteger Value)
 {
-    public static bool IsValid(BigInteger value) => true && value >= 0;
+    public static bool IsValid(BigInteger value) => value >= 0;
 }
 
 public readonly record struct B(bool Value)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ExtendedNumerics;
+using System.Text.RegularExpressions;
 
 public readonly record struct AnyBool(bool Value)
 {
@@ -20,7 +21,7 @@ public readonly record struct AnyString(string Value)
 
 public readonly record struct BoundedInt(byte Value)
 {
-    public static bool IsValid(byte value) => true && value >= 1 && value <= 10;
+    public static bool IsValid(byte value) => value >= 1 && value <= 10;
 }
 
 public class ConcreteValues
@@ -49,7 +50,7 @@ public class CoreTypesExample
 
 public readonly record struct EmailString(string Value)
 {
-    public static bool IsValid(string value) => true && System.Text.RegularExpressions.Regex.IsMatch(value, "^.+@.+$");
+    public static bool IsValid(string value) => Regex.IsMatch(value, "^.+@.+$");
 }
 
 public readonly record struct LiteralBool(bool Value)
@@ -74,7 +75,7 @@ public readonly record struct LiteralString(string Value)
 
 public readonly record struct NonEmptyString(string Value)
 {
-    public static bool IsValid(string value) => true && value != "";
+    public static bool IsValid(string value) => value != "";
 }
 
 public class OptionalAndNullable
@@ -87,7 +88,7 @@ public class OptionalAndNullable
 
 public readonly record struct PositiveInt(BigInteger Value)
 {
-    public static bool IsValid(BigInteger value) => true && value > 0;
+    public static bool IsValid(BigInteger value) => value > 0;
 }
 
 public class PrimitiveTypes
