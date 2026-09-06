@@ -11,7 +11,7 @@ namespace Cue.Generator.Roslyn;
 
 public interface IRoslynGenerator
 {
-    string GenerateCode(IEnumerable<CueValueNode> root);
+    string GenerateCode(IEnumerable<CueValueNode> root, string? @namespace = null);
 }
 
 public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer) : IRoslynGenerator
@@ -34,7 +34,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
             MetadataReference.CreateFromFile(typeof(BigDecimal).Assembly.Location)
         ]);
     
-    public string GenerateCode(IEnumerable<CueValueNode> root)
+    public string GenerateCode(IEnumerable<CueValueNode> root, string? @namespace = null)
     {
         var roots = root.ToArray();
         typeStore.Collect(roots);
@@ -59,9 +59,21 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
             .Where(member => member is not null)
             .Cast<MemberDeclarationSyntax>());
 
-        return CompilationUnit()
-            .AddUsings(usings.ToArray())
-            .AddMembers(members.ToArray())
+        var compilation = CompilationUnit()
+            .AddUsings(usings.ToArray());
+
+        if (@namespace != null)
+        {
+            var ns = NamespaceDeclaration(ParseName(@namespace))
+                .AddMembers(members.ToArray());
+            compilation = compilation.AddMembers(ns);
+        }
+        else
+        {
+            compilation = compilation.AddMembers(members.ToArray());
+        }
+
+        return compilation
             .NormalizeWhitespace()
             .ToFullString();
     }
@@ -266,7 +278,7 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
                     .WithInitializer(EqualsValueClause(IdentifierName("value")))
                     .WithSemicolonToken(Token(SemicolonToken)),
                 ConversionOperatorDeclaration(Token(ImplicitKeyword), IdentifierName(containerName))
-                    .AddModifiers(Token(PublicKeyword))
+                    .AddModifiers(Token(PublicKeyword), Token(StaticKeyword))
                     .WithParameterList(ParameterList(SingletonSeparatedList(
                         Parameter(Identifier("value")).WithType(typeSyntax))))
                     .WithExpressionBody(ArrowExpressionClause(

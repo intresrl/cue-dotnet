@@ -3,17 +3,19 @@ using Cue.Generator;
 using Cue.Generator.Roslyn;
 using Microsoft.Extensions.DependencyInjection;
 
-// Parse optional --debug flag
-var (input, output, debugOutputPath) = args switch
+// Parse optional arguments
+var (input, output, debugOutputPath, namespaceName) = args switch
 {
-    [var i, var o, "--debug", var d] => (i, o, d),
-    [var i, var o] => (i, o, null),
-    _ => (null, null, null)
+    [var i, var o, "--debug", var d, "--namespace", var ns] => (i, o, d, ns),
+    [var i, var o, "--namespace", var ns] => (i, o, null, ns),
+    [var i, var o, "--debug", var d] => (i, o, d, null),
+    [var i, var o] => (i, o, null, null),
+    _ => (null, null, null, null)
 };
 
 if (input is null || output is null)
 {
-    Console.WriteLine("Usage: dotnet run -- <input.cue> <output.cs> [--debug [debug-output-path]]");
+    Console.WriteLine("Usage: dotnet run -- <input.cue> <output.cs> [--debug [debug-output-path]] [--namespace <namespace>]");
     Console.WriteLine();
     Console.WriteLine("Arguments:");
     Console.WriteLine("  input.cue             Path to the CUE schema file to compile");
@@ -21,6 +23,7 @@ if (input is null || output is null)
     Console.WriteLine();
     Console.WriteLine("Options:");
     Console.WriteLine("  --debug path          Enable debug output to that file.");
+    Console.WriteLine("  --namespace ns        Wrap generated code in the specified namespace.");
     return 1;
 }
 
@@ -49,7 +52,7 @@ try
 
     var gen = serviceProvider.GetRequiredService<IRoslynGenerator>();
 
-    var code = gen.GenerateCode(node);
+    var code = gen.GenerateCode(node, namespaceName);
 
     File.WriteAllText(output, code);
     Console.WriteLine($"Wrote {output}");

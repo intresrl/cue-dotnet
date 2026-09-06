@@ -91,6 +91,10 @@ visiting expression: (LessThanEqual 10)
 visiting expression: 10
 visiting value at #LiteralInt: 42
 visiting value at #IntChoice: (Or 1 2 3)
+visiting expression: (Or 1 2 3)
+visiting expression: 1
+visiting expression: 2
+visiting expression: 3
 visiting value at #AnyNumber: (No ???<#AnyNumber: Number>)
 visiting expression: (No ???<#AnyNumber: Number>)
 visiting value at #PositiveNumber: (And (No ???<#PositiveNumber: Number>) (GreaterThan 0))
