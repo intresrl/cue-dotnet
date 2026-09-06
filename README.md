@@ -91,12 +91,6 @@ dotnet build
 
 CUE operations begin with a context:
 
-```csharp
-using Cuelang.Cue;
-
-using var ctx = new CueContext();
-using var value = ctx.Compile("name: string");
-```
 
 `CueContext` owns the native CUE context while `Value` represents a
 managed wrapper around a native CUE value.
@@ -130,17 +124,87 @@ bash ./run-generator-examples.sh
 
 The current implementation and tests cover CUE concepts including:
 
-- structs;
-- lists;
-- definitions;
-- references;
-- nullable values;
-- disjunctions;
-- constrained primitive values;
-- expressions;
-- discriminated alternatives;
-- `matchN` expressions.
+- [structs](#structs--composition);
+- [lists](#lists--nesting);
+- [definitions](#constrained-types);
+- [references](#unions--references);
+- [nullable values](#structs--composition);
+- [disjunctions and `matchN` expressions](#unions--references);
+- [constrained primitive values](#constrained-types).
 
 The generated representation can model alternatives as interfaces and
 record implementations instead of arbitrarily reducing a CUE disjunction
 to one type.
+
+## Generator Logic
+
+### Constrained types
+
+CUE primitive definitions with constraints are encoded as **readonly record structs**
+that wrap a value with an `IsValid()` validation method.
+
+The inner value type is narrowed based on the constraint range or the literal magnitude. Unbounded or very 
+large ranges use `BigInteger`, floating point uses the `ExtendedNumerics` library's
+`BigDecimal` type, and bounded ranges 
+select the smallest fitting type.
+
+When a literal is encoded in a constraint definition its type is encoded to the smallest numeric type compatible with
+its value. `decimal` is the only type used instead of `BigDecimal` for floating point types.
+
+Constraint logic in `IsValid()` is encoded exactly as CUE expressions:
+- Range bounds become comparisons: `int & >=0 & <=100` → `value >= 0 && value <= 100`
+- Regex constraints use `Regex.IsMatch()`: `string & =~"pattern"` → `Regex.IsMatch(value, "pattern")`
+- Literal disjunctions become `||` chains: `1 | 5 | 10` → `value == 1 || value == 5 || value == 10`
+
+**CUE:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/01-constrained-types.cue
+
+**Generated C#:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/01-constrained-types.cs#L7-L40
+
+See the full generated file for complete examples of constrained primitive types with validation logic.
+
+### Structs & composition
+
+CUE struct definitions are encoded as **classes** with properties.
+Fields are `required` by default; optional fields (`field?`) or nullable fields
+(`null | type`) become nullable/non-required properties.
+
+**CUE:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/02-structs-and-composition.cue
+
+**Generated C#:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/02-structs-and-composition.cs#L7-L29
+
+### Lists & nesting
+
+CUE lists become `List<T>`. For concrete index-specific lists (e.g., `[string, int, bool]`), 
+the generator creates tuples or `CueList<TConcrete, TAnyIndex>` types to distinguish 
+fixed elements from variable-length tails.
+
+Inline struct definitions are extracted as separate classes and referenced:
+
+**CUE:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/03-lists-and-nesting.cue
+
+**Generated C#:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/03-lists-and-nesting.cs#L7-L44
+
+### Unions & references
+
+Named struct disjunctions create an interface with nested record types for each variant,
+plus a special `Value` record that holds all possible branches:
+
+**CUE:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/04-unions-and-references.cue
+
+**Generated C#:** 
+
+https://github.com/intresrl/cue-dotnet/blob/master/Readme/04-unions-and-references.cs#L7-L30
