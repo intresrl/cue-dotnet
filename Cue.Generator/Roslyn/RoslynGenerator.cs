@@ -148,20 +148,23 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
     {
         var className = namer.TypeName(definition.DisjunctionPath, NamingKind.Disjunction);
         var branchRecords = definition.BranchPaths.Select(MemberDeclarationSyntax (branchPath) =>
-            RecordDeclaration(
+        {
+            var branchType = GetBranchType(branchPath);
+            var recordName = GetBranchRecordName(branchPath);
+            return RecordDeclaration(
                 default,
                 TokenList(Token(PublicKeyword)),
                 Token(RecordKeyword),
-                Identifier(namer.TypeName(branchPath, NamingKind.DisjunctionBranch)),
+                Identifier(recordName),
                 null,
                 ParameterList(SingletonSeparatedList(
-                    Parameter(Identifier("value")).WithType(IdentifierName(
-                        namer.TypeName(branchPath, NamingKind.Type))))),
+                    Parameter(Identifier("value")).WithType(branchType))),
                 BaseList(SingletonSeparatedList<BaseTypeSyntax>(
                     SimpleBaseType(IdentifierName(className)))),
                 default,
                 default)
-            .WithSemicolonToken(Token(SemicolonToken)));
+            .WithSemicolonToken(Token(SemicolonToken));
+        });
 
         var branchesParameter = Parameter(Identifier("Branches")).WithType(
             ArrayType(IdentifierName(className)).AddRankSpecifiers(
@@ -189,6 +192,46 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
         return InterfaceDeclaration(className)
             .AddModifiers(Token(PublicKeyword))
             .AddMembers([.. branchRecords, valueRecord]);
+    }
+
+    private string GetBranchRecordName(string branchPath)
+    {
+        // Check if the branch path ends with a primitive type marker
+        if (branchPath.EndsWith(": Int"))
+            return "AsInt";
+        if (branchPath.EndsWith(": Float"))
+            return "AsFloat";
+        if (branchPath.EndsWith(": String"))
+            return "AsString";
+        if (branchPath.EndsWith(": Bool"))
+            return "AsBool";
+        if (branchPath.EndsWith(": Bytes"))
+            return "AsBytes";
+        if (branchPath.EndsWith(": Number"))
+            return "AsNumber";
+        
+        // Otherwise, use the standard naming
+        return "As" + namer.TypeName(branchPath, NamingKind.Type);
+    }
+
+    private TypeSyntax GetBranchType(string branchPath)
+    {
+        // Check if the branch path ends with a primitive type marker
+        if (branchPath.EndsWith(": Int"))
+            return PredefinedType(Token(LongKeyword));
+        if (branchPath.EndsWith(": Float"))
+            return IdentifierName("double");
+        if (branchPath.EndsWith(": String"))
+            return PredefinedType(Token(StringKeyword));
+        if (branchPath.EndsWith(": Bool"))
+            return PredefinedType(Token(BoolKeyword));
+        if (branchPath.EndsWith(": Bytes"))
+            return ArrayType(PredefinedType(Token(ByteKeyword)));
+        if (branchPath.EndsWith(": Number"))
+            return IdentifierName("BigInteger");
+        
+        // Otherwise, treat it as a named type
+        return IdentifierName(namer.TypeName(branchPath, NamingKind.Type));
     }
 
     private ClassDeclarationSyntax CreateClassDeclaration(string typePath, CueStructValue? node)

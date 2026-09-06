@@ -11,18 +11,18 @@ public sealed class CueList<TConcrete, TAnyIndex>
     public List<TAnyIndex> AnyIndex { get; init; } = [];
 }
 
-public readonly struct Slice((Default, long) value)
+public readonly struct Slice((long, long) value)
 {
-    public (Default, long) Value { get; } = value;
+    public (long, long) Value { get; } = value;
 
-    public implicit operator Slice((Default, long) value) => new(value);
+    public implicit operator Slice((long, long) value) => new(value);
 }
 
-public readonly struct List(CueList<(Default, long, long), long> value)
+public readonly struct List(CueList<(long, long, long), long> value)
 {
-    public CueList<(Default, long, long), long> Value { get; } = value;
+    public CueList<(long, long, long), long> Value { get; } = value;
 
-    public implicit operator List(CueList<(Default, long, long), long> value) => new(value);
+    public implicit operator List(CueList<(long, long, long), long> value) => new(value);
 }
 
 public interface MatchNMessageBase
@@ -35,20 +35,10 @@ public interface MatchNMessageBase
     };
 }
 
-public interface MixedTreeBase
-{
-    public record AsUnify(Unify value) : MixedTreeBase;
-    public record AsS(S value) : MixedTreeBase;
-    public record Value(MixedTreeBase[] Branches)
-    {
-        public bool Valid => Branches.Length == 1;
-    };
-}
-
 public interface OrBase
 {
-    public record AsOr(Or value) : OrBase;
-    public record AsS(S value) : OrBase;
+    public record AsInt(long value) : OrBase;
+    public record AsString(string value) : OrBase;
     public record Value(OrBase[] Branches)
     {
         public bool Valid => Branches.Length == 1;
@@ -70,6 +60,11 @@ public readonly record struct Default(byte Value)
     public static bool IsValid(byte value) => value == 1 || value == 2;
 }
 
+public readonly record struct Index(BigInteger Value)
+{
+    public static bool IsValid(BigInteger value) => true;
+}
+
 public readonly record struct Unify(BigInteger Value)
 {
     public static bool IsValid(BigInteger value) => value >= 0;
@@ -83,7 +78,7 @@ public readonly record struct B(bool Value)
 public class DateTimeMessage
 {
     public string Type { get; init; }
-    public S Format { get; init; }
+    public string Format { get; init; }
     public string Timezone { get; init; }
 }
 
@@ -100,6 +95,6 @@ public readonly record struct S(string Value)
 public class TextMessage
 {
     public string Type { get; init; }
-    public Selector MaxLength { get; init; }
+    public long MaxLength { get; init; }
     public string Pattern { get; init; }
 }

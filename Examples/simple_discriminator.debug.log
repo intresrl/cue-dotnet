@@ -1,19 +1,19 @@
-DEBUG LIST LENGTH #DateTimeMessage: ???<#DateTimeMessage: Struct>
-DEBUG LIST LENGTH #DateTimeMessage.type: "datetime"
-DEBUG LIST LENGTH #DateTimeMessage.format: (No ???<#DateTimeMessage.format: String>)
-visiting: (No ???<#DateTimeMessage.format: String>)
-DEBUG LIST LENGTH #DateTimeMessage.timezone: (No ???<#DateTimeMessage.timezone: String>)
-visiting: (No ???<#DateTimeMessage.timezone: String>)
-DEBUG LIST LENGTH #TextMessage: ???<#TextMessage: Struct>
-DEBUG LIST LENGTH #TextMessage.type: "text"
-DEBUG LIST LENGTH #TextMessage.maxLength: (No ???<#TextMessage.maxLength: Int>)
-visiting: (No ???<#TextMessage.maxLength: Int>)
-DEBUG LIST LENGTH #TextMessage.pattern: (No ???<#TextMessage.pattern: String>)
-visiting: (No ???<#TextMessage.pattern: String>)
-DEBUG LIST LENGTH #Message: ???<#Message: Struct>
-DEBUG LIST LENGTH #Message.matchNMessage: (Call<$matchN> 1 ???<#Message.matchNMessage: List>)
-DEBUG LIST LENGTH #Message.matchNMessage[0]: (Selector ???<#Message.matchNMessage[0]: Struct> "#DateTimeMessage")
-DEBUG LIST LENGTH #Message.matchNMessage[1]: (Selector ???<#Message.matchNMessage[1]: Struct> "#TextMessage")
-DEBUG LIST LENGTH #Message.simpleOrMessage: (Or (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage") (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage"))
-DEBUG LIST LENGTH #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage")
-DEBUG LIST LENGTH #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage")
+visiting value at #DateTimeMessage: ???<#DateTimeMessage: Struct>
+visiting value at #DateTimeMessage.type: "datetime"
+visiting value at #DateTimeMessage.format: (No ???<#DateTimeMessage.format: String>)
+visiting expression: (No ???<#DateTimeMessage.format: String>)
+visiting value at #DateTimeMessage.timezone: (No ???<#DateTimeMessage.timezone: String>)
+visiting expression: (No ???<#DateTimeMessage.timezone: String>)
+visiting value at #TextMessage: ???<#TextMessage: Struct>
+visiting value at #TextMessage.type: "text"
+visiting value at #TextMessage.maxLength: (No ???<#TextMessage.maxLength: Int>)
+visiting expression: (No ???<#TextMessage.maxLength: Int>)
+visiting value at #TextMessage.pattern: (No ???<#TextMessage.pattern: String>)
+visiting expression: (No ???<#TextMessage.pattern: String>)
+visiting value at #Message: ???<#Message: Struct>
+visiting value at #Message.matchNMessage: (Call<$matchN> 1 ???<#Message.matchNMessage: List>)
+visiting value at #Message.matchNMessage[0]: (Selector ???<#Message.matchNMessage[0]: Struct> "#DateTimeMessage")
+visiting value at #Message.matchNMessage[1]: (Selector ???<#Message.matchNMessage[1]: Struct> "#TextMessage")
+visiting value at #Message.simpleOrMessage: (Or (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage") (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage"))
+visiting value at #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#DateTimeMessage")
+visiting value at #Message.simpleOrMessage: (Selector ???<#Message.simpleOrMessage: Struct> "#TextMessage")

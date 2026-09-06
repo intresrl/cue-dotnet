@@ -11,7 +11,7 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
     public static IEnumerable<CueValueNode> VisitRoot(Value value, TextWriter? debug = null)
     {
         var definitions = value.Fields(new EvalOption.Definitions(true));
-
+        
         try
         {
             var visitor = new CueValueVisitor(definitions, debug, new CueExprVisitor(debug));
@@ -35,13 +35,18 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
 
     public CueValueNode Visit(Value value)
     {
-        writer?.WriteLine($"DEBUG LIST LENGTH {value.Path()}: {value.FormatExpr()}");
+        writer?.WriteLine($"visiting value at {value.Path()}: {value.FormatExpr()}");
 
-        foreach (var rootValue in rootDefinitions)
+        // Don't treat primitive types as definition references
+        var kind = value.IncompleteKind();
+        if (kind is not (Kind.Bottom or Kind.Null or Kind.Int or Kind.Float or Kind.String or Kind.Bool or Kind.Bytes or Kind.Number))
         {
-            if (Value.SchemaComparer.Equals(value, rootValue) && _definedPaths.Contains(rootValue.Path()))
+            foreach (var rootValue in rootDefinitions)
             {
-                return new CueDefinitionReference(rootValue.Path());
+                if (Value.SchemaComparer.Equals(value, rootValue) && _definedPaths.Contains(rootValue.Path()))
+                {
+                    return new CueDefinitionReference(rootValue.Path());
+                }
             }
         }
 
@@ -51,8 +56,6 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
         {
             return new CueDefinitionReference(schemaValue.GetString()!);
         }
-
-        var kind = value.IncompleteKind();
 
         if (kind is Kind.Top or Kind.Struct && DisjunctionBranches(value) is { } branches)
         {
@@ -263,7 +266,39 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
 
         try
         {
-            var nodes = branchArray.Select(Visit).ToList();
+            var nodes = branchArray.Select((branch, index) =>
+            {
+                var branchType = branch.IncompleteKind() switch
+                {
+                    Kind.Int => "Int",
+                    Kind.Float => "Float",
+                    Kind.String => "String",
+                    Kind.Bool => "Bool",
+                    Kind.Bytes => "Bytes",
+                    Kind.Number => "Number",
+                    _ => branch.IncompleteKind().ToString()
+                };
+                
+                // Preserve the existing path but mark it with the branch type for uniqueness
+                var node = Visit(branch);
+                
+                // Update the path to be unique per branch for primitive types
+                if (value.Path() == node.Path && node is (CueIntValue or CueFloatValue or CueStringValue or CueBoolValue or CueNumberValue))
+                {
+                    node = node switch
+                    {
+                        CueIntValue v => v with { Path = $"{value.Path()}: {branchType}" },
+                        CueFloatValue v => v with { Path = $"{value.Path()}: {branchType}" },
+                        CueStringValue v => v with { Path = $"{value.Path()}: {branchType}" },
+                        CueBoolValue v => v with { Path = $"{value.Path()}: {branchType}" },
+                        CueNumberValue v => v with { Path = $"{value.Path()}: {branchType}" },
+                        _ => node
+                    };
+                }
+                
+                return node;
+            }).ToList();
+            
             var (name, paths) = FindDiscriminatorField(nodes);
             return new CueDisjunction(value.Path(), nodes, name, paths);
         }

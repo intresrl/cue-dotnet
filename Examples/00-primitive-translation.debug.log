@@ -1,86 +1,86 @@
-DEBUG LIST LENGTH #AnyString: (No ???<#AnyString: String>)
-visiting: (No ???<#AnyString: String>)
-DEBUG LIST LENGTH #AnyBool: (No ???<#AnyBool: Bool>)
-visiting: (No ???<#AnyBool: Bool>)
-DEBUG LIST LENGTH #ExactInt: 42
-DEBUG LIST LENGTH #PositiveInt: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
-visiting: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
-visiting: (No ???<#PositiveInt: Int>)
-visiting: (GreaterThan 0)
-visiting: 0
-DEBUG LIST LENGTH #NonNegativeInt: (And (No ???<#NonNegativeInt: Int>) (GreaterThanEqual 0))
-visiting: (And (No ???<#NonNegativeInt: Int>) (GreaterThanEqual 0))
-visiting: (No ???<#NonNegativeInt: Int>)
-visiting: (GreaterThanEqual 0)
-visiting: 0
-DEBUG LIST LENGTH #SmallInt: (And (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0)) (LessThanEqual 100))
-visiting: (And (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0)) (LessThanEqual 100))
-visiting: (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0))
-visiting: (No ???<#SmallInt: Int>)
-visiting: (GreaterThanEqual 0)
-visiting: 0
-visiting: (LessThanEqual 100)
-visiting: 100
-DEBUG LIST LENGTH #Percentage: (And (And (No ???<#Percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
-visiting: (And (And (No ???<#Percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
-visiting: (And (No ???<#Percentage: Number>) (GreaterThanEqual 0))
-visiting: (No ???<#Percentage: Number>)
-visiting: (GreaterThanEqual 0)
-visiting: 0
-visiting: (LessThanEqual 100)
-visiting: 100
-DEBUG LIST LENGTH #Port: (And (And (No ???<#Port: Int>) (GreaterThanEqual 1)) (LessThanEqual 65535))
-visiting: (And (And (No ???<#Port: Int>) (GreaterThanEqual 1)) (LessThanEqual 65535))
-visiting: (And (No ???<#Port: Int>) (GreaterThanEqual 1))
-visiting: (No ???<#Port: Int>)
-visiting: (GreaterThanEqual 1)
-visiting: 1
-visiting: (LessThanEqual 65535)
-visiting: 65535
-DEBUG LIST LENGTH #NegativeInt: (And (No ???<#NegativeInt: Int>) (LessThan 0))
-visiting: (And (No ???<#NegativeInt: Int>) (LessThan 0))
-visiting: (No ???<#NegativeInt: Int>)
-visiting: (LessThan 0)
-visiting: 0
-DEBUG LIST LENGTH #NonPositiveInt: (And (No ???<#NonPositiveInt: Int>) (LessThanEqual 0))
-visiting: (And (No ???<#NonPositiveInt: Int>) (LessThanEqual 0))
-visiting: (No ???<#NonPositiveInt: Int>)
-visiting: (LessThanEqual 0)
-visiting: 0
-DEBUG LIST LENGTH #ZeroOrPositiveLarge: (Or 0 (GreaterThanEqual 1000))
-visiting: (Or 0 (GreaterThanEqual 1000))
-visiting: 0
-visiting: (GreaterThanEqual 1000)
-visiting: 1000
-DEBUG LIST LENGTH #OneOfThree: (Or 1 5 10)
-visiting: (Or 1 5 10)
-visiting: 1
-visiting: 5
-visiting: 10
-DEBUG LIST LENGTH #OutsideRange: (Or (LessThan 0) (GreaterThan 100))
-visiting: (Or (LessThan 0) (GreaterThan 100))
-visiting: (LessThan 0)
-visiting: 0
-visiting: (GreaterThan 100)
-visiting: 100
-DEBUG LIST LENGTH #ByteLike: (And (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0)) (LessThanEqual 255))
-visiting: (And (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0)) (LessThanEqual 255))
-visiting: (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0))
-visiting: (No ???<#ByteLike: Int>)
-visiting: (GreaterThanEqual 0)
-visiting: 0
-visiting: (LessThanEqual 255)
-visiting: 255
-DEBUG LIST LENGTH #Int16Like: (And (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768))) (LessThanEqual 32767))
-visiting: (And (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768))) (LessThanEqual 32767))
-visiting: (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768)))
-visiting: (No ???<#Int16Like: Int>)
-visiting: (GreaterThanEqual (Subtract 32768))
-visiting: (Subtract 32768)
-visiting: 32768
-visiting: (LessThanEqual 32767)
-visiting: 32767
-DEBUG LIST LENGTH #VeryBigInteger: 123456789012345678901234567890
-DEBUG LIST LENGTH #VeryBigDecimal: 123456789012345678901234567890.123456789
-DEBUG LIST LENGTH #ExactString: "active"
-DEBUG LIST LENGTH #ExactBool: true
+visiting value at #AnyString: (No ???<#AnyString: String>)
+visiting expression: (No ???<#AnyString: String>)
+visiting value at #AnyBool: (No ???<#AnyBool: Bool>)
+visiting expression: (No ???<#AnyBool: Bool>)
+visiting value at #ExactInt: 42
+visiting value at #PositiveInt: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
+visiting expression: (And (No ???<#PositiveInt: Int>) (GreaterThan 0))
+visiting expression: (No ???<#PositiveInt: Int>)
+visiting expression: (GreaterThan 0)
+visiting expression: 0
+visiting value at #NonNegativeInt: (And (No ???<#NonNegativeInt: Int>) (GreaterThanEqual 0))
+visiting expression: (And (No ???<#NonNegativeInt: Int>) (GreaterThanEqual 0))
+visiting expression: (No ???<#NonNegativeInt: Int>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
+visiting value at #SmallInt: (And (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting expression: (And (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting expression: (And (No ???<#SmallInt: Int>) (GreaterThanEqual 0))
+visiting expression: (No ???<#SmallInt: Int>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
+visiting expression: (LessThanEqual 100)
+visiting expression: 100
+visiting value at #Percentage: (And (And (No ???<#Percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting expression: (And (And (No ???<#Percentage: Number>) (GreaterThanEqual 0)) (LessThanEqual 100))
+visiting expression: (And (No ???<#Percentage: Number>) (GreaterThanEqual 0))
+visiting expression: (No ???<#Percentage: Number>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
+visiting expression: (LessThanEqual 100)
+visiting expression: 100
+visiting value at #Port: (And (And (No ???<#Port: Int>) (GreaterThanEqual 1)) (LessThanEqual 65535))
+visiting expression: (And (And (No ???<#Port: Int>) (GreaterThanEqual 1)) (LessThanEqual 65535))
+visiting expression: (And (No ???<#Port: Int>) (GreaterThanEqual 1))
+visiting expression: (No ???<#Port: Int>)
+visiting expression: (GreaterThanEqual 1)
+visiting expression: 1
+visiting expression: (LessThanEqual 65535)
+visiting expression: 65535
+visiting value at #NegativeInt: (And (No ???<#NegativeInt: Int>) (LessThan 0))
+visiting expression: (And (No ???<#NegativeInt: Int>) (LessThan 0))
+visiting expression: (No ???<#NegativeInt: Int>)
+visiting expression: (LessThan 0)
+visiting expression: 0
+visiting value at #NonPositiveInt: (And (No ???<#NonPositiveInt: Int>) (LessThanEqual 0))
+visiting expression: (And (No ???<#NonPositiveInt: Int>) (LessThanEqual 0))
+visiting expression: (No ???<#NonPositiveInt: Int>)
+visiting expression: (LessThanEqual 0)
+visiting expression: 0
+visiting value at #ZeroOrPositiveLarge: (Or 0 (GreaterThanEqual 1000))
+visiting expression: (Or 0 (GreaterThanEqual 1000))
+visiting expression: 0
+visiting expression: (GreaterThanEqual 1000)
+visiting expression: 1000
+visiting value at #OneOfThree: (Or 1 5 10)
+visiting expression: (Or 1 5 10)
+visiting expression: 1
+visiting expression: 5
+visiting expression: 10
+visiting value at #OutsideRange: (Or (LessThan 0) (GreaterThan 100))
+visiting expression: (Or (LessThan 0) (GreaterThan 100))
+visiting expression: (LessThan 0)
+visiting expression: 0
+visiting expression: (GreaterThan 100)
+visiting expression: 100
+visiting value at #ByteLike: (And (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0)) (LessThanEqual 255))
+visiting expression: (And (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0)) (LessThanEqual 255))
+visiting expression: (And (No ???<#ByteLike: Int>) (GreaterThanEqual 0))
+visiting expression: (No ???<#ByteLike: Int>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
+visiting expression: (LessThanEqual 255)
+visiting expression: 255
+visiting value at #Int16Like: (And (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768))) (LessThanEqual 32767))
+visiting expression: (And (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768))) (LessThanEqual 32767))
+visiting expression: (And (No ???<#Int16Like: Int>) (GreaterThanEqual (Subtract 32768)))
+visiting expression: (No ???<#Int16Like: Int>)
+visiting expression: (GreaterThanEqual (Subtract 32768))
+visiting expression: (Subtract 32768)
+visiting expression: 32768
+visiting expression: (LessThanEqual 32767)
+visiting expression: 32767
+visiting value at #VeryBigInteger: 123456789012345678901234567890
+visiting value at #VeryBigDecimal: 123456789012345678901234567890.123456789
+visiting value at #ExactString: "active"
+visiting value at #ExactBool: true

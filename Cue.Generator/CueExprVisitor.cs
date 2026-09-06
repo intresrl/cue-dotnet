@@ -18,7 +18,7 @@ public class CueExprVisitor(TextWriter? debugWriter) : ICueExprVisitor
     public CueExpr Visit(Value value)
     {
         var exprResult = value.Expr();
-        debugWriter?.WriteLine("visiting: " + value.FormatExpr());
+        debugWriter?.WriteLine("visiting expression: " + value.FormatExpr());
         return VisitExpr(value, exprResult);
     }
 

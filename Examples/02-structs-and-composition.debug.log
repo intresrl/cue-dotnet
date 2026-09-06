@@ -1,77 +1,77 @@
-DEBUG LIST LENGTH #Address: ???<#Address: Struct>
-DEBUG LIST LENGTH #Address.street: (No ???<#Address.street: String>)
-visiting: (No ???<#Address.street: String>)
-DEBUG LIST LENGTH #Address.city: (No ???<#Address.city: String>)
-visiting: (No ???<#Address.city: String>)
-DEBUG LIST LENGTH #Address.country: (No ???<#Address.country: String>)
-visiting: (No ???<#Address.country: String>)
-DEBUG LIST LENGTH #Person: ???<#Person: Struct>
-DEBUG LIST LENGTH #Person.name: (No ???<#Person.name: String>)
-visiting: (No ???<#Person.name: String>)
-DEBUG LIST LENGTH #Person.address: (Selector ???<#Person.address: Struct> "#Address")
-DEBUG LIST LENGTH #Entity: ???<#Entity: Struct>
-DEBUG LIST LENGTH #Entity.id: (No ???<#Entity.id: String>)
-visiting: (No ???<#Entity.id: String>)
-DEBUG LIST LENGTH #Entity.createdAt: (No ???<#Entity.createdAt: String>)
-visiting: (No ???<#Entity.createdAt: String>)
-DEBUG LIST LENGTH #User: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
-visiting: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
-visiting: (Selector ???<#User: Struct> "#Entity")
-visiting: ???<#User: Struct>
-visiting: ???<#User: Struct>
-DEBUG LIST LENGTH #User.id: (No ???<#User.id: String>)
-visiting: (No ???<#User.id: String>)
-DEBUG LIST LENGTH #User.createdAt: (No ???<#User.createdAt: String>)
-visiting: (No ???<#User.createdAt: String>)
-DEBUG LIST LENGTH #User.name: (No ???<#User.name: String>)
-visiting: (No ???<#User.name: String>)
-DEBUG LIST LENGTH #User.email: (No ???<#User.email: String>)
-visiting: (No ???<#User.email: String>)
-DEBUG LIST LENGTH #Employee: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
-visiting: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
-visiting: (Selector ???<#Employee: Struct> "#User")
-visiting: ???<#Employee: Struct>
-visiting: ???<#Employee: Struct>
-DEBUG LIST LENGTH #Employee.employeeNumber: (No ???<#Employee.employeeNumber: String>)
-visiting: (No ???<#Employee.employeeNumber: String>)
-DEBUG LIST LENGTH #Employee.department: (No ???<#Employee.department: String>)
-visiting: (No ???<#Employee.department: String>)
-DEBUG LIST LENGTH #Employee.id: (No ???<#Employee.id: String>)
-visiting: (No ???<#Employee.id: String>)
-DEBUG LIST LENGTH #Employee.createdAt: (No ???<#Employee.createdAt: String>)
-visiting: (No ???<#Employee.createdAt: String>)
-DEBUG LIST LENGTH #Employee.name: (No ???<#Employee.name: String>)
-visiting: (No ???<#Employee.name: String>)
-DEBUG LIST LENGTH #Employee.email: (No ???<#Employee.email: String>)
-visiting: (No ???<#Employee.email: String>)
-DEBUG LIST LENGTH #TaggedEntity: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
-visiting: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
-visiting: (Selector ???<#TaggedEntity: Struct> "#Entity")
-visiting: ???<#TaggedEntity: Struct>
-visiting: {}
-DEBUG LIST LENGTH #TaggedEntity.id: (No ???<#TaggedEntity.id: String>)
-visiting: (No ???<#TaggedEntity.id: String>)
-DEBUG LIST LENGTH #TaggedEntity.createdAt: (No ???<#TaggedEntity.createdAt: String>)
-visiting: (No ???<#TaggedEntity.createdAt: String>)
-DEBUG LIST LENGTH #TaggedEntity.tags: []
-visiting: (And (No ???<#TaggedEntity.tags: Int>) (GreaterThanEqual 0))
-visiting: (No ???<#TaggedEntity.tags: Int>)
-visiting: (GreaterThanEqual 0)
-visiting: 0
+visiting value at #Address: ???<#Address: Struct>
+visiting value at #Address.street: (No ???<#Address.street: String>)
+visiting expression: (No ???<#Address.street: String>)
+visiting value at #Address.city: (No ???<#Address.city: String>)
+visiting expression: (No ???<#Address.city: String>)
+visiting value at #Address.country: (No ???<#Address.country: String>)
+visiting expression: (No ???<#Address.country: String>)
+visiting value at #Person: ???<#Person: Struct>
+visiting value at #Person.name: (No ???<#Person.name: String>)
+visiting expression: (No ???<#Person.name: String>)
+visiting value at #Person.address: (Selector ???<#Person.address: Struct> "#Address")
+visiting value at #Entity: ???<#Entity: Struct>
+visiting value at #Entity.id: (No ???<#Entity.id: String>)
+visiting expression: (No ???<#Entity.id: String>)
+visiting value at #Entity.createdAt: (No ???<#Entity.createdAt: String>)
+visiting expression: (No ???<#Entity.createdAt: String>)
+visiting value at #User: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
+visiting expression: (And (Selector ???<#User: Struct> "#Entity") ???<#User: Struct>)
+visiting expression: (Selector ???<#User: Struct> "#Entity")
+visiting expression: ???<#User: Struct>
+visiting expression: ???<#User: Struct>
+visiting value at #User.id: (No ???<#User.id: String>)
+visiting expression: (No ???<#User.id: String>)
+visiting value at #User.createdAt: (No ???<#User.createdAt: String>)
+visiting expression: (No ???<#User.createdAt: String>)
+visiting value at #User.name: (No ???<#User.name: String>)
+visiting expression: (No ???<#User.name: String>)
+visiting value at #User.email: (No ???<#User.email: String>)
+visiting expression: (No ???<#User.email: String>)
+visiting value at #Employee: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
+visiting expression: (And (Selector ???<#Employee: Struct> "#User") ???<#Employee: Struct>)
+visiting expression: (Selector ???<#Employee: Struct> "#User")
+visiting expression: ???<#Employee: Struct>
+visiting expression: ???<#Employee: Struct>
+visiting value at #Employee.employeeNumber: (No ???<#Employee.employeeNumber: String>)
+visiting expression: (No ???<#Employee.employeeNumber: String>)
+visiting value at #Employee.department: (No ???<#Employee.department: String>)
+visiting expression: (No ???<#Employee.department: String>)
+visiting value at #Employee.id: (No ???<#Employee.id: String>)
+visiting expression: (No ???<#Employee.id: String>)
+visiting value at #Employee.createdAt: (No ???<#Employee.createdAt: String>)
+visiting expression: (No ???<#Employee.createdAt: String>)
+visiting value at #Employee.name: (No ???<#Employee.name: String>)
+visiting expression: (No ???<#Employee.name: String>)
+visiting value at #Employee.email: (No ???<#Employee.email: String>)
+visiting expression: (No ???<#Employee.email: String>)
+visiting value at #TaggedEntity: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
+visiting expression: (And (Selector ???<#TaggedEntity: Struct> "#Entity") {})
+visiting expression: (Selector ???<#TaggedEntity: Struct> "#Entity")
+visiting expression: ???<#TaggedEntity: Struct>
+visiting expression: {}
+visiting value at #TaggedEntity.id: (No ???<#TaggedEntity.id: String>)
+visiting expression: (No ???<#TaggedEntity.id: String>)
+visiting value at #TaggedEntity.createdAt: (No ???<#TaggedEntity.createdAt: String>)
+visiting expression: (No ???<#TaggedEntity.createdAt: String>)
+visiting value at #TaggedEntity.tags: []
+visiting expression: (And (No ???<#TaggedEntity.tags: Int>) (GreaterThanEqual 0))
+visiting expression: (No ???<#TaggedEntity.tags: Int>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
 #TaggedEntity.tags list concrete length: 0
-DEBUG LIST LENGTH #TaggedEntity.tags.[_]: (No ???<#TaggedEntity.tags.[_]: String>)
-visiting: (No ???<#TaggedEntity.tags.[_]: String>)
-DEBUG LIST LENGTH #Profile: ???<#Profile: Struct>
-DEBUG LIST LENGTH #Profile.displayName: (No ???<#Profile.displayName: String>)
-visiting: (No ???<#Profile.displayName: String>)
-DEBUG LIST LENGTH #Profile.settings: ???<#Profile.settings: Struct>
-DEBUG LIST LENGTH #Profile.settings.theme: (No ???<#Profile.settings.theme: String>)
-visiting: (No ???<#Profile.settings.theme: String>)
-DEBUG LIST LENGTH #Profile.settings.notifications: (No ???<#Profile.settings.notifications: Bool>)
-visiting: (No ???<#Profile.settings.notifications: Bool>)
-DEBUG LIST LENGTH #StructsAndCompositionExample: ???<#StructsAndCompositionExample: Struct>
-DEBUG LIST LENGTH #StructsAndCompositionExample.person: (Selector ???<#StructsAndCompositionExample.person: Struct> "#Person")
-DEBUG LIST LENGTH #StructsAndCompositionExample.user: (Selector ???<#StructsAndCompositionExample.user: Struct> "#User")
-DEBUG LIST LENGTH #StructsAndCompositionExample.employee: (Selector ???<#StructsAndCompositionExample.employee: Struct> "#Employee")
-DEBUG LIST LENGTH #StructsAndCompositionExample.tagged: (Selector ???<#StructsAndCompositionExample.tagged: Struct> "#TaggedEntity")
-DEBUG LIST LENGTH #StructsAndCompositionExample.profile: (Selector ???<#StructsAndCompositionExample.profile: Struct> "#Profile")
+visiting value at #TaggedEntity.tags.[_]: (No ???<#TaggedEntity.tags.[_]: String>)
+visiting expression: (No ???<#TaggedEntity.tags.[_]: String>)
+visiting value at #Profile: ???<#Profile: Struct>
+visiting value at #Profile.displayName: (No ???<#Profile.displayName: String>)
+visiting expression: (No ???<#Profile.displayName: String>)
+visiting value at #Profile.settings: ???<#Profile.settings: Struct>
+visiting value at #Profile.settings.theme: (No ???<#Profile.settings.theme: String>)
+visiting expression: (No ???<#Profile.settings.theme: String>)
+visiting value at #Profile.settings.notifications: (No ???<#Profile.settings.notifications: Bool>)
+visiting expression: (No ???<#Profile.settings.notifications: Bool>)
+visiting value at #StructsAndCompositionExample: ???<#StructsAndCompositionExample: Struct>
+visiting value at #StructsAndCompositionExample.person: (Selector ???<#StructsAndCompositionExample.person: Struct> "#Person")
+visiting value at #StructsAndCompositionExample.user: (Selector ???<#StructsAndCompositionExample.user: Struct> "#User")
+visiting value at #StructsAndCompositionExample.employee: (Selector ???<#StructsAndCompositionExample.employee: Struct> "#Employee")
+visiting value at #StructsAndCompositionExample.tagged: (Selector ???<#StructsAndCompositionExample.tagged: Struct> "#TaggedEntity")
+visiting value at #StructsAndCompositionExample.profile: (Selector ???<#StructsAndCompositionExample.profile: Struct> "#Profile")
