@@ -18,21 +18,21 @@ namespace Examples.simple_discriminator
 
     public class DateTimeMessage
     {
-        public string Type { get; init; }
-        public string Format { get; init; }
+        public required string Type { get; init; }
+        public required string Format { get; init; }
         public string Timezone { get; init; }
     }
 
     public class Message
     {
-        public MessagematchNMessageBase MatchNMessage { get; init; }
-        public MessagematchNMessageBase SimpleOrMessage { get; init; }
+        public required MessagematchNMessageBase MatchNMessage { get; init; }
+        public required MessagematchNMessageBase SimpleOrMessage { get; init; }
     }
 
     public class TextMessage
     {
-        public string Type { get; init; }
-        public long MaxLength { get; init; }
+        public required string Type { get; init; }
+        public required long MaxLength { get; init; }
         public string Pattern { get; init; }
     }
 }

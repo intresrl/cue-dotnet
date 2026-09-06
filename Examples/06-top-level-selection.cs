@@ -22,14 +22,14 @@ namespace Examples.top_level_selection
 
     public class ConvertedPerson
     {
-        public string Name { get; init; }
-        public long Age { get; init; }
+        public required string Name { get; init; }
+        public required long Age { get; init; }
     }
 
     public class ConvertedSettings
     {
-        public bool Enabled { get; init; }
-        public string Mode { get; init; }
+        public required bool Enabled { get; init; }
+        public required string Mode { get; init; }
     }
 
     public readonly record struct ConvertedString(string Value)
@@ -54,6 +54,6 @@ namespace Examples.top_level_selection
 
     public class PlainStruct
     {
-        public string Name { get; init; }
+        public required string Name { get; init; }
     }
 }

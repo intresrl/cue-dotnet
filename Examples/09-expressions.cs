@@ -79,14 +79,14 @@ namespace Examples.expressions
 
     public class DateTimeMessage
     {
-        public string Type { get; init; }
-        public string Format { get; init; }
+        public required string Type { get; init; }
+        public required string Format { get; init; }
         public string Timezone { get; init; }
     }
 
     public class Obj
     {
-        public long A { get; init; }
+        public required long A { get; init; }
     }
 
     public readonly record struct S(string Value)
@@ -96,8 +96,8 @@ namespace Examples.expressions
 
     public class TextMessage
     {
-        public string Type { get; init; }
-        public long MaxLength { get; init; }
+        public required string Type { get; init; }
+        public required long MaxLength { get; init; }
         public string Pattern { get; init; }
     }
 }

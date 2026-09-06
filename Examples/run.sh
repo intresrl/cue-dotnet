@@ -16,7 +16,7 @@ for cue_file in *.cue; do
     "$name.cs" \
     --debug "$name.debug.log" \
     --namespace "$namespace"
-  
-  # verify the generated output compiles
-  dotnet build ./Examples.csproj 
 done
+
+# verify the generated output compiles
+dotnet build ./Examples.csproj

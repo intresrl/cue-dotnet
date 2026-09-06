@@ -28,26 +28,26 @@ namespace Examples.core_types
 
     public class ConcreteValues
     {
-        public string Status { get; init; }
-        public long Version { get; init; }
-        public bool Enabled { get; init; }
+        public required string Status { get; init; }
+        public required long Version { get; init; }
+        public required bool Enabled { get; init; }
     }
 
     public class ConstrainedValues
     {
-        public long Age { get; init; }
-        public decimal Percentage { get; init; }
-        public string Email { get; init; }
+        public required long Age { get; init; }
+        public required decimal Percentage { get; init; }
+        public required string Email { get; init; }
     }
 
     public class CoreTypesExample
     {
-        public PrimitiveTypes Primitives { get; init; }
-        public ConcreteValues Concrete { get; init; }
-        public OptionalAndNullable Fields { get; init; }
-        public ConstrainedValues Constrained { get; init; }
-        public Status Status { get; init; }
-        public Priority Priority { get; init; }
+        public required PrimitiveTypes Primitives { get; init; }
+        public required ConcreteValues Concrete { get; init; }
+        public required OptionalAndNullable Fields { get; init; }
+        public required ConstrainedValues Constrained { get; init; }
+        public required Status Status { get; init; }
+        public required Priority Priority { get; init; }
     }
 
     public readonly record struct EmailString(string Value)
@@ -87,9 +87,9 @@ namespace Examples.core_types
 
     public class OptionalAndNullable
     {
-        public string Required { get; init; }
+        public required string Required { get; init; }
         public string Optional { get; init; }
-        public string? Nullable { get; init; }
+        public required string? Nullable { get; init; }
         public string? OptionalNullable { get; init; }
     }
 
@@ -100,10 +100,10 @@ namespace Examples.core_types
 
     public class PrimitiveTypes
     {
-        public string Text { get; init; }
-        public long Integer { get; init; }
-        public decimal Decimal { get; init; }
-        public bool Enabled { get; init; }
+        public required string Text { get; init; }
+        public required long Integer { get; init; }
+        public required decimal Decimal { get; init; }
+        public required bool Enabled { get; init; }
     }
 
     public readonly record struct Priority(byte Value)

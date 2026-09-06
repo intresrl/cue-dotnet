@@ -59,98 +59,98 @@ namespace Examples.unions_and_discriminators
 
     public class Bird
     {
-        public string Type { get; init; }
-        public string Name { get; init; }
-        public bool CanFly { get; init; }
+        public required string Type { get; init; }
+        public required string Name { get; init; }
+        public required bool CanFly { get; init; }
     }
 
     public class Cat
     {
-        public string Type { get; init; }
-        public string Name { get; init; }
-        public long Lives { get; init; }
+        public required string Type { get; init; }
+        public required string Name { get; init; }
+        public required long Lives { get; init; }
     }
 
     public class Circle
     {
-        public string Kind { get; init; }
-        public decimal Radius { get; init; }
+        public required string Kind { get; init; }
+        public required decimal Radius { get; init; }
     }
 
     public class Contact
     {
-        public ContactvalueBase Value { get; init; }
+        public required ContactvalueBase Value { get; init; }
     }
 
     public class CreatedEvent
     {
-        public string Status { get; init; }
-        public string Id { get; init; }
+        public required string Status { get; init; }
+        public required string Id { get; init; }
     }
 
     public class DeletedEvent
     {
-        public string Status { get; init; }
-        public string Id { get; init; }
+        public required string Status { get; init; }
+        public required string Id { get; init; }
     }
 
     public class Dog
     {
-        public string Type { get; init; }
-        public string Name { get; init; }
+        public required string Type { get; init; }
+        public required string Name { get; init; }
         public string Breed { get; init; }
     }
 
     public class Drawing
     {
-        public string Name { get; init; }
-        public DrawingshapeBase Shape { get; init; }
+        public required string Name { get; init; }
+        public required DrawingshapeBase Shape { get; init; }
     }
 
     public class EmailContact
     {
-        public string Address { get; init; }
+        public required string Address { get; init; }
     }
 
     public class Event
     {
-        public EventvalueBase Value { get; init; }
+        public required EventvalueBase Value { get; init; }
     }
 
     public class Pet
     {
-        public PetvalueBase Value { get; init; }
+        public required PetvalueBase Value { get; init; }
     }
 
     public class PhoneContact
     {
-        public string Number { get; init; }
+        public required string Number { get; init; }
     }
 
     public class Rectangle
     {
-        public string Kind { get; init; }
-        public decimal Width { get; init; }
-        public decimal Height { get; init; }
+        public required string Kind { get; init; }
+        public required decimal Width { get; init; }
+        public required decimal Height { get; init; }
     }
 
     public class StringOrInteger
     {
-        public StringOrIntegervalueBase Value { get; init; }
+        public required StringOrIntegervalueBase Value { get; init; }
     }
 
     public class UnionsAndDiscriminatorsExample
     {
-        public StringOrInteger PrimitiveUnion { get; init; }
-        public Contact Contact { get; init; }
-        public Pet Pet { get; init; }
-        public Event Event { get; init; }
-        public Drawing Drawing { get; init; }
-        public Zoo Zoo { get; init; }
+        public required StringOrInteger PrimitiveUnion { get; init; }
+        public required Contact Contact { get; init; }
+        public required Pet Pet { get; init; }
+        public required Event Event { get; init; }
+        public required Drawing Drawing { get; init; }
+        public required Zoo Zoo { get; init; }
     }
 
     public class Zoo
     {
-        public List<PetvalueBase> Animals { get; init; }
+        public required List<PetvalueBase> Animals { get; init; }
     }
 }

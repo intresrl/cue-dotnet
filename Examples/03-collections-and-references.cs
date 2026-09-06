@@ -57,52 +57,52 @@ namespace Examples.collections_and_references
 
     public class CollectionsAndReferencesExample
     {
-        public Order Order { get; init; }
-        public User User { get; init; }
-        public InlineOrder InlineOrder { get; init; }
-        public Scores Scores { get; init; }
-        public Organization Organization { get; init; }
-        public StringList Strings { get; init; }
-        public StringList Items { get; init; }
+        public required Order Order { get; init; }
+        public required User User { get; init; }
+        public required InlineOrder InlineOrder { get; init; }
+        public required Scores Scores { get; init; }
+        public required Organization Organization { get; init; }
+        public required StringList Strings { get; init; }
+        public required StringList Items { get; init; }
     }
 
     public class Department
     {
-        public string Name { get; init; }
-        public List<User> Members { get; init; }
+        public required string Name { get; init; }
+        public required List<User> Members { get; init; }
     }
 
     public class FixedStructTuple0
     {
-        public string Id { get; init; }
+        public required string Id { get; init; }
     }
 
     public class FixedStructTuple1
     {
-        public long Count { get; init; }
+        public required long Count { get; init; }
     }
 
     public class InlineOrder
     {
-        public List<Item> Items { get; init; }
+        public required List<Item> Items { get; init; }
     }
 
     public class Item
     {
-        public string Sku { get; init; }
-        public long Quantity { get; init; }
+        public required string Sku { get; init; }
+        public required long Quantity { get; init; }
     }
 
     public class Order
     {
-        public string Id { get; init; }
-        public List<Item> Items { get; init; }
+        public required string Id { get; init; }
+        public required List<Item> Items { get; init; }
     }
 
     public class Organization
     {
-        public string Name { get; init; }
-        public List<Department> Departments { get; init; }
+        public required string Name { get; init; }
+        public required List<Department> Departments { get; init; }
     }
 
     public readonly record struct Role(string Value)
@@ -116,7 +116,7 @@ namespace Examples.collections_and_references
 
     public class User
     {
-        public string Id { get; init; }
-        public List<Role> Roles { get; init; }
+        public required string Id { get; init; }
+        public required List<Role> Roles { get; init; }
     }
 }

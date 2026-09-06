@@ -76,6 +76,36 @@ public sealed class RoslynGeneratorDiscriminatorTests
     }
 
     [Fact]
+    public void GeneratesRequiredModifierOnlyForNonOptionalFields()
+    {
+        using var ctx = new CueContext();
+        using var value = ctx.Compile("""
+            #DateTimeMessage: {
+                type: "datetime"
+                format: string
+                timezone?: string
+            }
+
+            #TextMessage: {
+                type: "text"
+                maxLength: int
+                pattern?: string
+            }
+            """);
+
+        var node = CueValueVisitor.VisitRoot(value);
+        var code = _sut.GenerateCode(node);
+
+        Assert.Contains("public required string Type { get; init; }", code);
+        Assert.Contains("public required string Format { get; init; }", code);
+        Assert.Contains("public required long MaxLength { get; init; }", code);
+        Assert.Contains("public string Timezone { get; init; }", code);
+        Assert.Contains("public string Pattern { get; init; }", code);
+        Assert.DoesNotContain("public required string Timezone { get; init; }", code);
+        Assert.DoesNotContain("public required string Pattern { get; init; }", code);
+    }
+
+    [Fact]
     public void GeneratesCorrectPropertyNamesForFields()
     {
         using var ctx = new CueContext();

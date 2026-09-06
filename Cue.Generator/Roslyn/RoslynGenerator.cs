@@ -255,9 +255,16 @@ public sealed class RoslynGenerator(ITypeStore typeStore, IIdentifierNamer namer
 
     private PropertyDeclarationSyntax DeclareProperty(CueStructField field)
     {
-        return PropertyDeclaration(ParseTypeName(typeStore.GetTypeName(field.Value).Format(namer.TypeName)),
+        var property = PropertyDeclaration(ParseTypeName(typeStore.GetTypeName(field.Value).Format(namer.TypeName)),
                 namer.Identifier(field.Name))
-            .AddModifiers(Token(PublicKeyword))
+            .AddModifiers(Token(PublicKeyword));
+        
+        if (!field.Optional)
+        {
+            property = property.AddModifiers(Token(RequiredKeyword));
+        }
+        
+        return property
             .AddAccessorListAccessors(
                 AccessorDeclaration(GetAccessorDeclaration).WithSemicolonToken(Token(SemicolonToken)),
                 AccessorDeclaration(InitAccessorDeclaration).WithSemicolonToken(Token(SemicolonToken)));

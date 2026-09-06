@@ -29,54 +29,54 @@ namespace Examples.matchn_and_advanced
 
     public class AnnotationValue
     {
-        public AnnotationValuevalueBase Value { get; init; }
+        public required AnnotationValuevalueBase Value { get; init; }
     }
 
     public class BooleanValue
     {
-        public string Kind { get; init; }
-        public bool Value { get; init; }
+        public required string Kind { get; init; }
+        public required bool Value { get; init; }
     }
 
     public class CompositeRecord
     {
-        public string Id { get; init; }
-        public AnnotationValue Annotation { get; init; }
-        public List<ContactValue> Contacts { get; init; }
+        public required string Id { get; init; }
+        public required AnnotationValue Annotation { get; init; }
+        public required List<ContactValue> Contacts { get; init; }
         public string? Description { get; init; }
     }
 
     public class ContactValue
     {
-        public ContactValuevalueBase Value { get; init; }
+        public required ContactValuevalueBase Value { get; init; }
     }
 
     public class EmailValue
     {
-        public string Type { get; init; }
-        public string Address { get; init; }
+        public required string Type { get; init; }
+        public required string Address { get; init; }
     }
 
     public class MatchNAndAdvancedExample
     {
-        public CompositeRecord Record { get; init; }
+        public required CompositeRecord Record { get; init; }
     }
 
     public class NumberValue
     {
-        public string Kind { get; init; }
-        public decimal Value { get; init; }
+        public required string Kind { get; init; }
+        public required decimal Value { get; init; }
     }
 
     public class PhoneValue
     {
-        public string Type { get; init; }
-        public string Number { get; init; }
+        public required string Type { get; init; }
+        public required string Number { get; init; }
     }
 
     public class TextValue
     {
-        public string Kind { get; init; }
-        public string Value { get; init; }
+        public required string Kind { get; init; }
+        public required string Value { get; init; }
     }
 }

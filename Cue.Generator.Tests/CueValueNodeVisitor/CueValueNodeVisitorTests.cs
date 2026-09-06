@@ -268,6 +268,8 @@ public sealed class CueValueNodeVisitorTests
 
         var fieldNames = structNode.Fields.Select(f => f.Name).OrderBy(n => n).ToList();
         Assert.Equal(2, fieldNames.Count);
+        Assert.False(structNode.Fields.Single(f => f.Name == "required").Optional);
+        Assert.True(structNode.Fields.Single(f => f.Name == "optional").Optional);
     }
 
     [Fact]

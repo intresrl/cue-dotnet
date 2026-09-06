@@ -18,58 +18,58 @@ namespace Examples.complete_domain_model
 
     public class Address
     {
-        public string Street { get; init; }
-        public string City { get; init; }
+        public required string Street { get; init; }
+        public required string City { get; init; }
         public string? Country { get; init; }
     }
 
     public class BaseEntity
     {
-        public string Id { get; init; }
+        public required string Id { get; init; }
     }
 
     public class CompleteDomainModel
     {
-        public Organization Organization { get; init; }
+        public required Organization Organization { get; init; }
     }
 
     public class DigitalProduct
     {
-        public string Type { get; init; }
-        public string Sku { get; init; }
-        public string DownloadUrl { get; init; }
+        public required string Type { get; init; }
+        public required string Sku { get; init; }
+        public required string DownloadUrl { get; init; }
     }
 
     public class Order
     {
-        public User Customer { get; init; }
-        public string Id { get; init; }
-        public List<OrderLine> Lines { get; init; }
+        public required User Customer { get; init; }
+        public required string Id { get; init; }
+        public required List<OrderLine> Lines { get; init; }
     }
 
     public class OrderLine
     {
-        public Product Product { get; init; }
-        public long Quantity { get; init; }
+        public required Product Product { get; init; }
+        public required long Quantity { get; init; }
     }
 
     public class Organization
     {
-        public string Name { get; init; }
-        public List<User> Users { get; init; }
-        public List<Order> Orders { get; init; }
+        public required string Name { get; init; }
+        public required List<User> Users { get; init; }
+        public required List<Order> Orders { get; init; }
     }
 
     public class PhysicalProduct
     {
-        public string Type { get; init; }
-        public string Sku { get; init; }
-        public decimal Weight { get; init; }
+        public required string Type { get; init; }
+        public required string Sku { get; init; }
+        public required decimal Weight { get; init; }
     }
 
     public class Product
     {
-        public ProductvalueBase Value { get; init; }
+        public required ProductvalueBase Value { get; init; }
     }
 
     public readonly record struct Role(string Value)
@@ -79,11 +79,11 @@ namespace Examples.complete_domain_model
 
     public class User
     {
-        public string Id { get; init; }
-        public string Name { get; init; }
-        public string Email { get; init; }
-        public UserStatus Status { get; init; }
-        public List<Role> Roles { get; init; }
+        public required string Id { get; init; }
+        public required string Name { get; init; }
+        public required string Email { get; init; }
+        public required UserStatus Status { get; init; }
+        public required List<Role> Roles { get; init; }
         public Address? Address { get; init; }
     }
 

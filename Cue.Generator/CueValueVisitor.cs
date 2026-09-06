@@ -188,6 +188,15 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
     {
         var path = value.Path();
 
+        // Get all required fields (fields without Optionals flag)
+        var requiredFields = value.Fields();
+        var requiredFieldPaths = new HashSet<string>(requiredFields.Select(f => f.Path()).ToArray());
+        foreach (var field in requiredFields)
+        {
+            field.Dispose();
+        }
+
+        // Get all fields including optional ones
         var fieldValues = value.Fields(new EvalOption.Optionals(true));
         var fields = new List<CueStructField>(fieldValues.Length);
 
@@ -196,7 +205,9 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
             using (fieldValue)
             {
                 var childPath = fieldValue.Path();
-                fields.Add(new CueStructField(GetFieldName(path, childPath), Visit(fieldValue)));
+                var fieldName = GetFieldName(path, childPath);
+                var isOptional = !requiredFieldPaths.Contains(childPath);
+                fields.Add(new CueStructField(fieldName, Visit(fieldValue), isOptional));
             }
         }
 
