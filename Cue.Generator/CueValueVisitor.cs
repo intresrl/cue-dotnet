@@ -27,12 +27,6 @@ public sealed class CueValueVisitor(Value[] rootDefinitions, TextWriter? writer,
         }
     }
 
-    [Obsolete]
-    public static CueValueNode ForTests(Value value)
-    {
-        return new CueValueVisitor([], null, new CueExprVisitor(null)).Visit(value);
-    }
-
     public CueValueNode Visit(Value value)
     {
         writer?.WriteLine($"visiting value at {value.Path()}: {value.FormatExpr()}");

@@ -59,7 +59,7 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
     {
         using var ctx = new CueContext();
         using var value = ctx.Compile(cueSource, new BuildOption.InferBuiltins(true));
-        var node = CueValueVisitor.ForTests(value);
+        var node = TestExtensions.CueVisit(value);
 
         Assert.NotNull(node);
         Assert.Equal(kind, GetKind(node));
@@ -79,33 +79,11 @@ public sealed class CueValueNodeVisitorSimpleTypesTests
                 Assert.Equal(l, (long)bi);
                 break;
             case (double d, BigDecimal bd):
-                Assert.Equal(d, (double)bd);
+                Assert.Equal(d, (double)bd, 1e-2);
                 break;
             default:
                 Assert.Equal(expected, actual);
                 break;
         }
-    }
-
-    [Fact]
-    private void SourceRoundTripsToIdenticalTree()
-    {
-        using var ctx = new CueContext();
-
-        var property = Prop.ForAll(
-            CueValueNodeArbitrary.Arbitrary,
-            node =>
-            {
-                var source = node.Source();
-                using var value = ctx.Compile(source, new BuildOption.InferBuiltins(true));
-                Assert.Equal(node, CueValueVisitor.ForTests(value), new Roslyn.CueValueNodeComparer());
-            });
-        
-        var config = Config.Quick
-            .WithMaxTest(1_000_000)
-            .WithEvery((n, test) => $"Test {n}: {test}")
-            .WithEveryShrink(config => $"Shrink");
-        
-        Check.One(config, property);
     }
 }

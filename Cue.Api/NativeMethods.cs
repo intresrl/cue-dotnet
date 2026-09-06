@@ -181,9 +181,6 @@ internal static unsafe class NativeMethods
     internal static extern nuint* cue_list(nuint value, nuint* length);
 
     [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
-    internal static extern nuint* cue_disjunctions(nuint value, nuint* length);
-
-    [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
     internal static extern byte* cue_path(nuint value);
 
     [DllImport("cue", CallingConvention = CallingConvention.Cdecl)]
