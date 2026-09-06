@@ -158,11 +158,11 @@ Constraint logic in `IsValid()` is encoded exactly as CUE expressions:
 
 **CUE:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/01-constrained-types.cue
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/01-constrained-types.cue#L1-L10
 
 **Generated C#:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/01-constrained-types.cs#L7-L40
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/01-constrained-types.cs#L7-L39
 
 See the full generated file for complete examples of constrained primitive types with validation logic.
 
@@ -174,11 +174,11 @@ Fields are `required` by default; optional fields (`field?`) or nullable fields
 
 **CUE:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/02-structs-and-composition.cue
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/02-structs-and-composition.cue#L1-L25
 
 **Generated C#:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/02-structs-and-composition.cs#L7-L29
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/02-structs-and-composition.cs#L7-L28
 
 ### Lists & nesting
 
@@ -190,11 +190,11 @@ Inline struct definitions are extracted as separate classes and referenced:
 
 **CUE:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/03-lists-and-nesting.cue
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/03-lists-and-nesting.cue#L1-L21
 
 **Generated C#:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/03-lists-and-nesting.cs#L7-L44
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/03-lists-and-nesting.cs#L7-L43
 
 ### Unions & references
 
@@ -203,8 +203,8 @@ plus a special `Value` record that holds all possible branches:
 
 **CUE:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/04-unions-and-references.cue
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/04-unions-and-references.cue#L1-L13
 
 **Generated C#:** 
 
-https://github.com/intresrl/cue-dotnet/blob/master/Readme/04-unions-and-references.cs#L7-L30
+https://github.com/intresrl/cue-dotnet/blob/6b101b50cf41902c45b774b4507c44f692b042dc/Readme/04-unions-and-references.cs#L7-L29
