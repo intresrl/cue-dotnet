@@ -1,3 +1,11 @@
+visiting value at x: (No ???<x: Number>)
+visiting expression: (No ???<x: Number>)
+visiting value at y: (No ???<y: Number>)
+visiting expression: (No ???<y: Number>)
+visiting value at s: (No ???<s: String>)
+visiting expression: (No ???<s: String>)
+visiting value at b: (No ???<b: Bool>)
+visiting expression: (No ???<b: Bool>)
 visiting value at #Add: (Add (Selector ???<#Add: Struct> "x") (Selector ???<#Add: Struct> "y"))
 visiting expression: (Add (Selector ???<#Add: Struct> "x") (Selector ???<#Add: Struct> "y"))
 visiting expression: (Selector ???<#Add: Struct> "x")
@@ -139,8 +147,26 @@ visiting value at #Call: (Call<$len> (Selector ???<#Call: Struct> "s"))
 visiting expression: (Call<$len> (Selector ???<#Call: Struct> "s"))
 visiting expression: (Selector ???<#Call: Struct> "s")
 visiting expression: ???<#Call: Struct>
+visiting value at obj: ???<obj: Struct>
+visiting value at obj.a: (No ???<obj.a: Int>)
+visiting expression: (No ???<obj.a: Int>)
+visiting value at list: [1,2,3]
+visiting expression: (And (No ???<list: Int>) (GreaterThanEqual 3))
+visiting expression: (No ???<list: Int>)
+visiting expression: (GreaterThanEqual 3)
+visiting expression: 3
+list list concrete length: 3
+visiting value at list[0]: 1
+visiting value at list[1]: 2
+visiting value at list[2]: 3
+visiting value at list.[_]: (No ???<list.[_]: Int>)
+visiting expression: (No ???<list.[_]: Int>)
 visiting value at #Selector: (Selector (Selector ???<#Selector: Struct> "obj") "a")
 visiting value at #Index: (Index (Selector ???<#Index: Struct> "list") 0)
+visiting expression: (Index (Selector ???<#Index: Struct> "list") 0)
+visiting expression: (Selector ???<#Index: Struct> "list")
+visiting expression: ???<#Index: Struct>
+visiting expression: 0
 visiting value at #Slice: (Slice (Selector ???<#Slice: Struct> "list") 0 2)
 visiting expression: (Slice (Selector ???<#Slice: Struct> "list") 0 2)
 visiting expression: (Selector ???<#Slice: Struct> "list")
@@ -176,8 +202,24 @@ visiting expression: ???<#BooleanTree: Struct>
 visiting expression: 10
 visiting value at #MixedTree: (Or (And (No ???<#MixedTree: Int>) (GreaterThanEqual 0)) (No ???<#MixedTree: String>))
 visiting value at #MixedTree: (And (No ???<#MixedTree: Int>) (GreaterThanEqual 0))
+visiting expression: (And (No ???<#MixedTree: Int>) (GreaterThanEqual 0))
+visiting expression: (No ???<#MixedTree: Int>)
+visiting expression: (GreaterThanEqual 0)
+visiting expression: 0
 visiting value at #MixedTree: (No ???<#MixedTree: String>)
 visiting expression: (No ???<#MixedTree: String>)
+visiting value at DateTimeMessage: ???<DateTimeMessage: Struct>
+visiting value at DateTimeMessage.type: "datetime"
+visiting value at DateTimeMessage.format: (No ???<DateTimeMessage.format: String>)
+visiting expression: (No ???<DateTimeMessage.format: String>)
+visiting value at DateTimeMessage.timezone: (No ???<DateTimeMessage.timezone: String>)
+visiting expression: (No ???<DateTimeMessage.timezone: String>)
+visiting value at TextMessage: ???<TextMessage: Struct>
+visiting value at TextMessage.type: "text"
+visiting value at TextMessage.maxLength: (No ???<TextMessage.maxLength: Int>)
+visiting expression: (No ???<TextMessage.maxLength: Int>)
+visiting value at TextMessage.pattern: (No ???<TextMessage.pattern: String>)
+visiting expression: (No ???<TextMessage.pattern: String>)
 visiting value at #matchNMessage: (Call<$matchN> 1 ???<#matchNMessage: List>)
 visiting value at #matchNMessage[0]: (Selector ???<#matchNMessage[0]: Struct> "DateTimeMessage")
 visiting value at #matchNMessage[1]: (Selector ???<#matchNMessage[1]: Struct> "TextMessage")

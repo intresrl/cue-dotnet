@@ -1,7 +1,17 @@
+visiting value at plainString: "this top-level property should be ignored"
+visiting value at plainInt: 123
+visiting value at plainBool: true
+visiting value at plainStruct: {"name":"ignored"}
+visiting value at plainStruct.name: "ignored"
+visiting value at plainList: ["ignored","also ignored"]
+plainList list concrete length: 2
+visiting value at plainList[0]: "ignored"
+visiting value at plainList[1]: "also ignored"
 visiting value at #ConvertedString: (No ???<#ConvertedString: String>)
 visiting expression: (No ???<#ConvertedString: String>)
 visiting value at #ConvertedPerson: ???<#ConvertedPerson: Struct>
 visiting value at #ConvertedPerson.name: (No ???<#ConvertedPerson.name: String>)
+visiting expression: (No ???<#ConvertedPerson.name: String>)
 visiting value at #ConvertedPerson.age: (No ???<#ConvertedPerson.age: Int>)
 visiting expression: (No ???<#ConvertedPerson.age: Int>)
 visiting value at #ConvertedList: []
@@ -11,6 +21,7 @@ visiting expression: (GreaterThanEqual 0)
 visiting expression: 0
 #ConvertedList list concrete length: 0
 visiting value at #ConvertedList.[_]: (No ???<#ConvertedList.[_]: String>)
+visiting expression: (No ???<#ConvertedList.[_]: String>)
 visiting value at #ConvertedSettings: ???<#ConvertedSettings: Struct>
 visiting value at #ConvertedSettings.enabled: (No ???<#ConvertedSettings.enabled: Bool>)
 visiting expression: (No ???<#ConvertedSettings.enabled: Bool>)
